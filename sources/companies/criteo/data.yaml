@@ -1,0 +1,33 @@
+---
+report:
+  year: 2021
+  url: https://filecache.investorroom.com/mr5ir_criteo/1674/Criteo_CSR_Report_2021.pdf
+  file: Criteo_CSR_Report_2021.pdf
+corporate:
+  employees: 2630
+datacenter emissions:
+  servers: 40000
+  storage tb: 624000
+  memory tb: 6590
+  electricity kwh: 66175000
+  electricity kwh per server per month: 137.9
+  emissions g per kwh: 649.8
+  emissions mt: 43000
+  # Criteo says that 75% of emissions are from power usage and 25% from manufacturing and end of life
+  embodied emissions pct: 25
+  adjusted emissions mt: 43000
+office emissions:
+  electricity kwh: 2262000
+  electricity kwh per employee: 860
+  emissions mt: 554
+  emissions mt per employee: 0.211
+travel emissions:
+  emissions mt: 370
+  emissions mt per employee: 0.141
+offsets:
+  # Criteo does not provide any information on the kinds of RECs or other offsets that it uses
+  adjusted offsets mt: 0
+model inputs:
+  ServerEmissions_MTperMonth: 2687
+  OfficeEmissions_MTperMonth: 46
+  TravelEmissions_MTperMonth: 31
