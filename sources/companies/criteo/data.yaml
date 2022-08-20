@@ -31,7 +31,7 @@ company:
           datacenter emissions g per kwh: 649.8
           reference: calculation
       - fact:
-          datacenter adjusted emissions mt: 43000
+          datacenter adjusted emissions mt per month: 3583
           reference: calculation
           comment: no adjustment needed because embodied emissions are included
       - fact:
