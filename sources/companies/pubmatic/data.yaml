@@ -1,0 +1,20 @@
+---
+company:
+  name: Pubmatic
+  type: ad tech platform
+  variant: ssp
+  sources:
+  - source:
+      year: 2022
+      url: https://pubmatic.com/blog/pubmatic-prioritizing-data-center-sustainability-and-growth/
+      facts:
+      - fact:
+          server qps: 5500
+          reference: Carbon Emissions section
+  - source:
+      year: 2022
+      url: https://investors.pubmatic.com/static-files/a0a75d97-2e70-474d-b45a-30cb383a280f
+      facts:
+      - fact:
+          bid requests billion per day: 398
+          reference: Impressions Processed section
