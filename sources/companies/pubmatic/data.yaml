@@ -16,5 +16,5 @@ company:
       url: https://investors.pubmatic.com/static-files/a0a75d97-2e70-474d-b45a-30cb383a280f
       facts:
       - fact:
-          bid requests billion per day: 398
+          bid requests processed billion per month: 12066
           reference: Impressions Processed section
