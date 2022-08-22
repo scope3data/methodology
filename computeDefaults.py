@@ -24,7 +24,7 @@ modelInputs = {
 }
 
 # inputs where we don't have enough data and have to guess
-bestGuess = {}
+bestGuess: Dict[str, float] = {}
 
 # get a list of all facts from our sources
 facts: Dict[str, List[float]] = {}
