@@ -16,6 +16,18 @@ parser.add_argument(
 )
 args = parser.parse_args()
 
+modelInputs = {
+    "travel emissions mt per employee per month",
+    "office emissions mt per employee per month",
+    "commuting emissions mt per employee per month",
+    "it emissions mt per employee per month",
+    "other emissions mt per employee per month",
+    "bid requests processed billion per month",
+}
+
+# inputs where we don't have enough data and have to guess
+bestGuess = {}
+
 # get a list of all facts from our sources
 facts: Dict[str, List[float]] = {}
 
@@ -42,16 +54,15 @@ for file in files:
                         facts[key] = []
                     facts[key].append(fact["fact"][key])
 
-relevantDefaults = {
-    "travel emissions mt per employee per month",
-    "office emissions mt per employee per month",
-    "commuting emissions mt per employee per month",
-}
-
 defaults: Dict[str, float] = {}
 for key in facts:
-    if key in relevantDefaults:
-        defaults[key] = sum(facts[key]) / len(facts[key])
+    if key in modelInputs:
+        defaults[key] = round(sum(facts[key]) / len(facts[key]), 4)
+
+for input in modelInputs:
+    if input not in defaults:
+        print(f"{input} not modeled - using best guess")
+        defaults[input] = bestGuess[input]
 
 output = yaml.dump({"defaults": defaults}, Dumper=yaml.Dumper)
 if args.dry_run:
