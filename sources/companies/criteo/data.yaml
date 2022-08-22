@@ -39,6 +39,7 @@ company:
   - source:
       year: 2021
       type: calculation
+      facts:
       - fact:
           datacenter electricity kwh per server per month: 137.9
       - fact:

@@ -42,9 +42,16 @@ for file in files:
                         facts[key] = []
                     facts[key].append(fact["fact"][key])
 
+relevantDefaults = {
+    "travel emissions mt per employee per month",
+    "office emissions mt per employee per month",
+    "commuting emissions mt per employee per month",
+}
+
 defaults: Dict[str, float] = {}
 for key in facts:
-    defaults[key] = sum(facts[key]) / len(facts[key])
+    if key in relevantDefaults:
+        defaults[key] = sum(facts[key]) / len(facts[key])
 
 output = yaml.dump({"defaults": defaults}, Dumper=yaml.Dumper)
 if args.dry_run:
