@@ -25,16 +25,6 @@ company:
           datacenter embodied emissions pct: 25
           reference: page 86
       - fact:
-          datacenter electricity kwh per server per month: 137.9
-          reference: calculation
-      - fact:
-          datacenter emissions g per kwh: 649.8
-          reference: calculation
-      - fact:
-          datacenter adjusted emissions mt per month: 3583
-          reference: calculation
-          comment: no adjustment needed because embodied emissions are included
-      - fact:
           office electricity kwh: 2262000
           reference: page 91
       - fact:
@@ -44,8 +34,19 @@ company:
           office emissions mt per month: 46.2
           reference: page 92
       - fact:
-          office emissions mt per employee: 0.211
-          reference: page 92
-      - fact:
           travel emissions mt per month: 30.8
           reference: page 92
+  - source:
+      year: 2021
+      type: calculation
+      - fact:
+          datacenter electricity kwh per server per month: 137.9
+      - fact:
+          datacenter emissions g per kwh: 649.8
+      - fact:
+          datacenter adjusted emissions mt per month: 3583
+          comment: no adjustment needed because embodied emissions are included
+      - fact:
+          travel emissions mt per employee per month: 0.011
+      - fact:
+          office emissions mt per employee per month: 0.0176
