@@ -24,20 +24,16 @@ facts: Dict[str, float] = {}
 stream = open(args.companyFile[0], "r")
 documents = list(yaml.load_all(stream, Loader=SafeLoader))
 for document in documents:
-    print(document)
     if "company" not in document:
-        print("No company found in " + document)
-        continue
+        raise Exception("No company found in " + document)
     if "sources" not in document["company"]:
-        print("No sources found in " + document)
+        raise Exception("No sources found in " + document)
         continue
     for source in document["company"]["sources"]:
         for fact in source["source"]["facts"]:
             keys = [key for key in fact["fact"] if key != "reference" and key != "comment"]
             for key in keys:
                 facts[key] = fact["fact"][key]
-print(facts)
-
 
 def getFactOrDefault(key: str, facts: Dict[str, float], defaults: Dict[str, float]) -> float:
     if key in facts:
@@ -54,21 +50,23 @@ def getCorporateEmissions(facts: Dict[str, float], defaults: Dict[str, float]) -
         raise Exception("Must provide either 'corporate emissions mt per month' or 'employees'")
     officeEmissionsPerEmployee = getFactOrDefault("office emissions mt per employee per month", facts, defaults)
     travelEmissionsPerEmployee = getFactOrDefault("travel emissions mt per employee per month", facts, defaults)
+    itEmissionsPerEmployee = getFactOrDefault("it emissions mt per employee per month", facts, defaults)
     commutingEmissionsPerEmployee = getFactOrDefault("commuting emissions mt per employee per month", facts, defaults)
     otherEmissionsPerEmployee = getFactOrDefault("other emissions mt per employee per month", facts, defaults)
     return facts["employees"] * (
         officeEmissionsPerEmployee
         + travelEmissionsPerEmployee
         + commutingEmissionsPerEmployee
+        + itEmissionsPerEmployee
         + otherEmissionsPerEmployee
     )
 
 
 def getCorporateEmissionsPerBidRequest(facts: Dict[str, float], defaults: Dict[str, float]) -> float:
     corporateEmissionsMT = getCorporateEmissions(facts, defaults)
-    bidRequestWeighting = getFactOrDefault("bid request emissions allocation pct", facts, defaults)
-    bidRequests = getFactOrDefault("bid requests billion per month", facts, defaults)
+    bidRequests = getFactOrDefault("bid requests processed billion per month", facts, defaults)
+    return corporateEmissionsMT / bidRequests
 
 
 corporateEmissionsPerBidRequest = getCorporateEmissionsPerBidRequest(facts, defaults)
-print(f"Corporate Emissions per bid request: %(corporateEmissionsPerBidRequest)")
+print(f"Corporate Emissions g per bid request: {corporateEmissionsPerBidRequest:.4f}")

@@ -7,3 +7,9 @@ $ brew install pyenv pipenv
 $ pyenv install 3.8.13
 $ pipenv --python 3.8 install
 $ pipenv shell
+
+To write defaults from latest sources:
+$ python3 computeDefaults.py
+
+To compute the emissions for a company, pass in its YAML file:
+$ python3 adTechModel.py sources/companies/criteo/data.yaml
