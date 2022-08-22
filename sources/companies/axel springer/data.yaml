@@ -1,0 +1,44 @@
+---
+company:
+  name: Axel Springer
+  type: publisher
+  variant: media company
+  sources:
+  - source:
+      year: 2020
+      url: https://sustainability.axelspringer.com/wp-content/uploads/2021/10/sustainability_report_AS_EN_211001.pdf
+      file: sustainability_report_AS_EN_211001.pdf
+      facts:
+      - fact:
+          employees: 16446
+          reference: page 32
+      - fact:
+          office emissions mt per month: 2495
+          reference: page 25
+      - fact:
+          commuting emissions mt per month: 799.9
+          reference: page 26
+      - fact:
+          travel emissions mt per month: 331
+          reference: page 26
+      - fact:
+          it emissions mt per month: 3353.5
+          reference: page 27
+          comment: Excludes data transmission and end-user devices
+      - fact:
+          other emissions mt per month: 5027.3
+          reference: page 25
+  - source:
+      year: 2020
+      type: calculation
+      facts:
+      - fact:
+          office emissions mt per employee per month: 0.152
+      - fact:
+          commuting emissions mt per employee per month: 0.0486
+      - fact:
+          travel emissions mt per employee per month: 0.020
+      - fact:
+          it emissions mt per employee per month: 0.204
+      - fact:
+          other emissions mt per employee per month: 0.306

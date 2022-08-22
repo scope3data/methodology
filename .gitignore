@@ -1,6 +1,9 @@
 # Output files
 defaults.yaml
 
+# git
+*.swp
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
