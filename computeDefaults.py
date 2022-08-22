@@ -11,9 +11,7 @@ parser.add_argument(
     default="defaults.yaml",
     help="Set the defaults file to use (overrides defaults.yaml)",
 )
-parser.add_argument(
-    "--dry-run", action="store_true", help="Print the defaults but don't write to file"
-)
+parser.add_argument("--dry-run", action="store_true", help="Print the defaults but don't write to file")
 args = parser.parse_args()
 
 modelInputs = {
@@ -44,11 +42,7 @@ for file in files:
             continue
         for source in document["company"]["sources"]:
             for fact in source["source"]["facts"]:
-                keys = [
-                    key
-                    for key in fact["fact"]
-                    if key != "reference" and key != "comment"
-                ]
+                keys = [key for key in fact["fact"] if key != "reference" and key != "comment"]
                 for key in keys:
                     if key not in facts:
                         facts[key] = []

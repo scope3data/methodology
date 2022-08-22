@@ -17,7 +17,7 @@ args = parser.parse_args()
 # Load defaults
 defaultsStream = open(args.defaultsFile, "r")
 defaultsDocument = yaml.load(defaultsStream, Loader=SafeLoader)
-defaults = defaultsDocument['defaults']
+defaults = defaultsDocument["defaults"]
 
 # Load facts about the company
 facts: Dict[str, float] = {}
@@ -35,6 +35,7 @@ for document in documents:
             for key in keys:
                 facts[key] = fact["fact"][key]
 
+
 def getFactOrDefault(key: str, facts: Dict[str, float], defaults: Dict[str, float]) -> float:
     if key in facts:
         return facts[key]
@@ -48,11 +49,19 @@ def getCorporateEmissions(facts: Dict[str, float], defaults: Dict[str, float]) -
         return getFactOrDefault("corporate emissions mt per month", facts, defaults)
     if not "employees" in facts:
         raise Exception("Must provide either 'corporate emissions mt per month' or 'employees'")
-    officeEmissionsPerEmployee = getFactOrDefault("office emissions mt per employee per month", facts, defaults)
-    travelEmissionsPerEmployee = getFactOrDefault("travel emissions mt per employee per month", facts, defaults)
+    officeEmissionsPerEmployee = getFactOrDefault(
+        "office emissions mt per employee per month", facts, defaults
+    )
+    travelEmissionsPerEmployee = getFactOrDefault(
+        "travel emissions mt per employee per month", facts, defaults
+    )
     itEmissionsPerEmployee = getFactOrDefault("it emissions mt per employee per month", facts, defaults)
-    commutingEmissionsPerEmployee = getFactOrDefault("commuting emissions mt per employee per month", facts, defaults)
-    otherEmissionsPerEmployee = getFactOrDefault("other emissions mt per employee per month", facts, defaults)
+    commutingEmissionsPerEmployee = getFactOrDefault(
+        "commuting emissions mt per employee per month", facts, defaults
+    )
+    otherEmissionsPerEmployee = getFactOrDefault(
+        "other emissions mt per employee per month", facts, defaults
+    )
     return facts["employees"] * (
         officeEmissionsPerEmployee
         + travelEmissionsPerEmployee
