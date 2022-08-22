@@ -38,8 +38,10 @@ for document in documents:
 
 def getFactOrDefault(key: str, facts: Dict[str, float], defaults: Dict[str, float]) -> float:
     if key in facts:
+        print(f"{key} = {facts[key]}")
         return facts[key]
     if key in defaults:
+        print(f"{key} = {defaults[key]} (default)")
         return defaults[key]
     raise Exception(f"No default found for '{key}'")
 
@@ -59,16 +61,14 @@ def getCorporateEmissions(facts: Dict[str, float], defaults: Dict[str, float]) -
     commutingEmissionsPerEmployee = getFactOrDefault(
         "commuting emissions mt per employee per month", facts, defaults
     )
-    otherEmissionsPerEmployee = getFactOrDefault(
-        "other emissions mt per employee per month", facts, defaults
-    )
-    return facts["employees"] * (
+    corporateEmissions = getFactOrDefault('employees', facts, defaults) * (
         officeEmissionsPerEmployee
         + travelEmissionsPerEmployee
         + commutingEmissionsPerEmployee
         + itEmissionsPerEmployee
-        + otherEmissionsPerEmployee
     )
+    print(f"corporate emissions mt per month: {corporateEmissions:.2f} (calculation)")
+    return corporateEmissions
 
 
 def getCorporateEmissionsPerBidRequest(facts: Dict[str, float], defaults: Dict[str, float]) -> float:
@@ -78,4 +78,4 @@ def getCorporateEmissionsPerBidRequest(facts: Dict[str, float], defaults: Dict[s
 
 
 corporateEmissionsPerBidRequest = getCorporateEmissionsPerBidRequest(facts, defaults)
-print(f"Corporate Emissions g per bid request: {corporateEmissionsPerBidRequest:.4f}")
+print(f"corporate emissions g per bid request: {corporateEmissionsPerBidRequest:.4f}")

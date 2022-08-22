@@ -18,3 +18,10 @@ company:
       - fact:
           bid requests processed billion per month: 12066
           reference: Impressions Processed section
+  - source:
+      year: 2021
+      url: https://www.linkedin.com/company/pubmatic/insights/
+      facts:
+      - fact:
+          employees: 812
+          reference: LinkedIn data for December 2021

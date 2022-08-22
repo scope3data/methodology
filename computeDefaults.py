@@ -19,7 +19,6 @@ modelInputs = {
     "office emissions mt per employee per month",
     "commuting emissions mt per employee per month",
     "it emissions mt per employee per month",
-    "other emissions mt per employee per month",
     "bid requests processed billion per month",
 }
 
