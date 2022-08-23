@@ -20,10 +20,20 @@ modelInputs = {
     "commuting emissions mt per employee per month",
     "it emissions mt per employee per month",
     "bid requests processed billion per month",
+    "pct of bid requests processed from ad tech platforms",
+    "bid request size in bytes",
+    "server to server emissions g per gb",
 }
 
 # inputs where we don't have enough data and have to guess
-bestGuess: Dict[str, float] = {}
+bestGuess: Dict[str, float] = {
+    "pct of bid requests processed from ad tech platforms": 30,
+    "bid request size in bytes": 10000,
+    # https://www.cloudcarbonfootprint.org/docs/methodology/#cloud-usage-and-cost-data-source
+    # https://www.cloudcarbonfootprint.org/docs/methodology/#appendix-v-grid-emissions-factors
+    # Above give 0.001 kWh per GB and 379 g per kWh (AWS US East 1)
+    "server to server emissions g per gb": 0.379,
+}
 
 # get a list of all facts from our sources
 facts: Dict[str, List[float]] = {}

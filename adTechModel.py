@@ -3,6 +3,8 @@ from yaml.loader import SafeLoader
 from typing import Dict, List
 import argparse
 
+# TODO - support templates/variants so we load different defaults by atp type
+
 # Parse command line to get company file
 parser = argparse.ArgumentParser(description="Compute emissions for an ad tech company")
 parser.add_argument(
@@ -86,17 +88,73 @@ def getCorporateEmissions(facts: Dict[str, float], defaults: Dict[str, float], d
 def getCorporateEmissionsPerBidRequest(
     facts: Dict[str, float], defaults: Dict[str, float], depth: int
 ) -> float:
-    corporateEmissionsMT = getCorporateEmissions(facts, defaults, depth - 1)
-    bidRequests = getFactOrDefault("bid requests processed billion per month", facts, defaults, depth - 1)
-    corporateEmissionsPerBidRequest = corporateEmissionsMT / bidRequests
+    corporateEmissionsG = getCorporateEmissions(facts, defaults, depth - 1) * 1000000
+    bidRequests = (
+        getFactOrDefault("bid requests processed billion per month", facts, defaults, depth - 1) * 1000000000
+    )
+    corporateEmissionsPerBidRequest = corporateEmissionsG / bidRequests
     verboseprint(f"{'  ' * (depth - 1)}-------------------------------------------")
     verboseprint(
-        f"{'  ' * depth}corporate emissions mt per billion bid requests: {corporateEmissionsPerBidRequest:.4f} (calculation)"
+        f"{'  ' * depth}corporate emissions g per bid request: {corporateEmissionsPerBidRequest:.8f} (calculation)"
     )
     return corporateEmissionsPerBidRequest
 
 
-depth = 3 if args.verbose else 0
-corporateEmissionsPerBidRequest = getCorporateEmissionsPerBidRequest(facts, defaults, depth - 1)
-verboseprint(f"{'  ' * (depth - 1)}-------------------------------------------")
-print(f"{'  ' * depth}corporate emissions g per bid request: {corporateEmissionsPerBidRequest/1000:.6f}")
+def getExternalRequestRatio(facts: Dict[str, float], defaults: Dict[str, float], depth: int) -> float:
+    if (
+        "ad tech platform bid requests processed billion per month" in facts
+        and "bid requests processed billion per month" in facts
+    ):
+        atpRequests = getFactOrDefault(
+            "ad tech platform bid requests processed billion per month", facts, defaults, depth - 1
+        )
+        bidRequests = getFactOrDefault(
+            "ad tech platform bid requests processed billion per month", facts, defaults, depth - 1
+        )
+        ratio = atpRequests / bidRequests
+        verboseprint(f"{'  ' * (depth - 1)}-------------------------------------------")
+        verboseprint(f"{'  ' * depth}external request ratio: {ratio * 100.0:.1f}% (calculation)")
+        return ratio
+    return getFactOrDefault("pct of bid requests processed from ad tech platforms", facts, defaults, depth) / 100
+
+
+def getDataTransferEmissionsPerBidRequest(
+    facts: Dict[str, float], defaults: Dict[str, float], depth: int
+) -> float:
+    if "data transfer emissions mt per month" in facts:
+        return getFactOrDefault("data transfer emissions mt per month", facts, defaults, depth)
+
+    externalRequestRatio = getExternalRequestRatio(facts, defaults, depth - 1)
+    bidRequestSizeGB = (
+        getFactOrDefault("bid request size in bytes", facts, defaults, depth - 1) / 1024 / 1024 / 1024
+    )
+    serverToServerEmissionsPerGB = getFactOrDefault(
+        "server to server emissions g per gb", facts, defaults, depth - 1
+    )
+    dataTransferEmissionsPerBidRequest = (
+        externalRequestRatio * bidRequestSizeGB * serverToServerEmissionsPerGB
+    )
+
+    verboseprint(f"{'  ' * (depth - 1)}-------------------------------------------")
+    verboseprint(
+        f"{'  ' * depth}data transfer emissions g per bid request: {dataTransferEmissionsPerBidRequest:.8f} (calculation)"
+    )
+    return dataTransferEmissionsPerBidRequest
+
+
+def getPrimaryEmissionsPerBidRequest(
+    facts: Dict[str, float], defaults: Dict[str, float], depth: int
+) -> float:
+    corporateEmissionsPerBidRequest = getCorporateEmissionsPerBidRequest(facts, defaults, depth - 1)
+    dataTransferEmissionsPerBidRequest = getDataTransferEmissionsPerBidRequest(facts, defaults, depth - 1)
+    verboseprint(f"{'  ' * (depth - 1)}-------------------------------------------")
+    primaryEmissionsPerBidRequest = corporateEmissionsPerBidRequest + dataTransferEmissionsPerBidRequest
+    verboseprint(
+        f"{'  ' * depth}primary emissions mt per billion bid requests: {primaryEmissionsPerBidRequest:.4f} (calculation)"
+    )
+    return primaryEmissionsPerBidRequest
+
+
+depth = 4 if args.verbose else 0
+primaryEmissionsPerBidRequest = getPrimaryEmissionsPerBidRequest(facts, defaults, depth)
+print(f"{'  ' * depth}primary emissions g per bid request: {primaryEmissionsPerBidRequest:.6f}")
