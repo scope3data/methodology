@@ -1,0 +1,17 @@
+---
+company:
+  private: true
+  type: ad tech platform
+  variant: ssp
+  sources:
+  - source:
+      month: 6
+      year: 2022
+      private: true
+      facts:
+      - fact:
+          bid requests processed billion per month: 2529.0
+          reference: provided by company to Scope3 
+      - fact:
+          bid requests distributed billion per month: 9704.8
+          reference: provided by company to Scope3 
