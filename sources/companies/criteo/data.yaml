@@ -1,8 +1,11 @@
 ---
 company:
   name: Criteo
-  type: ad tech platform
-  variant: ad network
+  products:
+  - product:
+      name: Criteo
+      template: network
+      scope3 id: 1234 # TODO
   sources:
   - source:
       year: 2021

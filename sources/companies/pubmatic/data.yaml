@@ -1,8 +1,11 @@
 ---
 company:
   name: Pubmatic
-  type: ad tech platform
-  variant: ssp
+  products:
+  - product:
+      name: Pubmatic
+      template: ssp
+      scope3 id: 1234 # TODO
   sources:
   - source:
       year: 2022

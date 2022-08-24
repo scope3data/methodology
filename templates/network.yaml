@@ -5,3 +5,5 @@ template:
   servers processing bid requests pct: 90
   servers processing cookie syncs pct: 5
   servers processing creative serving pct: 5
+  cookie syncs processed per bid request: 0.1
+  creative serving processed billion per month: 30    # made up & definitely wrong (not used yet)

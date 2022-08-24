@@ -6,8 +6,8 @@ Where does YAML come from?
 
 To install (MacOS):
 $ brew install pyenv pipenv
-$ pyenv install 3.8.13
-$ pipenv --python 3.8 install
+$ pyenv install 3.10.6
+$ pipenv --python 3.10 install
 $ pipenv shell
 
 To write defaults from latest sources:

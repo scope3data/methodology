@@ -1,9 +1,6 @@
 import yaml
 from yaml.loader import SafeLoader
-from typing import Dict, List
 import argparse
-
-# TODO - support templates/variants so we load different defaults by atp type
 
 # Parse command line to get company file
 parser = argparse.ArgumentParser(description="Compute emissions for an ad tech company")
@@ -28,26 +25,37 @@ else:
 # Load defaults
 defaultsStream = open(args.defaultsFile, "r")
 defaultsDocument = yaml.load(defaultsStream, Loader=SafeLoader)
-defaults = defaultsDocument["defaults"]
 
 # Load facts about the company
-facts: Dict[str, float] = {}
+facts: dict[str, float] = {}
 stream = open(args.companyFile[0], "r")
 documents = list(yaml.load_all(stream, Loader=SafeLoader))
-for document in documents:
-    if "company" not in document:
-        raise Exception("No company found in " + document)
-    if "sources" not in document["company"]:
-        raise Exception("No sources found in " + document)
-        continue
-    for source in document["company"]["sources"]:
-        for fact in source["source"]["facts"]:
-            keys = [key for key in fact["fact"] if key != "reference" and key != "comment"]
-            for key in keys:
-                facts[key] = fact["fact"][key]
+template: str
+document = documents[0]  # shouldn't have multiple
+if "company" not in document:
+    raise Exception("No 'company' field found in company file")
+if "products" not in document["company"]:
+    raise Exception("No 'products' field found in company file")
+if "sources" not in document["company"]:
+    raise Exception("No 'sources' field found in company file")
+for source in document["company"]["sources"]:
+    for fact in source["source"]["facts"]:
+        keys = [key for key in fact["fact"] if key != "reference" and key != "comment"]
+        for key in keys:
+            facts[key] = fact["fact"][key]
 
 
-def getFactOrDefault(key: str, facts: Dict[str, float], defaults: Dict[str, float], depth: int) -> float:
+def getProductInfo(key: str, default: float | None, product: dict[str, float], depth: int) -> float:
+    if key in product:
+        verboseprint(f"{'  ' * depth}{key} = {product[key]}")
+        return product[key]
+    if default is not None:
+        verboseprint(f"{'  ' * depth}{key} = {default} (default)")
+        return default
+    raise Exception(f"No value found in product {product['name'] if 'name' in product else ''} for '{key}'")
+
+
+def getFactOrDefault(key: str, facts: dict[str, float], defaults: dict[str, float], depth: int) -> float:
     if key in facts:
         verboseprint(f"{'  ' * depth}{key} = {facts[key]}")
         return facts[key]
@@ -57,7 +65,7 @@ def getFactOrDefault(key: str, facts: Dict[str, float], defaults: Dict[str, floa
     raise Exception(f"No default found for '{key}'")
 
 
-def getCorporateEmissions(facts: Dict[str, float], defaults: Dict[str, float], depth: int) -> float:
+def getCorporateEmissions(facts: dict[str, float], defaults: dict[str, float], depth: int) -> float:
     if "corporate emissions mt per month" in facts:
         return getFactOrDefault("corporate emissions mt per month", facts, defaults, depth)
     if not "employees" in facts:
@@ -86,13 +94,13 @@ def getCorporateEmissions(facts: Dict[str, float], defaults: Dict[str, float], d
 
 
 def getCorporateEmissionsPerBidRequest(
-    facts: Dict[str, float], defaults: Dict[str, float], depth: int
+    corporateAllocation: float, facts: dict[str, float], defaults: dict[str, float], depth: int
 ) -> float:
     corporateEmissionsG = getCorporateEmissions(facts, defaults, depth - 1) * 1000000
     bidRequests = (
         getFactOrDefault("bid requests processed billion per month", facts, defaults, depth - 1) * 1000000000
     )
-    corporateEmissionsPerBidRequest = corporateEmissionsG / bidRequests
+    corporateEmissionsPerBidRequest = corporateAllocation * corporateEmissionsG / bidRequests
     verboseprint(f"{'  ' * (depth - 1)}-------------------------------------------")
     verboseprint(
         f"{'  ' * depth}corporate emissions g per bid request: {corporateEmissionsPerBidRequest:.8f} (calculation)"
@@ -100,7 +108,7 @@ def getCorporateEmissionsPerBidRequest(
     return corporateEmissionsPerBidRequest
 
 
-def getExternalRequestRatio(facts: Dict[str, float], defaults: Dict[str, float], depth: int) -> float:
+def getExternalRequestRatio(facts: dict[str, float], defaults: dict[str, float], depth: int) -> float:
     if (
         "ad tech platform bid requests processed billion per month" in facts
         and "bid requests processed billion per month" in facts
@@ -115,11 +123,14 @@ def getExternalRequestRatio(facts: Dict[str, float], defaults: Dict[str, float],
         verboseprint(f"{'  ' * (depth - 1)}-------------------------------------------")
         verboseprint(f"{'  ' * depth}external request ratio: {ratio * 100.0:.1f}% (calculation)")
         return ratio
-    return getFactOrDefault("pct of bid requests processed from ad tech platforms", facts, defaults, depth) / 100
+    return (
+        getFactOrDefault("pct of bid requests processed from ad tech platforms", facts, defaults, depth)
+        / 100
+    )
 
 
 def getDataTransferEmissionsPerBidRequest(
-    facts: Dict[str, float], defaults: Dict[str, float], depth: int
+    facts: dict[str, float], defaults: dict[str, float], depth: int
 ) -> float:
     if "data transfer emissions mt per month" in facts:
         return getFactOrDefault("data transfer emissions mt per month", facts, defaults, depth)
@@ -142,44 +153,116 @@ def getDataTransferEmissionsPerBidRequest(
     return dataTransferEmissionsPerBidRequest
 
 
-def getServerEmissions(
-    facts: Dict[str, float], defaults: Dict[str, float], depth: int
-) -> float:
-    if "server emissions mt per month" in facts:
-        return getFactOrDefault("server emissions mt per month", facts, defaults, depth)
-
 def getServerEmissionsPerBidRequest(
-    facts: Dict[str, float], defaults: Dict[str, float], depth: int
+    serverAllocation: float, facts: dict[str, float], defaults: dict[str, float], depth: int
 ) -> float:
-    serverEmissionsG = getFactOrDefault("server emissions mt per month", facts, defaults, depth - 1) * 1000000
-    bidRequests = getFactOrDefault(
-        "bid requests processed billion per month", facts, defaults, depth - 1
-    ) * 1000000000
-    serversProcessingBidRequests = getFactOrDefault("servers processing bid requests pct", facts, defaults, depth - 1) / 100.0
+    serverEmissionsG = (
+        getFactOrDefault("server emissions mt per month", facts, defaults, depth - 1) * 1000000
+    )
+    bidRequests = (
+        getFactOrDefault("bid requests processed billion per month", facts, defaults, depth - 1) * 1000000000
+    )
+    serversProcessingBidRequests = (
+        getFactOrDefault("servers processing bid requests pct", facts, defaults, depth - 1) / 100.0
+    )
     verboseprint(f"{'  ' * (depth - 1)}-------------------------------------------")
-    serverEmissionsPerBidRequest = serverEmissionsG * serversProcessingBidRequests / bidRequests
+    serverEmissionsPerBidRequest = (
+        serverAllocation * serverEmissionsG * serversProcessingBidRequests / bidRequests
+    )
     verboseprint(
-        f"{'  ' * depth}server emissions g per bid request: {serverEmissionsPerBidRequest:.6f} (calculation)")
+        f"{'  ' * depth}server emissions g per bid request: {serverEmissionsPerBidRequest:.6f} (calculation)"
+    )
     return serverEmissionsPerBidRequest
 
+
 def getPrimaryEmissionsPerBidRequest(
-    facts: Dict[str, float], defaults: Dict[str, float], depth: int
+    serverAllocation: float,
+    corporateAllocation: float,
+    facts: dict[str, float],
+    defaults: dict[str, float],
+    depth: int,
 ) -> float:
-    corporateEmissionsPerBidRequest = getCorporateEmissionsPerBidRequest(facts, defaults, depth - 1)
+    corporateEmissionsPerBidRequest = getCorporateEmissionsPerBidRequest(
+        corporateAllocation, facts, defaults, depth - 1
+    )
     dataTransferEmissionsPerBidRequest = getDataTransferEmissionsPerBidRequest(facts, defaults, depth - 1)
-    serverEmissionsPerBidRequest = getServerEmissionsPerBidRequest(facts, defaults, depth - 1)
+    serverEmissionsPerBidRequest = getServerEmissionsPerBidRequest(
+        serverAllocation, facts, defaults, depth - 1
+    )
     verboseprint(f"{'  ' * (depth - 1)}-------------------------------------------")
-    primaryEmissionsPerBidRequest = corporateEmissionsPerBidRequest + dataTransferEmissionsPerBidRequest + serverEmissionsPerBidRequest
+    primaryEmissionsPerBidRequest = (
+        corporateEmissionsPerBidRequest + dataTransferEmissionsPerBidRequest + serverEmissionsPerBidRequest
+    )
     verboseprint(
         f"{'  ' * depth}primary emissions mt per billion bid requests: {primaryEmissionsPerBidRequest:.6f} (calculation)"
     )
     return primaryEmissionsPerBidRequest
 
 
+def getCookieSyncsProcessed(facts: dict[str, float], defaults: dict[str, float], depth: int) -> float:
+    if "cookie syncs processed billion per month" in facts:
+        return (
+            getFactOrDefault("cookie syncs processed billion per month", facts, defaults, depth) * 1000000000
+        )
+    cookieSyncsPerBidRequest = getFactOrDefault(
+        "cookie syncs processed per bid request", facts, defaults, depth - 1
+    )
+    bidRequests = (
+        getFactOrDefault("bid requests processed billion per month", facts, defaults, depth - 1) * 1000000000
+    )
+    verboseprint(f"{'  ' * (depth - 1)}-------------------------------------------")
+    cookieSyncsProcessed = bidRequests * cookieSyncsPerBidRequest
+    verboseprint(f"{'  ' * depth}cookie syncs processed per month: {cookieSyncsProcessed} (calculation)")
+    return cookieSyncsProcessed
+
+
+def getPrimaryEmissionsPerCookieSync(
+    serverAllocation: float, facts: dict[str, float], defaults: dict[str, float], depth: int
+) -> float:
+    serverEmissionsG = (
+        getFactOrDefault("server emissions mt per month", facts, defaults, depth - 1) * 1000000
+    )
+    cookieSyncRequests = getCookieSyncsProcessed(facts, defaults, depth - 1)
+    serversProcessingCookieSyncs = (
+        getFactOrDefault("servers processing cookie syncs pct", facts, defaults, depth - 1) / 100.0
+    )
+    verboseprint(f"{'  ' * (depth - 1)}-------------------------------------------")
+    primaryEmissionsPerCookieSync = (
+        serverAllocation * serverEmissionsG * serversProcessingCookieSyncs / cookieSyncRequests
+    )
+    verboseprint(
+        f"{'  ' * depth}primary emissions g per cookie sync: {primaryEmissionsPerCookieSync} (calculation)"
+    )
+    return primaryEmissionsPerCookieSync
+
+
 depth = 4 if args.verbose else 0
+productModels = []
+for p in document["company"]["products"]:
+    product = p["product"]
+    if "name" not in product:
+        raise Exception(f"No 'name' field found in a product")
 
-modelInput = {
-    "primaryEmissionsGPerBidRequest": round(getPrimaryEmissionsPerBidRequest(facts, defaults, depth), 8)
-}
+    verboseprint(f"#### {product['name']}")
+    template = getProductInfo("template", None, product, 0)
+    scope3Id = getProductInfo("scope3 id", None, product, 0)
+    serverAllocation = getProductInfo("server allocation pct", 100, product, 0) / 100
+    corporateAllocation = getProductInfo("corporate allocation pct", 100, product, 0) / 100
+    if template not in defaultsDocument["defaults"]:
+        raise Exception(f"Template {template} not found in defaults")
+    defaults = defaultsDocument["defaults"][template]
+    emissionsPerBidRequest = getPrimaryEmissionsPerBidRequest(
+        serverAllocation, corporateAllocation, facts, defaults, depth
+    )
+    emissionsPerCookieSync = getPrimaryEmissionsPerCookieSync(serverAllocation, facts, defaults, depth)
+    productModel = {
+        "product": {
+            "name": product["name"],
+            "scope3Id": scope3Id,
+            "primaryEmissionsGPerBidRequest": round(emissionsPerBidRequest, 8),
+            "primaryEmissionsGPerCookieSync": round(emissionsPerCookieSync, 8),
+        }
+    }
+    productModels.append(productModel)
 
-print(yaml.dump({"ATPModelInput": modelInput}, Dumper=yaml.Dumper))
+print(yaml.dump({"products": productModels}, Dumper=yaml.Dumper))
