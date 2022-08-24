@@ -1,6 +1,8 @@
 # methodology
 Measurement methodology for advertising emissions
 
+Secondary (downstream) emissions are stubbed. Discuss.
+Where does YAML come from?
 
 To install (MacOS):
 $ brew install pyenv pipenv

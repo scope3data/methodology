@@ -23,6 +23,8 @@ modelInputs = {
     "pct of bid requests processed from ad tech platforms",
     "bid request size in bytes",
     "server to server emissions g per gb",
+    "server emissions mt per month",
+    "servers processing bid requests pct",
 }
 
 # inputs where we don't have enough data and have to guess
@@ -33,6 +35,8 @@ bestGuess: Dict[str, float] = {
     # https://www.cloudcarbonfootprint.org/docs/methodology/#appendix-v-grid-emissions-factors
     # Above give 0.001 kWh per GB and 379 g per kWh (AWS US East 1)
     "server to server emissions g per gb": 0.379,
+    # TODO: Need templates
+    "servers processing bid requests pct": 100,
 }
 
 # get a list of all facts from our sources
