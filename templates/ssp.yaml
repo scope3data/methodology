@@ -1,0 +1,7 @@
+---
+template:
+  name: ssp
+  pct of bid requests processed from ad tech platforms: 30
+  servers processing bid requests pct: 95
+  servers processing cookie syncs pct: 5
+  servers processing creative serving pct: 0
