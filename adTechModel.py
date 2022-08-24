@@ -45,7 +45,7 @@ for source in document["company"]["sources"]:
             facts[key] = fact["fact"][key]
 
 
-def getProductInfo(key: str, default: float | None, product: dict[str, float], depth: int) -> float:
+def getProductInfo(key: str, default: float | None, product: dict[str, float], depth: int):
     if key in product:
         verboseprint(f"{'  ' * depth}{key} = {product[key]}")
         return product[key]
