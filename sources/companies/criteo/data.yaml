@@ -1,0 +1,56 @@
+---
+company:
+  name: Criteo
+  products:
+  - product:
+      name: Criteo
+      template: network
+      identifier: criteo.com
+  sources:
+  - source:
+      year: 2021
+      url: https://filecache.investorroom.com/mr5ir_criteo/1674/Criteo_CSR_Report_2021.pdf
+      file: Criteo_CSR_Report_2021.pdf
+      facts:
+      - fact:
+          employees: 2810
+          reference: page 7
+      - fact:
+          servers: 40000
+          reference: page 7
+      - fact:
+          server electricity kwh per month: 5514583
+          reference: page 85
+      - fact:
+          server emissions mt per month: 3583
+          reference: page 85
+      - fact:
+          server embodied emissions pct: 25
+          reference: page 86
+      - fact:
+          office electricity kwh: 2262000
+          reference: page 91
+      - fact:
+          office electricity kwh per employee: 860
+          reference: page 91
+      - fact:
+          office emissions mt per month: 46.2
+          reference: page 92
+      - fact:
+          travel emissions mt per month: 30.8
+          reference: page 92
+  - source:
+      year: 2021
+      type: calculation
+      facts:
+      - fact:
+          server electricity kwh per server per month: 137.9
+      - fact:
+          server emissions g per kwh: 649.8
+      - fact:
+          server adjusted emissions mt per month: 3583
+          comment: no adjustment needed because embodied emissions are included
+      - fact:
+          travel emissions mt per employee per month: 0.011
+      - fact:
+          office emissions mt per employee per month: 0.0176
