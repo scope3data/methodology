@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import yaml
 from yaml.loader import SafeLoader
 import argparse
