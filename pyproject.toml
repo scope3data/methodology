@@ -1,8 +1,8 @@
 [tool.poetry]
-name = "scope3-methodology"
+name = "scope3_methodology"
 version = "0.1.0"
 description = ""
-authors = ["Scope3 <hello@scope3.com>"]
+authors = ["scope3 <hello@scope3.com>"]
 license = ""
 readme = "README.md"
 
@@ -20,7 +20,7 @@ pytest = "^7.1.2"
 coverage = "^6.4.4"
 
 [tool.scriv]
-version = "literal: scope3/__init__.py: __version__"
+version = "literal: scope3_methodology/__init__.py: __version__"
 format = "md"
 
 [build-system]

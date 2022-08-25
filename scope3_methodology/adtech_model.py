@@ -41,11 +41,21 @@ parser.add_argument(
     default="defaults.yaml",
     help="Set the defaults file to use (overrides defaults.yaml)",
 )
-parser.add_argument("-v", "--verbose", action="store_true", help="Show derivation of output")
 parser.add_argument(
-    "-p", "--partners", const=1, default=0, type=int, nargs="?", help="Simulate distribution partners"
+    "-v", "--verbose", action="store_true", help="Show derivation of output"
 )
-parser.add_argument("companyFile", nargs=1, help="The company file to parse in YAML format")
+parser.add_argument(
+    "-p",
+    "--partners",
+    const=1,
+    default=0,
+    type=int,
+    nargs="?",
+    help="Simulate distribution partners",
+)
+parser.add_argument(
+    "companyFile", nargs=1, help="The company file to parse in YAML format"
+)
 args = parser.parse_args()
 
 if args.verbose:
@@ -79,17 +89,23 @@ for source in document["company"]["sources"]:
             facts[key] = fact["fact"][key]
 
 
-def getProductInfo(key: str, default: float | None, product: dict[str, float], depth: int):
+def getProductInfo(
+    key: str, default: float | None, product: dict[str, float], depth: int
+):
     if key in product:
         verboseprint(f"{'  ' * depth}{key} = {product[key]}")
         return product[key]
     if default is not None:
         verboseprint(f"{'  ' * depth}{key} = {default} (default)")
         return default
-    raise Exception(f"No value found in product {product['name'] if 'name' in product else ''} for '{key}'")
+    raise Exception(
+        f"No value found in product {product['name'] if 'name' in product else ''} for '{key}'"
+    )
 
 
-def getFactOrDefault(key: str, facts: dict[str, float], defaults: dict[str, float], depth: int) -> float:
+def getFactOrDefault(
+    key: str, facts: dict[str, float], defaults: dict[str, float], depth: int
+) -> float:
     if key in facts:
         verboseprint(f"{'  ' * depth}{key} = {facts[key]}")
         return facts[key]
@@ -99,11 +115,17 @@ def getFactOrDefault(key: str, facts: dict[str, float], defaults: dict[str, floa
     raise Exception(f"No default found for '{key}'")
 
 
-def getCorporateEmissions(facts: dict[str, float], defaults: dict[str, float], depth: int) -> float:
+def getCorporateEmissions(
+    facts: dict[str, float], defaults: dict[str, float], depth: int
+) -> float:
     if "corporate emissions mt per month" in facts:
-        return getFactOrDefault("corporate emissions mt per month", facts, defaults, depth)
+        return getFactOrDefault(
+            "corporate emissions mt per month", facts, defaults, depth
+        )
     if not "employees" in facts:
-        raise Exception("Must provide either 'corporate emissions mt per month' or 'employees'")
+        raise Exception(
+            "Must provide either 'corporate emissions mt per month' or 'employees'"
+        )
     officeEmissionsPerEmployee = getFactOrDefault(
         "office emissions mt per employee per month", facts, defaults, depth - 1
     )
@@ -123,18 +145,28 @@ def getCorporateEmissions(facts: dict[str, float], defaults: dict[str, float], d
         + itEmissionsPerEmployee
     )
     verboseprint(f"{'  ' * (depth - 1)}-------------------------------------------")
-    verboseprint(f"{'  ' * depth}corporate emissions mt per month: {corporateEmissions:.2f} (calculation)")
+    verboseprint(
+        f"{'  ' * depth}corporate emissions mt per month: {corporateEmissions:.2f} (calculation)"
+    )
     return corporateEmissions
 
 
 def getCorporateEmissionsPerBidRequest(
-    corporateAllocation: float, facts: dict[str, float], defaults: dict[str, float], depth: int
+    corporateAllocation: float,
+    facts: dict[str, float],
+    defaults: dict[str, float],
+    depth: int,
 ) -> float:
     corporateEmissionsG = getCorporateEmissions(facts, defaults, depth - 1) * 1000000
     bidRequests = (
-        getFactOrDefault("bid requests processed billion per month", facts, defaults, depth - 1) * 1000000000
+        getFactOrDefault(
+            "bid requests processed billion per month", facts, defaults, depth - 1
+        )
+        * 1000000000
     )
-    corporateEmissionsPerBidRequest = corporateAllocation * corporateEmissionsG / bidRequests
+    corporateEmissionsPerBidRequest = (
+        corporateAllocation * corporateEmissionsG / bidRequests
+    )
     verboseprint(f"{'  ' * (depth - 1)}-------------------------------------------")
     verboseprint(
         f"{'  ' * depth}corporate emissions g per bid request: {corporateEmissionsPerBidRequest:.8f} (calculation)"
@@ -142,23 +174,35 @@ def getCorporateEmissionsPerBidRequest(
     return corporateEmissionsPerBidRequest
 
 
-def getExternalRequestRatio(facts: dict[str, float], defaults: dict[str, float], depth: int) -> float:
+def getExternalRequestRatio(
+    facts: dict[str, float], defaults: dict[str, float], depth: int
+) -> float:
     if (
         "ad tech platform bid requests processed billion per month" in facts
         and "bid requests processed billion per month" in facts
     ):
         atpRequests = getFactOrDefault(
-            "ad tech platform bid requests processed billion per month", facts, defaults, depth - 1
+            "ad tech platform bid requests processed billion per month",
+            facts,
+            defaults,
+            depth - 1,
         )
         bidRequests = getFactOrDefault(
             "bid requests processed billion per month", facts, defaults, depth - 1
         )
         ratio = atpRequests / bidRequests
         verboseprint(f"{'  ' * (depth - 1)}-------------------------------------------")
-        verboseprint(f"{'  ' * depth}external request ratio: {ratio * 100.0:.1f}% (calculation)")
+        verboseprint(
+            f"{'  ' * depth}external request ratio: {ratio * 100.0:.1f}% (calculation)"
+        )
         return ratio
     return (
-        getFactOrDefault("pct of bid requests processed from ad tech platforms", facts, defaults, depth)
+        getFactOrDefault(
+            "pct of bid requests processed from ad tech platforms",
+            facts,
+            defaults,
+            depth,
+        )
         / 100
     )
 
@@ -167,11 +211,16 @@ def getDataTransferEmissionsPerBidRequest(
     facts: dict[str, float], defaults: dict[str, float], depth: int
 ) -> float:
     if "data transfer emissions mt per month" in facts:
-        return getFactOrDefault("data transfer emissions mt per month", facts, defaults, depth)
+        return getFactOrDefault(
+            "data transfer emissions mt per month", facts, defaults, depth
+        )
 
     externalRequestRatio = getExternalRequestRatio(facts, defaults, depth - 1)
     bidRequestSizeGB = (
-        getFactOrDefault("bid request size in bytes", facts, defaults, depth - 1) / 1024 / 1024 / 1024
+        getFactOrDefault("bid request size in bytes", facts, defaults, depth - 1)
+        / 1024
+        / 1024
+        / 1024
     )
     serverToServerEmissionsPerGB = getFactOrDefault(
         "server to server emissions g per gb", facts, defaults, depth - 1
@@ -188,16 +237,26 @@ def getDataTransferEmissionsPerBidRequest(
 
 
 def getServerEmissionsPerBidRequest(
-    serverAllocation: float, facts: dict[str, float], defaults: dict[str, float], depth: int
+    serverAllocation: float,
+    facts: dict[str, float],
+    defaults: dict[str, float],
+    depth: int,
 ) -> float:
     serverEmissionsG = (
-        getFactOrDefault("server emissions mt per month", facts, defaults, depth - 1) * 1000000
+        getFactOrDefault("server emissions mt per month", facts, defaults, depth - 1)
+        * 1000000
     )
     bidRequests = (
-        getFactOrDefault("bid requests processed billion per month", facts, defaults, depth - 1) * 1000000000
+        getFactOrDefault(
+            "bid requests processed billion per month", facts, defaults, depth - 1
+        )
+        * 1000000000
     )
     serversProcessingBidRequests = (
-        getFactOrDefault("servers processing bid requests pct", facts, defaults, depth - 1) / 100.0
+        getFactOrDefault(
+            "servers processing bid requests pct", facts, defaults, depth - 1
+        )
+        / 100.0
     )
     verboseprint(f"{'  ' * (depth - 1)}-------------------------------------------")
     serverEmissionsPerBidRequest = (
@@ -219,13 +278,17 @@ def getPrimaryEmissionsPerBidRequest(
     corporateEmissionsPerBidRequest = getCorporateEmissionsPerBidRequest(
         corporateAllocation, facts, defaults, depth - 1
     )
-    dataTransferEmissionsPerBidRequest = getDataTransferEmissionsPerBidRequest(facts, defaults, depth - 1)
+    dataTransferEmissionsPerBidRequest = getDataTransferEmissionsPerBidRequest(
+        facts, defaults, depth - 1
+    )
     serverEmissionsPerBidRequest = getServerEmissionsPerBidRequest(
         serverAllocation, facts, defaults, depth - 1
     )
     verboseprint(f"{'  ' * (depth - 1)}-------------------------------------------")
     primaryEmissionsPerBidRequest = (
-        corporateEmissionsPerBidRequest + dataTransferEmissionsPerBidRequest + serverEmissionsPerBidRequest
+        corporateEmissionsPerBidRequest
+        + dataTransferEmissionsPerBidRequest
+        + serverEmissionsPerBidRequest
     )
     verboseprint(
         f"{'  ' * depth}primary emissions mt per billion bid requests: {primaryEmissionsPerBidRequest:.6f} (calculation)"
@@ -250,36 +313,56 @@ def getSecondaryEmissionsPerBidRequest(
     return secondaryEmissionsPerBidRequest
 
 
-def getCookieSyncsProcessed(facts: dict[str, float], defaults: dict[str, float], depth: int) -> float:
+def getCookieSyncsProcessed(
+    facts: dict[str, float], defaults: dict[str, float], depth: int
+) -> float:
     if "cookie syncs processed billion per month" in facts:
         return (
-            getFactOrDefault("cookie syncs processed billion per month", facts, defaults, depth) * 1000000000
+            getFactOrDefault(
+                "cookie syncs processed billion per month", facts, defaults, depth
+            )
+            * 1000000000
         )
     cookieSyncsPerBidRequest = getFactOrDefault(
         "cookie syncs processed per bid request", facts, defaults, depth - 1
     )
     bidRequests = (
-        getFactOrDefault("bid requests processed billion per month", facts, defaults, depth - 1) * 1000000000
+        getFactOrDefault(
+            "bid requests processed billion per month", facts, defaults, depth - 1
+        )
+        * 1000000000
     )
     verboseprint(f"{'  ' * (depth - 1)}-------------------------------------------")
     cookieSyncsProcessed = bidRequests * cookieSyncsPerBidRequest
-    verboseprint(f"{'  ' * depth}cookie syncs processed per month: {cookieSyncsProcessed} (calculation)")
+    verboseprint(
+        f"{'  ' * depth}cookie syncs processed per month: {cookieSyncsProcessed} (calculation)"
+    )
     return cookieSyncsProcessed
 
 
 def getPrimaryEmissionsPerCookieSync(
-    serverAllocation: float, facts: dict[str, float], defaults: dict[str, float], depth: int
+    serverAllocation: float,
+    facts: dict[str, float],
+    defaults: dict[str, float],
+    depth: int,
 ) -> float:
     serverEmissionsG = (
-        getFactOrDefault("server emissions mt per month", facts, defaults, depth - 1) * 1000000
+        getFactOrDefault("server emissions mt per month", facts, defaults, depth - 1)
+        * 1000000
     )
     cookieSyncRequests = getCookieSyncsProcessed(facts, defaults, depth - 1)
     serversProcessingCookieSyncs = (
-        getFactOrDefault("servers processing cookie syncs pct", facts, defaults, depth - 1) / 100.0
+        getFactOrDefault(
+            "servers processing cookie syncs pct", facts, defaults, depth - 1
+        )
+        / 100.0
     )
     verboseprint(f"{'  ' * (depth - 1)}-------------------------------------------")
     primaryEmissionsPerCookieSync = (
-        serverAllocation * serverEmissionsG * serversProcessingCookieSyncs / cookieSyncRequests
+        serverAllocation
+        * serverEmissionsG
+        * serversProcessingCookieSyncs
+        / cookieSyncRequests
     )
     verboseprint(
         f"{'  ' * depth}primary emissions g per cookie sync: {primaryEmissionsPerCookieSync} (calculation)"
@@ -312,7 +395,9 @@ for p in document["company"]["products"]:
     template = getProductInfo("template", None, product, 0)
     identifier = getProductInfo("identifier", None, product, 0)
     serverAllocation = getProductInfo("server allocation pct", 100, product, 0) / 100
-    corporateAllocation = getProductInfo("corporate allocation pct", 100, product, 0) / 100
+    corporateAllocation = (
+        getProductInfo("corporate allocation pct", 100, product, 0) / 100
+    )
     if template not in defaultsDocument["defaults"]:
         raise Exception(f"Template {template} not found in defaults")
     defaults = defaultsDocument["defaults"][template]
@@ -326,7 +411,8 @@ for p in document["company"]["products"]:
         "cookie sync distribution ratio", facts, defaults, depth - 1
     )
     bidRequestRejectionRate = (
-        getFactOrDefault("bid request rejection pct", facts, defaults, depth - 1) / 100.0
+        getFactOrDefault("bid request rejection pct", facts, defaults, depth - 1)
+        / 100.0
     )
     model = AdTechPlatform(
         product["name"],
@@ -347,5 +433,9 @@ if args.partners and args.verbose:
         partner = AdTechPlatform(f"dummy {i}", f"dummy{i}.com", 0.001, 0.0001, 1.0, 0.3)
         distributionPartners.append(DistributionPartner(partner, 1.0))
 
-    getSecondaryEmissionsPerBidRequest(productModels[0]["product"], distributionPartners)
-    getSecondaryEmissionsPerCookieSync(productModels[0]["product"], distributionPartners)
+    getSecondaryEmissionsPerBidRequest(
+        productModels[0]["product"], distributionPartners
+    )
+    getSecondaryEmissionsPerCookieSync(
+        productModels[0]["product"], distributionPartners
+    )
