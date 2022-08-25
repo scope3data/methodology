@@ -23,6 +23,7 @@ modelInputs = {
     "bid requests processed billion per month",
     "cookie syncs processed billion per month",
     "cookie syncs processed per bid request",
+    "cookie sync distribution ratio",
     "creative serving processed billion per month",
     "pct of bid requests processed from ad tech platforms",
     "bid request size in bytes",
@@ -36,10 +37,6 @@ modelInputs = {
 globalDefaults: dict[str, float] = {
     # TODO - get some actual data on this from customers
     "bid request size in bytes": 10000,
-    # https://www.cloudcarbonfootprint.org/docs/methodology/#cloud-usage-and-cost-data-source
-    # https://www.cloudcarbonfootprint.org/docs/methodology/#appendix-v-grid-emissions-factors
-    # Above give 0.001 kWh per GB and 379 g per kWh (AWS US East 1)
-    "server to server emissions g per gb": 0.379,
     # not used (overridden by template)
     "cookie syncs processed billion per month": 0,
 }
@@ -88,10 +85,8 @@ for name, template in templates.items():
     for input in modelInputs:
         if input not in defaults:
             if input in template:
-                print(f"{input} not modeled - using template default")
                 defaults[input] = template[input]
             else:
-                print(f"{input} not modeled - using global default")
                 defaults[input] = globalDefaults[input]
     templateDefaults[name] = defaults
 

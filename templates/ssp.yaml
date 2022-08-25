@@ -5,5 +5,6 @@ template:
   servers processing bid requests pct: 95
   servers processing cookie syncs pct: 5
   servers processing creative serving pct: 0
-  cookie syncs processed per bid request: 0.5         # in theory there is some frequency cap per user?
+  cookie syncs processed per bid request: 0.01        # once per 100 bid requests
+  cookie sync distribution ratio: 1                   # send to every distribution partner every time
   creative serving processed billion per month: 30    # made up & definitely wrong (not used yet)

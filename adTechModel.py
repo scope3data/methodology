@@ -11,12 +11,15 @@ parser.add_argument(
     help="Set the defaults file to use (overrides defaults.yaml)",
 )
 parser.add_argument("-v", "--verbose", action="store_true", help="Show derivation of output")
+parser.add_argument(
+    "-p", "--partners", const=1, default=0, type=int, nargs="?", help="Simulate distribution partners"
+)
 parser.add_argument("companyFile", nargs=1, help="The company file to parse in YAML format")
 args = parser.parse_args()
 
 if args.verbose:
 
-    def verboseprint(*args, **kwargs):
+    def verboseprint(*args, **kwargs) -> None:
         print(*args, **kwargs)
 
 else:
@@ -43,6 +46,20 @@ for source in document["company"]["sources"]:
         keys = [key for key in fact["fact"] if key != "reference" and key != "comment"]
         for key in keys:
             facts[key] = fact["fact"][key]
+
+distributionPartners = []
+for i in range(args.partners):
+
+    distributionPartners.append(
+        {
+            "name": "dummy",
+            "identifier": "dummy.org",
+            "primaryEmissionsGPerBidRequest": 0.001,
+            "primaryEmissionsGPerCookieSync": 0.0001,
+            "secondaryEmissionsGPerBidRequest": 0,
+            "secondaryEmissionsGPerCookieSync": 0,
+        }
+    )
 
 
 def getProductInfo(key: str, default: float | None, product: dict[str, float], depth: int):
@@ -199,6 +216,23 @@ def getPrimaryEmissionsPerBidRequest(
     return primaryEmissionsPerBidRequest
 
 
+def getSecondaryEmissionsPerBidRequest(
+    syncPartners, facts: dict[str, float], defaults: dict[str, float], depth: int
+) -> float:
+    bidRequestDistributionRatio = getFactOrDefault(
+        "cookie sync distribution ratio", facts, defaults, depth - 1
+    )
+    secondaryEmissionsPerBidRequest = 0.0
+    for partner in syncPartners:
+        secondaryEmissionsPerBidRequest += partner["primaryEmissionsGPerBidRequest"]
+    secondaryEmissionsPerBidRequest *= bidRequestDistributionRatio
+    verboseprint(f"{'  ' * (depth - 1)}-------------------------------------------")
+    verboseprint(
+        f"{'  ' * depth}secondary emissions g per bid request: {secondaryEmissionsPerBidRequest} (calculation using {len(syncPartners)} partners)"
+    )
+    return secondaryEmissionsPerBidRequest
+
+
 def getCookieSyncsProcessed(facts: dict[str, float], defaults: dict[str, float], depth: int) -> float:
     if "cookie syncs processed billion per month" in facts:
         return (
@@ -236,6 +270,23 @@ def getPrimaryEmissionsPerCookieSync(
     return primaryEmissionsPerCookieSync
 
 
+def getSecondaryEmissionsPerCookieSync(
+    syncPartners, facts: dict[str, float], defaults: dict[str, float], depth: int
+) -> float:
+    cookieSyncDistributionRatio = getFactOrDefault(
+        "cookie sync distribution ratio", facts, defaults, depth - 1
+    )
+    secondaryEmissionsPerCookieSync = 0.0
+    for partner in syncPartners:
+        secondaryEmissionsPerCookieSync += partner["primaryEmissionsGPerCookieSync"]
+    secondaryEmissionsPerCookieSync *= cookieSyncDistributionRatio
+    verboseprint(f"{'  ' * (depth - 1)}-------------------------------------------")
+    verboseprint(
+        f"{'  ' * depth}secondary emissions g per cookie sync: {secondaryEmissionsPerCookieSync} (calculation using {len(syncPartners)} partners)"
+    )
+    return secondaryEmissionsPerCookieSync
+
+
 depth = 4 if args.verbose else 0
 productModels = []
 for p in document["company"]["products"]:
@@ -245,22 +296,32 @@ for p in document["company"]["products"]:
 
     verboseprint(f"#### {product['name']}")
     template = getProductInfo("template", None, product, 0)
-    scope3Id = getProductInfo("scope3 id", None, product, 0)
+    identifier = getProductInfo("identifier", None, product, 0)
     serverAllocation = getProductInfo("server allocation pct", 100, product, 0) / 100
     corporateAllocation = getProductInfo("corporate allocation pct", 100, product, 0) / 100
     if template not in defaultsDocument["defaults"]:
         raise Exception(f"Template {template} not found in defaults")
     defaults = defaultsDocument["defaults"][template]
-    emissionsPerBidRequest = getPrimaryEmissionsPerBidRequest(
+    primaryEmissionsPerBidRequest = getPrimaryEmissionsPerBidRequest(
         serverAllocation, corporateAllocation, facts, defaults, depth
     )
-    emissionsPerCookieSync = getPrimaryEmissionsPerCookieSync(serverAllocation, facts, defaults, depth)
+    secondaryEmissionsPerBidRequest = getSecondaryEmissionsPerBidRequest(
+        distributionPartners, facts, defaults, depth
+    )
+    primaryEmissionsPerCookieSync = getPrimaryEmissionsPerCookieSync(
+        serverAllocation, facts, defaults, depth
+    )
+    secondaryEmissionsPerCookieSync = getSecondaryEmissionsPerCookieSync(
+        distributionPartners, facts, defaults, depth
+    )
     productModel = {
         "product": {
             "name": product["name"],
-            "scope3Id": scope3Id,
-            "primaryEmissionsGPerBidRequest": round(emissionsPerBidRequest, 8),
-            "primaryEmissionsGPerCookieSync": round(emissionsPerCookieSync, 8),
+            "identifier": identifier,
+            "primaryEmissionsGPerBidRequest": round(primaryEmissionsPerBidRequest, 8),
+            "secondaryEmissionsGPerBidRequest": round(secondaryEmissionsPerBidRequest, 8),
+            "primaryEmissionsGPerCookieSync": round(primaryEmissionsPerCookieSync, 8),
+            "secondaryEmissionsGPerCookieSync": round(secondaryEmissionsPerCookieSync, 8),
         }
     }
     productModels.append(productModel)
