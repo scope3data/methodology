@@ -241,7 +241,7 @@ def getSecondaryEmissionsPerBidRequest(
         secondaryEmissionsPerBidRequest += (
             edge.partner.primaryBidRequestEmissions * edge.bidRequestDistributionRatio
         )
-    secondaryEmissionsPerBidRequest *= model.bidRequestRejectionRate
+    secondaryEmissionsPerBidRequest *= 1 - model.bidRequestRejectionRate
     verboseprint(f"{'  ' * (depth - 1)}-------------------------------------------")
     verboseprint(
         f"{'  ' * depth}secondary emissions g per bid request: {secondaryEmissionsPerBidRequest} (calculation using {len(distributionPartners)} partners)"
