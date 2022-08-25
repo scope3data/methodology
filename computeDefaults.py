@@ -27,6 +27,7 @@ modelInputs = {
     "creative serving processed billion per month",
     "pct of bid requests processed from ad tech platforms",
     "bid request size in bytes",
+    "bid request rejection pct",
     "server to server emissions g per gb",
     "server emissions mt per month",
     "servers processing bid requests pct",

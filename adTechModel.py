@@ -2,6 +2,36 @@ import yaml
 from yaml.loader import SafeLoader
 import argparse
 
+# This represents a node in our graph
+class AdTechPlatform:
+    def __init__(
+        self,
+        name: str,
+        identifier: str,
+        primaryBidRequestEmissions: float,
+        primaryCookieSyncEmissions: float,
+        cookieSyncDistributionRate: float,
+        bidRequestRejectionRate: float,
+    ) -> None:
+        self.name = name
+        self.identifier = identifier
+        self.primaryBidRequestEmissions = primaryBidRequestEmissions
+        self.primaryCookieSyncEmissions = primaryCookieSyncEmissions
+        self.cookieSyncDistributionRate = cookieSyncDistributionRate
+        self.bidRequestRejectionRate = bidRequestRejectionRate
+
+
+# This represents an edge in our graph
+class DistributionPartner:
+    def __init__(
+        self,
+        partner: AdTechPlatform,
+        bidRequestDistributionRatio: float,
+    ) -> None:
+        self.partner = partner
+        self.bidRequestDistributionRatio = bidRequestDistributionRatio
+
+
 # Parse command line to get company file
 parser = argparse.ArgumentParser(description="Compute emissions for an ad tech company")
 parser.add_argument(
@@ -46,20 +76,6 @@ for source in document["company"]["sources"]:
         keys = [key for key in fact["fact"] if key != "reference" and key != "comment"]
         for key in keys:
             facts[key] = fact["fact"][key]
-
-distributionPartners = []
-for i in range(args.partners):
-
-    distributionPartners.append(
-        {
-            "name": "dummy",
-            "identifier": "dummy.org",
-            "primaryEmissionsGPerBidRequest": 0.001,
-            "primaryEmissionsGPerCookieSync": 0.0001,
-            "secondaryEmissionsGPerBidRequest": 0,
-            "secondaryEmissionsGPerCookieSync": 0,
-        }
-    )
 
 
 def getProductInfo(key: str, default: float | None, product: dict[str, float], depth: int):
@@ -217,18 +233,18 @@ def getPrimaryEmissionsPerBidRequest(
 
 
 def getSecondaryEmissionsPerBidRequest(
-    syncPartners, facts: dict[str, float], defaults: dict[str, float], depth: int
+    model: AdTechPlatform,
+    distributionPartners: list[DistributionPartner],
 ) -> float:
-    bidRequestDistributionRatio = getFactOrDefault(
-        "cookie sync distribution ratio", facts, defaults, depth - 1
-    )
     secondaryEmissionsPerBidRequest = 0.0
-    for partner in syncPartners:
-        secondaryEmissionsPerBidRequest += partner["primaryEmissionsGPerBidRequest"]
-    secondaryEmissionsPerBidRequest *= bidRequestDistributionRatio
+    for edge in distributionPartners:
+        secondaryEmissionsPerBidRequest += (
+            edge.partner.primaryBidRequestEmissions * edge.bidRequestDistributionRatio
+        )
+    secondaryEmissionsPerBidRequest *= model.bidRequestRejectionRate
     verboseprint(f"{'  ' * (depth - 1)}-------------------------------------------")
     verboseprint(
-        f"{'  ' * depth}secondary emissions g per bid request: {secondaryEmissionsPerBidRequest} (calculation using {len(syncPartners)} partners)"
+        f"{'  ' * depth}secondary emissions g per bid request: {secondaryEmissionsPerBidRequest} (calculation using {len(distributionPartners)} partners)"
     )
     return secondaryEmissionsPerBidRequest
 
@@ -271,18 +287,15 @@ def getPrimaryEmissionsPerCookieSync(
 
 
 def getSecondaryEmissionsPerCookieSync(
-    syncPartners, facts: dict[str, float], defaults: dict[str, float], depth: int
+    model: AdTechPlatform, distributionPartners: list[DistributionPartner]
 ) -> float:
-    cookieSyncDistributionRatio = getFactOrDefault(
-        "cookie sync distribution ratio", facts, defaults, depth - 1
-    )
     secondaryEmissionsPerCookieSync = 0.0
-    for partner in syncPartners:
-        secondaryEmissionsPerCookieSync += partner["primaryEmissionsGPerCookieSync"]
-    secondaryEmissionsPerCookieSync *= cookieSyncDistributionRatio
+    for edge in distributionPartners:
+        secondaryEmissionsPerCookieSync += edge.partner.primaryCookieSyncEmissions
+    secondaryEmissionsPerCookieSync *= model.cookieSyncDistributionRate
     verboseprint(f"{'  ' * (depth - 1)}-------------------------------------------")
     verboseprint(
-        f"{'  ' * depth}secondary emissions g per cookie sync: {secondaryEmissionsPerCookieSync} (calculation using {len(syncPartners)} partners)"
+        f"{'  ' * depth}secondary emissions g per cookie sync: {secondaryEmissionsPerCookieSync:.6f} (calculation using {len(distributionPartners)} partners)"
     )
     return secondaryEmissionsPerCookieSync
 
@@ -305,25 +318,33 @@ for p in document["company"]["products"]:
     primaryEmissionsPerBidRequest = getPrimaryEmissionsPerBidRequest(
         serverAllocation, corporateAllocation, facts, defaults, depth
     )
-    secondaryEmissionsPerBidRequest = getSecondaryEmissionsPerBidRequest(
-        distributionPartners, facts, defaults, depth
-    )
     primaryEmissionsPerCookieSync = getPrimaryEmissionsPerCookieSync(
         serverAllocation, facts, defaults, depth
     )
-    secondaryEmissionsPerCookieSync = getSecondaryEmissionsPerCookieSync(
-        distributionPartners, facts, defaults, depth
+    cookieSyncDistributionRatio = getFactOrDefault(
+        "cookie sync distribution ratio", facts, defaults, depth - 1
     )
-    productModel = {
-        "product": {
-            "name": product["name"],
-            "identifier": identifier,
-            "primaryEmissionsGPerBidRequest": round(primaryEmissionsPerBidRequest, 8),
-            "secondaryEmissionsGPerBidRequest": round(secondaryEmissionsPerBidRequest, 8),
-            "primaryEmissionsGPerCookieSync": round(primaryEmissionsPerCookieSync, 8),
-            "secondaryEmissionsGPerCookieSync": round(secondaryEmissionsPerCookieSync, 8),
-        }
-    }
+    bidRequestRejectionRate = (
+        getFactOrDefault("bid request rejection pct", facts, defaults, depth - 1) / 100.0
+    )
+    model = AdTechPlatform(
+        product["name"],
+        identifier,
+        primaryEmissionsPerBidRequest,
+        primaryEmissionsPerCookieSync,
+        cookieSyncDistributionRatio,
+        bidRequestRejectionRate,
+    )
+    productModel = {"product": model}
     productModels.append(productModel)
 
 print(yaml.dump({"products": productModels}, Dumper=yaml.Dumper))
+
+if args.partners and args.verbose:
+    distributionPartners: list[DistributionPartner] = []
+    for i in range(args.partners):
+        partner = AdTechPlatform(f"dummy {i}", f"dummy{i}.com", 0.001, 0.0001, 1.0, 0.3)
+        distributionPartners.append(DistributionPartner(partner, 1.0))
+
+    getSecondaryEmissionsPerBidRequest(productModels[0]["product"], distributionPartners)
+    getSecondaryEmissionsPerCookieSync(productModels[0]["product"], distributionPartners)
