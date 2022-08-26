@@ -12,7 +12,7 @@ The templates in the `templates` directory is used to pull default values for ho
 The ATP model assumes that there will be various requests coming from a publisher (on the left of the below diagram) that will trigger downstream actions (the white boxes) and consume various resources (the blue boxes).
 ![ATP Emissions Model](atp_emissions_model.jpg)
 
-Running the ATP model in verbose mode will show the calculations being used, and they are detailed in the `scope3/adtech_model.py` file.
+Running the ATP model in verbose mode will show the calculations being used, and they are detailed in the `./scope3_methodology/adtech_model.py` file.
 
 ### Primary vs Secondary Emissions
 Our model outputs the primary emissions from an ATP, in other words, what happens within the direct control of the ATP. This includes their scope 1, 2, and 3 emissions *except* for the emissions due to downstream distribution partners. In the context of a graph, this means we are outputting the emissions from each node, but not following the edges.
@@ -42,7 +42,7 @@ The file must have:
 
 To model emissions, make sure defaults have been computed. Then run:
 ```sh
-./scope3/adtech_model.py --verbose [your_model.yaml]
+./scope3_methodology/adtech_model.py --verbose [your_model.yaml]
 ```
 
 If you want to see how the secondary emissions would be modeled, pass in `-p N` where N is the number of partners to simulate.
