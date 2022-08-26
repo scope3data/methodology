@@ -37,6 +37,8 @@ def main():
         "bid request rejection pct",
         "server to server emissions g per gb",
         "server emissions mt per month",
+        "server emissions g per kwh",
+        "datacenter water intensity h2o m^3 per mwh",
         "servers processing bid requests pct",
         "servers processing cookie syncs pct",
         "servers processing creative serving pct",

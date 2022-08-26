@@ -340,6 +340,23 @@ def getCookieSyncsProcessed(
     return cookieSyncsProcessed
 
 
+def getWaterUsageToEmissionsRatio(
+    facts: dict[str, float],
+    defaults: dict[str, float],
+    depth: int
+) -> float:
+    waterPerMWh = getFactOrDefault(
+            "datacenter water intensity h2o m^3 per mwh", facts, defaults, depth - 1
+        )
+    emissionsPerKWh = getFactOrDefault("server emissions g per kwh", facts, defaults, depth - 1)
+    waterM3PerEmissionsG = waterPerMWh / emissionsPerKWh / 1000
+    verboseprint(f"{'  ' * (depth - 1)}-------------------------------------------")
+    verboseprint(
+        f"{'  ' * depth}h2o m^3 per g emissions: {waterM3PerEmissionsG} (calculation)"
+    )
+    return waterM3PerEmissionsG
+
+
 def getPrimaryEmissionsPerCookieSync(
     serverAllocation: float,
     facts: dict[str, float],
@@ -366,6 +383,12 @@ def getPrimaryEmissionsPerCookieSync(
     )
     verboseprint(
         f"{'  ' * depth}primary emissions g per cookie sync: {primaryEmissionsPerCookieSync} (calculation)"
+    )
+    waterUsageToEmissionsRatio = getWaterUsageToEmissionsRatio(facts, defaults, depth - 1)
+    verboseprint(f"{'  ' * (depth - 1)}-------------------------------------------")
+    primaryWaterUsagePerCookieSync = primaryEmissionsPerCookieSync * waterUsageToEmissionsRatio
+    verboseprint(
+        f"{'  ' * depth}primary water usage m^3 per cookie sync: {primaryWaterUsagePerCookieSync} (calculation)"
     )
     return primaryEmissionsPerCookieSync
 
