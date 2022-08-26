@@ -4,7 +4,7 @@ Our goal with this project is to build a framework where the media and advertisi
 Measuring emissions is extremely complicated in general. In the words of one industry leader, "it took us 100 years to figure out how to do financial accounting... and now we're trying to figure out carbon accounting in 2 or 3." As such, we feel like it's critical to learn in public and to be honest about what we know and what we don't know. Assuming the carbon accounting will require the same auditing and assurance process as the financial accounting world, we hope that this project will enable every step of the process to be traced and validated.
 
 Our measurement process, at a high level, works as follows:
-1. Gather public sustainability materials from industry participants
+1. Gather public materials referencing sustainability and other related data from industry participants
 2. Pull out factual statements from these reports and normalize them into a common framework
 3. Apply the facts we have about each company to a model that outputs emissions by activity (for instance, per ad impression)
 
@@ -30,12 +30,12 @@ On Mac you can also install poetry via [brew](https://brew.sh/)
 brew install poetry
 ```
 
-1. Install Depdencies
+1. Install Dependencies
 ```
 poetry install
 ```
 
-2. Active virtual environment
+2. Activate virtual environment
 ```
 poetry shell
 ```
