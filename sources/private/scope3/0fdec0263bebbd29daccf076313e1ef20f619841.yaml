@@ -10,7 +10,7 @@ company:
       facts:
       - fact:
           bid requests processed billion per month: 8303
-          reference: provided by company to Scope3 
+          reference: provided by company to Scope3
       - fact:
           bid requests distributed billion per month: 34927
-          reference: provided by company to Scope3 
+          reference: provided by company to Scope3

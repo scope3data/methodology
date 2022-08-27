@@ -40,6 +40,11 @@ poetry install
 poetry shell
 ```
 
+3. If you want to commit code, install pre-commit hooks
+```
+pre-commit install
+```
+
 # Usage
 To write defaults from latest sources:
 ```sh

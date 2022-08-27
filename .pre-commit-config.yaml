@@ -27,7 +27,7 @@ repos:
         args: ["--max-line-length", "88", "--max-complexity", "10"]
 
   - repo: https://github.com/PyCQA/pylint/
-    rev: v2.14.5
+    rev: v2.15.0
     hooks:
       - id: pylint
         exclude: tests/
@@ -43,9 +43,14 @@ repos:
         types: [python]
 
   - repo: https://github.com/python-poetry/poetry
-    rev: ''  # add version here
+    rev: '1.2.0rc1'
     hooks:
       - id: poetry-check
       - id: poetry-lock
       - id: poetry-export
         args: ["-f", "requirements.txt", "-o", "requirements.txt"]
+  - repo: https://github.com/adrienverge/yamllint.git
+    rev: v1.27.1  # or higher tag
+    hooks:
+      - id: yamllint
+        args: [--strict]

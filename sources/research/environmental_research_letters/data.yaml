@@ -19,4 +19,3 @@ company:
           comment: US number; significant variance within the US
       - fact:
           max datacenter water scarcity intensity h2o m^3 per mwh: 305
-      
