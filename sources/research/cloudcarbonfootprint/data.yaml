@@ -2,18 +2,18 @@
 company:
   name: Cloud Carbon Footprint
   sources:
-  - source:
+  -
       year: 2022
       url: https://www.cloudcarbonfootprint.org/docs/methodology/#appendix-iv-recent-networking-studies
       facts:
-      - fact:
+      -
           core networking kwh per gb: 0.001
-      - fact:
+      -
           server emissions g per kwh: 379
           comment: AWS US-East-1
-  - source:
+  -
       year: 2022
       type: calculation
       facts:
-      - fact:
+      -
           server to server emissions g per gb: 0.379

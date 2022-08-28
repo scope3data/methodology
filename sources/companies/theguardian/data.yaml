@@ -4,34 +4,34 @@ company:
   type: publisher
   variant: newspaper
   sources:
-  - source:
+  -
       year: 2020
       url: https://uploads.guim.co.uk/2021/08/25/Positive_Impact_Sustainability_Report_1920.pdf
       file: Positive_Impact_Sustainability_Report_1920.pdf
       facts:
-      - fact:
+      -
           office emissions mt per month: 227.2
           reference: page 8
-      - fact:
+      -
           commuting emissions mt per month: 59.0
           reference: page 8
-      - fact:
+      -
           travel emissions mt per month: 203.3
           reference: page 8
-  - source:
+  -
       year: 2020
       url: https://www.linkedin.com/company/theguardian/insights/
       facts:
-      - fact:
+      -
           employees: 2079
           reference: LinkedIn data for December 2020
-  - source:
+  -
       year: 2020
       type: calculation
       facts:
-      - fact:
+      -
           office emissions mt per employee per month: 0.109
-      - fact:
+      -
           commuting emissions mt per employee per month: 0.0283
-      - fact:
+      -
           travel emissions mt per employee per month: 0.0978

@@ -2,20 +2,20 @@
 company:
   name: Environmental Research Letters
   sources:
-  - source:
+  -
       year: 2018
       url: https://iopscience.iop.org/article/10.1088/1748-9326/abfba1
       facts:
-      - fact:
+      -
           min datacenter water intensity h2o m^3 per mwh: 1.8
-      - fact:
+      -
           datacenter water intensity h2o m^3 per mwh: 7.1
-      - fact:
+      -
           max datacenter water intensity h2o m^3 per mwh: 106
-      - fact:
+      -
           min datacenter water scarcity intensity h2o m^3 per mwh: 0.5
-      - fact:
+      -
           datacenter water scarcity intensity h2o m^3 per mwh: 17.9
           comment: US number; significant variance within the US
-      - fact:
+      -
           max datacenter water scarcity intensity h2o m^3 per mwh: 305

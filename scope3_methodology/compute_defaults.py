@@ -1,10 +1,9 @@
 #!/usr/bin/env python
+import argparse
 from glob import glob
+
 import yaml
 from yaml.loader import SafeLoader
-import argparse
-
-Template = dict[str, float]
 
 
 def main():
@@ -22,11 +21,15 @@ def main():
     )
     args = parser.parse_args()
 
-    modelInputs = {
+    corporate_model_inputs = {
+        "corporate emissions mt per month",
         "travel emissions mt per employee per month",
         "office emissions mt per employee per month",
         "commuting emissions mt per employee per month",
         "it emissions mt per employee per month",
+    }
+
+    ad_tech_model_inputs = {
         "bid requests processed billion per month",
         "cookie syncs processed billion per month",
         "cookie syncs processed per bid request",
@@ -38,17 +41,23 @@ def main():
         "server to server emissions g per gb",
         "server emissions mt per month",
         "server emissions g per kwh",
-        "datacenter water intensity h2o m^3 per mwh",
         "servers processing bid requests pct",
         "servers processing cookie syncs pct",
         "servers processing creative serving pct",
+        "datacenter water intensity h2o m^3 per mwh",
     }
+
+    property_model_inputs = {
+        "quality impressions per duration s",
+        "revenue allocation to digital pct",
+        "revenue allocation to ads pct",
+    }
+
+    atp_model_inputs = corporate_model_inputs.union(ad_tech_model_inputs)
 
     globalDefaults: dict[str, float] = {
         # TODO - get some actual data on this from customers
         "bid request size in bytes": 10000,
-        # not used (overridden by template)
-        "cookie syncs processed billion per month": 0,
     }
 
     # get a list of all facts from our sources
@@ -65,18 +74,14 @@ def main():
                 print("No sources found in " + document)
                 continue
             for source in document["company"]["sources"]:
-                for fact in source["source"]["facts"]:
-                    keys = [
-                        key
-                        for key in fact["fact"]
-                        if key != "reference" and key != "comment"
-                    ]
+                for fact in source["facts"]:
+                    keys = [key for key in fact if key != "reference" and key != "comment"]
                     for key in keys:
                         if key not in facts:
                             facts[key] = []
-                        facts[key].append(fact["fact"][key])
+                        facts[key].append(fact[key])
 
-    templates: dict[str, Template] = {}
+    templates = {}
     templateFiles = glob("templates/*.yaml")
     for file in templateFiles:
         stream = open(file, "r")
@@ -85,22 +90,31 @@ def main():
             raise Exception(f"'template' field not found in {file}")
         if "name" not in document["template"]:
             raise Exception(f"'name' field not found in {file}")
+        if "type" not in document["template"]:
+            raise Exception(f"'type' field not found in {file}")
         name = document["template"]["name"]
         templates[name] = document["template"]
 
     templateDefaults = {}
 
     for name, template in templates.items():
+        model_inputs: set[str]
+        if template["type"] == "publisher":
+            model_inputs = corporate_model_inputs
+        elif template["type"] == "property":
+            model_inputs = property_model_inputs
+        else:
+            model_inputs = atp_model_inputs
         defaults: dict[str, float] = {}
         for key in facts:
-            if key in modelInputs:
+            if key in model_inputs:
                 defaults[key] = round(sum(facts[key]) / len(facts[key]), 4)
 
-        for input in modelInputs:
+        for input in model_inputs:
             if input not in defaults:
                 if input in template:
                     defaults[input] = template[input]
-                else:
+                elif input in globalDefaults:
                     defaults[input] = globalDefaults[input]
         templateDefaults[name] = defaults
 

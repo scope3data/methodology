@@ -1,39 +1,98 @@
 ---
 company:
   name: Axel Springer
-  type: publisher
-  variant: media company
+  properties:
+  -
+    template: news_with_print
+    identifier: autobild.de
+    sources:
+    -
+      year: 2022
+      month: 7
+      url: https://www.similarweb.com/website/autobild.de/
+      facts:
+      -
+        visits per month: 8800000
+      -
+        pages per visit: 2.28
+      -
+        average visit duration s: 96
+  -
+    template: news_with_print
+    identifier: bild.de
+    sources:
+    -
+      year: 2022
+      month: 7
+      url: https://www.similarweb.com/website/bild.de/
+      facts:
+      -
+        visits per month: 209500000
+      -
+        pages per visit: 3.31
+      -
+        average visit duration s: 271
+  -
+    template: news_with_print
+    identifier: businessinsider.de
+    sources:
+    -
+      year: 2022
+      month: 7
+      url: https://www.similarweb.com/website/businessinsider.de/
+      facts:
+      -
+        visits per month: 10100000
+      -
+        pages per visit: 1.48
+      -
+        average visit duration s: 89
+  -
+    template: news_with_print
+    identifier: bz-berlin.de
+    sources:
+    -
+      year: 2022
+      month: 7
+      url: https://www.similarweb.com/website/bz-berlin.de/
+      facts:
+      -
+        visits per month: 17600000
+      -
+        pages per visit: 2.24
+      -
+        average visit duration s: 120
   sources:
-  - source:
+  -
       year: 2020
       url: https://sustainability.axelspringer.com/wp-content/uploads/2021/10/sustainability_report_AS_EN_211001.pdf
       file: sustainability_report_AS_EN_211001.pdf
       facts:
-      - fact:
+      -
           employees: 16446
           reference: page 32
-      - fact:
+      -
           office emissions mt per month: 2495
           reference: page 25
-      - fact:
+      -
           commuting emissions mt per month: 799.9
           reference: page 26
-      - fact:
+      -
           travel emissions mt per month: 331
           reference: page 26
-      - fact:
+      -
           it emissions mt per month: 224
           reference: page 27
           comment: Only using direct datacenter costs - the "overhead" value is likely mainly ad tech
-  - source:
+  -
       year: 2020
       type: calculation
       facts:
-      - fact:
+      -
           office emissions mt per employee per month: 0.152
-      - fact:
+      -
           commuting emissions mt per employee per month: 0.0486
-      - fact:
+      -
           travel emissions mt per employee per month: 0.020
-      - fact:
+      -
           it emissions mt per employee per month: 0.0136

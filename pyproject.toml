@@ -19,6 +19,11 @@ scriv = { extras = ["toml"], version = "^0.16.0" }
 types-PyYAML = "^6.0.11"
 pytest = "^7.1.2"
 coverage = "^6.4.4"
+pylint = "^2.15.0"
+
+[tool.black]
+line-length = 100
+target-version = ['py310']
 
 [tool.scriv]
 version = "literal: scope3_methodology/__init__.py: __version__"

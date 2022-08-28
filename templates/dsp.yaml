@@ -1,6 +1,7 @@
 ---
 template:
   name: dsp
+  type: atp
   pct of bid requests processed from ad tech platforms: 100
   servers processing bid requests pct: 93
   servers processing cookie syncs pct: 7
