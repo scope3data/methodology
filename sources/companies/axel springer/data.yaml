@@ -17,6 +17,17 @@ company:
         pages per visit: 2.28
       -
         average visit duration s: 96
+    -
+      year: 2022
+      month: 8
+      url: https://tools.pingdom.com/#60b937435c800000
+      environment: desktop
+      country: DE
+      facts:
+      -
+        requests per page: 136
+        page size mb: 6.3
+        load time s: 1.88
   -
     template: news_with_print
     identifier: bild.de
@@ -32,6 +43,17 @@ company:
         pages per visit: 3.31
       -
         average visit duration s: 271
+    -
+      year: 2022
+      month: 8
+      url: https://tools.pingdom.com/#60b93574d4800000
+      environment: desktop
+      country: DE
+      facts:
+      -
+        requests per page: 342
+        page size mb: 6.4
+        load time s: 3.65
   -
     template: news_with_print
     identifier: businessinsider.de
@@ -47,6 +69,17 @@ company:
         pages per visit: 1.48
       -
         average visit duration s: 89
+    -
+      year: 2022
+      month: 8
+      url: https://tools.pingdom.com/#60b937a239400000
+      environment: desktop
+      country: DE
+      facts:
+      -
+        requests per page: 130
+        page size mb: 3.1
+        load time s: 1.45
   -
     template: news_with_print
     identifier: bz-berlin.de
@@ -62,6 +95,17 @@ company:
         pages per visit: 2.24
       -
         average visit duration s: 120
+    -
+      year: 2022
+      month: 8
+      url: https://tools.pingdom.com/#60b937d3cb000000
+      environment: desktop
+      country: DE
+      facts:
+      -
+        requests per page: 179
+        page size mb: 2.2
+        load time s: 1.35
   sources:
   -
       year: 2020

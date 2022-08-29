@@ -51,6 +51,9 @@ def main():
         "quality impressions per duration s",
         "revenue allocation to digital pct",
         "revenue allocation to ads pct",
+        "end-user data transfer electricity use kwh per gb",
+        "computer active electricity use watts",
+        "computer idle electricity use watts",
     }
 
     atp_model_inputs = corporate_model_inputs.union(ad_tech_model_inputs)
