@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+""" Model the emissions for a publisher """
 import argparse
 import logging
 
@@ -15,13 +16,54 @@ parser.add_argument(
     default="defaults.yaml",
     help="Set the defaults file to use (overrides defaults.yaml)",
 )
+parser.add_argument(
+    "-e",
+    "--environment",
+    const=1,
+    default="computer",
+    type=str,
+    nargs="?",
+    help="Environment to model: computer, mobile, tv",
+)
+parser.add_argument(
+    "-b",
+    "--buying-method",
+    const=1,
+    default="programmatic",
+    type=str,
+    nargs="?",
+    help="Buying mechanism to model: guaranteed, programmatic, native",
+)
+parser.add_argument(
+    "-g",
+    "--grid-intensity",
+    const=1,
+    default=539,
+    type=int,
+    nargs="?",
+    help="Carbon intensity of the energy grid in g per KWh",
+)
+parser.add_argument(
+    "-p",
+    "--partners",
+    const=1,
+    default=10,
+    type=int,
+    nargs="?",
+    help="Simulate ad tech partners",
+)
+parser.add_argument(
+    "-a",
+    "--auctions",
+    const=1,
+    default=2,
+    type=int,
+    nargs="?",
+    help="Simulate multiple auctions",
+)
 parser.add_argument("-v", "--verbose", action="store_true", help="Show derivation of output")
 parser.add_argument("companyFile", nargs=1, help="The company file to parse in YAML format")
 args = parser.parse_args()
-
-# TODO: make this configurable by commmand line - this represents the user we want to model
-device = "computer"
-grid_intensity_g_per_kwh = 500
 
 if args.verbose:
     logging.basicConfig(level=logging.INFO)
@@ -51,6 +93,8 @@ depth = 4 if args.verbose else 0
 
 
 class Property:
+    """A media property, representing a web site, mobile app, ctv channel, etc"""
+
     def __init__(
         self,
         identifier: str,
@@ -58,12 +102,14 @@ class Property:
         ad_revenue_allocation: float,
         data_transfer_electricity_kwh: float,
         page_load_electricity_kwh: float,
+        client_device_emissions_g: float,
     ) -> None:
         self.identifier = identifier
         self.impressions = impressions
         self.ad_revenue_allocation = ad_revenue_allocation
         self.data_transfer_electricity_kwh = data_transfer_electricity_kwh
         self.page_load_electricity_kwh = page_load_electricity_kwh
+        self.client_device_emissions_g = client_device_emissions_g
 
     def set_corporate_emissions(self, emissions: float) -> None:
         self.corporate_emissions_per_impression = round(
@@ -77,15 +123,13 @@ class Property:
 
 
 def get_energy_from_page_load(
-    device: str | None,
+    device: str,
     active_load_s: float,
     browse_s: float,
     facts: dict[str, float],
     defaults: dict[str, float],
     depth: int,
 ) -> float:
-    if device is None:
-        device = "computer"
     active_key = f"{device} active electricity use watts"
     idle_key = f"{device} idle electricity use watts"
     active_watts = get_fact_or_default(active_key, facts, defaults, depth - 1)
@@ -118,7 +162,9 @@ for property in document["company"]["properties"]:
         "average visit duration s", property_facts, None, 1
     )
     ad_load = get_fact_or_default("quality impressions per duration s", property_facts, defaults, 1)
-    impressions = visits * average_visit_duration * ad_load
+    ads_per_visit = average_visit_duration * ad_load
+    log_result("ads per visit", ads_per_visit, 2)
+    impressions = visits * ads_per_visit
     log_result("impressions per month", impressions, 2)
     publisher_impressions += impressions
 
@@ -138,24 +184,36 @@ for property in document["company"]["properties"]:
     browse_time = average_visit_duration - active_page_load_time
     log_result("browse time", browse_time, depth)
 
+    # CLIENT DEVICE EMISSIONS
     page_load_energy_per_session = get_energy_from_page_load(
-        device, active_page_load_time, browse_time, facts, defaults, depth - 1
+        args.environment, active_page_load_time, browse_time, facts, defaults, depth - 1
     )
-    page_load_electricity_kwh = page_load_energy_per_session / 1000 / ad_load
+    page_load_electricity_kwh = page_load_energy_per_session / 1000 / ads_per_visit
     log_result("page_load_electricity_kwh", page_load_electricity_kwh, 2)
 
     page_size_mb = get_fact_or_default("page size mb", property_facts, defaults, 1)
-    data_transfer_per_impression = page_size_mb / ad_load
+    data_transfer_per_impression = page_size_mb / ads_per_visit
     electricity_per_mb = (
         get_fact_or_default(
             "end-user data transfer electricity use kwh per gb", property_facts, defaults, 1
         )
         / 1024
     )
+    electricity_per_mb += (
+        get_fact_or_default(
+            "core internet data transfer electricity use kwh per gb", property_facts, defaults, 1
+        )
+        / 1024
+    )
     data_transfer_electricity_kwh = data_transfer_per_impression * electricity_per_mb
     log_result("data_transfer_electricity_kwh", data_transfer_electricity_kwh, 2)
 
-    # TODO - add internet core emissions
+    client_device_emissions_per_impression = args.grid_intensity * (
+        data_transfer_electricity_kwh + page_load_electricity_kwh
+    )
+    log_result("client_device_emissions", client_device_emissions_per_impression, 2)
+
+    # TODO - simulate auctions to multiple ad tech partners w/ cookie syncs
 
     properties.append(
         Property(
@@ -164,6 +222,7 @@ for property in document["company"]["properties"]:
             ad_revenue_allocation,
             data_transfer_electricity_kwh,
             page_load_electricity_kwh,
+            client_device_emissions_per_impression,
         )
     )
 

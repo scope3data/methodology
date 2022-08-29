@@ -52,6 +52,7 @@ def main():
         "revenue allocation to digital pct",
         "revenue allocation to ads pct",
         "end-user data transfer electricity use kwh per gb",
+        "core internet data transfer electricity use kwh per gb",
         "computer active electricity use watts",
         "computer idle electricity use watts",
     }
