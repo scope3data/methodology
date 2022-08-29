@@ -44,12 +44,13 @@ To understand how publishers interact with ad tech platforms, we need to know ho
 
 ### Mapping the ad tech graph
 
+We use ads.txt to understand the direct and indirect ad tech platforms in the graph. There is risk here that publishers will not put all of their vendors in the ads.txt file, and we are relying on the increased enforcement from the programmatic ecosystem to make sure that these files are correct. We also strongly recommend that buyers stop purchasing "masked" inventory where the publisher or supply chain are obfuscated.
 
+Ads.txt file have a number of issues, including the lack of a geographic indicator. Publishers often share the same ads.txt file across multiple domains, which causes problems if each domain has a different publisher ID for a particular ad tech platform (it will look like that ATP is called multiple times on every domain, instead of once per domain). At Scope3, we have a secondary set of filters that we use to manually clean up this information, and we also work with publishers directly to make this as accurate as possible.
 
+### Determining programmatic auctions
 
-
-
-
+One challenge is understanding how many auctions a publisher operates. We can scan the code on a page to see, for instance, Prebid.js code. However, we can't tell from the client side whether a publisher is using Google Open Bidding inside of GAM, or if they are running server-side auctions through Prebid Server or Amazon's TAM.
 
 ## Calculating Consumer Device Emissions
 
