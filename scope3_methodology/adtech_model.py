@@ -5,7 +5,8 @@ import logging
 
 import yaml
 from corporate import get_corporate_emissions
-from utils import get_fact_or_default, get_facts_from_sources, log_result, log_step
+from utils import (get_fact_or_default, get_facts_from_sources, log_result,
+                   log_step)
 from yaml.loader import SafeLoader
 
 

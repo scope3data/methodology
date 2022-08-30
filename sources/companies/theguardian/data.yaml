@@ -19,19 +19,19 @@ company:
           travel emissions mt per month: 203.3
           reference: page 8
   -
-      year: 2020
-      url: https://www.linkedin.com/company/theguardian/insights/
+      year: 2022
+      url: https://uploads.guim.co.uk/2022/07/20/GMG_Financial_Statements_2022.pdf
       facts:
       -
-          employees: 2079
-          reference: LinkedIn data for December 2020
+        advertising revenue gbp per year: 73.7
+        print revenue gbp per year: 71.5
+        digital revenue gbp per year: 76.1
+        employees: 1489
   -
-      year: 2020
       type: calculation
       facts:
       -
-          office emissions mt per employee per month: 0.109
-      -
-          commuting emissions mt per employee per month: 0.0283
-      -
-          travel emissions mt per employee per month: 0.0978
+          office emissions mt per employee per month: 0.153
+          commuting emissions mt per employee per month: 0.040
+          travel emissions mt per employee per month: 0.137
+          revenue allocation to ads pct: 33.3

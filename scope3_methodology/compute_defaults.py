@@ -3,6 +3,7 @@ import argparse
 from glob import glob
 
 import yaml
+from corporate import get_corporate_keys
 from yaml.loader import SafeLoader
 
 
@@ -21,13 +22,7 @@ def main():
     )
     args = parser.parse_args()
 
-    corporate_model_inputs = {
-        "corporate emissions mt per month",
-        "travel emissions mt per employee per month",
-        "office emissions mt per employee per month",
-        "commuting emissions mt per employee per month",
-        "it emissions mt per employee per month",
-    }
+    corporate_model_inputs = get_corporate_keys()
 
     ad_tech_model_inputs = {
         "bid requests processed billion per month",

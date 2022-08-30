@@ -115,11 +115,44 @@ We do this by calculating corporate emissions per month and dividing by the numb
 
 For publishers that have detailed sustainability reports, we can pull this directly from these filings. For other publishers, we use their employee count (pulled from LinkedIn or equivalent sources) to estimate emissions. For a digital property, we attempt to allocate only the digital ad revenue for each publisher, excluding print and other channels as well as revenue from subscriptions and affiliate programs.
 
+### Estimating corporate emissions
+
+Imagine a company that has done a perfect job of measuring its carbon emissions. This company would have analyzed every expense in its financials, gone a level deeper to get activity data, performed lifecycle analysis on each of its products, and then asked each company in its supply chain to do the same.
+
+This idealized company does not exist, though Google, Microsoft, Axel Springer, and Salesforce - among others - are making substantive efforts to get there. We can think of this as a spectrum where on the far left is a company that has done nothing to measure its emissions, on the middle-right are these best-of-breed companies, at at the far right is this idealized company who has measured everything.
+
+We need a way to estimate corporate emissions based on the information we have available. We can translate the spectrum above into a table that translates what we know into a methodology to fill in the gaps of what we don't know:
+
+What we know | Estimation methodology
+---|---
+Nothing | Use industry-average emissions per impression
+Number of employees | Use industry-average emissions per employee
+Sustainability report with missing or aggregated scope 3 categories | Use industry-average emissions per employee for missing categories
+Complete sustainability report with suboptimal methodology (market-based vs location-based, or omitting embodied emissions, for instance) | Use industry average correction factors
+
+### Calculating industry-average emissions factors
+
+In this repository we aggregate public data from companies who produce sustainability reports - for instance, ![Axel Springer](../sources/companies/axel%20springer/data.yaml). We pull facts from these reports and use them to produce industry average values including:
+- Office Emissions Per Employee Per Month
+- Commuting Emissions Per Employee Per Month
+- Travel Emissions Per Employee Per Month
+- Datacenter Emissions Per Employee Per Month (may include cloud)
+- Overhead Emissions Per Employee Per Month (this bucket includes third party software and marketing expenses; we need to get it broken out in a consistent way)
+- Quality Ad Impressions Per Employee Per Month
+
+We only include data that includes all scope 3 categories and uses location-based emissions for electricity use. Unfortunately, this means that very few sustainability reports are usable for us, though we expect this to change quickly.
+
+
+### Allocation of corporate emissions to properties
+
+TODO - talk about allocation to properties by visits or sessions
+
 ### Quality ads per month
 
 We can pull session information from SimilarWeb for each of the publisher's properties to determine the number and length of sessions for each.
 
 To determine ads per session, Scope3 uses a crawler to detect ads per page, but we have found a number of issues with this approach:
+
 - Ad layouts can be dramatically different on a site's home page vs internal pages
 - It is difficult to trigger ads in every type of content (for instance, a mobile game may only show an incentivized ad after a certain amount of playing the game)
 - Our scanner is technically a bot and should not actually see ads if ad tech companies are doing their job properly

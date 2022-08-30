@@ -1,6 +1,19 @@
 import logging
 
 
+class Fact:
+    """A fact from one of our sources"""
+
+    def __init__(self, company: str, url: str | None, is_calculation: bool, value: float) -> None:
+        self.company = company
+        self.url = "n/a" if not url else url
+        self.is_calculation = is_calculation
+        self.value = value
+
+    def __repr__(self):
+        return f"{self.company}{' (calculation)' if self.is_calculation else ''}: {self.value}"
+
+
 def log_step(key: str, value: str, source: str, depth: int) -> None:
     logging.info(f"{'  ' * depth}{key} = {value} ({source})")
 
@@ -30,3 +43,15 @@ def get_facts_from_sources(sources) -> dict[str, float]:
             for key in keys:
                 facts[key] = fact[key]
     return facts
+
+
+def populate_facts(facts: dict[str, list[Fact]], company: str, sources) -> None:
+    for source in sources:
+        is_calculation = True if "calculation" in source else False
+        url = source["url"] if "url" in source else ""
+        for fact in source["facts"]:
+            keys = [key for key in fact if key != "reference" and key != "comment"]
+            for key in keys:
+                if key not in facts:
+                    facts[key] = []
+                facts[key].append(Fact(company, url, is_calculation, fact[key]))

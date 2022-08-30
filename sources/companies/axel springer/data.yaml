@@ -125,18 +125,18 @@ company:
           travel emissions mt per month: 331
           reference: page 26
       -
-          it emissions mt per month: 224
+          datacenter emissions mt per month: 224
           reference: page 27
-          comment: Only using direct datacenter costs - the "overhead" value is likely mainly ad tech
+      -
+          overhead emissions mt per month: 3129.5
+          reference: page 27
   -
       year: 2020
-      type: calculation
+      calculation: true
       facts:
       -
           office emissions mt per employee per month: 0.152
-      -
           commuting emissions mt per employee per month: 0.0486
-      -
           travel emissions mt per employee per month: 0.020
-      -
-          it emissions mt per employee per month: 0.0136
+          datacenter emissions mt per employee per month: 0.0136
+          overhead emissions mt per employee per month: 0.190
