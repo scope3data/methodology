@@ -62,16 +62,16 @@ def main():
 
     # get a list of all facts from our sources
     facts: dict[str, list[float]] = {}
-    files = glob("sources/**/*.yaml", recursive=True)
+    files = glob("sources/**^research/*.yaml", recursive=True)
     for file in files:
         stream = open(file, "r")
         documents = list(yaml.load_all(stream, Loader=SafeLoader))
         for document in documents:
             if "company" not in document:
-                print("No company found in " + document)
+                print("No company found in " + file + " Contents: " + str(document))
                 continue
             if "sources" not in document["company"]:
-                print("No sources found in " + document)
+                print("No sources found in  " + file + " Contents: " + str(document))
                 continue
             for source in document["company"]["sources"]:
                 for fact in source["facts"]:
