@@ -1,0 +1,33 @@
+---
+company:
+  name: Washington Post
+  properties:
+  -
+    template: news_with_print
+    identifier: washingtonpost.com
+    sources:
+    -
+      year: 2022
+      month: 7
+      url: https://www.similarweb.com/website/theguardian.com/#overview
+      facts:
+      -
+        visits per month: 176200000
+        pages per visit: 2.52
+        average visit duration s: 185
+    -
+      year: 2022
+      month: 8
+      url: https://tools.pingdom.com/#60bc06a1bbc00000
+      facts:
+      -
+        requests per page: 191
+        page size mb: 2.3
+        load time s: 2.13
+  sources:
+  -
+      year: 2022
+      url: https://www.linkedin.com/company/the-washington-post/insights/
+      facts:
+      -
+          employees: 3662

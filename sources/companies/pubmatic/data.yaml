@@ -2,29 +2,29 @@
 company:
   name: Pubmatic
   products:
-  - product:
+  -
       name: Pubmatic
       template: ssp
       identifier: pubmatic.com
   sources:
-  - source:
+  -
       year: 2022
       url: https://pubmatic.com/blog/pubmatic-prioritizing-data-center-sustainability-and-growth/
       facts:
-      - fact:
+      -
           server qps: 5500
           reference: Carbon Emissions section
-  - source:
+  -
       year: 2022
       url: https://investors.pubmatic.com/static-files/a0a75d97-2e70-474d-b45a-30cb383a280f
       facts:
-      - fact:
+      -
           bid requests processed billion per month: 12066
           reference: Impressions Processed section
-  - source:
+  -
       year: 2021
       url: https://www.linkedin.com/company/pubmatic/insights/
       facts:
-      - fact:
+      -
           employees: 812
           reference: LinkedIn data for December 2021

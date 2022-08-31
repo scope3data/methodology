@@ -17,20 +17,27 @@ repos:
     rev: 5.10.1
     hooks:
       - id: isort
-        args: ["--check", "--profile", "black"]
+        args: ["--profile", "black"]
 
   - repo: https://github.com/PyCQA/flake8
     rev: 5.0.4
     hooks:
       - id: flake8
         additional_dependencies: [mccabe]
-        args: ["--max-line-length", "88", "--max-complexity", "10"]
+        args: ["--max-line-length", "100", "--max-complexity", "10"]
 
-  - repo: https://github.com/PyCQA/pylint/
-    rev: v2.14.5
-    hooks:
-      - id: pylint
-        exclude: tests/
+  #- repo: local
+  #  hooks:
+  #    - id: pylint
+  #      name: pylint
+  #      entry: pylint
+  #      language: system
+  #      types: [python]
+  #      args: 
+  #        [
+  #          "-rn", # Only display messages
+  #          "-sn", # Don't display the score
+  #        ]
 
   - repo: local
     hooks:
@@ -43,7 +50,7 @@ repos:
         types: [python]
 
   - repo: https://github.com/python-poetry/poetry
-    rev: ''  # add version here
+    rev: '1.2.0rc1'
     hooks:
       - id: poetry-check
       - id: poetry-lock

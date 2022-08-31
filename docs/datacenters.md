@@ -16,3 +16,8 @@ Note that methodologies for calculating embodied emissions here are not standard
 
 ### Recommendations for reporting emissions
 - Provide the average lifetime of servers, or even better, new servers installed vs old servers decommissioned each year
+
+
+
+# Measuring technology providers
+- Document snowflake (todo)

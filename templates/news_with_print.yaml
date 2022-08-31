@@ -1,0 +1,6 @@
+---
+template:
+  name: news_with_print
+  type: property
+  quality impressions per duration s: 0.1
+  revenue allocation to digital pct: 70

@@ -1,6 +1,7 @@
 ---
 template:
   name: network
+  type: atp
   pct of bid requests processed from ad tech platforms: 20
   servers processing bid requests pct: 90
   servers processing cookie syncs pct: 5
