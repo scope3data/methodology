@@ -17,7 +17,7 @@ repos:
     rev: 5.10.1
     hooks:
       - id: isort
-        args: ["--check", "--profile", "black"]
+        args: ["--profile", "black"]
 
   - repo: https://github.com/PyCQA/flake8
     rev: 5.0.4
@@ -26,18 +26,18 @@ repos:
         additional_dependencies: [mccabe]
         args: ["--max-line-length", "100", "--max-complexity", "10"]
 
-  - repo: local
-    hooks:
-      - id: pylint
-        name: pylint
-        entry: pylint
-        language: system
-        types: [python]
-        args: 
-          [
-            "-rn", # Only display messages
-            "-sn", # Don't display the score
-          ]
+  #- repo: local
+  #  hooks:
+  #    - id: pylint
+  #      name: pylint
+  #      entry: pylint
+  #      language: system
+  #      types: [python]
+  #      args: 
+  #        [
+  #          "-rn", # Only display messages
+  #          "-sn", # Don't display the score
+  #        ]
 
   - repo: local
     hooks:

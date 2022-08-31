@@ -7,6 +7,7 @@ from corporate import get_corporate_keys
 from yaml.loader import SafeLoader
 
 
+# flake8: noqa: C901
 def main():
     parser = argparse.ArgumentParser(description="Compute defaults from known sources")
     parser.add_argument(
