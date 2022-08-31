@@ -1,4 +1,9 @@
 import logging
+from glob import glob
+from pathlib import Path
+
+import yaml
+from yaml.loader import SafeLoader
 
 
 class Fact:
@@ -57,3 +62,17 @@ def populate_facts(facts: dict[str, list[Fact]], company: str, sources) -> None:
                 if key not in facts:
                     facts[key] = []
                 facts[key].append(Fact(company, url, is_calculation, fact[key]))
+
+
+def get_all_facts() -> dict[str, list[Fact]]:
+    facts: dict[str, list[Fact]] = {}
+    files = glob("sources/**/*.yaml", recursive=True)
+    for file in files:
+        stream = open(file, "r")
+        document = yaml.load(stream, Loader=SafeLoader)
+        pth = Path(file)
+        if "company" in document and "sources" in document["company"]:
+            populate_facts(facts, "/".join(pth.parts[-2:]), document["company"]["sources"])
+        if "sources" in document:
+            populate_facts(facts, "/".join(pth.parts[-2:]), document["sources"])
+    return facts

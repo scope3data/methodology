@@ -4,6 +4,7 @@ from glob import glob
 
 import yaml
 from corporate import get_corporate_keys
+from utils import get_all_facts
 from yaml.loader import SafeLoader
 
 
@@ -61,25 +62,7 @@ def main():
     }
 
     # get a list of all facts from our sources
-    facts: dict[str, list[float]] = {}
-    files = glob("sources/**/*.yaml", recursive=True)
-    for file in files:
-        stream = open(file, "r")
-        documents = list(yaml.load_all(stream, Loader=SafeLoader))
-        for document in documents:
-            if "company" not in document:
-                print("No company found in " + document)
-                continue
-            if "sources" not in document["company"]:
-                print("No sources found in " + document)
-                continue
-            for source in document["company"]["sources"]:
-                for fact in source["facts"]:
-                    keys = [key for key in fact if key != "reference" and key != "comment"]
-                    for key in keys:
-                        if key not in facts:
-                            facts[key] = []
-                        facts[key].append(fact[key])
+    facts = get_all_facts()
 
     templates = {}
     templateFiles = glob("templates/*.yaml")
@@ -108,7 +91,7 @@ def main():
         defaults: dict[str, float] = {}
         for key in facts:
             if key in model_inputs:
-                defaults[key] = round(sum(facts[key]) / len(facts[key]), 4)
+                defaults[key] = round(sum(fact.value for fact in facts[key]) / len(facts[key]), 4)
 
         for input in model_inputs:
             if input not in defaults:
