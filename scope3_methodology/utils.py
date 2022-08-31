@@ -49,6 +49,8 @@ def populate_facts(facts: dict[str, list[Fact]], company: str, sources) -> None:
     for source in sources:
         is_calculation = True if "calculation" in source else False
         url = source["url"] if "url" in source else ""
+        if "facts" not in source:
+            continue
         for fact in source["facts"]:
             keys = [key for key in fact if key != "reference" and key != "comment"]
             for key in keys:

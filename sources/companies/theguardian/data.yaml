@@ -1,8 +1,29 @@
 ---
 company:
   name: The Guardian
-  type: publisher
-  variant: newspaper
+  properties:
+  -
+    template: news_with_print
+    identifier: theguardian.com
+    sources:
+    -
+      year: 2022
+      month: 7
+      url: https://www.similarweb.com/website/theguardian.com/#overview
+      facts:
+      -
+        visits per month: 359200000
+        pages per visit: 3.35
+        average visit duration s: 290
+    -
+      year: 2022
+      month: 7
+      url: https://tools.pingdom.com/#60bbdd2e2a800000
+      facts:
+      -
+        requests per page: 219
+        page size mb: 3.0
+        load time s: 1.89
   sources:
   -
       year: 2020

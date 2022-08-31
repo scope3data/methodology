@@ -4,11 +4,13 @@ Publishers (media owners, platforms, etc) tend to be complex businesses, often w
 
 Modeling the emissions for a single digital ad impression on a property requires three buckets of work:
 
-1. Allocating (and potentially modeling) corporate emissions by channel, property, and revenue stream
-2. Calculating user device emissions based on regionalized grid mix data
-3. Modeling the emissions from the ad tech and data used to monetize the property
+- [Ad tech emissions](#computing-emissions-from-ad-tech)
+- [Consumer device emissions](#calculating-consumer-device-emissions)
+- [Corporate overhead](#corporate-overhead)
 
 This model is intended to apply all digital media including web, mobile app, and CTV. DOOH should work but we have not thought through it fully. The examples below are generally built around web and need to be updated for other channels.
+
+At the bottom of this document we list some [concerns and caveats](#caveats-complications-and-concerns).
 
 ## Visualizing the publisher model
 
@@ -77,8 +79,6 @@ This study estimates, for instance, desktop computer + monitor as using 115W whe
 
 As an example, SimilarWeb shows [BZ](https://www.similarweb.com/website/bz-berlin.de/#overview) as having 2.24 pages per visit and average visit duration of 120 seconds. [Pingdom](https://tools.pingdom.com/#60b937d3cb000000) shows a load time of 1.35 seconds. For a laptop, we would model this as 3 seconds of active use per visit at 22W plus 117 seconds of idle time for a total of 0.376Wh per visit. (TODO: this should include embodied emissions).
 
-#### Our methodology
-
 In the open source version, we ask for the above data as inputs into the calculation (in the `publisher.properties` object). In the Scope3 version, we operate a crawler that simulates loading multiple pages of each website and measures actual CPU and network usage, creating a weighted average of consumer device emissions for each domain.
 
 ### Assessing the carbon footprint of network traffic
@@ -97,25 +97,23 @@ The same author, Jens Malmodin, produced a graphic showing the sources of power 
 
 These bottom-up numbers indicate that the majority of emissions from broadband users are fixed and change little based on data transfer, while mobile emissions are somewhat based upon data transfer (presumably because the access network uses energy to transmit more actively). An expansion of this analysis that compares to other assessments of emissions from network use can be found in *IEA (2020), [The carbon footprint of streaming video: fact-checking the headlines]( https://www.iea.org/commentaries/the-carbon-footprint-of-streaming-video-fact-checking-the-headlines), IEA, Paris*
 
-#### Our methodology
-For the current version, we are using a simplistic value of 0.1 kWh per GB from the [most recent peer-reviewed study](https://www.mdpi.com/2071-1050/10/7/2494) we have found to estimate emissions from data transfer. In future versions, we will distinguish mobile and fixed broadband as well as streaming vs non-streaming use cases.
+For the current version, we are using a simplistic value of 0.1 kWh per GB from the [most recent peer-reviewed study](https://www.mdpi.com/2071-1050/10/7/2494) we have found to estimate emissions from data transfer. In future versions, we will distinguish mobile and fixed broadband as well as streaming vs non-streaming use cases. For mobile vs fixed data there is a great [2020 EU study](https://circabc.europa.eu/sd/a/8b7319ba-ce4f-49ea-a6e6-b28df00b20d1/ICT%20impact%20study%20final.pdf) that is more or less in line with the above numbers (0.03 kWh/GB for fixed, 0.14 kWh/GB for mobile).
 
 ### Grid mix
+
 There are (at least) two companies that provide grid mix data for a broad range of companies and regions: [Electricity Map](https://electricitymaps.com) and [Watt Time](https://www.watttime.org). Each of these can provide data on the current and historical carbon intensity of the electricity grid. They use slightly different methodologies (Electricity Map uses average intensity; Watt Time is marginal intensity) and have different coverage areas. In both cases, it is necessary to map from grid regions to administrative regions (states and provinces) in countries like the US.
 
 At Scope3, we subscribe to Watt Time and use their API; in this open source repo you can pass the carbon intensity into the model on the command line.
 
-## Corporate overhead allocation
+## Corporate overhead
 
 The final part of the publisher model is to allocate corporate overhead - representing the emissions from content production, monetization, and marketing - to each impression.
 
 We do this by calculating corporate emissions per month and dividing by the number of ads per month.
 
-### Corporate emissions per month
+### Estimating corporate emissions
 
 For publishers that have detailed sustainability reports, we can pull this directly from these filings. For other publishers, we use their employee count (pulled from LinkedIn or equivalent sources) to estimate emissions. For a digital property, we attempt to allocate only the digital ad revenue for each publisher, excluding print and other channels as well as revenue from subscriptions and affiliate programs.
-
-### Estimating corporate emissions
 
 Imagine a company that has done a perfect job of measuring its carbon emissions. This company would have analyzed every expense in its financials, gone a level deeper to get activity data, performed lifecycle analysis on each of its products, and then asked each company in its supply chain to do the same.
 
@@ -133,6 +131,7 @@ Complete sustainability report with suboptimal methodology (market-based vs loca
 ### Calculating industry-average emissions factors
 
 In this repository we aggregate public data from companies who produce sustainability reports - for instance, ![Axel Springer](../sources/companies/axel%20springer/data.yaml). We pull facts from these reports and use them to produce industry average values including:
+
 - Office Emissions Per Employee Per Month
 - Commuting Emissions Per Employee Per Month
 - Travel Emissions Per Employee Per Month
@@ -142,10 +141,11 @@ In this repository we aggregate public data from companies who produce sustainab
 
 We only include data that includes all scope 3 categories and uses location-based emissions for electricity use. Unfortunately, this means that very few sustainability reports are usable for us, though we expect this to change quickly.
 
-
 ### Allocation of corporate emissions to properties
 
-TODO - talk about allocation to properties by visits or sessions
+We allocate corporate emissions to properties based on relative time spent across properties. This could also be done based on raw traffic or revenue - curious if there are any standards or best practices (or opinions!) around this.
+
+For purposes of the open source repo, we suggest using SimilarWeb to add facts to the `properties` object for `visits per month` and `average time per visit`. We sum these to produce total publisher time, and then assign to each property based on property time divised by total publisher time.
 
 ### Quality ads per month
 
@@ -161,7 +161,46 @@ To determine ads per session, Scope3 uses a crawler to detect ads per page, but 
 
 Instead of using the actual ads we detect, we decided to use a "quality ad load" metric that represents the maximum quality ad load that a publisher can deploy in a session. Based on consultation with some major publishers, we estimate that 20% of impressions produce 60% of revenue, and that around 5 ads per page is a reasonable ad load that can produce meaningful attention. Translating these numbers into a "quality ad load," we came up with around 1 ad per 10 seconds of session length as a default for a typical news website. A similar metric for TV might be 1 ad per 133 seconds of viewing (22 30-second ads per 49 minutes).
 
-TODO: Get an attention measurement company to open source some attention data to compute these metrics for various channels and property types
+Future state: Get an attention measurement company to open source some attention data to compute these metrics for various channels and property types
+
+### Sample publisher YAML
+This is an example of the minimal YAML that would be passed into `./scope3methodology/publisher.py` to produce an estimate of emissions. This does not include emissions from the ad tech supply chain.
+
+```yaml
+---
+company:
+  name: Washington Post
+  properties:
+  -
+    template: news_with_print
+    identifier: washingtonpost.com
+    sources:
+    -
+      year: 2022
+      month: 7
+      url: https://www.similarweb.com/website/theguardian.com/#overview
+      facts:
+      -
+        visits per month: 176200000
+        pages per visit: 2.52
+        average visit duration s: 185
+    -
+      year: 2022
+      month: 8
+      url: https://tools.pingdom.com/#60bc06a1bbc00000
+      facts:
+      -
+        requests per page: 191
+        page size mb: 2.3
+        load time s: 2.13
+  sources:
+  -
+      year: 2022
+      url: https://www.linkedin.com/company/the-washington-post/insights/
+      facts:
+      -
+          employees: 3662
+```
 
 ## Caveats, Complications, and Concerns
 
@@ -174,10 +213,6 @@ The risk here is that each participant will see the impression slightly differen
 Our approach has been to create statistical averages of various inputs into the model that ensure that all emissions are captured and that decisions made based on the data will have the desired effect.
 
 For instance, a device model for a user that we know is on a personal computer of some sort. We assume that a "personal computer" is the weighted average of electricity use of a desktop (38%), laptop (62%), and monitor (52%) based on publicly-available data. By merging these together we do lose the ability to optimize a campaign to run only against laptops, which would save significant energy. However, this is not a feature available in any advertising platform that we are aware of, and even if it were, this data would not be generally available to the ecosystem at large.
-
-### Different assumptions about emissions from data transmission
-
-Add discussion here
 
 ### Interaction with content
 

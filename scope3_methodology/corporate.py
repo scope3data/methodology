@@ -8,6 +8,7 @@ def get_corporate_keys() -> set[str]:
         "travel emissions mt per employee per month",
         "overhead emissions mt per employee per month",
         "commuting emissions mt per employee per month",
+        "datacenter emissions mt per employee per month",
     }
 
 

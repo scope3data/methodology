@@ -13,9 +13,7 @@ company:
       facts:
       -
         visits per month: 8800000
-      -
         pages per visit: 2.28
-      -
         average visit duration s: 96
     -
       year: 2022
