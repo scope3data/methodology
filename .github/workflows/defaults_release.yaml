@@ -1,0 +1,69 @@
+name: Defaults Release
+
+# In the future if we want to fix this for a month
+# we could switch to running it on a schedule to publish
+# once a month
+#on:
+#  schedule:
+#    - cron:  '0 0 1 * *'
+
+# For now will manually trigger the release
+on: workflow_dispatch
+
+env:
+  HASH: $(git rev-parse --short "$GITHUB_SHA")
+  BRANCH: ${GITHUB_REF##*/}
+  PROJECT_ID: ${{ secrets.GCR_PROJECT_ID }}
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10"]
+    steps:
+    - name: Checkout Sources
+      uses: actions/checkout@v3
+    - name: Set Release Information
+      id: release-info
+      run: |
+        echo "::set-output name=release-name::$(date +'%Y-%m-%d')"
+        echo "::set-output name=tag::$(date +'%Y%m%d')"
+    - name: Create Draft Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: defaults-release-${{ steps.tag.outputs.tag }}
+        release_name: Defaults Release ${{ steps.release-name.outputs.release-name  }}
+        draft: true
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install poetry
+        poetry install
+      env:
+        POETRY_VIRTUALENVS_CREATE: false
+    - name: Generate Defaults File
+      run: python ./scope3_methodology/compute_defaults.py
+    - name: Upload Defaults Files to Release
+      id: upload_defaults_files
+      uses: actions/upload-release-asset@v1.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: defaults.yaml
+        asset_name: methodology_model_defaults.yaml
+        asset_content_type: text/plain
+    - name: Publish Release
+      uses: eregon/publish-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        release_id: ${{ steps.create_release.outputs.id }}
