@@ -26,11 +26,18 @@ repos:
         additional_dependencies: [mccabe]
         args: ["--max-line-length", "100", "--max-complexity", "10"]
 
-  - repo: https://github.com/PyCQA/pylint/
-    rev: v2.15.0
+  - repo: local
     hooks:
       - id: pylint
-        exclude: tests/
+        name: pylint
+        entry: pylint
+        language: system
+        types: [python]
+        args: 
+          [
+            "-rn", # Only display messages
+            "-sn", # Don't display the score
+          ]
 
   - repo: local
     hooks:

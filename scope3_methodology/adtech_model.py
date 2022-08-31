@@ -2,8 +2,8 @@
 """ Compute emissions model for an ad tech company """
 import argparse
 import logging
-
 import yaml
+
 from corporate import get_corporate_emissions
 from utils import get_fact_or_default, get_facts_from_sources, log_result, log_step
 from yaml.loader import SafeLoader
@@ -316,7 +316,7 @@ depth = 4 if args.verbose else 0
 productModels = []
 for product in document["company"]["products"]:
     if "name" not in product:
-        raise Exception(f"No 'name' field found in a product")
+        raise Exception("No 'name' field found in a product")
 
     logging.info(f"#### {product['name']}")
     template = getProductInfo("template", None, product, 0)
