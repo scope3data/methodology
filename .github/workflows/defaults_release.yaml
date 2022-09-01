@@ -35,8 +35,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: defaults-release-${{ steps.tag.outputs.tag }}
-        release_name: Defaults Release ${{ steps.release-name.outputs.release-name  }}
+        tag_name: defaults-release-${{ steps.release-info.outputs.tag }}
+        release_name: Defaults Release ${{ steps.release-info.outputs.release-name  }}
         draft: true
     - name: Setup Python
       uses: actions/setup-python@v4
