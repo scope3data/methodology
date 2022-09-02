@@ -3,6 +3,7 @@ import argparse
 from glob import glob
 
 import yaml
+from adtech_model import get_ad_tech_model_keys
 from corporate import get_corporate_keys
 from utils import get_all_facts
 from yaml.loader import SafeLoader
@@ -26,24 +27,6 @@ def main():
 
     corporate_model_inputs = get_corporate_keys()
 
-    ad_tech_model_inputs = {
-        "bid requests processed billion per month",
-        "cookie syncs processed billion per month",
-        "cookie syncs processed per bid request",
-        "cookie sync distribution ratio",
-        "creative serving processed billion per month",
-        "pct of bid requests processed from ad tech platforms",
-        "bid request size in bytes",
-        "bid request rejection pct",
-        "server to server emissions g per gb",
-        "server emissions mt per month",
-        "server emissions g per kwh",
-        "servers processing bid requests pct",
-        "servers processing cookie syncs pct",
-        "servers processing creative serving pct",
-        "datacenter water intensity h2o m^3 per mwh",
-    }
-
     property_model_inputs = {
         "quality impressions per duration s",
         "revenue allocation to digital pct",
@@ -54,7 +37,7 @@ def main():
         "computer idle electricity use watts",
     }
 
-    atp_model_inputs = corporate_model_inputs.union(ad_tech_model_inputs)
+    atp_model_inputs = corporate_model_inputs.union(get_ad_tech_model_keys())
 
     globalDefaults: dict[str, float] = {
         # TODO - get some actual data on this from customers
