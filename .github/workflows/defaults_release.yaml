@@ -49,17 +49,37 @@ jobs:
         poetry install
       env:
         POETRY_VIRTUALENVS_CREATE: false
-    - name: Generate Defaults File
+    - name: Generate Defaults Files
       run: python ./scope3_methodology/compute_defaults.py
-    - name: Upload Defaults Files to Release
-      id: upload_defaults_files
+    - name: Upload ATP Defaults File to Release
+      id: upload_atp_defaults_files
       uses: actions/upload-release-asset@v1.0.1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: defaults.yaml
-        asset_name: methodology_model_defaults.yaml
+        asset_path: atp-defaults.yaml
+        asset_name: methodology_atp_defaults.yaml
+        asset_content_type: text/plain
+    - name: Upload Organization Defaults File to Release
+      id: upload_org_defaults_files
+      uses: actions/upload-release-asset@v1.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: organization-defaults.yaml
+        asset_name: methodology_organization_defaults.yaml
+        asset_content_type: text/plain
+    - name: Upload Property Defaults Files to Release
+      id: upload_prop_defaults_files
+      uses: actions/upload-release-asset@v1.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: property-defaults.yaml
+        asset_name: methodology_property_defaults.yaml
         asset_content_type: text/plain
     - name: Publish Release
       uses: eregon/publish-release@v1
