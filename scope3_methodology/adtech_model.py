@@ -41,43 +41,24 @@ class DistributionPartner:
         self.bid_request_distribution_rate = bid_request_distribution_rate
 
 
-# Parse command line to get company file
-parser = argparse.ArgumentParser(description="Compute emissions for an ad tech company")
-parser.add_argument(
-    "-d",
-    "--defaultsFile",
-    default="defaults.yaml",
-    help="Set the defaults file to use (overrides defaults.yaml)",
-)
-parser.add_argument("-v", "--verbose", action="store_true", help="Show derivation of output")
-parser.add_argument(
-    "-p",
-    "--partners",
-    const=1,
-    default=0,
-    type=int,
-    nargs="?",
-    help="Simulate distribution partners",
-)
-parser.add_argument("companyFile", nargs=1, help="The company file to parse in YAML format")
-args = parser.parse_args()
-if args.verbose:
-    logging.basicConfig(level=logging.INFO)
-
-# Load defaults
-defaultsStream = open(args.defaultsFile, "r")
-defaultsDocument = yaml.load(defaultsStream, Loader=SafeLoader)
-
-# Load facts about the company
-stream = open(args.companyFile[0], "r")
-document = yaml.load(stream, Loader=SafeLoader)
-if "company" not in document:
-    raise Exception("No 'company' field found in company file")
-if "products" not in document["company"]:
-    raise Exception("No 'products' field found in company file")
-if "sources" not in document["company"]:
-    raise Exception("No 'sources' field found in company file")
-facts = get_facts_from_sources(document["company"]["sources"])
+def get_ad_tech_model_keys() -> set[str]:
+    return {
+        "bid requests processed billion per month",
+        "cookie syncs processed billion per month",
+        "cookie syncs processed per bid request",
+        "cookie sync distribution ratio",
+        "creative serving processed billion per month",
+        "pct of bid requests processed from ad tech platforms",
+        "bid request size in bytes",
+        "bid request rejection pct",
+        "server to server emissions g per gb",
+        "server emissions mt per month",
+        "server emissions g per kwh",
+        "servers processing bid requests pct",
+        "servers processing cookie syncs pct",
+        "servers processing creative serving pct",
+        "datacenter water intensity h2o m^3 per mwh",
+    }
 
 
 def getProductInfo(key: str, default: float | None, product: dict[str, float], depth: int):
@@ -228,8 +209,7 @@ def getPrimaryEmissionsPerBidRequest(
 
 
 def getSecondaryEmissionsPerBidRequest(
-    model: AdTechPlatform,
-    distributionPartners: list[DistributionPartner],
+    model: AdTechPlatform, distributionPartners: list[DistributionPartner], depth: int
 ) -> float:
     secondaryEmissionsPerBidRequest = 0.0
     for edge in distributionPartners:
@@ -298,7 +278,7 @@ def getPrimaryEmissionsPerCookieSync(
 
 
 def getSecondaryEmissionsPerCookieSync(
-    model: AdTechPlatform, distributionPartners: list[DistributionPartner]
+    model: AdTechPlatform, distributionPartners: list[DistributionPartner], depth: int
 ) -> float:
     secondary_emissions_per_cookie_sync = 0.0
     for edge in distributionPartners:
@@ -312,49 +292,93 @@ def getSecondaryEmissionsPerCookieSync(
     return secondary_emissions_per_cookie_sync
 
 
-depth = 4 if args.verbose else 0
-productModels = []
-for product in document["company"]["products"]:
-    if "name" not in product:
-        raise Exception("No 'name' field found in a product")
+def main():
 
-    logging.info(f"#### {product['name']}")
-    template = getProductInfo("template", None, product, 0)
-    identifier = getProductInfo("identifier", None, product, 0)
-    serverAllocation = getProductInfo("server allocation pct", 100, product, 0) / 100
-    corporateAllocation = getProductInfo("corporate allocation pct", 100, product, 0) / 100
-    if template not in defaultsDocument["defaults"]:
-        raise Exception(f"Template {template} not found in defaults")
-    defaults = defaultsDocument["defaults"][template]
-    primaryEmissionsPerBidRequest = getPrimaryEmissionsPerBidRequest(
-        serverAllocation, corporateAllocation, facts, defaults, depth
+    # Parse command line to get company file
+    parser = argparse.ArgumentParser(description="Compute emissions for an ad tech company")
+    parser.add_argument(
+        "-d",
+        "--defaultsFile",
+        default="defaults.yaml",
+        help="Set the defaults file to use (overrides defaults.yaml)",
     )
-    primaryEmissionsPerCookieSync = getPrimaryEmissionsPerCookieSync(
-        serverAllocation, facts, defaults, depth
+    parser.add_argument("-v", "--verbose", action="store_true", help="Show derivation of output")
+    parser.add_argument(
+        "-p",
+        "--partners",
+        const=1,
+        default=0,
+        type=int,
+        nargs="?",
+        help="Simulate distribution partners",
     )
-    cookieSyncDistributionRatio = get_fact_or_default(
-        "cookie sync distribution ratio", facts, defaults, depth - 1
-    )
-    bidRequestRejectionRate = (
-        get_fact_or_default("bid request rejection pct", facts, defaults, depth - 1) / 100.0
-    )
-    model = AdTechPlatform(
-        product["name"],
-        identifier,
-        primaryEmissionsPerBidRequest,
-        primaryEmissionsPerCookieSync,
-        cookieSyncDistributionRatio,
-        bidRequestRejectionRate,
-    )
-    productModels.append(model)
+    parser.add_argument("companyFile", nargs=1, help="The company file to parse in YAML format")
+    args = parser.parse_args()
+    if args.verbose:
+        logging.basicConfig(level=logging.INFO)
 
-print(yaml.dump({"products": productModels}, Dumper=yaml.Dumper))
+    # Load defaults
+    defaultsStream = open(args.defaultsFile, "r")
+    defaultsDocument = yaml.load(defaultsStream, Loader=SafeLoader)
 
-if args.partners and args.verbose:
-    distributionPartners: list[DistributionPartner] = []
-    for i in range(args.partners):
-        partner = AdTechPlatform(f"dummy {i}", f"dummy{i}.com", 0.001, 0.0001, 1.0, 0.3)
-        distributionPartners.append(DistributionPartner(partner, 1.0))
+    # Load facts about the company
+    stream = open(args.companyFile[0], "r")
+    document = yaml.load(stream, Loader=SafeLoader)
+    if "company" not in document:
+        raise Exception("No 'company' field found in company file")
+    if "products" not in document["company"]:
+        raise Exception("No 'products' field found in company file")
+    if "sources" not in document["company"]:
+        raise Exception("No 'sources' field found in company file")
+    facts = get_facts_from_sources(document["company"]["sources"])
 
-    getSecondaryEmissionsPerBidRequest(productModels[0], distributionPartners)
-    getSecondaryEmissionsPerCookieSync(productModels[0], distributionPartners)
+    depth = 4 if args.verbose else 0
+    productModels = []
+    for product in document["company"]["products"]:
+        if "name" not in product:
+            raise Exception("No 'name' field found in a product")
+
+        logging.info(f"#### {product['name']}")
+        template = getProductInfo("template", None, product, 0)
+        identifier = getProductInfo("identifier", None, product, 0)
+        serverAllocation = getProductInfo("server allocation pct", 100, product, 0) / 100
+        corporateAllocation = getProductInfo("corporate allocation pct", 100, product, 0) / 100
+        if template not in defaultsDocument["defaults"]:
+            raise Exception(f"Template {template} not found in defaults")
+        defaults = defaultsDocument["defaults"][template]
+        primaryEmissionsPerBidRequest = getPrimaryEmissionsPerBidRequest(
+            serverAllocation, corporateAllocation, facts, defaults, depth
+        )
+        primaryEmissionsPerCookieSync = getPrimaryEmissionsPerCookieSync(
+            serverAllocation, facts, defaults, depth
+        )
+        cookieSyncDistributionRatio = get_fact_or_default(
+            "cookie sync distribution ratio", facts, defaults, depth - 1
+        )
+        bidRequestRejectionRate = (
+            get_fact_or_default("bid request rejection pct", facts, defaults, depth - 1) / 100.0
+        )
+        model = AdTechPlatform(
+            product["name"],
+            identifier,
+            primaryEmissionsPerBidRequest,
+            primaryEmissionsPerCookieSync,
+            cookieSyncDistributionRatio,
+            bidRequestRejectionRate,
+        )
+        productModels.append(model)
+
+    print(yaml.dump({"products": productModels}, Dumper=yaml.Dumper))
+
+    if args.partners and args.verbose:
+        distributionPartners: list[DistributionPartner] = []
+        for i in range(args.partners):
+            partner = AdTechPlatform(f"dummy {i}", f"dummy{i}.com", 0.001, 0.0001, 1.0, 0.3)
+            distributionPartners.append(DistributionPartner(partner, 1.0))
+
+        getSecondaryEmissionsPerBidRequest(productModels[0], distributionPartners, depth - 1)
+        getSecondaryEmissionsPerCookieSync(productModels[0], distributionPartners, depth - 1)
+
+
+if __name__ == "__main__":
+    main()
