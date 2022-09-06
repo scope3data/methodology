@@ -4,7 +4,6 @@ import argparse
 import logging
 
 import yaml
-from corporate import get_corporate_emissions
 from utils import get_fact_or_default, get_facts_from_sources, log_result
 from yaml.loader import SafeLoader
 
@@ -63,6 +62,14 @@ parser.add_argument(
 )
 parser.add_argument("-v", "--verbose", action="store_true", help="Show derivation of output")
 parser.add_argument("companyFile", nargs=1, help="The company file to parse in YAML format")
+parser.add_argument(
+    "-c",
+    "--corporateEmissionsG",
+    default=0,
+    type=float,
+    nargs="?",
+    help="Provide the corporate emissions for organization in grams",
+)
 args = parser.parse_args()
 
 if args.verbose:
@@ -85,9 +92,7 @@ facts: dict[str, float] = get_facts_from_sources(document["company"]["sources"])
 
 if "publisher" not in defaultsDocument["defaults"]:
     raise Exception("Publisher template not found")
-corporate_emissions = (
-    get_corporate_emissions(facts, defaultsDocument["defaults"]["publisher"], 0) * 1000000
-)
+corporate_emissionsG = args.corporateEmissionsG
 
 depth = 4 if args.verbose else 0
 
@@ -228,7 +233,7 @@ for property in document["company"]["properties"]:
 
 for property in properties:
     property.set_corporate_emissions(
-        corporate_emissions * property.impressions / publisher_impressions
+        corporate_emissionsG * property.impressions / publisher_impressions
     )
 
 print(yaml.dump({"properties": properties}, Dumper=yaml.Dumper))

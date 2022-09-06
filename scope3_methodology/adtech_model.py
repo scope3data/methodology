@@ -4,7 +4,6 @@ import argparse
 import logging
 
 import yaml
-from corporate import get_corporate_emissions
 from utils import get_fact_or_default, get_facts_from_sources, log_result, log_step
 from yaml.loader import SafeLoader
 
@@ -74,12 +73,12 @@ def getProductInfo(key: str, default: float | None, product: dict[str, float], d
 
 
 def getCorporateEmissionsPerBidRequest(
+    corporateEmissionsG: float,
     corporateAllocation: float,
     facts: dict[str, float],
     defaults: dict[str, float],
     depth: int,
 ) -> float:
-    corporateEmissionsG = get_corporate_emissions(facts, defaults, depth - 1) * 1000000
     bidRequests = (
         get_fact_or_default("bid requests processed billion per month", facts, defaults, depth - 1)
         * 1000000000
@@ -181,13 +180,14 @@ def getServerEmissionsPerBidRequest(
 
 def getPrimaryEmissionsPerBidRequest(
     serverAllocation: float,
+    corporateEmissionsG: float, 
     corporateAllocation: float,
     facts: dict[str, float],
     defaults: dict[str, float],
     depth: int,
 ) -> float:
     corporateEmissionsPerBidRequest = getCorporateEmissionsPerBidRequest(
-        corporateAllocation, facts, defaults, depth - 1
+        corporateEmissionsG, corporateAllocation, facts, defaults, depth - 1
     )
     dataTransferEmissionsPerBidRequest = getDataTransferEmissionsPerBidRequest(
         facts, defaults, depth - 1
@@ -313,6 +313,15 @@ def main():
         help="Simulate distribution partners",
     )
     parser.add_argument("companyFile", nargs=1, help="The company file to parse in YAML format")
+    parser.add_argument(
+        "-c",
+        "--corporateEmissions",
+        default=0,
+        type=float,
+        nargs=1,
+        help="Provide the corporate emissions for organization",
+    )
+
     args = parser.parse_args()
     if args.verbose:
         logging.basicConfig(level=logging.INFO)
@@ -347,7 +356,7 @@ def main():
             raise Exception(f"Template {template} not found in defaults")
         defaults = defaultsDocument["defaults"][template]
         primaryEmissionsPerBidRequest = getPrimaryEmissionsPerBidRequest(
-            serverAllocation, corporateAllocation, facts, defaults, depth
+            args.corporateEmissions[0], serverAllocation, corporateAllocation, facts, defaults, depth
         )
         primaryEmissionsPerCookieSync = getPrimaryEmissionsPerCookieSync(
             serverAllocation, facts, defaults, depth
