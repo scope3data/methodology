@@ -60,7 +60,7 @@ def get_ad_tech_model_keys() -> set[str]:
     }
 
 
-def getProductInfo(key: str, default: float | None, product: dict[str, float], depth: int):
+def get_product_info(key: str, default: float | None, product: dict[str, str], depth: int):
     if key in product:
         log_step(key, product[key], "", depth)
         return product[key]
@@ -72,43 +72,43 @@ def getProductInfo(key: str, default: float | None, product: dict[str, float], d
     )
 
 
-def getCorporateEmissionsPerBidRequest(
+def get_corporate_emissions_per_bid_request(
     corporate_emissions_g: float,
     corporate_allocation: float,
     facts: dict[str, float],
     defaults: dict[str, float],
     depth: int,
 ) -> float:
-    bidRequests = (
+    bid_requests = (
         get_fact_or_default("bid requests processed billion per month", facts, defaults, depth - 1)
         * 1000000000
     )
-    corporateEmissionsPerBidRequest = corporate_allocation * corporate_emissions_g / bidRequests
+    emissions = corporate_allocation * corporate_emissions_g / bid_requests
     log_result(
         "corporate emissions g per bid request",
-        f"{corporateEmissionsPerBidRequest}:.8f",
+        f"{emissions}:.8f",
         depth,
     )
-    return corporateEmissionsPerBidRequest
+    return emissions
 
 
-def getExternalRequestRatio(
+def get_external_request_ratio(
     facts: dict[str, float], defaults: dict[str, float], depth: int
 ) -> float:
     if (
         "ad tech platform bid requests processed billion per month" in facts
         and "bid requests processed billion per month" in facts
     ):
-        atpRequests = get_fact_or_default(
+        atp_requests = get_fact_or_default(
             "ad tech platform bid requests processed billion per month",
             facts,
             defaults,
             depth - 1,
         )
-        bidRequests = get_fact_or_default(
+        bid_requests = get_fact_or_default(
             "bid requests processed billion per month", facts, defaults, depth - 1
         )
-        ratio = atpRequests / bidRequests
+        ratio = atp_requests / bid_requests
         log_result("external request ratio", f"{ratio * 100.0:.1f}%", depth)
         return ratio
     return (
@@ -122,102 +122,102 @@ def getExternalRequestRatio(
     )
 
 
-def getDataTransferEmissionsPerBidRequest(
+def get_data_transfer_emissions_per_bid_request(
     facts: dict[str, float], defaults: dict[str, float], depth: int
 ) -> float:
     if "data transfer emissions mt per month" in facts:
         return get_fact_or_default("data transfer emissions mt per month", facts, defaults, depth)
 
-    externalRequestRatio = getExternalRequestRatio(facts, defaults, depth - 1)
-    bidRequestSizeGB = (
+    external_request_ratio = get_external_request_ratio(facts, defaults, depth - 1)
+    bid_request_size_gb = (
         get_fact_or_default("bid request size in bytes", facts, defaults, depth - 1)
         / 1024
         / 1024
         / 1024
     )
-    serverToServerEmissionsPerGB = get_fact_or_default(
+    server_to_server_emissions_per_gb = get_fact_or_default(
         "server to server emissions g per gb", facts, defaults, depth - 1
     )
-    dataTransferEmissionsPerBidRequest = (
-        externalRequestRatio * bidRequestSizeGB * serverToServerEmissionsPerGB
+    data_transfer_emissions_per_bid_request = (
+        external_request_ratio * bid_request_size_gb * server_to_server_emissions_per_gb
     )
 
     log_result(
         "data transfer emissions g per bid request",
-        f"{dataTransferEmissionsPerBidRequest:.8f}",
+        f"{data_transfer_emissions_per_bid_request:.8f}",
         depth,
     )
-    return dataTransferEmissionsPerBidRequest
+    return data_transfer_emissions_per_bid_request
 
 
-def getServerEmissionsPerBidRequest(
-    serverAllocation: float,
+def get_server_emissions_per_bid_request(
+    server_allocation: float,
     facts: dict[str, float],
     defaults: dict[str, float],
     depth: int,
 ) -> float:
-    serverEmissionsG = (
+    server_emissions_g = (
         get_fact_or_default("server emissions mt per month", facts, defaults, depth - 1) * 1000000
     )
-    bidRequests = (
+    bid_requests = (
         get_fact_or_default("bid requests processed billion per month", facts, defaults, depth - 1)
         * 1000000000
     )
-    serversProcessingBidRequests = (
+    servers_processing_bid_requests = (
         get_fact_or_default("servers processing bid requests pct", facts, defaults, depth - 1)
         / 100.0
     )
-    serverEmissionsPerBidRequest = (
-        serverAllocation * serverEmissionsG * serversProcessingBidRequests / bidRequests
+    server_emissions_per_bid_request = (
+        server_allocation * server_emissions_g * servers_processing_bid_requests / bid_requests
     )
     log_result(
         "server emissions g per bid request",
-        f"{serverEmissionsPerBidRequest:.6f}",
+        f"{server_emissions_per_bid_request:.6f}",
         depth,
     )
-    return serverEmissionsPerBidRequest
+    return server_emissions_per_bid_request
 
 
-def getPrimaryEmissionsPerBidRequest(
-    corporateEmissionsPerBidRequest: float,
-    serverAllocation: float,
+def get_primary_emissions_per_bid_request(
+    corporate_emissions_per_bid_request: float,
+    server_allocation: float,
     facts: dict[str, float],
     defaults: dict[str, float],
     depth: int,
 ) -> float:
-    dataTransferEmissionsPerBidRequest = getDataTransferEmissionsPerBidRequest(
+    data_transfer_emissions_per_bid_request = get_data_transfer_emissions_per_bid_request(
         facts, defaults, depth - 1
     )
-    serverEmissionsPerBidRequest = getServerEmissionsPerBidRequest(
-        serverAllocation, facts, defaults, depth - 1
+    server_emissions_per_bid_request = get_server_emissions_per_bid_request(
+        server_allocation, facts, defaults, depth - 1
     )
-    primaryEmissionsPerBidRequest = (
-        corporateEmissionsPerBidRequest
-        + dataTransferEmissionsPerBidRequest
-        + serverEmissionsPerBidRequest
+    primary_emissions_per_bid_request = (
+        corporate_emissions_per_bid_request
+        + data_transfer_emissions_per_bid_request
+        + server_emissions_per_bid_request
     )
     log_result(
         "primary emissions mt per billion bid requests",
-        f"{primaryEmissionsPerBidRequest:.6f}",
+        f"{primary_emissions_per_bid_request:.6f}",
         depth,
     )
-    return primaryEmissionsPerBidRequest
+    return primary_emissions_per_bid_request
 
 
-def getSecondaryEmissionsPerBidRequest(
-    model: AdTechPlatform, distributionPartners: list[DistributionPartner], depth: int
+def get_secondary_emissions_per_bid_request(
+    model: AdTechPlatform, distribution_partners: list[DistributionPartner], depth: int
 ) -> float:
-    secondaryEmissionsPerBidRequest = 0.0
-    for edge in distributionPartners:
-        secondaryEmissionsPerBidRequest += (
+    secondary_emissions_per_bid_request = 0.0
+    for edge in distribution_partners:
+        secondary_emissions_per_bid_request += (
             edge.partner.primary_bid_request_emissions * edge.bid_request_distribution_rate
         )
-    secondaryEmissionsPerBidRequest *= 1 - model.bid_request_rejection_rate
-    log_result("secondary emissions g per bid request", secondaryEmissionsPerBidRequest, depth)
-    return secondaryEmissionsPerBidRequest
+    secondary_emissions_per_bid_request *= 1 - model.bid_request_rejection_rate
+    log_result("secondary emissions g per bid request", secondary_emissions_per_bid_request, depth)
+    return secondary_emissions_per_bid_request
 
 
-def getCookieSyncsProcessed(
+def get_cookie_syncs_processed(
     facts: dict[str, float], defaults: dict[str, float], depth: int
 ) -> float:
     if "cookie syncs processed billion per month" in facts:
@@ -225,59 +225,61 @@ def getCookieSyncsProcessed(
             get_fact_or_default("cookie syncs processed billion per month", facts, defaults, depth)
             * 1000000000
         )
-    cookieSyncsPerBidRequest = get_fact_or_default(
+    cookie_syncs_per_bid_request = get_fact_or_default(
         "cookie syncs processed per bid request", facts, defaults, depth - 1
     )
-    bidRequests = (
+    bid_requests = (
         get_fact_or_default("bid requests processed billion per month", facts, defaults, depth - 1)
         * 1000000000
     )
-    cookieSyncsProcessed = bidRequests * cookieSyncsPerBidRequest
-    log_result("cookie syncs processed per month", cookieSyncsProcessed, depth)
-    return cookieSyncsProcessed
+    cookie_syncs_processed = bid_requests * cookie_syncs_per_bid_request
+    log_result("cookie syncs processed per month", cookie_syncs_processed, depth)
+    return cookie_syncs_processed
 
 
-def getWaterUsageToEmissionsRatio(
+def get_water_usage_to_emissions_ratio(
     facts: dict[str, float], defaults: dict[str, float], depth: int
 ) -> float:
-    waterPerMWh = get_fact_or_default(
+    water_per_m_wh = get_fact_or_default(
         "datacenter water intensity h2o m^3 per mwh", facts, defaults, depth - 1
     )
-    emissionsPerKWh = get_fact_or_default("server emissions g per kwh", facts, defaults, depth - 1)
-    waterM3PerEmissionsG = waterPerMWh / emissionsPerKWh / 1000
-    log_result("h2o m^3 per g emissions", waterM3PerEmissionsG, depth)
-    return waterM3PerEmissionsG
+    emissions_per_k_wh = get_fact_or_default(
+        "server emissions g per kwh", facts, defaults, depth - 1
+    )
+    water_m3_per_emissions_g = water_per_m_wh / emissions_per_k_wh / 1000
+    log_result("h2o m^3 per g emissions", water_m3_per_emissions_g, depth)
+    return water_m3_per_emissions_g
 
 
-def getPrimaryEmissionsPerCookieSync(
-    serverAllocation: float,
+def get_primary_emissions_per_cookie_sync(
+    server_allocation: float,
     facts: dict[str, float],
     defaults: dict[str, float],
     depth: int,
 ) -> float:
-    serverEmissionsG = (
+    server_emissions_g = (
         get_fact_or_default("server emissions mt per month", facts, defaults, depth - 1) * 1000000
     )
-    cookieSyncRequests = getCookieSyncsProcessed(facts, defaults, depth - 1)
-    serversProcessingCookieSyncs = (
+    requests = get_cookie_syncs_processed(facts, defaults, depth - 1)
+    servers_processing_cookie_syncs = (
         get_fact_or_default("servers processing cookie syncs pct", facts, defaults, depth - 1)
         / 100.0
     )
-    primaryEmissionsPerCookieSync = (
-        serverAllocation * serverEmissionsG * serversProcessingCookieSyncs / cookieSyncRequests
+    primary_emissions_per_cookie_sync = (
+        server_allocation * server_emissions_g * servers_processing_cookie_syncs / requests
     )
-    log_result("primary emissions g per cookie sync", primaryEmissionsPerCookieSync, depth)
-    waterUsageToEmissionsRatio = getWaterUsageToEmissionsRatio(facts, defaults, depth - 1)
-    primaryWaterUsagePerCookieSync = primaryEmissionsPerCookieSync * waterUsageToEmissionsRatio
-    log_result("primary water usage m^3 per cookie sync", primaryWaterUsagePerCookieSync, depth)
-    return primaryEmissionsPerCookieSync
+    log_result("primary emissions g per cookie sync", primary_emissions_per_cookie_sync, depth)
+    water_usage_to_emissions_ratio = get_water_usage_to_emissions_ratio(facts, defaults, depth - 1)
+    primary_water_usage = primary_emissions_per_cookie_sync * water_usage_to_emissions_ratio
+    log_result("primary water usage m^3 per cookie sync", primary_water_usage, depth)
+    return primary_water_usage
 
 
-def getSecondaryEmissionsPerCookieSync(
-    model: AdTechPlatform, distributionPartners: list[DistributionPartner], depth: int
+def get_secondary_emissions_per_cookie_sync(
+    model: AdTechPlatform, distribution_partners: list[DistributionPartner], depth: int
 ) -> float:
     secondary_emissions_per_cookie_sync = 0.0
-    for edge in distributionPartners:
+    for edge in distribution_partners:
         secondary_emissions_per_cookie_sync += edge.partner.primary_cookie_sync_emissions
     secondary_emissions_per_cookie_sync *= model.cookie_sync_distribution_rate
     log_result(
@@ -286,6 +288,58 @@ def getSecondaryEmissionsPerCookieSync(
         depth,
     )
     return secondary_emissions_per_cookie_sync
+
+
+def process_product(
+    product: dict[str, str],
+    facts: dict[str, float],
+    defaults_document: dict[str, dict[str, dict[str, float]]],
+    corporate_emissions_g: float | None,
+    corporate_emissions_g_per_imp: float | None,
+    depth: int,
+) -> AdTechPlatform:
+    if "name" not in product:
+        raise Exception("No 'name' field found in a product")
+
+    logging.info(f"#### {product['name']}")
+    template = get_product_info("template", None, product, 0)
+    identifier = get_product_info("identifier", None, product, 0)
+    server_allocation = get_product_info("server allocation pct", 100, product, 0) / 100
+    corporate_allocation = get_product_info("corporate allocation pct", 100, product, 0) / 100
+    if template not in defaults_document["defaults"]:
+        raise Exception(f"Template {template} not found in defaults")
+    defaults = defaults_document["defaults"][template]
+
+    corporate_emissions_per_bid_request = corporate_emissions_g_per_imp
+    if corporate_emissions_g:
+        corporate_emissions_per_bid_request = get_corporate_emissions_per_bid_request(
+            corporate_emissions_g, corporate_allocation, facts, defaults, depth - 1
+        )
+
+    if not corporate_emissions_per_bid_request:
+        raise Exception("failed to compute corporate emissions per bid request")
+
+    primary_emissions_per_bid_request = get_primary_emissions_per_bid_request(
+        corporate_emissions_per_bid_request, server_allocation, facts, defaults, depth
+    )
+    primary_emissions_per_cookie_sync = get_primary_emissions_per_cookie_sync(
+        server_allocation, facts, defaults, depth
+    )
+    cookie_sync_distribution_ratio = get_fact_or_default(
+        "cookie sync distribution ratio", facts, defaults, depth - 1
+    )
+    bid_request_rejection_rate = (
+        get_fact_or_default("bid request rejection pct", facts, defaults, depth - 1) / 100.0
+    )
+    model = AdTechPlatform(
+        str(product["name"]),
+        identifier,
+        primary_emissions_per_bid_request,
+        primary_emissions_per_cookie_sync,
+        cookie_sync_distribution_ratio,
+        bid_request_rejection_rate,
+    )
+    return model
 
 
 def main():
@@ -328,8 +382,8 @@ def main():
         logging.basicConfig(level=logging.INFO)
 
     # Load defaults
-    defaultsStream = open(args.defaultsFile, "r")
-    defaultsDocument = yaml.load(defaultsStream, Loader=SafeLoader)
+    defaults_stream = open(args.defaultsFile, "r")
+    defaults_document = yaml.load(defaults_stream, Loader=SafeLoader)
 
     # Load facts about the company
     stream = open(args.companyFile[0], "r")
@@ -349,58 +403,28 @@ def main():
         raise Exception("Must provide either --corporateEmissionsG or --corporateEmissionsGPerImp")
 
     depth = 4 if args.verbose else 0
-    productModels = []
+    product_models = []
     for product in document["company"]["products"]:
-        if "name" not in product:
-            raise Exception("No 'name' field found in a product")
+        model = process_product(
+            product,
+            facts,
+            defaults_document,
+            corporate_emissions_g,
+            corporate_emissions_g_per_imp,
+            depth,
+        )
+        product_models.append(model)
 
-        logging.info(f"#### {product['name']}")
-        template = getProductInfo("template", None, product, 0)
-        identifier = getProductInfo("identifier", None, product, 0)
-        serverAllocation = getProductInfo("server allocation pct", 100, product, 0) / 100
-        corporateAllocation = getProductInfo("corporate allocation pct", 100, product, 0) / 100
-        if template not in defaultsDocument["defaults"]:
-            raise Exception(f"Template {template} not found in defaults")
-        defaults = defaultsDocument["defaults"][template]
-
-        corporate_emissions_per_bid_request = corporate_emissions_g_per_imp
-        if corporate_emissions_g:
-            corporate_emissions_per_bid_request = getCorporateEmissionsPerBidRequest(
-                corporate_emissions_g, corporateAllocation, facts, defaults, depth - 1
-            )
-
-        primaryEmissionsPerBidRequest = getPrimaryEmissionsPerBidRequest(
-            corporate_emissions_per_bid_request, serverAllocation, facts, defaults, depth
-        )
-        primaryEmissionsPerCookieSync = getPrimaryEmissionsPerCookieSync(
-            serverAllocation, facts, defaults, depth
-        )
-        cookieSyncDistributionRatio = get_fact_or_default(
-            "cookie sync distribution ratio", facts, defaults, depth - 1
-        )
-        bidRequestRejectionRate = (
-            get_fact_or_default("bid request rejection pct", facts, defaults, depth - 1) / 100.0
-        )
-        model = AdTechPlatform(
-            product["name"],
-            identifier,
-            primaryEmissionsPerBidRequest,
-            primaryEmissionsPerCookieSync,
-            cookieSyncDistributionRatio,
-            bidRequestRejectionRate,
-        )
-        productModels.append(model)
-
-    print(yaml.dump({"products": productModels}, Dumper=yaml.Dumper))
+    print(yaml.dump({"products": product_models}, Dumper=yaml.Dumper))
 
     if args.partners and args.verbose:
-        distributionPartners: list[DistributionPartner] = []
+        distribution_partners: list[DistributionPartner] = []
         for i in range(args.partners):
             partner = AdTechPlatform(f"dummy {i}", f"dummy{i}.com", 0.001, 0.0001, 1.0, 0.3)
-            distributionPartners.append(DistributionPartner(partner, 1.0))
+            distribution_partners.append(DistributionPartner(partner, 1.0))
 
-        getSecondaryEmissionsPerBidRequest(productModels[0], distributionPartners, depth - 1)
-        getSecondaryEmissionsPerCookieSync(productModels[0], distributionPartners, depth - 1)
+        get_secondary_emissions_per_bid_request(product_models[0], distribution_partners, depth - 1)
+        get_secondary_emissions_per_cookie_sync(product_models[0], distribution_partners, depth - 1)
 
 
 if __name__ == "__main__":
