@@ -42,7 +42,7 @@ The file must have:
 
 To model emissions, make sure defaults have been computed. Then run:
 ```sh
-./scope3_methodology/adtech_model.py --verbose [your_model.yaml]
+./scope3_methodology/adtech_model.py --verbose  [--corporateEmissionsG]  [--corporateEmissionsGPerRequest] [your_model.yaml]
 ```
 
 If you want to see how the secondary emissions would be modeled, pass in `-p N` where N is the number of partners to simulate.

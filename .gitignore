@@ -1,5 +1,7 @@
 # Output files
-defaults.yaml
+atp-defaults.yaml
+organization-defaults.yaml
+property-defaults.yaml
 
 # git
 *.swp

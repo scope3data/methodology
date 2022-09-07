@@ -4,7 +4,6 @@ import argparse
 import logging
 
 import yaml
-from corporate import get_corporate_emissions
 from utils import get_fact_or_default, get_facts_from_sources, log_result, log_step
 from yaml.loader import SafeLoader
 
@@ -74,17 +73,17 @@ def getProductInfo(key: str, default: float | None, product: dict[str, float], d
 
 
 def getCorporateEmissionsPerBidRequest(
-    corporateAllocation: float,
+    corporate_emissions_g: float,
+    corporate_allocation: float,
     facts: dict[str, float],
     defaults: dict[str, float],
     depth: int,
 ) -> float:
-    corporateEmissionsG = get_corporate_emissions(facts, defaults, depth - 1) * 1000000
     bidRequests = (
         get_fact_or_default("bid requests processed billion per month", facts, defaults, depth - 1)
         * 1000000000
     )
-    corporateEmissionsPerBidRequest = corporateAllocation * corporateEmissionsG / bidRequests
+    corporateEmissionsPerBidRequest = corporate_allocation * corporate_emissions_g / bidRequests
     log_result(
         "corporate emissions g per bid request",
         f"{corporateEmissionsPerBidRequest}:.8f",
@@ -180,15 +179,12 @@ def getServerEmissionsPerBidRequest(
 
 
 def getPrimaryEmissionsPerBidRequest(
+    corporateEmissionsPerBidRequest: float,
     serverAllocation: float,
-    corporateAllocation: float,
     facts: dict[str, float],
     defaults: dict[str, float],
     depth: int,
 ) -> float:
-    corporateEmissionsPerBidRequest = getCorporateEmissionsPerBidRequest(
-        corporateAllocation, facts, defaults, depth - 1
-    )
     dataTransferEmissionsPerBidRequest = getDataTransferEmissionsPerBidRequest(
         facts, defaults, depth - 1
     )
@@ -299,8 +295,8 @@ def main():
     parser.add_argument(
         "-d",
         "--defaultsFile",
-        default="defaults.yaml",
-        help="Set the defaults file to use (overrides defaults.yaml)",
+        default="atp-defaults.yaml",
+        help="Set the defaults file to use (overrides atp-defaults.yaml)",
     )
     parser.add_argument("-v", "--verbose", action="store_true", help="Show derivation of output")
     parser.add_argument(
@@ -311,6 +307,20 @@ def main():
         type=int,
         nargs="?",
         help="Simulate distribution partners",
+    )
+    parser.add_argument(
+        "--corporateEmissionsG",
+        const=1,
+        type=float,
+        nargs="?",
+        help="Provide the corporate emissionsfor organization",
+    )
+    parser.add_argument(
+        "--corporateEmissionsGPerImp",
+        const=1,
+        type=float,
+        nargs="?",
+        help="Provide the corporate emissions for organization per bid request",
     )
     parser.add_argument("companyFile", nargs=1, help="The company file to parse in YAML format")
     args = parser.parse_args()
@@ -332,6 +342,12 @@ def main():
         raise Exception("No 'sources' field found in company file")
     facts = get_facts_from_sources(document["company"]["sources"])
 
+    corporate_emissions_g = args.corporateEmissionsG
+    corporate_emissions_g_per_imp = args.corporateEmissionsGPerImp
+
+    if not corporate_emissions_g and not corporate_emissions_g_per_imp:
+        raise Exception("Must provide either --corporateEmissionsG or --corporateEmissionsGPerImp")
+
     depth = 4 if args.verbose else 0
     productModels = []
     for product in document["company"]["products"]:
@@ -346,8 +362,15 @@ def main():
         if template not in defaultsDocument["defaults"]:
             raise Exception(f"Template {template} not found in defaults")
         defaults = defaultsDocument["defaults"][template]
+
+        corporate_emissions_per_bid_request = corporate_emissions_g_per_imp
+        if corporate_emissions_g:
+            corporate_emissions_per_bid_request = getCorporateEmissionsPerBidRequest(
+                corporate_emissions_g, corporateAllocation, facts, defaults, depth - 1
+            )
+
         primaryEmissionsPerBidRequest = getPrimaryEmissionsPerBidRequest(
-            serverAllocation, corporateAllocation, facts, defaults, depth
+            corporate_emissions_per_bid_request, serverAllocation, facts, defaults, depth
         )
         primaryEmissionsPerCookieSync = getPrimaryEmissionsPerCookieSync(
             serverAllocation, facts, defaults, depth

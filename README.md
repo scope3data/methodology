@@ -61,15 +61,21 @@ To write defaults from latest sources:
 ./scope3_methodology/compute_defaults.py
 ```
 
+To compute the corporate emissions, pass in its YAML file:
+
+```sh
+./scope3_methodology/corporate.py --verbose  [--publisher] [--adTechPlatform] [your_model.yaml]
+```
+
 To compute the emissions for an ad tech company, pass in its YAML file:
 
 ```sh
-./scope3_methodology/adtech_model.py -v sources/companies/criteo/data.yaml
+./scope3_methodology/adtech_model.py -v [--corporateEmissionsG]  [--corporateEmissionsGPerRequest] sources/companies/criteo/data.yaml
 ```
 
 To compute the emissions for publisher, pass in its YAML file:
 
 ```sh
-./scope3_methodology/publisher.py -vsources/companies/theguardian/data.yaml
+./scope3_methodology/publisher.py -v [--corporateEmissionsG]  [--corporateEmissionsGPerImp] sources/companies/theguardian/data.yaml
 
 ```

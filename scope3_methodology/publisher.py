@@ -4,7 +4,6 @@ import argparse
 import logging
 
 import yaml
-from corporate import get_corporate_emissions
 from utils import get_fact_or_default, get_facts_from_sources, log_result
 from yaml.loader import SafeLoader
 
@@ -13,8 +12,8 @@ parser = argparse.ArgumentParser(description="Compute emissions for an publisher
 parser.add_argument(
     "-d",
     "--defaultsFile",
-    default="defaults.yaml",
-    help="Set the defaults file to use (overrides defaults.yaml)",
+    default="property-defaults.yaml",
+    help="Set the defaults file to use (overrides property-defaults.yaml)",
 )
 parser.add_argument(
     "-e",
@@ -61,8 +60,23 @@ parser.add_argument(
     nargs="?",
     help="Simulate multiple auctions",
 )
+parser.add_argument(
+    "--corporateEmissionsG",
+    const=1,
+    type=float,
+    nargs="?",
+    help="Provide the corporate emissions for organization",
+)
+parser.add_argument(
+    "--corporateEmissionsGPerImp",
+    const=1,
+    type=float,
+    nargs="?",
+    help="Provide the corporate emissions for organization per impression",
+)
 parser.add_argument("-v", "--verbose", action="store_true", help="Show derivation of output")
 parser.add_argument("companyFile", nargs=1, help="The company file to parse in YAML format")
+
 args = parser.parse_args()
 
 if args.verbose:
@@ -82,12 +96,6 @@ if "properties" not in document["company"]:
 if "sources" not in document["company"]:
     raise Exception("No 'sources' field found in company file")
 facts: dict[str, float] = get_facts_from_sources(document["company"]["sources"])
-
-if "publisher" not in defaultsDocument["defaults"]:
-    raise Exception("Publisher template not found")
-corporate_emissions = (
-    get_corporate_emissions(facts, defaultsDocument["defaults"]["publisher"], 0) * 1000000
-)
 
 depth = 4 if args.verbose else 0
 
@@ -111,12 +119,15 @@ class Property:
         self.page_load_electricity_kwh = page_load_electricity_kwh
         self.client_device_emissions_g = client_device_emissions_g
 
-    def set_corporate_emissions(self, emissions: float) -> None:
-        self.corporate_emissions_per_impression = round(
-            emissions * self.ad_revenue_allocation / self.impressions, 6
-        )
+    def set_corporate_emissions_per_impression(self, emissionsG: float, emissionsGPerImp) -> None:
+        if emissionsG:
+            self.corporate_emissions_per_impression = round(
+                emissionsG * self.ad_revenue_allocation / self.impressions, 6
+            )
+        else:
+            self.corporate_emissions_per_impression = round(emissionsGPerImp, 6)
         log_result(
-            f"{self.identifier} corporate emissions g",
+            f"{self.identifier} corporate emissions g per impression",
             self.corporate_emissions_per_impression,
             1,
         )
@@ -214,7 +225,6 @@ for property in document["company"]["properties"]:
     log_result("client_device_emissions", client_device_emissions_per_impression, 2)
 
     # TODO - simulate auctions to multiple ad tech partners w/ cookie syncs
-
     properties.append(
         Property(
             identifier,
@@ -226,9 +236,19 @@ for property in document["company"]["properties"]:
         )
     )
 
+corporate_emissions_g = args.corporateEmissionsG
+corporate_emissions_g_per_imp = args.corporateEmissionsGPerImp
+
+if not corporate_emissions_g and not corporate_emissions_g_per_imp:
+    raise Exception("Must provide either --corporateEmissionsG or --corporateEmissionsGPerImp")
+
 for property in properties:
-    property.set_corporate_emissions(
-        corporate_emissions * property.impressions / publisher_impressions
-    )
+    if corporate_emissions_g:
+        property.set_corporate_emissions_per_impression(
+            corporate_emissions_g * property.impressions / publisher_impressions, None
+        )
+    else:
+        property.set_corporate_emissions_per_impression(None, corporate_emissions_g_per_imp)
+
 
 print(yaml.dump({"properties": properties}, Dumper=yaml.Dumper))
