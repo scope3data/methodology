@@ -24,30 +24,30 @@ def compute_emissions(facts: dict[str, float], defaults: dict[str, float], depth
         return get_fact_or_default("corporate emissions mt per month", facts, defaults, depth)
     if "employees" not in facts:
         raise Exception("Must provide either 'corporate emissions mt per month' or 'employees'")
-    officeEmissionsPerEmployee = get_fact_or_default(
+    office_emissions_per_employee = get_fact_or_default(
         "office emissions mt per employee per month", facts, defaults, depth - 1
     )
-    travelEmissionsPerEmployee = get_fact_or_default(
+    travel_emissions_per_employee = get_fact_or_default(
         "travel emissions mt per employee per month", facts, defaults, depth - 1
     )
-    datacenterEmissionsPerEmployee = get_fact_or_default(
+    datacenter_emissions_per_employee = get_fact_or_default(
         "datacenter emissions mt per employee per month", facts, defaults, depth - 1
     )
-    commutingEmissionsPerEmployee = get_fact_or_default(
+    commuting_emissions_per_employee = get_fact_or_default(
         "commuting emissions mt per employee per month", facts, defaults, depth - 1
     )
-    overheadEmissionsPerEmployee = get_fact_or_default(
+    overhead_emissions_per_employee = get_fact_or_default(
         "overhead emissions mt per employee per month", facts, defaults, depth - 1
     )
-    corporateEmissions = get_fact_or_default("employees", facts, defaults, depth - 1) * (
-        officeEmissionsPerEmployee
-        + travelEmissionsPerEmployee
-        + commutingEmissionsPerEmployee
-        + datacenterEmissionsPerEmployee
-        + overheadEmissionsPerEmployee
+    corporate_emissions = get_fact_or_default("employees", facts, defaults, depth - 1) * (
+        office_emissions_per_employee
+        + travel_emissions_per_employee
+        + commuting_emissions_per_employee
+        + datacenter_emissions_per_employee
+        + overhead_emissions_per_employee
     )
-    log_result("corporate emissions mt per month", f"{corporateEmissions:.2f}", depth)
-    return corporateEmissions
+    log_result("corporate emissions mt per month", f"{corporate_emissions:.2f}", depth)
+    return corporate_emissions
 
 
 def main():
@@ -85,8 +85,8 @@ def main():
         logging.basicConfig(level=logging.INFO)
 
     # Load defaults
-    defaultsStream = open(args.defaultsFile, "r")
-    defaultsDocument = yaml.load(defaultsStream, Loader=SafeLoader)
+    defaults_stream = open(args.defaultsFile, "r")
+    defaults_document = yaml.load(defaults_stream, Loader=SafeLoader)
 
     # Load facts about the company
     stream = open(args.companyFile[0], "r")
@@ -100,14 +100,14 @@ def main():
     facts = get_facts_from_sources(document["company"]["sources"])
 
     depth = 4 if args.verbose else 0
-    orgEmissions = {}
+    org_emissions = {}
     if args.publisher:
-        defaults = defaultsDocument["defaults"]["publisher"]
-        orgEmissions["publisher"] = compute_emissions(facts, defaults, depth - 1) * 1000000
+        defaults = defaults_document["defaults"]["publisher"]
+        org_emissions["publisher"] = compute_emissions(facts, defaults, depth - 1) * 1000000
     if args.adTechPlatform:
-        defaults = defaultsDocument["defaults"]["adTechPlatform"]
-        orgEmissions["adTechPlatform"] = compute_emissions(facts, defaults, depth - 1) * 1000000
-    print(yaml.dump({"corporateEmissions": orgEmissions}, Dumper=yaml.Dumper))
+        defaults = defaults_document["defaults"]["adTechPlatform"]
+        org_emissions["adTechPlatform"] = compute_emissions(facts, defaults, depth - 1) * 1000000
+    print(yaml.dump({"corporateEmissions": org_emissions}, Dumper=yaml.Dumper))
 
 
 if __name__ == "__main__":

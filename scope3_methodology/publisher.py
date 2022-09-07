@@ -83,8 +83,8 @@ if args.verbose:
     logging.basicConfig(level=logging.INFO)
 
 # Load defaults
-defaultsStream = open(args.defaultsFile, "r")
-defaultsDocument = yaml.load(defaultsStream, Loader=SafeLoader)
+defaults_stream = open(args.defaultsFile, "r")
+defaults_document = yaml.load(defaults_stream, Loader=SafeLoader)
 
 # Load facts about the company
 stream = open(args.companyFile[0], "r")
@@ -119,13 +119,15 @@ class Property:
         self.page_load_electricity_kwh = page_load_electricity_kwh
         self.client_device_emissions_g = client_device_emissions_g
 
-    def set_corporate_emissions_per_impression(self, emissionsG: float, emissionsGPerImp) -> None:
-        if emissionsG:
+    def set_corporate_emissions_per_impression(
+        self, emissions_g: float, emissions_g_per_imp: float
+    ) -> None:
+        if emissions_g:
             self.corporate_emissions_per_impression = round(
-                emissionsG * self.ad_revenue_allocation / self.impressions, 6
+                emissions_g * self.ad_revenue_allocation / self.impressions, 6
             )
         else:
-            self.corporate_emissions_per_impression = round(emissionsGPerImp, 6)
+            self.corporate_emissions_per_impression = round(emissions_g_per_imp, 6)
         log_result(
             f"{self.identifier} corporate emissions g per impression",
             self.corporate_emissions_per_impression,
@@ -162,9 +164,9 @@ for property in document["company"]["properties"]:
         raise Exception("Each property must have an identifier and a template")
     identifier = get_fact_or_default("identifier", property, None, 1)
     template = get_fact_or_default("template", property, None, 1)
-    if template not in defaultsDocument["defaults"]:
+    if template not in defaults_document["defaults"]:
         raise Exception(f"Template {template} not found in defaults")
-    defaults = defaultsDocument["defaults"][template]
+    defaults = defaults_document["defaults"][template]
 
     property_facts = get_facts_from_sources(property["sources"])
     # no defaults for these - they must be provided
