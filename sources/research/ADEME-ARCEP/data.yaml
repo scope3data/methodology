@@ -8,7 +8,8 @@ sources:
 -
   year: 2020
   name: European Commission, ICT Impact study, Final report
-  url: https://www.arcep.fr/uploads/tx_gspublication/etude-numerique-environnement-ademe-arcep-volet02_janv2022.pdf
+  url: https://circabc.europa.eu/sd/a/8b7319ba-ce4f-49ea-a6e6-b28df00b20d1/ICT%20impact%20study%20final.pdf
+  file: ICT%20impact%20study%20final.pdf
   comment: probably more good data points to pull from this study
   facts:
   -
