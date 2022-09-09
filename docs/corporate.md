@@ -37,5 +37,9 @@ The file must have:
 
 To model emissions, make sure defaults have been computed. Then run:
 ```sh
-./scope3_methodology/corporate.py --verbose  [--publisher] [--adTechPlatform] [your_model.yaml]
+./scope3_methodology/corporate.py --verbose  [--publisher] [--adTechPlatform] [--companyFile your_model.yaml]
+```
+or 
+```sh
+./scope3_methodology/corporate.py --verbose  [--publisher] [--adTechPlatform] [--corporateEmissionFacts object]
 ```
