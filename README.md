@@ -64,11 +64,7 @@ To write defaults from latest sources:
 To compute the corporate emissions, pass in its YAML file:
 
 ```sh
-./scope3_methodology/corporate.py --verbose  [--publisher] [--adTechPlatform] [--companyFile your_model.yaml]
-```
-or 
-```sh
-./scope3_methodology/corporate.py --verbose  [--publisher] [--adTechPlatform] [--corporateEmissionFacts object]
+./scope3_methodology/corporate.py --verbose  [--publisher] [--adTechPlatform] [your_model.yaml]
 ```
 
 To compute the emissions for an ad tech company, pass in its YAML file:
