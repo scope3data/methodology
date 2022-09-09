@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 """ Compute corporate emissions for an organization """
 import argparse
-import json
 import logging
 
 import yaml
@@ -61,7 +60,7 @@ def main():
         help="Set the defaults file to use (overrides organization-defaults.yaml)",
     )
     parser.add_argument("-v", "--verbose", action="store_true", help="Show derivation of output")
-    parser.add_argument("--companyFile", help="The company file to parse in YAML format")
+    parser.add_argument("companyFile", nargs=1, help="The company file to parse in YAML format")
     parser.add_argument(
         "-p",
         "--publisher",
@@ -80,19 +79,6 @@ def main():
         nargs="?",
         help="Whether to compute corporate emissions as if the company is a ad tech platform",
     )
-    parser.add_argument(
-        "-o",
-        "--outputFilename",
-        const=1,
-        type=str,
-        nargs="?",
-    )
-    parser.add_argument(
-        "--corporateEmissionFacts",
-        const=1,
-        type=str,
-        nargs="?",
-    )
 
     args = parser.parse_args()
     if args.verbose:
@@ -103,23 +89,15 @@ def main():
     defaults_document = yaml.load(defaults_stream, Loader=SafeLoader)
 
     # Load facts about the company
-    if not args.companyFile and not args.corporateEmissionFacts:
-        raise Exception("Must provide either --companyFile or --corporateEmissionFacts")
-
-    facts = {}
-    if args.companyFile:
-        print(args.companyFile)
-        stream = open(args.companyFile, "r")
-        document = yaml.load(stream, Loader=SafeLoader)
-        if "company" not in document:
-            raise Exception("No 'company' field found in company file")
-        if "products" not in document["company"]:
-            raise Exception("No 'products' field found in company file")
-        if "sources" not in document["company"]:
-            raise Exception("No 'sources' field found in company file")
-        facts = get_facts_from_sources(document["company"]["sources"])
-    else:
-        facts = json.loads(args.corporateEmissionFacts)
+    stream = open(args.companyFile[0], "r")
+    document = yaml.load(stream, Loader=SafeLoader)
+    if "company" not in document:
+        raise Exception("No 'company' field found in company file")
+    if "products" not in document["company"]:
+        raise Exception("No 'products' field found in company file")
+    if "sources" not in document["company"]:
+        raise Exception("No 'sources' field found in company file")
+    facts = get_facts_from_sources(document["company"]["sources"])
 
     depth = 4 if args.verbose else 0
     org_emissions = {}
@@ -129,14 +107,7 @@ def main():
     if args.adTechPlatform:
         defaults = defaults_document["defaults"]["adTechPlatform"]
         org_emissions["adTechPlatform"] = compute_emissions(facts, defaults, depth - 1) * 1000000
-
-    output = yaml.dump({"corporateEmissions": org_emissions}, Dumper=yaml.Dumper)
-    if args.outputFilename:
-        write_stream = open(args.outputFilename, "w")
-        write_stream.write(output)
-        write_stream.close()
-    else:
-        print(output)
+    print(yaml.dump({"corporateEmissions": org_emissions}, Dumper=yaml.Dumper))
 
 
 if __name__ == "__main__":
