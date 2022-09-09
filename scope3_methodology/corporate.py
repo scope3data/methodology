@@ -60,25 +60,12 @@ def main():
         help="Set the defaults file to use (overrides organization-defaults.yaml)",
     )
     parser.add_argument("-v", "--verbose", action="store_true", help="Show derivation of output")
+    parser.add_argument(
+        "type",
+        choices=["generic", "publisher", "atp"],
+        help="Type of organization for computing defaults",
+    )
     parser.add_argument("companyFile", nargs=1, help="The company file to parse in YAML format")
-    parser.add_argument(
-        "-p",
-        "--publisher",
-        const=1,
-        default=False,
-        type=bool,
-        nargs="?",
-        help="Whether to compute corporate emissions as if the company is a publisher",
-    )
-    parser.add_argument(
-        "-a",
-        "--adTechPlatform",
-        const=1,
-        default=False,
-        type=bool,
-        nargs="?",
-        help="Whether to compute corporate emissions as if the company is a ad tech platform",
-    )
 
     args = parser.parse_args()
     if args.verbose:
@@ -100,14 +87,15 @@ def main():
     facts = get_facts_from_sources(document["company"]["sources"])
 
     depth = 4 if args.verbose else 0
-    org_emissions = {}
-    if args.publisher:
+    defaults = {}
+    if args.type == "publisher":
         defaults = defaults_document["defaults"]["publisher"]
-        org_emissions["publisher"] = compute_emissions(facts, defaults, depth - 1) * 1000000
-    if args.adTechPlatform:
+    elif args.type == "atp":
         defaults = defaults_document["defaults"]["adTechPlatform"]
-        org_emissions["adTechPlatform"] = compute_emissions(facts, defaults, depth - 1) * 1000000
-    print(yaml.dump({"corporateEmissions": org_emissions}, Dumper=yaml.Dumper))
+    else:
+        defaults = defaults_document["defaults"]["generic"]
+    org_emissions = compute_emissions(facts, defaults, depth - 1) * 1000000
+    print(yaml.dump({"corporate_emissions_mt_per_month": org_emissions}, Dumper=yaml.Dumper))
 
 
 if __name__ == "__main__":
