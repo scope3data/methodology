@@ -6,7 +6,7 @@ Modeling the emissions for a single digital ad impression on a property requires
 
 - [Ad tech emissions](#computing-emissions-from-ad-tech)
 - [Consumer device emissions](#calculating-consumer-device-emissions)
-- [Corporate overhead](#corporate-overhead)
+- [Content production](#content-production)
 
 This model is intended to apply all digital media including web, mobile app, and CTV. DOOH should work but we have not thought through it fully. The examples below are generally built around web and need to be updated for other channels.
 
@@ -30,7 +30,7 @@ We model ad tech in three steps:
 
 1. Determine the waterfall used by the publisher so we can differentiate direct buys from programmatic buys, including the number of auctions run at each stage
 2. Determine the ad tech graph
-3. Use the ![Ad Tech Platform Model](adTechModel.md) to determine emissions for each ad tech platform
+3. Use the [Ad Tech Platform Model](adTechModel.md) to determine emissions for each ad tech platform
 
 ### The Monetization Waterfall
 
@@ -105,41 +105,20 @@ There are (at least) two companies that provide grid mix data for a broad range 
 
 At Scope3, we subscribe to Watt Time and use their API; in this open source repo you can pass the carbon intensity into the model on the command line.
 
-## Corporate overhead
+## Content Production
 
 The final part of the publisher model is to allocate corporate overhead - representing the emissions from content production, monetization, and marketing - to each impression.
 
 We do this by calculating corporate emissions per month and dividing by the number of ads per month.
 
-### Estimating corporate emissions
+### Calculating corporate emissions
 
-For publishers that have detailed sustainability reports, we can pull this directly from these filings. For other publishers, we use their employee count (pulled from LinkedIn or equivalent sources) to estimate emissions. For a digital property, we attempt to allocate only the digital ad revenue for each publisher, excluding print and other channels as well as revenue from subscriptions and affiliate programs.
+See [Corporate Emissions](./corporate.md)
 
-Imagine a company that has done a perfect job of measuring its carbon emissions. This company would have analyzed every expense in its financials, gone a level deeper to get activity data, performed lifecycle analysis on each of its products, and then asked each company in its supply chain to do the same.
+### Allocation of corporate emissions by channel and business model
 
-This idealized company does not exist, though Google, Microsoft, Axel Springer, and Salesforce - among others - are making substantive efforts to get there. We can think of this as a spectrum where on the far left is a company that has done nothing to measure its emissions, on the middle-right are these best-of-breed companies, at at the far right is this idealized company who has measured everything.
-
-We need a way to estimate corporate emissions based on the information we have available. We can translate the spectrum above into a table that translates what we know into a methodology to fill in the gaps of what we don't know:
-
-What we know | Estimation methodology
----|---
-Nothing | Use industry-average emissions per impression
-Number of employees | Use industry-average emissions per employee
-Sustainability report with missing or aggregated scope 3 categories | Use industry-average emissions per employee for missing categories
-Complete sustainability report with suboptimal methodology (market-based vs location-based, or omitting embodied emissions, for instance) | Use industry average correction factors
-
-### Calculating industry-average emissions factors
-
-In this repository we aggregate public data from companies who produce sustainability reports - for instance, ![Axel Springer](../sources/companies/axel%20springer/data.yaml). We pull facts from these reports and use them to produce industry average values including:
-
-- Office Emissions Per Employee Per Month
-- Commuting Emissions Per Employee Per Month
-- Travel Emissions Per Employee Per Month
-- Datacenter Emissions Per Employee Per Month (may include cloud)
-- Overhead Emissions Per Employee Per Month (this bucket includes third party software and marketing expenses; we need to get it broken out in a consistent way)
-- Quality Ad Impressions Per Employee Per Month
-
-We only include data that includes all scope 3 categories and uses location-based emissions for electricity use. Unfortunately, this means that very few sustainability reports are usable for us, though we expect this to change quickly.
+For a digital property, we attempt to allocate only the digital ad revenue for each publisher, excluding print and other channels as well as revenue from subscriptions and affiliate programs.
+(TODO)
 
 ### Allocation of corporate emissions to properties
 

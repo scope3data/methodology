@@ -61,10 +61,10 @@ To write defaults from latest sources:
 ./scope3_methodology/compute_defaults.py
 ```
 
-To compute the corporate emissions, pass in its YAML file:
+To compute the corporate emissions, pass in its YAML file and org type (which will make defaults more accurate):
 
 ```sh
-./scope3_methodology/corporate.py --verbose  [--publisher] [--adTechPlatform] [your_model.yaml]
+./scope3_methodology/corporate.py --verbose {generic,atp,publisher} your_model.yaml
 ```
 
 To compute the emissions for an ad tech company, pass in its YAML file:
