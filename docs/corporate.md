@@ -13,9 +13,15 @@ Number of employees | Use industry-average emissions per employee
 Sustainability report with missing or aggregated scope 3 categories | Use industry-average emissions per employee for missing categories
 Complete sustainability report with suboptimal methodology (market-based vs location-based, or omitting embodied emissions, for instance) | Use industry average correction factors
 
+## Mapping emissions into business units
+
+For a company like Google, the corporate sustainability report will be produced for the entire company. Some business units, like YouTube, will be broken out with specific emissions data; other business units will not be.
+
+For a business unit like ad tech inside Google, we need to allocate a percentage of the overall corporate emissions based on percentage of revenue or another method.
+
 ## Calculating industry-average emissions factors
 
-In this repository we aggregate public data from companies who produce sustainability reports - for instance, ![Axel Springer](../sources/companies/axel%20springer/data.yaml). We pull facts from these reports and use them to produce industry average values including:
+In this repository we aggregate public data from companies who produce sustainability reports - for instance, [Axel Springer](../sources/companies/axel%20springer/data.yaml). We pull facts from these reports and use them to produce industry average values including:
 
 - Office Emissions Per Employee Per Month
 - Commuting Emissions Per Employee Per Month
