@@ -1,0 +1,26 @@
+---
+type: corporate
+name: Google
+raw_facts:
+
+  - percentage_of_hourly_carbon_neutral_data_center_electricity_use: 66
+    reference: page 2
+    source_id: 1
+  - water_withdrawal_million_gallons: 6297
+    reference: page 12
+    source_id: 1
+  - carbon_intensity_per_unit_of_revenue_mt_per_million_usd: 7.25
+    reference: page 11
+    source_id: 1
+  - carbon_intensity_mt_per_employee: 12.87
+    reference: page 11
+    source_id: 1
+  - business_travel_and_commuting_mt: 136,000
+    reference: page 11
+    source_id: 1
+sources:
+  - id: 1
+    year: 2021
+    url: >-
+      https://www.gstatic.com/gumdrop/sustainability/google-2022-environmental-report.pdf
+    file: Criteo_CSR_Report_2021.pdf

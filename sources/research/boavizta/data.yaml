@@ -1,9 +1,0 @@
----
-sources:
--
-  year: 2022
-  url: https://dataviz.boavizta.org
-  comment: pulled from the URL on Sep 16, 2022
-  facts:
-  -
-    server embodied emissions kg per kWh: 0.269

@@ -1,0 +1,22 @@
+---
+type: corporate
+name: Criteo
+facts:
+  - travel_emissions_mt_co2e_per_employee_per_month: 0.011
+    reference: page 7
+    source_id: 1
+  - office_emissions_mt_co2e_per_employee_per_month: 0.0176
+  - number_of_employees: 2810
+raw_facts:
+  - office_electricity_kwh: 2262000
+    reference: page 91
+    source_id: 1
+  - office_electricity_kwh_per_employee: 860
+    reference: page 91
+    source_id: 1
+sources:
+  - id: 1
+    year: 2021
+    url: >-
+      https://filecache.investorroom.com/mr5ir_criteo/1674/Criteo_CSR_Report_2021.pdf
+    file: Criteo_CSR_Report_2021.pdf

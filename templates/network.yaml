@@ -2,11 +2,11 @@
 template:
   name: network
   type: atp
-  pct of bid requests processed from ad tech platforms: 20
-  servers processing bid requests pct: 90
-  servers processing cookie syncs pct: 5
-  servers processing creative serving pct: 5
-  cookie syncs processed per bid request: 0.01        # once per 100 bid requests
-  cookie sync distribution ratio: 1                   # send to every distribution partner every time
-  creative serving processed billion per month: 30    # made up & definitely wrong (not used yet)
-  bid request rejection pct: 30
+  bid_requests_processed_from_ad_tech_platforms_pct: 20
+  servers_processing_bid_requests_pct: 90
+  servers_processing_cookie_syncs_pct: 5
+  servers_processing_creative_serving_pct: 5
+  cookie_syncs_processed_per_bid_request: 0.01        # once per 100 bid requests
+  cookie_sync_distribution_ratio: 1                   # send to every distribution partner every time
+  creative_serving_processed_billion_per_month: 30    # made up & definitely wrong (not used yet)
+  bid_request_rejection_pct: 30

@@ -2,5 +2,5 @@
 template:
   name: news_with_print
   type: property
-  quality impressions per duration s: 0.1
-  revenue allocation to digital pct: 70
+  quality_impressions_per_duration_s: 0.1
+  revenue_allocation_to_digital_pct: 70

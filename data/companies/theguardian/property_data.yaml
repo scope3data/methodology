@@ -1,0 +1,32 @@
+---
+type: publisher
+company: The Guardian
+properties:
+  - template: news_with_print
+    identifier: theguardian.com
+    facts:
+      - visits_per_month: 359200000
+        source_id: 1
+      - pages_per_visit:  3.35
+        source_id: 1
+      - average_visit_duration_s: 290
+        source_id: 1
+      - page_size_mb: 3.0
+        source_id: 2
+      - load_time_s: 1.89
+        source_id: 2
+      - corporate_emissions_g_co2e_per_impression: 0.017779455902004453
+        comment: Output of model Sept 20, 2022
+      - revenue_allocation_to_ads_pct: 33.3
+    raw_facts:
+      - requests_per_page: 219
+        source_id: 2
+    sources:
+      - id: 1
+        year: 2022
+        month: 7
+        url: https://www.similarweb.com/website/theguardian.com/#overview
+      - id: 2
+        year: 2022
+        month: 7
+        url: https://tools.pingdom.com/#60bbdd2e2a800000

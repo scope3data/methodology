@@ -1,0 +1,11 @@
+---
+company:
+  name: VTT Technical Research Centre of Finland
+  sources:
+  -
+    year: 2018
+    url: https://www.mdpi.com/2071-1050/10/7/2494
+    facts:
+    -
+      end_user_data_transfer_electricity_use_kwh_per_gb: 0.1
+      comment: projected from 2010 - 2017 rates in Finland

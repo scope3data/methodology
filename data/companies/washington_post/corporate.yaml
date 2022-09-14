@@ -1,0 +1,11 @@
+---
+type: corporate
+name: Washington Post
+facts:
+  - number_of_employees: 3662
+    source_id: 1
+sources:
+  - id: 1
+    year: 2022
+    url: >-
+      https://www.linkedin.com/company/the-washington-post/insights/

@@ -1,0 +1,33 @@
+---
+name: Axel Springer
+facts:
+  - number_of_employees: 16446
+  - office_emissions_mt_co2e_per_employee_per_month: 0.152
+  - commuting_emissions_mt_co2e_per_employee_per_month: 0.0486
+  - travel_emissions_mt_co2e_per_employee_per_month: 0.02
+  - datacenter_emissions_mt_co2e_per_employee_per_month: 0.0136
+  - overhead_emissions_mt_co2e_per_employee_per_month: 0.19
+raw_data:
+  - employees: 16446
+    source: sustainability_report_AS_EN_211001.pdf
+    reference: page 32
+  - office emissions mt per month: 2495
+    source: sustainability_report_AS_EN_211001.pdf
+    reference: page 25
+  - commuting emissions mt per month: 799.9
+    source: sustainability_report_AS_EN_211001.pdf
+    reference: page 26
+  - travel emissions mt per month: 331
+    source: sustainability_report_AS_EN_211001.pdf
+    reference: page 26
+  - datacenter emissions mt per month: 224
+    source: sustainability_report_AS_EN_211001.pdf
+    reference: page 27
+  - overhead emissions mt per month: 3129.5
+    source: sustainability_report_AS_EN_211001.pdf
+    reference: page 27
+reference_files:
+  - year: 2020
+    url: >-
+      https://sustainability.axelspringer.com/wp-content/uploads/2021/10/sustainability_report_AS_EN_211001.pdf
+    file: sustainability_report_AS_EN_211001.pdf

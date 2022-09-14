@@ -1,12 +1,13 @@
 #!/usr/bin/env python
+""" Compute defaults for all templates types [atp, property, organization ] """
 import argparse
 from glob import glob
 
 import yaml
-from adtech_model import get_ad_tech_model_keys
-from corporate import get_corporate_keys
-from utils import get_all_facts
-from yaml.loader import SafeLoader
+from ad_tech_platform.model import AdTechPlatform
+from corporate.model import CorporateEmissions
+from publisher.model import Property
+from utils.utils import get_all_facts
 
 
 def compute_defaults(
@@ -17,9 +18,10 @@ def compute_defaults(
     model_inputs: set[str],
     dry_run: bool,
 ):
+    """Compute defaults for a template type"""
     global_defaults: dict[str, float] = {
         # TODO - get some actual data on this from customers
-        "bid request size in bytes": 10000,
+        "bid_request_size_in_bytes": 10000,
     }
 
     template_defaults = {}
@@ -31,14 +33,14 @@ def compute_defaults(
         for key in facts:
             if key in model_inputs:
                 fact_sum = sum(fact.value for fact in facts[key])  # type: ignore
-                defaults[key] = round(fact_sum / len(facts[key]), 4)  # type: ignore
+                defaults[key] = fact_sum / len(facts[key])  # type: ignore
 
-        for input in model_inputs:
-            if input not in defaults:
-                if input in template:
-                    defaults[input] = template[input]
-                elif input in global_defaults:
-                    defaults[input] = global_defaults[input]
+        for key_input in model_inputs:
+            if key_input not in defaults:
+                if key_input in template:
+                    defaults[key_input] = template[key_input]
+                elif key_input in global_defaults:
+                    defaults[key_input] = global_defaults[key_input]
 
         template_defaults[name] = defaults
 
@@ -46,12 +48,13 @@ def compute_defaults(
     if dry_run:
         print(output)
     else:
-        write_stream = open(defaults_file, "w")
-        write_stream.write(output)
-        write_stream.close()
+        with open(defaults_file, "w") as write_stream:
+            write_stream.write(output)
+            write_stream.close()
 
 
 def main():
+    """Compute defaults for all template types"""
     parser = argparse.ArgumentParser(description="Compute defaults from known sources")
     parser.add_argument(
         "--dry-run",
@@ -61,17 +64,9 @@ def main():
     args = parser.parse_args()
 
     template_keys = {}
-    template_keys["organization"] = get_corporate_keys()
-    template_keys["property"] = {
-        "quality impressions per duration s",
-        "revenue allocation to digital pct",
-        "revenue allocation to ads pct",
-        "end-user data transfer electricity use kwh per gb",
-        "core internet data transfer electricity use kwh per gb",
-        "computer active electricity use watts",
-        "computer idle electricity use watts",
-    }
-    template_keys["atp"] = get_ad_tech_model_keys()
+    template_keys["organization"] = CorporateEmissions.default_fields()
+    template_keys["property"] = Property.default_fields()
+    template_keys["atp"] = AdTechPlatform.default_fields()
 
     # get a list of all facts from our sources
     facts = get_all_facts()
@@ -79,19 +74,26 @@ def main():
     templates = {}
     template_files = glob("templates/*.yaml")
     for file in template_files:
-        stream = open(file, "r")
-        document = yaml.load(stream, Loader=SafeLoader)
-        if "template" not in document:
-            raise Exception(f"'template' field not found in {file}")
-        if "name" not in document["template"]:
-            raise Exception(f"'name' field not found in {file}")
-        if "type" not in document["template"]:
-            raise Exception(f"'type' field not found in {file}")
-        name = document["template"]["name"]
-        templates[name] = document["template"]
+        with open(file, "r") as stream:
+            document = yaml.safe_load(stream)
+            if "template" not in document:
+                raise Exception(f"'template' field not found in {file}")
+            if "name" not in document["template"]:
+                raise Exception(f"'name' field not found in {file}")
+            if "type" not in document["template"]:
+                raise Exception(f"'type' field not found in {file}")
+            name = document["template"]["name"]
+            templates[name] = document["template"]
 
-    for t in template_keys:
-        compute_defaults(t, templates, facts, t + "-defaults.yaml", template_keys[t], args.dry_run)
+    for template in template_keys:
+        compute_defaults(
+            template,
+            templates,
+            facts,
+            template + "-defaults.yaml",
+            template_keys[template],
+            args.dry_run,
+        )
 
 
 if __name__ == "__main__":

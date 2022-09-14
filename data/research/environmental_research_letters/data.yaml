@@ -1,0 +1,21 @@
+---
+company:
+  name: Environmental Research Letters
+  sources:
+  -
+      year: 2018
+      url: https://iopscience.iop.org/article/10.1088/1748-9326/abfba1
+      facts:
+      -
+          min_datacenter_water_intensity_h2o_m_3_per_mwh: 1.8
+      -
+          datacenter_water_intensity_h2o_m_3_per_mwh: 7.1
+      -
+          max_datacenter_water_intensity_h2o_m_3_per_mwh: 106
+      -
+          min_datacenter_water_scarcity_intensity_h2o_m_3_per_mwh: 0.5
+      -
+          datacenter_water_scarcity_intensity_h2o_m_3_per_mwh: 17.9
+          comment: US number; significant variance within the US
+      -
+          max_datacenter_water_scarcity_intensity_h2o_m_3_per_mwh: 305

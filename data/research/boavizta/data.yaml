@@ -1,0 +1,9 @@
+---
+sources:
+-
+  year: 2022
+  url: https://dataviz.boavizta.org
+  comment: pulled from the URL on Sep 16, 2022
+  facts:
+  -
+    server_embodied_emissions_kg_per_k_wh: 0.269

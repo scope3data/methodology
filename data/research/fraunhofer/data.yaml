@@ -1,0 +1,35 @@
+---
+company:
+  name: Fraunhofer USA Center for Sustainable Energy Systems
+  sources:
+  -
+    year: 2017
+    url: https://www.researchgate.net/publication/335911295_Residential_Consumer_Electronics_Energy_Consumption_in_the_United_States_in_2017
+    facts:
+    -
+      desktop_units_millions: 72
+    -
+      laptop_units_millions: 122
+    -
+      monitor_units_millions: 101
+    -
+      desktop_active_electricity_use_watts: 85
+    -
+      desktop_idle_electricity_use_watts: 59
+    -
+      laptop_active_electricity_use_watts: 22
+    -
+      laptop_idle_electricity_use_watts: 11
+    -
+      monitor_active_electricity_use_watts: 30
+    -
+      monitor_idle_electricity_use_watts: 30
+  -
+    year: 2017
+    calculation: true
+    comment: using weighted average vs total computer users (194M)
+    facts:
+    -
+      computer_active_electricity_use_watts: 61
+    -
+      computer_idle_electricity_use_watts: 44.4

@@ -1,0 +1,11 @@
+---
+company:
+  name: Jens Malmodin
+  sources:
+  -
+    year: 2020
+    url: https://www.youtube.com/watch?v=Xo0PB5i_b4Y&t=2520s
+    facts:
+    -
+      core_internet_data_transfer_electricity_use_kwh_per_gb: 0.0000667
+      comment: no underlying sources presented - low defensibility but he is an expert

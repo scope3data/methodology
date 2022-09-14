@@ -1,0 +1,29 @@
+---
+type: publisher
+company: Washington Post
+properties:
+  - template: news_with_print
+    identifier: washingtonpost.com
+    facts:
+      - visits_per_month: 176200000
+        source_id: 1
+      - pages_per_visit:  2.52
+        source_id: 1
+      - average_visit_duration_s: 185
+        source_id: 1
+      - page_size_mb: 2.3
+        source_id: 2
+      - load_time_s: 2.13
+        source_id: 2
+    raw_facts:
+      - requests_per_page: 191
+        source_id: 2
+    sources:
+      - id: 1
+        year: 2022
+        month: 7
+        url: https://www.similarweb.com/website/theguardian.com/#overview
+      - id: 2
+        year: 2022
+        month: 8
+        url: https://tools.pingdom.com/#60bc06a1bbc00000

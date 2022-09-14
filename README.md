@@ -18,8 +18,8 @@ This project is an attempt to "show our work" as we fill in the gaps in our know
 
 In this project you will find:
 
-- Public sustainability materials and the structured "fact" data from them. These are in the `sources/companies` directory
-- Scope3 has received confidential sustainability data from a number of companies. Some of this data is useful for producing default values, and is included anonymously in `sources/private/scope3`.
+- Public sustainability materials and the structured "fact" data from them. These are in the `data/companies` directory
+- Scope3 has received confidential sustainability data from a number of companies. Some of this data is useful for producing default values, and is included anonymously in `data/private/scope3`.
 - A script to scan through the source data and produce industry defaults for various types of company. The script is `./scope3_methodology/compute_defaults.py` and the templates are in `templates`. Also see `./scope3_methodology/fact_finder.py` to see how defaults are derived from the data sources we have analyzed.
 - A script to model the emissions for ad tech platforms (ssps, dsps, ad networks, dmps, creative ad servers, etc). See [ad tech platform docs](docs/adTechModel.md).
 - A script to model the emissions for publishers. See [publisher docs](docs/publisher_model.md).
@@ -64,18 +64,18 @@ To write defaults from latest sources:
 To compute the corporate emissions, pass in its YAML file and org type (which will make defaults more accurate):
 
 ```sh
-./scope3_methodology/corporate.py --verbose {generic,atp,publisher} your_model.yaml
+./scope3_methodology/model_corporate_emissions.py --verbose {generic,atp,publisher} [company_file.yaml]
 ```
 
 To compute the emissions for an ad tech company, pass in its YAML file:
 
 ```sh
-./scope3_methodology/adtech_model.py -v [--corporateEmissionsG]  [--corporateEmissionsGPerRequest] sources/companies/criteo/data.yaml
+./scope3_methodology/model_ad_tech_platform.py -v [--corporateEmissionsG]  [--corporateEmissionsGPerRequest] [company_file.yaml]
 ```
 
 To compute the emissions for publisher, pass in its YAML file:
 
 ```sh
-./scope3_methodology/publisher.py -v [--corporateEmissionsG]  [--corporateEmissionsGPerImp] sources/companies/theguardian/data.yaml
+./scope3_methodology/model_publisher_emissions.py -v [--corporateEmissionsG]  [--corporateEmissionsGPerImp] [company_file.yaml]
 
 ```

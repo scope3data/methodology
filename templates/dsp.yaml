@@ -2,11 +2,11 @@
 template:
   name: dsp
   type: atp
-  pct of bid requests processed from ad tech platforms: 100
-  servers processing bid requests pct: 93
-  servers processing cookie syncs pct: 7
-  servers processing creative serving pct: 0
-  cookie syncs processed per bid request: 0.01        # once per 100 bid requests
-  cookie sync distribution ratio: 0
-  creative serving processed billion per month: 0
-  bid request rejection pct: 30
+  bid_requests_processed_from_ad_tech_platforms_pct: 100
+  servers_processing_bid_requests_pct: 93
+  servers_processing_cookie_syncs_pct: 7
+  servers_processing_creative_serving_pct: 0
+  cookie_syncs_processed_per_bid_request: 0.01        # once per 100 bid requests
+  cookie_sync_distribution_ratio: 0
+  creative_serving_processed_billion_per_month: 0
+  bid_request_rejection_pct: 30
