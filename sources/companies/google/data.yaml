@@ -1,22 +1,23 @@
+---
 company:
   name: Google
   sources:
-  -
+    -
       year: 2021
       url: https://www.gstatic.com/gumdrop/sustainability/google-2022-environmental-report.pdf
       facts:
-      -
+        -
           percentage of hourly carbon-neutral data center electricity use: 66
           reference: page 2
-      -
-        water withdrawal million gallons: 6297
-        reference: page 12
-      -
-        carbon intensity per unit of revenue mt per million USD: 7.25
-        reference: page 11
-      -
-        carbon intensity mt per employee: 12.87
-        reference: page 11
-      -
-        business travel and commuting mt: 136,000
-        reference: page 11
+        -
+          water withdrawal million gallons: 6297
+          reference: page 12
+        -
+          carbon intensity per unit of revenue mt per million USD: 7.25
+          reference: page 11
+        -
+          carbon intensity mt per employee: 12.87
+          reference: page 11
+        -
+          business travel and commuting mt: 136,000
+          reference: page 11
