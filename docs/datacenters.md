@@ -1,11 +1,19 @@
 # Key metrics
 For a given datacenter, we need to know power efficiency (PUE), water efficiency (WUE?), number and type of servers, location, power sources, etc.
 
+## Market-based vs location-based
+
+There is a consensus around the fact that RECs / GOs have no impact on decarbonizing the grid:
+- Beyond 100% renewable: Policy and practical pathways to 24/7 renewable energy procurement - University of California
+- Renewable energy certificates threaten the integrity of corporate science-based targets - Nature Climate Change
+- To achieve carbon neutrality, we need to fix the system that guarantees the origin of electricity - La Tribune
+- Most companies buying renewable energy certificates aren’t actually reducing emissions - The Conversation
+
+Need to talk through methodology for converting and handling these when we see them in sustainability reports.
+
 ## Energy and offset calculation topics to discuss (todo):
 
-- Market-based vs location-based
-- Do renewable energy certificates (RECs) count?
-- How do we adjust for 24/7 renewable energy as per Google?
+- How do we adjust for 24/7 carbon-free energy as per Google?
 - Marginal vs average grid mix
 
 ## Embodied emissions / cradle-to-grave
@@ -23,7 +31,6 @@ This [Facebook paper](https://ugupta.com/files/ChasingCarbon_HPCA2021.pdf) discu
 ## Measuring technology providers
 
 - Document snowflake (todo)
-
 
 ### Recommendations for reporting emissions
 
