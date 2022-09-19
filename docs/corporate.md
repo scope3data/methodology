@@ -13,28 +13,39 @@ Number of employees | Use industry-average emissions per employee
 Sustainability report with missing or aggregated scope 3 categories | Use industry-average emissions per employee for missing categories
 Complete sustainability report with suboptimal methodology (market-based vs location-based, or omitting embodied emissions, for instance) | Use industry average correction factors
 
+## Mapping emissions into business units
+
+ For a company like Google, the corporate sustainability report will be produced for the entire company. Some business units, like YouTube, will be broken out with specific emissions data; other business units will not be.
+
+ For a business unit like ad tech inside Google, we need to allocate a percentage of the overall corporate emissions based on percentage of revenue or another method.
+
 ## Calculating industry-average emissions factors
 
-In this repository we aggregate public data from companies who produce sustainability reports - for instance, ![Axel Springer](../sources/companies/axel%20springer/data.yaml). We pull facts from these reports and use them to produce industry average values including:
+In this repository we aggregate public data from companies who produce sustainability reports - for instance, [Axel Springer](../sources/companies/axel%20springer/data.yaml). We pull facts from these reports and use them to produce industry average values including:
 
 - Office Emissions Per Employee Per Month
 - Commuting Emissions Per Employee Per Month
 - Travel Emissions Per Employee Per Month
 - Datacenter Emissions Per Employee Per Month (may include cloud)
 - Overhead Emissions Per Employee Per Month (this bucket includes third party software and marketing expenses; we need to get it broken out in a consistent way)
-- Quality Ad Impressions Per Employee Per Month
 
 We only include data that includes all scope 3 categories and uses location-based emissions for electricity use. Unfortunately, this means that very few sustainability reports are usable for us, though we expect this to change quickly.
 
 ## How we parse and understand corporate sustainability reports
 
-**office emissions mt per month**
-Emissions related to buildings and offices, ideally excluding production facilities (printing presses for instance).
+### Scope 3 Aggregation
 
-**commuting emissions mt per month**
-Includes home office emissions
+One of the issues with combining sustainability reports across a supply chain is that, at least in theory, the upstream supply partner should already be accounted for by the downstream partner and vice versa.
 
-**offsets and PPAs**
+In other words, a publisher should be including programmatic supply chain emissions already, as should a DSP, SSP, all the way through to the agency and advertiser. When we parse these reports, we should be excluding these in order to get a non-overlapping boundary.
+
+In practice, at least in 2022, when we have asked companies - both publishers and ad tech companies - they have told us that these emissions are not included in their reporting boundaries today. Therefore we are not making any additional exclusions. In the future, we suggest that companies be explicit about what parts of their value chain are included recursively so that a de-duplication is possible (h/t Benjamin Davy for pointing this out!)
+
+For the purposes of the current project, we are assuming the following categories of scope 3 emissions are fairly comprehensive for companies in the media and advertising space:
+
+
+### offsets, RECs, and PPAs
+
 to discuss
 
 ## Usage
@@ -46,11 +57,6 @@ Create a YAML file that describes the company you would like to model. The YAML 
 ```yaml
 company:
   name: Criteo
-  products:
-  - product:
-      name: Criteo
-      template: network
-      identifier: criteo.com
   sources:
   - source:
       facts:
