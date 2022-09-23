@@ -1,0 +1,24 @@
+---
+type: atp
+company: Pubmatic
+products:
+  - name: Pubmatic
+    template: ssp
+    identifier: pubmatic.com
+    facts:
+      - bid_requests_processed_billion_per_month: 12066
+        reference: Impressions Processed section
+        source_id: 2
+    raw_facts:
+      - server_qps: 5500
+        reference: Carbon Emissions section
+        source_id: 1
+    sources:
+      - id: 1
+        year: 2022
+        url: >-
+          https://pubmatic.com/blog/pubmatic-prioritizing-data-center-sustainability-and-growth/
+      - id: 2
+        year: 2022
+        url: >-
+          https://investors.pubmatic.com/static-files/a0a75d97-2e70-474d-b45a-30cb383a280f

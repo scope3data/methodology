@@ -1,0 +1,33 @@
+---
+type: atp
+company: Criteo
+products:
+  - name: Criteo
+    template: network
+    identifier: criteo.com
+    facts:
+      - server_emissions_mt_co2e_per_month: 3583
+        reference: page 85
+        source_id: 1
+      - server_emissions_g_co2e_per_kwh: 649.8
+      - corporate_emissions_g_co2e_per_bid_request: 0.00015648471735020598
+        comment: 'Output of model Sept 20, 2022'
+    raw_facts:
+      - servers: 40000
+        reference: page 7
+        source_id: 1
+      - server_electricity_kwh_per_month: 5514583
+        reference: page 85
+        source_id: 1
+      - server_embodied_emissions_pct: 25
+        reference: page 86
+        source_id: 1
+      - server_electricity_kwh_per_server_per_month: 137.9
+      - server_adjusted_emissions_mt_per_month: 3583
+        comment: no adjustment needed because embodied emissions are included
+    sources:
+      - id: 1
+        year: 2021
+        url: >-
+          https://filecache.investorroom.com/mr5ir_criteo/1674/Criteo_CSR_Report_2021.pdf
+        file: Criteo_CSR_Report_2021.pdf

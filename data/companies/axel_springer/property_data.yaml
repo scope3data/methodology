@@ -1,0 +1,113 @@
+
+---
+type: publisher
+company: Axel Springer
+properties:
+  - template: news_with_print
+    identifier: autobild.de
+    facts:
+      - visits_per_month: 8800000
+        source_id: 1
+      - pages_per_visit: 2.28
+        source_id: 1
+      - average_visit_duration_s: 96
+        source_id: 1
+      - page_size_mb: 6.3
+        source_id: 2
+      - load_time_s: 1.88
+        source_id: 2
+    raw_facts:
+      - requests_per_page: 136
+        source_id: 2
+    sources:
+      - id: 1
+        year: 2022
+        month: 7
+        url: https://www.similarweb.com/website/autobild.de/
+      - id: 2
+        year: 2022
+        month: 8
+        url: https://tools.pingdom.com/#60b937435c800000
+        environment: desktop
+        country: DE
+  - template: news_with_print
+    identifier: bild.de
+    facts:
+      - visits_per_month: 209500000
+        source_id: 1
+      - pages_per_visit: 3.31
+        source_id: 1
+      - average_visit_duration_s: 271
+        source_id: 1
+      - page_size_mb: 6.4
+        source_id: 2
+      - load_time_s: 3.65
+        source_id: 2
+    raw_facts:
+      - requests_per_page: 342
+        source_id: 2
+    sources:
+      - id: 1
+        year: 2022
+        month: 7
+        url: https://www.similarweb.com/website/bild.de/
+      - id: 2
+        year: 2022
+        month: 8
+        url: https://tools.pingdom.com/#60b93574d4800000
+        environment: desktop
+        country: DE
+  - template: news_with_print
+    identifier: businessinsider.de
+    facts:
+      - visits_per_month: 10100000
+        source_id: 1
+      - pages_per_visit: 1.48
+        source_id: 1
+      - average_visit_duration_s: 89
+        source_id: 1
+      - page_size_mb: 3.1
+        source_id: 2
+      - load_time_s: 1.45
+        source_id: 2
+    raw_facts:
+      - requests_per_page: 130
+        source_id: 2
+    sources:
+      - id: 1
+        year: 2022
+        month: 7
+        url: https://www.similarweb.com/website/businessinsider.de/
+      - id: 2
+        year: 2022
+        month: 8
+        url: https://tools.pingdom.com/#60b937a239400000
+        environment: desktop
+        country: DE
+  - template: news_with_print
+    identifier: bz-berlin.de
+    facts:
+      - visits_per_month: 17600000
+        source_id: 1
+      - pages_per_visit: 2.24
+        source_id: 1
+      - average_visit_duration_s: 120
+        source_id: 1
+      - page_size_mb: 2.2
+        source_id: 2
+      - load_time_s: 1.35
+        source_id: 2
+    raw_facts:
+      - requests_per_page: 179
+        source_id: 2
+    sources:
+      - id: 1
+        year: 2022
+        month: 7
+        url: https://www.similarweb.com/website/bz-berlin.de/
+      - id: 2
+        year: 2022
+        month: 8
+        url: https://tools.pingdom.com/#60b937d3cb000000
+        environment: desktop
+        country: DE

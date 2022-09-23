@@ -113,7 +113,7 @@ We do this by calculating corporate emissions per month and dividing by the numb
 
 ### Calculating corporate emissions
 
-See [Corporate Emissions](./corporate.md)
+See [Corporate Emissions](./corporate_model.md)
 
 ### Allocation of corporate emissions by channel and business model
 
@@ -124,7 +124,7 @@ For a digital property, we attempt to allocate only the digital ad revenue for e
 
 We allocate corporate emissions to properties based on relative time spent across properties. This could also be done based on raw traffic or revenue - curious if there are any standards or best practices (or opinions!) around this.
 
-For purposes of the open source repo, we suggest using SimilarWeb to add facts to the `properties` object for `visits per month` and `average time per visit`. We sum these to produce total publisher time, and then assign to each property based on property time divised by total publisher time.
+For purposes of the open source repo, we suggest using SimilarWeb to add facts to the `properties` object for `visits_per_month` and `average_visit_duration_s`. We sum these to produce total publisher time, and then assign to each property based on property time divised by total publisher time.
 
 ### Quality ads per month
 
@@ -143,42 +143,48 @@ Instead of using the actual ads we detect, we decided to use a "quality ad load"
 Future state: Get an attention measurement company to open source some attention data to compute these metrics for various channels and property types
 
 ### Sample publisher YAML
-This is an example of the minimal YAML that would be passed into `./scope3methodology/publisher.py` to produce an estimate of emissions. This does not include emissions from the ad tech supply chain.
+This is an example of the minimal YAML that would be passed into `./scope3methodology/model_publisher_emissions.py` to produce an estimate of emissions. This does not include emissions from the ad tech supply chain.
 
 ```yaml
 ---
-company:
-  name: Washington Post
-  properties:
-  -
-    template: news_with_print
-    identifier: washingtonpost.com
+type: publisher
+company: The Guardian
+properties:
+  - template: news_with_print
+    identifier: theguardian.com
+    facts:
+      - visits_per_month: 359200000
+        source_id: 1
+      - pages_per_visit:  3.35
+        source_id: 1
+      - average_visit_duration_s: 290
+        source_id: 1
+      - page_size_mb: 3.0
+        source_id: 2
+      - load_time_s: 1.89
+        source_id: 2
+      - corporate_emissions_g_co2e_per_impression: 0.017779455902004453
+        comment: Output of model Sept 20, 2022
+      - revenue_allocation_to_ads_pct: 33.3
+    raw_facts:
+      - requests_per_page: 219
+        source_id: 2
     sources:
-    -
-      year: 2022
-      month: 7
-      url: https://www.similarweb.com/website/theguardian.com/#overview
-      facts:
-      -
-        visits per month: 176200000
-        pages per visit: 2.52
-        average visit duration s: 185
-    -
-      year: 2022
-      month: 8
-      url: https://tools.pingdom.com/#60bc06a1bbc00000
-      facts:
-      -
-        requests per page: 191
-        page size mb: 2.3
-        load time s: 2.13
-  sources:
-  -
-      year: 2022
-      url: https://www.linkedin.com/company/the-washington-post/insights/
-      facts:
-      -
-          employees: 3662
+      - id: 1
+        year: 2022
+        month: 7
+        url: https://www.similarweb.com/website/theguardian.com/#overview
+      - id: 2
+        year: 2022
+        month: 7
+        url: https://tools.pingdom.com/#60bbdd2e2a800000
+```
+
+To compute the emissions for publisher, then run:
+
+```sh
+./scope3_methodology/model_publisher_emissions.py -v [--corporateEmissionsG]  [--corporateEmissionsGPerImp] [company_file.yaml]
+
 ```
 
 ## Caveats, Complications, and Concerns

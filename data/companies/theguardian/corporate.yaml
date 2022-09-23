@@ -1,0 +1,36 @@
+---
+type: corporate
+name: The Guardian
+facts:
+  - number_of_employees: 1489
+  - office_emissions_mt_co2e_per_employee_per_month: 0.153
+  - commuting_emissions_mt_co2e_per_employee_per_month: 0.040
+  - travel_emissions_mt_co2e_per_employee_per_month: 0.137
+raw_data:
+  - advertising_revenue_gbp_per_year: 73.7
+    source_id: 1
+  - print_revenue_gbp_per_year: 71.5
+    source_id: 1
+  - digital_revenue_gbp_per_year: 76.1
+    source_id: 1
+  - employees: 1489
+    source_id: 1
+  - office_emissions_mt_per_month: 227.2
+    reference: page 8
+    source_id: 2
+  - commuting_emissions_mt_per_month: 59.0
+    reference: page 8
+    source_id: 2
+  - travel_emissions_mt_per_month: 203.3
+    reference: page 8
+    source_id: 2
+reference_files:
+  - id: 1
+    year: 2022
+    url: >-
+      https://uploads.guim.co.uk/2022/07/20/GMG_Financial_Statements_2022.pdf
+  - id: 2
+    year: 2020
+    url: >-
+      https://uploads.guim.co.uk/2021/08/25/Positive_Impact_Sustainability_Report_1920.pdf
+    file: Positive_Impact_Sustainability_Report_1920.pdf

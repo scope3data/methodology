@@ -1,0 +1,11 @@
+---
+type: corporate
+name: Pubmatic
+facts:
+  - number_of_employees: 812
+    source_id: 1
+sources:
+  - id: 1
+    year: 2021
+    url: >-
+      https://www.linkedin.com/company/pubmatic/insights/

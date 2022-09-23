@@ -1,0 +1,16 @@
+---
+company:
+  private: true
+  type: ad tech platform
+  variant: ssp
+  sources:
+  -
+      year: 2022
+      private: true
+      facts:
+      -
+          bid_requests_processed_billion_per_month: 8303
+          reference: provided by company to Scope3
+      -
+          bid_requests_distributed_billion_per_month: 34927
+          reference: provided by company to Scope3

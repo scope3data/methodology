@@ -1,0 +1,21 @@
+---
+sources:
+-
+  year: 2022
+  name: Evaluation environnementale des équipements et infrastructures numériques en France (2ème volet), ADEME-ARCEP
+  url: https://www.arcep.fr/uploads/tx_gspublication/etude-numerique-environnement-ademe-arcep-volet02_janv2022.pdf
+  comment: has embodied emissions data for various kinds of equipment
+-
+  year: 2020
+  name: European Commission, ICT Impact study, Final report
+  url: https://circabc.europa.eu/sd/a/8b7319ba-ce4f-49ea-a6e6-b28df00b20d1/ICT%20impact%20study%20final.pdf
+  file: ICT%20impact%20study%20final.pdf
+  comment: probably more good data points to pull from this study
+  facts:
+  -
+    fixed_network_data_transfer_electricity_use_kwh_per_gb: 0.03
+    reference: page 73
+    comment: ADEME study says this is "excluding box"
+  -
+    mobile_network_data_transfer_electricity_use_kwh_per_gb: 0.14
+    reference: page 73
