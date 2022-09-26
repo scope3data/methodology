@@ -17,7 +17,7 @@ class ModeledAdTechPlatform:
     primary_cookie_sync_emissions_g_co2e: float
     corporate_emissions_g_co2e_per_bid_request: float | None = None
     cookie_sync_distribution_ratio: float | None = None
-    bid_request_rejection_pct: float | None = None
+    atp_block_rate: float = 0.0
     secondary_bid_request_emissions_g_co2e: float | None = None
     secondary_cookie_sync_emissions_g_co2e: float | None = None
 
@@ -58,9 +58,7 @@ class AdTechPlatform(BaseModel):
     servers_processing_bid_requests_pct: Optional[float] = field(
         default=None, metadata={"default_eligible": True}
     )
-    bid_request_rejection_pct: Optional[float] = field(
-        default=None, metadata={"default_eligible": True}
-    )
+    atp_block_rate: Optional[float] = field(default=None, metadata={"default_eligible": True})
     cookie_syncs_processed_per_bid_request: Optional[float] = field(
         default=None, metadata={"default_eligible": True}
     )
@@ -119,10 +117,6 @@ class AdTechPlatform(BaseModel):
     def get_allocation_of_corporate_emissions_rate(self) -> float:
         """Returns allocation of corporate emissions rate (decimal fraction)"""
         return not_none(self.allocation_of_corporate_emissions_pct) / 100.0
-
-    def get_bid_request_rejection_rate(self) -> float:
-        """Returns bid request rejection rate (decimal fraction)"""
-        return not_none(self.bid_request_rejection_pct) / 100.0
 
     def get_bid_requests_processed_from_ad_tech_platforms_rate(self) -> float:
         """Returns bid requests processed from incoming ATPs rate (decimal fraction)"""
@@ -233,18 +227,18 @@ class AdTechPlatform(BaseModel):
         """
         secondary_emissions_per_bid_request = 0.0
         if distribution_partners:
-            if self.distribution_partners:
-                for edge in self.distribution_partners:
-                    secondary_emissions_per_bid_request += (
-                        edge.partner.primary_bid_request_emissions_g_co2e
-                        * edge.bid_request_distribution_rate
-                    )
-                secondary_emissions_per_bid_request *= 1 - self.get_bid_request_rejection_rate()
-                log_result(
-                    "secondary emissions g co2e per bid request",
-                    secondary_emissions_per_bid_request,
-                    depth,
+            for edge in distribution_partners:
+                dp_emissions = (
+                    1 - edge.partner.atp_block_rate
+                ) * edge.partner.primary_bid_request_emissions_g_co2e
+                secondary_emissions_per_bid_request += (
+                    edge.bid_request_distribution_rate * dp_emissions
                 )
+            log_result(
+                "secondary emissions g co2e per bid request",
+                secondary_emissions_per_bid_request,
+                depth,
+            )
         return secondary_emissions_per_bid_request
 
     def comp_cookie_syncs_processed_per_month(self, depth: int) -> float:
@@ -307,7 +301,7 @@ class AdTechPlatform(BaseModel):
         """
         secondary_emissions_per_cookie_sync = 0.0
         if distribution_partners:
-            for edge in self.distribution_partners:
+            for edge in distribution_partners:
                 secondary_emissions_per_cookie_sync += (
                     edge.partner.primary_cookie_sync_emissions_g_co2e
                 )
@@ -384,9 +378,10 @@ class AdTechPlatform(BaseModel):
             secondary_emissions_per_bid_request = (
                 self.comp_secondary_emissions_g_co2e_per_bid_request(distribution_partners, depth)
             )
-            secondary_emissions_per_cookie_sync = (
-                self.comp_secondary_emissions_g_co2e_per_cookie_sync(distribution_partners, depth)
-            )
+            # TODO once cookie sync logic is updated uncomment this code
+            # secondary_emissions_per_cookie_sync = (
+            #     self.comp_secondary_emissions_g_co2e_per_cookie_sync(distribution_partners, depth)
+            # )
 
         return ModeledAdTechPlatform(
             name,
@@ -395,7 +390,7 @@ class AdTechPlatform(BaseModel):
             primary_emissions_per_cookie_sync,
             self.corporate_emissions_g_co2e_per_bid_request,
             self.cookie_sync_distribution_ratio,
-            self.bid_request_rejection_pct,
+            not_none(self.atp_block_rate),
             secondary_emissions_per_bid_request,
             secondary_emissions_per_cookie_sync,
         )
