@@ -30,7 +30,7 @@ class BaseModel:
             return cls(**{k: v for k, v in defaults.items() if k in keys})
 
     def __getattribute__(self, name):
-        if object.__getattribute__(self, name):
+        if object.__getattribute__(self, name) is not None:
             return object.__getattribute__(self, name)
 
         default_eligible = [
@@ -38,7 +38,7 @@ class BaseModel:
         ]
         if object.__getattribute__(self, "defaults") and name in default_eligible:
             default = object.__getattribute__(object.__getattribute__(self, "defaults"), name)
-            if default:
+            if default is not None:
                 return default
             raise Exception(f"Failed to find value or default for {name}")
 

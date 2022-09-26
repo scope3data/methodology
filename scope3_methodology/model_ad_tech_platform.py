@@ -119,7 +119,12 @@ def main():
         if args.partners and args.verbose:
             for i in range(args.partners):
                 partner = ModeledAdTechPlatform(
-                    f"dummy {i}", f"dummy{i}.com", 0.001, 0.0001, 1.0, 0.3
+                    name=f"dummy {i}",
+                    identifier=f"dummy{i}.com",
+                    primary_bid_request_emissions_g_co2e=0.001,
+                    primary_cookie_sync_emissions_g_co2e=0.0001,
+                    cookie_sync_distribution_ratio=1.0,
+                    atp_block_rate=0.3,
                 )
                 distribution_partners.append(DistributionPartner(partner, 1.0))
 

@@ -23,7 +23,7 @@ class Fact:
 
 def not_none(value: Optional[float]) -> float:
     """Verifies the value is not none or raises an exception"""
-    if value:
+    if value is not None:
         return value
     raise Exception("Attempting operation with None value")
 

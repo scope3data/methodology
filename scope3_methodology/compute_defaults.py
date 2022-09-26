@@ -22,6 +22,9 @@ def compute_defaults(
     global_defaults: dict[str, float] = {
         # TODO - get some actual data on this from customers
         "bid_request_size_in_bytes": 10000,
+        "publisher_block_rate": 0.0,
+        "atp_block_rate": 0.0,
+        "bid_request_distribution_rate": 1.0,
     }
 
     template_defaults = {}
