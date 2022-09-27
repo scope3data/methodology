@@ -1,0 +1,10 @@
+---
+type: atp
+company: Generic ATPs
+products:
+  - name: Generic SSP
+    template: ssp
+    identifier: generic_ssp.com
+  - name: Generic DSP
+    template: dsp
+    identifier: generic_dsp.com

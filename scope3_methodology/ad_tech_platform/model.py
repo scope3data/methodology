@@ -58,7 +58,6 @@ class AdTechPlatform(BaseModel):
     servers_processing_bid_requests_pct: Optional[float] = field(
         default=None, metadata={"default_eligible": True}
     )
-    atp_block_rate: Optional[float] = field(default=None, metadata={"default_eligible": True})
     cookie_syncs_processed_per_bid_request: Optional[float] = field(
         default=None, metadata={"default_eligible": True}
     )
@@ -390,7 +389,7 @@ class AdTechPlatform(BaseModel):
             primary_emissions_per_cookie_sync,
             self.corporate_emissions_g_co2e_per_bid_request,
             self.cookie_sync_distribution_ratio,
-            not_none(self.atp_block_rate),
+            (1 - not_none(self.get_bid_requests_processed_from_ad_tech_platforms_rate())),
             secondary_emissions_per_bid_request,
             secondary_emissions_per_cookie_sync,
         )

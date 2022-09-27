@@ -6,7 +6,7 @@ products:
     template: network
     identifier: criteo.com
     facts:
-      - server_emissions_mt_co2e_per_month: 3583
+      - server_emissions_mt_co2e_per_month: 298.5833333333
         reference: page 85
         source_id: 1
       - server_emissions_g_co2e_per_kwh: 649.8
@@ -24,6 +24,7 @@ products:
         source_id: 1
       - server_electricity_kwh_per_server_per_month: 137.9
       - server_adjusted_emissions_mt_per_month: 3583
+        reference: page 85
         comment: no adjustment needed because embodied emissions are included
     sources:
       - id: 1
