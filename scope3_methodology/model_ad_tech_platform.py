@@ -121,8 +121,8 @@ def main():
                 partner = ModeledAdTechPlatform(
                     name=f"dummy {i}",
                     identifier=f"dummy{i}.com",
-                    primary_bid_request_emissions_g_co2e=0.00020403552546744037,
-                    primary_cookie_sync_emissions_g_co2e=0.00035312100449136157,
+                    primary_bid_request_emissions_g_co2e=0.0007033278081937295,
+                    primary_cookie_sync_emissions_g_co2e=0.004111234960495689,
                     cookie_sync_distribution_ratio=1.0,
                     atp_block_rate=0.0,
                 )

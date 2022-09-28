@@ -6,7 +6,7 @@ products:
     template: network
     identifier: criteo.com
     facts:
-      - server_emissions_mt_co2e_per_month: 298.5833333333
+      - server_emissions_mt_co2e_per_month: 3583
         reference: page 85
         source_id: 1
       - server_emissions_g_co2e_per_kwh: 649.8
