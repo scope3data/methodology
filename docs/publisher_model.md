@@ -145,7 +145,7 @@ Instead of using the actual ads we detect, we decided to use a "quality ad load"
 Future state: Get an attention measurement company to open source some attention data to compute these metrics for various channels and property types
 
 ### Sample publisher YAML
-This is an example of the minimal YAML that would be passed into `./scope3methodology/model_publisher_emissions.py` to produce an estimate of emissions. This does not include emissions from the ad tech supply chain.
+This is an example of the minimal YAML that would be passed into `./scope3methodology/cli/model_publisher_emissions.py` to produce an estimate of emissions. This does not include emissions from the ad tech supply chain.
 
 ```yaml
 ---
@@ -185,7 +185,7 @@ properties:
 To compute the emissions for publisher, then run:
 
 ```sh
-./scope3_methodology/model_publisher_emissions.py -v [--corporateEmissionsG]  [--corporateEmissionsGPerImp] [company_file.yaml]
+./scope3_methodology/cli/model_publisher_emissions.py -v [--corporateEmissionsG]  [--corporateEmissionsGPerImp] [company_file.yaml]
 
 ```
 

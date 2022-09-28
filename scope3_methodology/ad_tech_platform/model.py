@@ -1,10 +1,16 @@
 """ Model for computing emissions for an ad tech platform"""
 from dataclasses import dataclass, field
+from decimal import Decimal
 from typing import Optional
 
-from utils.base_model import BaseModel
-from utils.constants import BILLION, BYTES_PER_GB, G_PER_MT
-from utils.utils import log_result, not_none
+from scope3_methodology.utils.constants import (
+    BILLION,
+    BYTES_PER_GB,
+    G_PER_MT,
+    ONE_HUNDRED,
+)
+from scope3_methodology.utils.custom_base_model import CustomBaseModel
+from scope3_methodology.utils.utils import log_result, not_none
 
 
 @dataclass
@@ -13,13 +19,14 @@ class ModeledAdTechPlatform:
 
     name: str
     identifier: str
-    primary_bid_request_emissions_g_co2e: float
-    primary_cookie_sync_emissions_g_co2e: float
-    corporate_emissions_g_co2e_per_bid_request: float | None = None
-    cookie_sync_distribution_ratio: float | None = None
-    atp_block_rate: float = 0.0
-    secondary_bid_request_emissions_g_co2e: float | None = None
-    secondary_cookie_sync_emissions_g_co2e: float | None = None
+    primary_bid_request_emissions_g_co2e: Decimal
+    primary_cookie_sync_emissions_g_co2e: Decimal
+    corporate_emissions_g_co2e_per_bid_request: Decimal | None = None
+    cookie_sync_distribution_ratio: Decimal | None = None
+    atp_block_rate: Decimal = Decimal("0.0")
+    publisher_block_rate: Decimal = Decimal("0.0")
+    secondary_bid_request_emissions_g_co2e: Decimal | None = None
+    secondary_cookie_sync_emissions_g_co2e: Decimal | None = None
 
 
 @dataclass
@@ -27,62 +34,65 @@ class DistributionPartner:
     """This represents an edge in our graph"""
 
     partner: ModeledAdTechPlatform
-    bid_request_distribution_rate: float
+    bid_request_distribution_rate: Decimal
 
 
 @dataclass
-class AdTechPlatform(BaseModel):
+class AdTechPlatform(CustomBaseModel):
     """Raw emissions information about an ATP and methodology of how to calculate emissions"""
 
-    allocation_of_company_servers_pct: Optional[float] = field(
-        default=100, metadata={"default_eligible": False}
+    allocation_of_company_servers_pct: Optional[Decimal] = field(
+        default=ONE_HUNDRED, metadata={"default_eligible": False}
     )
-    allocation_of_corporate_emissions_pct: Optional[float] = field(
-        default=100, metadata={"default_eligible": False}
+    allocation_of_corporate_emissions_pct: Optional[Decimal] = field(
+        default=ONE_HUNDRED, metadata={"default_eligible": False}
     )
-    corporate_emissions_g_co2e_per_bid_request: Optional[float] = field(
+    corporate_emissions_g_co2e_per_bid_request: Optional[Decimal] = field(
         default=None, metadata={"default_eligible": True}
     )
-    bid_requests_processed_from_ad_tech_platforms_pct: Optional[float] = field(
+    bid_requests_processed_from_ad_tech_platforms_pct: Optional[Decimal] = field(
         default=None, metadata={"default_eligible": True}
     )
-    bid_request_size_in_bytes: Optional[float] = field(
+    bid_requests_processed_from_publishers_pct: Optional[Decimal] = field(
         default=None, metadata={"default_eligible": True}
     )
-    server_to_server_emissions_g_co2e_per_gb: Optional[float] = field(
+    bid_request_size_in_bytes: Optional[Decimal] = field(
         default=None, metadata={"default_eligible": True}
     )
-    server_emissions_mt_co2e_per_month: Optional[float] = field(
+    server_to_server_emissions_g_co2e_per_gb: Optional[Decimal] = field(
         default=None, metadata={"default_eligible": True}
     )
-    servers_processing_bid_requests_pct: Optional[float] = field(
+    server_emissions_mt_co2e_per_month: Optional[Decimal] = field(
         default=None, metadata={"default_eligible": True}
     )
-    cookie_syncs_processed_per_bid_request: Optional[float] = field(
+    servers_processing_bid_requests_pct: Optional[Decimal] = field(
         default=None, metadata={"default_eligible": True}
     )
-    datacenter_water_intensity_h2o_m_3_per_mwh: Optional[float] = field(
+    cookie_syncs_processed_per_bid_request: Optional[Decimal] = field(
         default=None, metadata={"default_eligible": True}
     )
-    server_emissions_g_co2e_per_kwh: Optional[float] = field(
+    datacenter_water_intensity_h2o_m_3_per_mwh: Optional[Decimal] = field(
         default=None, metadata={"default_eligible": True}
     )
-    servers_processing_cookie_syncs_pct: Optional[float] = field(
+    server_emissions_g_co2e_per_kwh: Optional[Decimal] = field(
         default=None, metadata={"default_eligible": True}
     )
-    cookie_sync_distribution_ratio: Optional[float] = field(
+    servers_processing_cookie_syncs_pct: Optional[Decimal] = field(
         default=None, metadata={"default_eligible": True}
     )
-    bid_requests_processed_billion_per_month: Optional[float] = field(
+    cookie_sync_distribution_ratio: Optional[Decimal] = field(
         default=None, metadata={"default_eligible": True}
     )
-    ad_tech_platform_bid_requests_processed_billion_per_month: Optional[float] = field(
+    bid_requests_processed_billion_per_month: Optional[Decimal] = field(
+        default=None, metadata={"default_eligible": True}
+    )
+    ad_tech_platform_bid_requests_processed_billion_per_month: Optional[Decimal] = field(
         default=None, metadata={"default_eligible": False}
     )
-    cookie_syncs_processed_billion_per_month: Optional[float] = field(
+    cookie_syncs_processed_billion_per_month: Optional[Decimal] = field(
         default=None, metadata={"default_eligible": False}
     )
-    data_transfer_emissions_mt_co2e_per_month: Optional[float] = field(
+    data_transfer_emissions_mt_co2e_per_month: Optional[Decimal] = field(
         default=None, metadata={"default_eligible": False}
     )
     defaults: Optional["AdTechPlatform"] = field(default=None, metadata={"default_eligible": False})
@@ -91,47 +101,66 @@ class AdTechPlatform(BaseModel):
         """Set defaults to be used as fallback in computations"""
         self.defaults = defaults
 
-    def get_bid_requests_processed_per_month(self) -> float:
+    def get_bid_requests_processed_per_month(self) -> Decimal:
         """Returns bif requests total processed per month"""
         return not_none(self.bid_requests_processed_billion_per_month) * BILLION
 
-    def get_server_emissions_g_co2e_per_month(self) -> float:
+    def get_server_emissions_g_co2e_per_month(self) -> Decimal:
         """Returns server emissions per month in grams"""
         return not_none(self.server_emissions_mt_co2e_per_month) * G_PER_MT
 
-    def get_cookie_syncs_processed_per_month(self) -> float | None:
+    def get_cookie_syncs_processed_per_month(self) -> Decimal | None:
         """Returns cookies syncs processed per month"""
         if self.cookie_syncs_processed_billion_per_month:
             return self.cookie_syncs_processed_billion_per_month * BILLION
         return None
 
-    def get_servers_processing_bid_requests_rate(self) -> float:
+    def get_servers_processing_bid_requests_rate(self) -> Decimal:
         """Returns servers processing bid requests rate (decimal fraction)"""
-        return not_none(self.servers_processing_bid_requests_pct) / 100.0
+        return not_none(self.servers_processing_bid_requests_pct) / ONE_HUNDRED
 
-    def get_servers_processing_cookie_syncs_rate(self) -> float:
+    def get_servers_processing_cookie_syncs_rate(self) -> Decimal:
         """Returns servers processing cookie syncs rate (decimal fraction)"""
-        return not_none(self.servers_processing_cookie_syncs_pct) / 100.0
+        return not_none(self.servers_processing_cookie_syncs_pct) / ONE_HUNDRED
 
-    def get_allocation_of_corporate_emissions_rate(self) -> float:
+    def get_allocation_of_corporate_emissions_rate(self) -> Decimal:
         """Returns allocation of corporate emissions rate (decimal fraction)"""
-        return not_none(self.allocation_of_corporate_emissions_pct) / 100.0
+        return not_none(self.allocation_of_corporate_emissions_pct) / ONE_HUNDRED
 
-    def get_bid_requests_processed_from_ad_tech_platforms_rate(self) -> float:
+    def get_bid_requests_processed_from_ad_tech_platforms_rate(self) -> Decimal:
         """Returns bid requests processed from incoming ATPs rate (decimal fraction)"""
-        return not_none(self.bid_requests_processed_from_ad_tech_platforms_pct) / 100.0
 
-    def get_data_transfer_emissions_g_co2e_per_month(self) -> float | None:
+        return not_none(self.bid_requests_processed_from_ad_tech_platforms_pct) / ONE_HUNDRED
+
+    def get_bid_requests_processed_from_publishers_rate(self) -> Decimal:
+        """Returns bid requests processed from incoming Publishers rate (decimal fraction)"""
+        return not_none(self.bid_requests_processed_from_publishers_pct) / ONE_HUNDRED
+
+    def get_data_transfer_emissions_g_co2e_per_month(self) -> Decimal | None:
         """Returns data transfere emissions per month in grams"""
         if self.data_transfer_emissions_mt_co2e_per_month:
             return self.data_transfer_emissions_mt_co2e_per_month * G_PER_MT
         return None
 
-    def get_allocation_of_company_servers_rate(self) -> float:
+    def get_allocation_of_company_servers_rate(self) -> Decimal:
         """Returns allocation of company servers rate (decimal fraction)"""
-        return not_none(self.allocation_of_company_servers_pct) / 100.0
+        return not_none(self.allocation_of_company_servers_pct) / ONE_HUNDRED
 
-    def comp_external_request_rate(self, depth: int) -> float:
+    def get_atp_block_rate(self) -> Decimal:
+        """
+        Returns the computed block rate, or requests blocked from incoming bid requests
+        from adtech platforms
+        """
+        return 1 - self.get_bid_requests_processed_from_ad_tech_platforms_rate()
+
+    def get_publisher_block_rate(self) -> Decimal:
+        """
+        Returns the computed block rate, or requests blocked from incoming direct bid
+        requests from publishers
+        """
+        return 1 - self.get_bid_requests_processed_from_publishers_rate()
+
+    def comp_external_request_rate(self, depth: int) -> Decimal:
         """
         Compute the external request rate.
 
@@ -151,11 +180,11 @@ class AdTechPlatform(BaseModel):
             return rate
         return self.get_bid_requests_processed_from_ad_tech_platforms_rate()
 
-    def comp_bid_request_size_gb(self) -> float:
+    def comp_bid_request_size_gb(self) -> Decimal:
         """Compute the bid requests size in GB"""
         return not_none(self.bid_request_size_in_bytes) / BYTES_PER_GB
 
-    def comp_data_transfer_emissions_g_co2e_per_bid_request(self, depth: int) -> float:
+    def comp_data_transfer_emissions_g_co2e_per_bid_request(self, depth: int) -> Decimal:
         """Compute the data transfer emissions per bid request in grams CO2e"""
         data_transfer_emissions_g_co2e_per_month = (
             self.get_data_transfer_emissions_g_co2e_per_month()
@@ -178,7 +207,7 @@ class AdTechPlatform(BaseModel):
     def comp_server_emissions_g_co2e_per_bid_request(
         self,
         depth: int,
-    ) -> float:
+    ) -> Decimal:
         """Compute the server emissions per bid request in grams CO2e"""
         server_emissions_g_co2e_per_bid_request = (
             self.get_allocation_of_company_servers_rate()
@@ -196,7 +225,7 @@ class AdTechPlatform(BaseModel):
     def comp_primary_emissions_g_co2e_per_bid_request(
         self,
         depth: int,
-    ) -> float:
+    ) -> Decimal:
         """Compute the primary emissions per bid request in grams CO2e"""
         data_transfer_emissions_g_co2e_per_bid_request = (
             self.comp_data_transfer_emissions_g_co2e_per_bid_request(depth - 1)
@@ -219,12 +248,12 @@ class AdTechPlatform(BaseModel):
 
     def comp_secondary_emissions_g_co2e_per_bid_request(
         self, distribution_partners: list[DistributionPartner], depth: int
-    ) -> float:
+    ) -> Decimal:
         """
         Compute the secondary emissions from distribution partners per bid request
         in grams CO2e.
         """
-        secondary_emissions_per_bid_request = 0.0
+        secondary_emissions_per_bid_request = Decimal("0.0")
         if distribution_partners:
             for edge in distribution_partners:
                 dp_emissions = (
@@ -240,7 +269,7 @@ class AdTechPlatform(BaseModel):
             )
         return secondary_emissions_per_bid_request
 
-    def comp_cookie_syncs_processed_per_month(self, depth: int) -> float:
+    def comp_cookie_syncs_processed_per_month(self, depth: int) -> Decimal:
         """Compute the total number of cookies syncs processed per month"""
         cookie_syncs_processed_per_month = self.get_cookie_syncs_processed_per_month()
         if cookie_syncs_processed_per_month:
@@ -252,12 +281,12 @@ class AdTechPlatform(BaseModel):
         log_result("cookie syncs processed per month", cookie_syncs_processed, depth)
         return cookie_syncs_processed
 
-    def comp_water_usage_to_emissions_ratio_h2o_m_3_per_g_co2e(self, depth: int) -> float:
+    def comp_water_usage_to_emissions_ratio_h2o_m_3_per_g_co2e(self, depth: int) -> Decimal:
         """Compute the water usage to emissions rate (H2O m^3 per gCO2e)"""
         water_m3_per_emissions = (
             not_none(self.datacenter_water_intensity_h2o_m_3_per_mwh)
             / not_none(self.server_emissions_g_co2e_per_kwh)
-            / 1000
+            / Decimal("1000.0")
         )
         log_result("h2o m^3 per g co2e emissions", water_m3_per_emissions, depth)
         return water_m3_per_emissions
@@ -265,7 +294,7 @@ class AdTechPlatform(BaseModel):
     def comp_primary_emissions_g_co2e_per_cookie_sync(
         self,
         depth: int,
-    ) -> float:
+    ) -> Decimal:
         """Compute the primary emissions per cookie sync in grams CO2e"""
         primary_emissions_per_cookie_sync = (
             self.get_allocation_of_company_servers_rate()
@@ -279,7 +308,7 @@ class AdTechPlatform(BaseModel):
     def comp_water_usage_per_cookie_sync(
         self,
         depth: int,
-    ) -> float:
+    ) -> Decimal:
         """Compute the water usuage per cookie sync"""
         water_usage_to_emissions_ratio = (
             self.comp_water_usage_to_emissions_ratio_h2o_m_3_per_g_co2e(depth - 1)
@@ -293,12 +322,12 @@ class AdTechPlatform(BaseModel):
 
     def comp_secondary_emissions_g_co2e_per_cookie_sync(
         self, distribution_partners: list[DistributionPartner], depth: int
-    ) -> float:
+    ) -> Decimal:
         """
         Compute the secondary emissions from distribution partners per cookie sync
         in grams CO2e.
         """
-        secondary_emissions_per_cookie_sync = 0.0
+        secondary_emissions_per_cookie_sync = Decimal("0.0")
         if distribution_partners:
             for edge in distribution_partners:
                 secondary_emissions_per_cookie_sync += (
@@ -315,9 +344,9 @@ class AdTechPlatform(BaseModel):
     def comp_corporate_emissions_g_co2e_per_bid_request(
         self,
         defaults: "AdTechPlatform",
-        corporate_emissions_g: Optional[float] = None,
-        corporate_emissions_g_per_bid_request: Optional[float] = None,
-    ) -> float:
+        corporate_emissions_g: Optional[Decimal] = None,
+        corporate_emissions_g_per_bid_request: Optional[Decimal] = None,
+    ) -> Decimal:
         """Compute the corporate emissions per bid request in grams CO2e"""
         corporate_emissions_g_co2e_per_bid_request = (
             defaults.corporate_emissions_g_co2e_per_bid_request
@@ -347,8 +376,8 @@ class AdTechPlatform(BaseModel):
         identifier: str,
         defaults: "AdTechPlatform",
         distribution_partners: list[DistributionPartner],
-        corporate_emissions_g: float | None = None,
-        corporate_emissions_g_per_bid_request: float | None = None,
+        corporate_emissions_g: Decimal | None = None,
+        corporate_emissions_g_per_bid_request: Decimal | None = None,
         depth: int = 1,
     ) -> ModeledAdTechPlatform:
         """
@@ -389,7 +418,8 @@ class AdTechPlatform(BaseModel):
             primary_emissions_per_cookie_sync,
             self.corporate_emissions_g_co2e_per_bid_request,
             self.cookie_sync_distribution_ratio,
-            (1 - not_none(self.get_bid_requests_processed_from_ad_tech_platforms_rate())),
+            self.get_atp_block_rate(),
+            self.get_publisher_block_rate(),
             secondary_emissions_per_bid_request,
             secondary_emissions_per_cookie_sync,
         )

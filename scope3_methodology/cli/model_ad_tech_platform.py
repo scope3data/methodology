@@ -2,15 +2,16 @@
 """ Compute emissions model for an ad tech company """
 import argparse
 import logging
+from decimal import Decimal
 
-import yaml
-from ad_tech_platform.helpers import get_product_info
-from ad_tech_platform.model import (
+from scope3_methodology.ad_tech_platform.helpers import get_product_info
+from scope3_methodology.ad_tech_platform.model import (
     AdTechPlatform,
     DistributionPartner,
     ModeledAdTechPlatform,
 )
-from utils.utils import get_facts
+from scope3_methodology.utils.utils import get_facts
+from scope3_methodology.utils.yaml_helpers import yaml_dump, yaml_load
 
 
 def parse_args():
@@ -36,7 +37,7 @@ def parse_args():
     parser.add_argument(
         "--corporateEmissionsG",
         const=1,
-        type=float,
+        type=Decimal,
         nargs="?",
         help="""
             Provide the corporate emissions for organization.
@@ -46,7 +47,7 @@ def parse_args():
     parser.add_argument(
         "--corporateEmissionsGPerBidRequest",
         const=1,
-        type=float,
+        type=Decimal,
         nargs="?",
         help="""
             Provide the corporate emissions for organization per bid request.
@@ -62,8 +63,8 @@ def process_product(
     defaults_file: str,
     depth: int,
     distribution_partners: list[DistributionPartner],
-    corporate_emissions_g: float | None = None,
-    corporate_emissions_g_per_bid_request: float | None = None,
+    corporate_emissions_g: Decimal | None = None,
+    corporate_emissions_g_per_bid_request: Decimal | None = None,
 ) -> ModeledAdTechPlatform:
     """
     Model the product (atp)
@@ -74,22 +75,22 @@ def process_product(
         raise Exception("No 'name' field found in a product")
 
     name = product["name"]
-    logging.info(f"#### {name}")
+    logging.info("#### %s", name)
     template = get_product_info("template", None, product, 0)
     identifier = get_product_info("identifier", None, product, 0)
-    facts = get_facts(product["facts"]) if "facts" in product else {}
+    facts = get_facts(product["facts"]) if "facts" in product else {}  # type: ignore
 
     facts["allocation_of_company_servers_pct"] = get_product_info(
-        "allocation_of_company_servers_pct", 100, product, 0
+        "allocation_of_company_servers_pct", Decimal("100.0"), product, 0
     )
     facts["allocation_of_corporate_emissions_pct"] = get_product_info(
-        "allocation_of_corporate_emissions_pct", 100, product, 0
+        "allocation_of_corporate_emissions_pct", Decimal("100.0"), product, 0
     )
-    atp = AdTechPlatform(**facts)
-    defaults = AdTechPlatform.load_default_yaml(template, defaults_file)
+    atp = AdTechPlatform(**facts)  # type: ignore
+    defaults = AdTechPlatform.load_default_yaml(str(template), defaults_file)
     modeled_product = atp.model_product(
-        name=name,
-        identifier=identifier,
+        name=str(name),
+        identifier=str(identifier),
         defaults=defaults,
         distribution_partners=distribution_partners,
         corporate_emissions_g=corporate_emissions_g,
@@ -106,8 +107,8 @@ def main():
         logging.basicConfig(level=logging.INFO)
 
     # Load facts about the company
-    with open(args.companyFile[0], "r") as stream:
-        document = yaml.safe_load(stream)
+    with open(args.companyFile[0], "r", encoding="UTF-8") as stream:
+        document = yaml_load(stream)
         if "products" not in document:
             raise Exception("No 'products' field found in company file")
 
@@ -121,12 +122,12 @@ def main():
                 partner = ModeledAdTechPlatform(
                     name=f"dummy {i}",
                     identifier=f"dummy{i}.com",
-                    primary_bid_request_emissions_g_co2e=0.0007033278081937295,
-                    primary_cookie_sync_emissions_g_co2e=0.004111234960495689,
-                    cookie_sync_distribution_ratio=1.0,
-                    atp_block_rate=0.0,
+                    primary_bid_request_emissions_g_co2e=Decimal("0.0007033278081937295"),
+                    primary_cookie_sync_emissions_g_co2e=Decimal("0.004111234960495689"),
+                    cookie_sync_distribution_ratio=Decimal("1.0"),
+                    atp_block_rate=Decimal("0.0"),
                 )
-                distribution_partners.append(DistributionPartner(partner, 1.0))
+                distribution_partners.append(DistributionPartner(partner, Decimal("1.0")))
 
         depth = 4 if args.verbose else 0
         product_models = []
@@ -141,7 +142,7 @@ def main():
             )
             product_models.append(modeled_product)
 
-    print(yaml.dump({"products": product_models}, Dumper=yaml.Dumper))
+    print(yaml_dump({"products": product_models}))
 
 
 if __name__ == "__main__":

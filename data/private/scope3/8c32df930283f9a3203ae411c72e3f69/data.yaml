@@ -2,7 +2,7 @@
 company:
   private: true
   type: ad tech platform
-  variant: dsp
+  template: dsp
   sources:
   -
       month: 9
@@ -15,4 +15,3 @@ company:
           cookie_syncs_processed_per_bid_request: 0.0059
           cookie_sync_distribution_ratio: 0
           reference: provided by company to Scope3
-          
