@@ -87,5 +87,5 @@ The file must have:
 To model emissions, make sure defaults have been computed. Then run:
 
 ```sh
-./scope3_methodology/model_corporate_emissions.py --verbose {generic,atp,publisher} [company_file.yaml]
+./scope3_methodology/cli/model_corporate_emissions.py --verbose {generic,atp,publisher} [company_file.yaml]
 ```

@@ -50,7 +50,7 @@ poetry shell
 If you want to commit code, install pre-commit hooks
 
 ```sh
-pre-commit install
+pre-commit installg
 ```
 
 ## Usage
@@ -58,24 +58,24 @@ pre-commit install
 To write defaults from latest sources:
 
 ```sh
-./scope3_methodology/compute_defaults.py
+./scope3_methodology/cli/compute_defaults.py
 ```
 
 To compute the corporate emissions, pass in its YAML file and org type (which will make defaults more accurate):
 
 ```sh
-./scope3_methodology/model_corporate_emissions.py --verbose {generic,atp,publisher} [company_file.yaml]
+./scope3_methodology/cli/model_corporate_emissions.py --verbose {generic,atp,publisher} [company_file.yaml]
 ```
 
 To compute the emissions for an ad tech company, pass in its YAML file:
 
 ```sh
-./scope3_methodology/model_ad_tech_platform.py -v [--corporateEmissionsG]  [--corporateEmissionsGPerRequest] [company_file.yaml]
+./scope3_methodology/cli/model_ad_tech_platform.py -v [--corporateEmissionsG]  [--corporateEmissionsGPerRequest] [company_file.yaml]
 ```
 
 To compute the emissions for publisher, pass in its YAML file:
 
 ```sh
-./scope3_methodology/model_publisher_emissions.py -v [--corporateEmissionsG]  [--corporateEmissionsGPerImp] [company_file.yaml]
+./scope3_methodology/cli/model_publisher_emissions.py -v [--corporateEmissionsG]  [--corporateEmissionsGPerImp] [company_file.yaml]
 
 ```

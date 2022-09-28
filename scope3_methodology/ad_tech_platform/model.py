@@ -2,9 +2,9 @@
 from dataclasses import dataclass, field
 from typing import Optional
 
-from utils.base_model import BaseModel
-from utils.constants import BILLION, BYTES_PER_GB, G_PER_MT
-from utils.utils import log_result, not_none
+from scope3_methodology.utils.constants import BILLION, BYTES_PER_GB, G_PER_MT
+from scope3_methodology.utils.custom_base_model import CustomBaseModel
+from scope3_methodology.utils.utils import log_result, not_none
 
 
 @dataclass
@@ -18,6 +18,7 @@ class ModeledAdTechPlatform:
     corporate_emissions_g_co2e_per_bid_request: float | None = None
     cookie_sync_distribution_ratio: float | None = None
     atp_block_rate: float = 0.0
+    publisher_block_rate: float = 0.0
     secondary_bid_request_emissions_g_co2e: float | None = None
     secondary_cookie_sync_emissions_g_co2e: float | None = None
 
@@ -31,7 +32,7 @@ class DistributionPartner:
 
 
 @dataclass
-class AdTechPlatform(BaseModel):
+class AdTechPlatform(CustomBaseModel):
     """Raw emissions information about an ATP and methodology of how to calculate emissions"""
 
     allocation_of_company_servers_pct: Optional[float] = field(
@@ -44,7 +45,10 @@ class AdTechPlatform(BaseModel):
         default=None, metadata={"default_eligible": True}
     )
     bid_requests_processed_from_ad_tech_platforms_pct: Optional[float] = field(
-        default=None, metadata={"default_eligible": True}
+        default=100, metadata={"default_eligible": True}
+    )
+    bid_requests_processed_from_publishers_pct: Optional[float] = field(
+        default=100, metadata={"default_eligible": True}
     )
     bid_request_size_in_bytes: Optional[float] = field(
         default=None, metadata={"default_eligible": True}
@@ -121,6 +125,10 @@ class AdTechPlatform(BaseModel):
         """Returns bid requests processed from incoming ATPs rate (decimal fraction)"""
         return not_none(self.bid_requests_processed_from_ad_tech_platforms_pct) / 100.0
 
+    def get_bid_requests_processed_from_publishers_rate(self) -> float:
+        """Returns bid requests processed from incoming Publishers rate (decimal fraction)"""
+        return not_none(self.bid_requests_processed_from_publishers_pct) / 100.0
+
     def get_data_transfer_emissions_g_co2e_per_month(self) -> float | None:
         """Returns data transfere emissions per month in grams"""
         if self.data_transfer_emissions_mt_co2e_per_month:
@@ -130,6 +138,12 @@ class AdTechPlatform(BaseModel):
     def get_allocation_of_company_servers_rate(self) -> float:
         """Returns allocation of company servers rate (decimal fraction)"""
         return not_none(self.allocation_of_company_servers_pct) / 100.0
+
+    def get_atp_block_rate(self):
+        return 1 - not_none(self.get_bid_requests_processed_from_ad_tech_platforms_rate())
+
+    def get_publisher_block_rate(self):
+        return 1 - not_none(self.get_bid_requests_processed_from_publishers_rate())
 
     def comp_external_request_rate(self, depth: int) -> float:
         """
@@ -389,7 +403,8 @@ class AdTechPlatform(BaseModel):
             primary_emissions_per_cookie_sync,
             self.corporate_emissions_g_co2e_per_bid_request,
             self.cookie_sync_distribution_ratio,
-            (1 - not_none(self.get_bid_requests_processed_from_ad_tech_platforms_rate())),
+            self.get_atp_block_rate(),
+            self.get_publisher_block_rate(),
             secondary_emissions_per_bid_request,
             secondary_emissions_per_cookie_sync,
         )

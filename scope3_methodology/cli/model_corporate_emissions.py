@@ -4,8 +4,9 @@ import argparse
 import logging
 
 import yaml
-from corporate.model import CorporateEmissions
-from utils.utils import get_facts
+
+from scope3_methodology.corporate.model import CorporateEmissions
+from scope3_methodology.utils.utils import get_facts
 
 
 def main():
@@ -41,7 +42,7 @@ def main():
         facts = get_facts(document["facts"]) if "facts" in document else {}
 
         depth = 4 if args.verbose else 0
-        corp = CorporateEmissions(**facts)
+        corp = CorporateEmissions(**facts)  # type: ignore
         defaults = CorporateEmissions.load_default_yaml(args.type, args.defaultsFile)
         org_emissions = corp.comp_emissions_g_co2e_per_month(defaults, depth - 1)
     print(yaml.dump({"corporate_emissions_g_co2e_per_month": org_emissions}, Dumper=yaml.Dumper))

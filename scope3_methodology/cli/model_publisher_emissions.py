@@ -4,8 +4,9 @@ import argparse
 import logging
 
 import yaml
-from publisher.model import ModeledProperty, Property
-from utils.utils import get_facts
+
+from scope3_methodology.publisher.model import ModeledProperty, Property
+from scope3_methodology.utils.utils import get_facts
 
 
 def parse_args():
@@ -84,7 +85,7 @@ def parse_args():
 
 
 def process_property(
-    publisher_property: dict[str, str],
+    publisher_property: dict[str, str | list[dict[str, float]]],
     defaults_file: str,
     depth: int,
     grid_intensity_g_co2e_per_kwh: float,
@@ -98,14 +99,14 @@ def process_property(
     if "identifier" not in publisher_property or "template" not in publisher_property:
         raise Exception("Each property must have an identifier and a template")
     template = publisher_property["template"]
-    facts = get_facts(publisher_property["facts"])
+    facts = get_facts(publisher_property["facts"])  # type: ignore
 
     # Add in additional facts not parsed from yaml
     facts["environment"] = environment
     facts["grid_intensity_g_co2e_per_kwh"] = grid_intensity_g_co2e_per_kwh
-    unmodeled_property = Property(**facts)
-    defaults = Property.load_default_yaml(template, defaults_file)
-    return unmodeled_property.model_property(publisher_property["identifier"], defaults, depth)
+    unmodeled_property = Property(**facts)  # type: ignore
+    defaults = Property.load_default_yaml(str(template), defaults_file)
+    return unmodeled_property.model_property(str(publisher_property["identifier"]), defaults, depth)
 
 
 def main():
@@ -125,7 +126,7 @@ def main():
         depth = 4 if args.verbose else 0
 
         publisher_impressions = 0.0
-        properties: list[Property] = []
+        properties: list[ModeledProperty] = []
         for publisher_property in document["properties"]:
             modeled_property = process_property(
                 publisher_property=publisher_property,
@@ -153,7 +154,7 @@ def main():
                     None, corporate_emissions_g_per_imp
                 )
 
-    print(yaml.dump({"properties": properties}, Dumper=yaml.Dumper))
+    print(yaml.dump({"propertiesg a": properties}, Dumper=yaml.Dumper))
 
 
 if __name__ == "__main__":

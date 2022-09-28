@@ -28,20 +28,20 @@ def not_none(value: Optional[float]) -> float:
     raise Exception("Attempting operation with None value")
 
 
-def log_step(key: str, value: str, source: str, depth: int) -> None:
+def log_step(key: str, value: str | float | None, source: str, depth: int) -> None:
     """Takes in a ke, value, and depth and logs the step"""
     logging.info(f"{'  ' * depth}{key} = {value} ({source})")
 
 
-def log_result(key: str, value: str, depth: int) -> None:
+def log_result(key: str, value: str | float | None, depth: int) -> None:
     """Takes in a ke, value, and depth and logs the result"""
     logging.info(f"{'  ' * (depth - 1)}-------------------------------------------")
     logging.info(f"{'  ' * depth}{key} = {value} (calculation)")
 
 
-def get_facts(facts: list[dict[str, float]]) -> dict[str, float]:
+def get_facts(facts: list[dict[str, float]]) -> dict[str, float | str]:
     """Extract all raw facts from list of facts dictionaries extracted"""
-    raw_facts: dict[str, float] = {}
+    raw_facts: dict[str, float | str] = {}
     for fact in facts:
         keys = [key for key in fact if key not in ["reference", "comment", "source_id"]]
         for key in keys:

@@ -4,13 +4,14 @@ import argparse
 import logging
 
 import yaml
-from ad_tech_platform.helpers import get_product_info
-from ad_tech_platform.model import (
+
+from scope3_methodology.ad_tech_platform.helpers import get_product_info
+from scope3_methodology.ad_tech_platform.model import (
     AdTechPlatform,
     DistributionPartner,
     ModeledAdTechPlatform,
 )
-from utils.utils import get_facts
+from scope3_methodology.utils.utils import get_facts
 
 
 def parse_args():
@@ -77,7 +78,7 @@ def process_product(
     logging.info(f"#### {name}")
     template = get_product_info("template", None, product, 0)
     identifier = get_product_info("identifier", None, product, 0)
-    facts = get_facts(product["facts"]) if "facts" in product else {}
+    facts = get_facts(product["facts"]) if "facts" in product else {}  # type: ignore
 
     facts["allocation_of_company_servers_pct"] = get_product_info(
         "allocation_of_company_servers_pct", 100, product, 0
@@ -85,11 +86,11 @@ def process_product(
     facts["allocation_of_corporate_emissions_pct"] = get_product_info(
         "allocation_of_corporate_emissions_pct", 100, product, 0
     )
-    atp = AdTechPlatform(**facts)
-    defaults = AdTechPlatform.load_default_yaml(template, defaults_file)
+    atp = AdTechPlatform(**facts)  # type: ignore
+    defaults = AdTechPlatform.load_default_yaml(str(template), defaults_file)
     modeled_product = atp.model_product(
-        name=name,
-        identifier=identifier,
+        name=str(name),
+        identifier=str(identifier),
         defaults=defaults,
         distribution_partners=distribution_partners,
         corporate_emissions_g=corporate_emissions_g,

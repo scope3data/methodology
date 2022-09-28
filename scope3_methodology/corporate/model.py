@@ -3,13 +3,13 @@
 from dataclasses import dataclass, field
 from typing import Optional
 
-from utils.base_model import BaseModel
-from utils.constants import G_PER_MT
-from utils.utils import log_result, not_none
+from scope3_methodology.utils.constants import G_PER_MT
+from scope3_methodology.utils.custom_base_model import CustomBaseModel
+from scope3_methodology.utils.utils import log_result, not_none
 
 
 @dataclass
-class CorporateEmissions(BaseModel):
+class CorporateEmissions(CustomBaseModel):
     """Raw emissions information about an org and methodology of how to calculate emissions"""
 
     office_emissions_mt_co2e_per_employee_per_month: Optional[float] = field(

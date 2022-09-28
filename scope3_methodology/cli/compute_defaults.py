@@ -4,16 +4,17 @@ import argparse
 from glob import glob
 
 import yaml
-from ad_tech_platform.model import AdTechPlatform
-from corporate.model import CorporateEmissions
-from publisher.model import Property
-from utils.utils import get_all_facts
+
+from scope3_methodology.ad_tech_platform.model import AdTechPlatform
+from scope3_methodology.corporate.model import CorporateEmissions
+from scope3_methodology.publisher.model import Property
+from scope3_methodology.utils.utils import Fact, get_all_facts
 
 
 def compute_defaults(
     template_type: str,
     templates: dict[str, dict[str, float]],
-    facts: dict[str, float],
+    facts: dict[str, list[Fact]],
     defaults_file: str,
     model_inputs: set[str],
     dry_run: bool,
@@ -22,7 +23,7 @@ def compute_defaults(
     global_defaults: dict[str, float] = {
         # TODO - get some actual data on this from customers
         "bid_request_size_in_bytes": 10000,
-        "publisher_block_rate": 0.0,
+        "bid_requests_processed_from_publishers_pct": 100.0,
         "bid_request_distribution_rate": 1.0,
     }
 
@@ -34,8 +35,8 @@ def compute_defaults(
         defaults: dict[str, float] = {}
         for key in facts:
             if key in model_inputs:
-                fact_sum = sum(fact.value for fact in facts[key])  # type: ignore
-                defaults[key] = fact_sum / len(facts[key])  # type: ignore
+                fact_sum = sum(fact.value for fact in facts[key])
+                defaults[key] = fact_sum / len(facts[key])
 
         for key_input in model_inputs:
             if key_input not in defaults:

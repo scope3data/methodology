@@ -6,7 +6,7 @@ import yaml
 
 
 @dataclass
-class BaseModel:
+class CustomBaseModel:
     """Base Model"""
 
     @classmethod

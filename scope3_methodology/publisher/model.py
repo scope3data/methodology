@@ -3,9 +3,9 @@ from dataclasses import dataclass, field
 from enum import Enum
 from typing import Optional
 
-from utils.base_model import BaseModel
-from utils.constants import MB_BYTES_PER_GB, SEC_PER_HOUR
-from utils.utils import log_result, not_none
+from scope3_methodology.utils.constants import MB_BYTES_PER_GB, SEC_PER_HOUR
+from scope3_methodology.utils.custom_base_model import CustomBaseModel
+from scope3_methodology.utils.utils import log_result, not_none
 
 
 class EnvironmentIdleElectricityUseWattFields(Enum):
@@ -41,7 +41,7 @@ class ModeledProperty:
         return self.ad_revenue_allocation_pct / 100.0
 
     def set_corporate_emissions_g_co2e_per_impression(
-        self, emissions_g: float, emissions_g_per_imp: float
+        self, emissions_g: float | None, emissions_g_per_imp: float | None
     ) -> None:
         """Compute and set the corporate emissions per impression in grams CO2e"""
         if emissions_g:
@@ -58,7 +58,7 @@ class ModeledProperty:
 
 
 @dataclass
-class Property(BaseModel):
+class Property(CustomBaseModel):
     """Raw emissions information about a property and methodology of how to calculate emissions"""
 
     environment: str = field(default="computer", metadata={"default_eligible": False})

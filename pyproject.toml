@@ -8,6 +8,8 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.10"
+uvicorn = "^0.18.3"
+fastapi = "^0.85.0"
 PyYAML = "^6.0"
 
 [tool.poetry.dev-dependencies]

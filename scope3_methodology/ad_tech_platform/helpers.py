@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 """ ATP Model Helpers """
-from utils.utils import log_step
+from scope3_methodology.utils.utils import log_step
 
 
 def get_product_info(
     key: str, default: float | None, product: dict[str, str], depth: int
-) -> str | float | None:
+) -> str | float:
     """Find product information for a specific key or raise exception"""
     if key in product:
         log_step(key, product[key], "", depth)
