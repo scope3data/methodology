@@ -93,7 +93,8 @@ def get_all_facts() -> dict[str, list[Fact]]:
                 populate_raw_facts(facts, "/".join(pth.parts[-2:]), document["facts"])
             if "products" in document:
                 for product in document["products"]:
-                    populate_raw_facts(facts, "/".join(pth.parts[-2:]), product["facts"])
+                    if "facts" in product:
+                        populate_raw_facts(facts, "/".join(pth.parts[-2:]), product["facts"])
             if "properties" in document:
                 for publisher_property in document["properties"]:
                     populate_raw_facts(facts, "/".join(pth.parts[-2:]), publisher_property["facts"])

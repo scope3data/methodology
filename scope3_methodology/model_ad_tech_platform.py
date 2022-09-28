@@ -77,7 +77,7 @@ def process_product(
     logging.info(f"#### {name}")
     template = get_product_info("template", None, product, 0)
     identifier = get_product_info("identifier", None, product, 0)
-    facts = get_facts(product["facts"])
+    facts = get_facts(product["facts"]) if "facts" in product else {}
 
     facts["allocation_of_company_servers_pct"] = get_product_info(
         "allocation_of_company_servers_pct", 100, product, 0
@@ -121,10 +121,10 @@ def main():
                 partner = ModeledAdTechPlatform(
                     name=f"dummy {i}",
                     identifier=f"dummy{i}.com",
-                    primary_bid_request_emissions_g_co2e=0.001,
-                    primary_cookie_sync_emissions_g_co2e=0.0001,
+                    primary_bid_request_emissions_g_co2e=0.00020403552546744037,
+                    primary_cookie_sync_emissions_g_co2e=0.00035312100449136157,
                     cookie_sync_distribution_ratio=1.0,
-                    atp_block_rate=0.3,
+                    atp_block_rate=0.0,
                 )
                 distribution_partners.append(DistributionPartner(partner, 1.0))
 
