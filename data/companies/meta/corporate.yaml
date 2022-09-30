@@ -1,0 +1,45 @@
+---
+type: corporate
+name: Meta  
+facts:
+  - number_of_employees: 71970
+    reference: page 11
+    source_id: 1
+  - datacenter_emissions_mt_co2e_per_employee_per_month: 3.46
+  - travel_emissions_mt_co2e_per_employee_per_month: 0.005789
+  - commuting_emissions_mt_co2e_per_employee_per_month: 0.02547
+  - office_emissions_mt_co2e_per_employee_per_month: 0.1065
+raw_facts:
+  - datacenter_water_usage_effectiveness: 0.26
+    reference: page 39
+    source_id: 1
+  - datacenter_power_usage_effectiveness: 1.09
+    reference: page 39
+    source_id: 1
+  - office_location_based_emissions_per_year_mt: 92000
+    reference: page 95
+    source_id: 1
+  - datacenter_location_based_emissions_per_year_mt: 2989000
+    reference: page 95
+    source_id: 1
+  - datacenter_electricity_consumption_per_year_mwh: 9117000
+    reference: page 97
+    source_id: 1
+  - commuting_emissions_mt_co2e_per_year: 22000
+    reference: page 50
+    source_id: 1
+  - travel_mt_co2e_per_year: 5000
+    reference: page 50
+    source_id: 1
+  - water_withdrawal_m^3_per_year: 5043000
+    reference: page 56
+    source_id: 1
+  - water_consumption_m^3_per_year: 2569000
+    reference: page 56
+    source_id: 1
+sources:
+  - id: 1
+    year: 2021
+    url: >-
+      https://sustainability.fb.com/wp-content/uploads/2022/06/Meta-2021-Sustainability-Report.pdf
+    file: Meta-2021-Sustainability-Report.pdf
