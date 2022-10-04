@@ -83,6 +83,8 @@ In the open source version, we ask for the above data as inputs into the calcula
 
 ### Assessing the carbon footprint of network traffic
 
+As a starting point in understanding all the various approaches for understanding the carbon footprint of various networks, we recommend [this article by Gauthier Roussilhe](https://gauthierroussilhe.com/articles/explications-sur-l-empreinte-carbone-du-streaming-et-du-transfert-de-donnees).
+
 As a sanity check on the total environmental impact of network infrastructure, this paper: [The electricity consumption and operational carbon emissions of ICT network operators](https://www.diva-portal.org/smash/get/diva2:1177210/FULLTEXT01.pdf) uses confidential information provided by network operators to produce an estimate of the total and per-subscriber emissions.
 
 > - The total annual operational carbon emissions of the ICT networks are estimated to 169 Mtonnes CO2e for 2015. This corresponds to 0.53% of the global carbon emissions related to energy (about 32 Gtonnes), or 0.34% of all carbon emissions (about 50 Gtonnes).
