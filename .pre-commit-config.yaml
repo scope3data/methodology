@@ -50,7 +50,7 @@ repos:
         types: [python]
 
   - repo: https://github.com/python-poetry/poetry
-    rev: '1.2.0rc1'
+    rev: '1.2.1'
     hooks:
       - id: poetry-check
       - id: poetry-lock
