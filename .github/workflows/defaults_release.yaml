@@ -50,7 +50,7 @@ jobs:
       env:
         POETRY_VIRTUALENVS_CREATE: false
     - name: Generate Defaults Files
-      run: python ./scope3_methodology/compute_defaults.py
+      run: python ./scope3_methodology/cli/compute_defaults.py
     - name: Upload ATP Defaults File to Release
       id: upload_atp_defaults_files
       uses: actions/upload-release-asset@v1.0.1
