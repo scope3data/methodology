@@ -2,32 +2,33 @@
 
 from dataclasses import dataclass, field
 from typing import Optional
+from decimal import Decimal
 
-from utils.base_model import BaseModel
-from utils.constants import G_PER_MT
-from utils.utils import log_result, not_none
+from scope3_methodology.utils.constants import G_PER_MT
+from scope3_methodology.utils.custom_base_model import CustomBaseModel
+from scope3_methodology.utils.utils import log_result, not_none
 
 
 @dataclass
-class CorporateEmissions(BaseModel):
+class CorporateEmissions(CustomBaseModel):
     """Raw emissions information about an org and methodology of how to calculate emissions"""
 
-    office_emissions_mt_co2e_per_employee_per_month: Optional[float] = field(
+    office_emissions_mt_co2e_per_employee_per_month: Optional[Decimal] = field(
         default=None, metadata={"default_eligible": True}
     )
-    datacenter_emissions_mt_co2e_per_employee_per_month: Optional[float] = field(
+    datacenter_emissions_mt_co2e_per_employee_per_month: Optional[Decimal] = field(
         default=None, metadata={"default_eligible": True}
     )
-    travel_emissions_mt_co2e_per_employee_per_month: Optional[float] = field(
+    travel_emissions_mt_co2e_per_employee_per_month: Optional[Decimal] = field(
         default=None, metadata={"default_eligible": True}
     )
-    commuting_emissions_mt_co2e_per_employee_per_month: Optional[float] = field(
+    commuting_emissions_mt_co2e_per_employee_per_month: Optional[Decimal] = field(
         default=None, metadata={"default_eligible": True}
     )
-    overhead_emissions_mt_co2e_per_employee_per_month: Optional[float] = field(
+    overhead_emissions_mt_co2e_per_employee_per_month: Optional[Decimal] = field(
         default=None, metadata={"default_eligible": True}
     )
-    corporate_emissions_mt_co2e_per_month: Optional[float] = field(
+    corporate_emissions_mt_co2e_per_month: Optional[Decimal] = field(
         default=None, metadata={"default_eligible": False}
     )
     number_of_employees: Optional[int] = field(default=None, metadata={"default_eligible": False})
@@ -52,7 +53,7 @@ class CorporateEmissions(BaseModel):
 
     def comp_emissions_mt_co2e_per_month(
         self, defaults: "CorporateEmissions", depth: int
-    ) -> float | None:
+    ) -> Decimal | None:
         """Computes the corporate emisisons per month in metric tons CO2e"""
         self.validate()
         self.set_defaults(defaults)
@@ -70,7 +71,7 @@ class CorporateEmissions(BaseModel):
 
     def comp_emissions_g_co2e_per_month(
         self, defaults: "CorporateEmissions", depth: int
-    ) -> float | None:
+    ) -> Decimal | None:
         """Computes the corporate emisisons per month in grams CO2e"""
         self.validate()
         self.set_defaults(defaults)

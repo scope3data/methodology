@@ -2,7 +2,7 @@
 """ Fact finder extracts all facts from data yaml files"""
 import argparse
 
-from utils.utils import get_all_facts
+from scope3_methodology.utils.utils import get_all_facts
 
 
 def main():

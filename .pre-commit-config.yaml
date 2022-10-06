@@ -26,18 +26,37 @@ repos:
         additional_dependencies: [mccabe]
         args: ["--max-line-length", "100", "--max-complexity", "10"]
 
-  #- repo: local
-  #  hooks:
-  #    - id: pylint
-  #      name: pylint
-  #      entry: pylint
-  #      language: system
-  #      types: [python]
-  #      args: 
-  #        [
-  #          "-rn", # Only display messages
-  #          "-sn", # Don't display the score
-  #        ]
+  - repo: local
+    hooks:
+      - id: pylint
+        name: pylint
+        entry: pylint
+        language: system
+        types: [python]
+        args:
+          [
+            "-rn", # Only display messages
+            "-sn", # Don't display the score
+            # TODO remove these disables, but enabling pylint on commit
+            # so we do not add any more pylint errors
+            "--disable",
+            "too-few-public-methods",
+            "--disable",
+            "fixme",
+            "--disable",
+            "too-many-instance-attributes",
+            "--disable",
+            "too-many-public-methods",
+            "--disable",
+            "too-many-arguments",
+            "--disable",
+            "duplicate-code",
+            "--disable",
+            "too-many-locals",
+            "--disable",
+            "too-many-ancestors",
+            "--extension-pkg-whitelist='pydantic'"
+          ]
 
   - repo: local
     hooks:

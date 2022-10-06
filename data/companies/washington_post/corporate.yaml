@@ -1,6 +1,7 @@
 ---
 type: corporate
 name: Washington Post
+template: publisher
 facts:
   - number_of_employees: 3662
     source_id: 1

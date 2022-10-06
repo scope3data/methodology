@@ -2,7 +2,7 @@
 company:
   private: true
   type: ad tech platform
-  variant: ssp
+  template: ssp
   sources:
   -
       year: 2022

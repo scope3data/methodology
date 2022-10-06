@@ -1,6 +1,7 @@
 ---
 type: corporate
 name: Pubmatic
+template: atp
 facts:
   - number_of_employees: 812
     source_id: 1

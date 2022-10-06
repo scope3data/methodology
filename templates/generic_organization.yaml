@@ -1,4 +1,5 @@
 ---
 template:
   name: generic
+  template: generic 
   type: organization

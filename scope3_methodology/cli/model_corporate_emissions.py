@@ -3,9 +3,9 @@
 import argparse
 import logging
 
-import yaml
-from corporate.model import CorporateEmissions
-from utils.utils import get_facts
+from scope3_methodology.corporate.model import CorporateEmissions
+from scope3_methodology.utils.utils import get_facts
+from scope3_methodology.utils.yaml_helpers import yaml_dump, yaml_load
 
 
 def main():
@@ -34,17 +34,18 @@ def main():
         logging.basicConfig(level=logging.INFO)
 
     # Load facts about the company
-    with open(args.companyFile[0], "r") as stream:
-        document = yaml.safe_load(stream)
+    with open(args.companyFile[0], "r", encoding="UTF-8") as stream:
+        document = yaml_load(stream)
         if "name" not in document:
             raise Exception("No 'name' field found in company file")
         facts = get_facts(document["facts"]) if "facts" in document else {}
 
         depth = 4 if args.verbose else 0
-        corp = CorporateEmissions(**facts)
+        corp = CorporateEmissions(**facts)  # type: ignore
         defaults = CorporateEmissions.load_default_yaml(args.type, args.defaultsFile)
         org_emissions = corp.comp_emissions_g_co2e_per_month(defaults, depth - 1)
-    print(yaml.dump({"corporate_emissions_g_co2e_per_month": org_emissions}, Dumper=yaml.Dumper))
+
+    print(yaml_dump({"corporate_emissions_g_co2e_per_month": org_emissions}))
 
 
 if __name__ == "__main__":

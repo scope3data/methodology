@@ -1,8 +1,8 @@
 ---
 type: corporate
 name: Google
+template: generic
 raw_facts:
-
   - percentage_of_hourly_carbon_neutral_data_center_electricity_use: 66
     reference: page 2
     source_id: 1

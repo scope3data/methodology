@@ -1,5 +1,7 @@
 ---
+type: corporate
 name: Axel Springer
+template: publisher
 facts:
   - number_of_employees: 16446
   - office_emissions_mt_co2e_per_employee_per_month: 0.152

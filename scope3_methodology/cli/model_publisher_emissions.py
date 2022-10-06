@@ -2,10 +2,11 @@
 """ Compute emissions for a publishers properties """
 import argparse
 import logging
+from decimal import Decimal
 
-import yaml
-from publisher.model import ModeledProperty, Property
-from utils.utils import get_facts
+from scope3_methodology.publisher.model import ModeledProperty, Property
+from scope3_methodology.utils.utils import get_facts
+from scope3_methodology.utils.yaml_helpers import yaml_dump, yaml_load
 
 
 def parse_args():
@@ -66,14 +67,14 @@ def parse_args():
     parser.add_argument(
         "--corporateEmissionsG",
         const=1,
-        type=float,
+        type=Decimal,
         nargs="?",
         help="Provide the corporate emissions for organization",
     )
     parser.add_argument(
         "--corporateEmissionsGPerImp",
         const=1,
-        type=float,
+        type=Decimal,
         nargs="?",
         help="Provide the corporate emissions for organization per impression",
     )
@@ -84,10 +85,10 @@ def parse_args():
 
 
 def process_property(
-    publisher_property: dict[str, str],
+    publisher_property: dict[str, str | list[dict[str, Decimal]]],
     defaults_file: str,
     depth: int,
-    grid_intensity_g_co2e_per_kwh: float,
+    grid_intensity_g_co2e_per_kwh: Decimal,
     environment: str,
 ) -> ModeledProperty:
     """
@@ -98,14 +99,14 @@ def process_property(
     if "identifier" not in publisher_property or "template" not in publisher_property:
         raise Exception("Each property must have an identifier and a template")
     template = publisher_property["template"]
-    facts = get_facts(publisher_property["facts"])
+    facts = get_facts(publisher_property["facts"])  # type: ignore
 
     # Add in additional facts not parsed from yaml
     facts["environment"] = environment
     facts["grid_intensity_g_co2e_per_kwh"] = grid_intensity_g_co2e_per_kwh
-    unmodeled_property = Property(**facts)
-    defaults = Property.load_default_yaml(template, defaults_file)
-    return unmodeled_property.model_property(publisher_property["identifier"], defaults, depth)
+    unmodeled_property = Property(**facts)  # type: ignore
+    defaults = Property.load_default_yaml(str(template), defaults_file)
+    return unmodeled_property.model_property(str(publisher_property["identifier"]), defaults, depth)
 
 
 def main():
@@ -117,15 +118,15 @@ def main():
         logging.basicConfig(level=logging.INFO)
 
     # Load facts about the company
-    with open(args.companyFile[0], "r") as stream:
-        document = yaml.safe_load(stream)
+    with open(args.companyFile[0], "r", encoding="UTF-8") as stream:
+        document = yaml_load(stream)
         if "properties" not in document:
             raise Exception("No 'properties' field found in company file")
 
         depth = 4 if args.verbose else 0
 
-        publisher_impressions = 0.0
-        properties: list[Property] = []
+        publisher_impressions = Decimal("0.0")
+        properties: list[ModeledProperty] = []
         for publisher_property in document["properties"]:
             modeled_property = process_property(
                 publisher_property=publisher_property,
@@ -153,7 +154,7 @@ def main():
                     None, corporate_emissions_g_per_imp
                 )
 
-    print(yaml.dump({"properties": properties}, Dumper=yaml.Dumper))
+    print(yaml_dump({"properties": properties}))
 
 
 if __name__ == "__main__":
