@@ -5,9 +5,13 @@ template: publisher
 facts:
   - number_of_employees: 16446
   - office_emissions_mt_co2e_per_employee_per_month: 0.152
+    calculation: true
   - commuting_emissions_mt_co2e_per_employee_per_month: 0.0486
+    calculation: true
   - travel_emissions_mt_co2e_per_employee_per_month: 0.02
+    calculation: true
   - datacenter_emissions_mt_co2e_per_employee_per_month: 0.0136
+    calculation: true
   - overhead_emissions_mt_co2e_per_employee_per_month: 0.19
 raw_data:
   - employees: 16446
