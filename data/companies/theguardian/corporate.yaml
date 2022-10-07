@@ -5,8 +5,11 @@ template: publisher
 facts:
   - number_of_employees: 1489
   - office_emissions_mt_co2e_per_employee_per_month: 0.153
+    calculation: true
   - commuting_emissions_mt_co2e_per_employee_per_month: 0.040
+    calculation: true
   - travel_emissions_mt_co2e_per_employee_per_month: 0.137
+    calculation: true
 raw_data:
   - advertising_revenue_gbp_per_year: 73.7
     source_id: 1

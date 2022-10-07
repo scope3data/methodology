@@ -4,9 +4,11 @@ name: Criteo
 template: atp
 facts:
   - travel_emissions_mt_co2e_per_employee_per_month: 0.011
+    calculation: true
     reference: page 7
     source_id: 1
   - office_emissions_mt_co2e_per_employee_per_month: 0.0176
+    calculation: true
   - number_of_employees: 2810
 raw_facts:
   - office_electricity_kwh: 2262000

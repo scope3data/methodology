@@ -88,12 +88,11 @@ def populate_raw_facts(
         for key in keys:
             if key not in all_facts:
                 all_facts[key] = []
-            # TODO fix calc
             all_facts[key].append(
                 Fact(
                     company=company,
                     url="",
-                    is_calculation=True,
+                    is_calculation="calculation" in fact,
                     value=fact[key],  # type: ignore
                     template=template,
                     key=key,
