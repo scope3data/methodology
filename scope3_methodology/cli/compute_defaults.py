@@ -81,7 +81,6 @@ def compute_defaults(
     global_defaults: dict[str, Decimal] = {
         # TODO - get some actual data on this from customers
         "bid_request_size_in_bytes": Decimal("10000.0"),
-        "bid_requests_processed_from_publishers_pct": Decimal("100.0"),
         "bid_request_distribution_rate": Decimal("1.0"),
     }
 

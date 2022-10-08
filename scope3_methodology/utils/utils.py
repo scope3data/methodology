@@ -55,7 +55,9 @@ def get_facts(facts: list[dict[str, Decimal]]) -> dict[str, Decimal | str]:
     """Extract all raw facts from list of facts dictionaries extracted"""
     raw_facts: dict[str, Decimal | str] = {}
     for fact in facts:
-        keys = [key for key in fact if key not in ["reference", "comment", "source_id"]]
+        keys = [
+            key for key in fact if key not in ["reference", "comment", "source_id", "calculation"]
+        ]
         for key in keys:
             raw_facts[key] = fact[key]
     return raw_facts
