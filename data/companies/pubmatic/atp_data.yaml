@@ -9,10 +9,19 @@ products:
       - bid_requests_processed_billion_per_month: 12066
         reference: Impressions Processed section
         source_id: 2
+      - depreciation_dollars_per_month: 2440333
+        calculation: true
+        comment: 1/3 of the quarterly d&a
+      - corporate_emissions_g_co2e_per_bid_request: 0.0000163
+        calculation: true
+        comment: estimate of corporate emissions 10/22 - 197.1 mt/mo
     raw_facts:
       - server_qps: 5500
         reference: Carbon Emissions section
         source_id: 1
+      - depreciation_and_amortization_quarter: 7321000
+        reference: adjusted ebitda reconciliation
+        source_id: 2
     sources:
       - id: 1
         year: 2022
