@@ -1,0 +1,15 @@
+---
+company:
+  private: true
+  type: ad tech platform
+  template: dsp
+  sources:
+  -
+      month: 10
+      year: 2022
+      private: true
+      facts:
+      -
+          bid_requests_processed_billion_per_month: 75168
+          bid_request_rejection_pct: 20.7
+          reference: provided by company to Scope3 (extrapolated from qps with 2x multiplier)
