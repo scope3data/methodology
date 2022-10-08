@@ -60,7 +60,7 @@ class AdTechPlatform(CustomBaseModel):
         default=None, metadata={"default_eligible": True}
     )
     depreciation_dollars_per_month: Optional[Decimal] = field(
-        default=None, metadata={"default_eligible": True}
+        default=None, metadata={"default_eligible": False}
     )
     server_emissions_mt_per_dollar_of_depreciation: Optional[Decimal] = field(
         default=None, metadata={"default_eligible": True}

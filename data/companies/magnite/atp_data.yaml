@@ -9,6 +9,9 @@ products:
       - depreciation_dollars_per_month: 2925000
         calculation: true
         comment: 1/12 of the annual server leasing cost
+      - server_emissions_mt_co2e_per_month: 1422
+        calculation: true
+        comment: Used platform average emissions/depreciation 10/22
     raw_facts:
       - server_leasing_dollars_per_year: 35100000
         reference: adjusted ebitda reconciliation
