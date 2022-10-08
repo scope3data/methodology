@@ -111,7 +111,6 @@ class AdTechPlatform(CustomBaseModel):
         """Returns bid requests total processed per month"""
         return not_none(self.bid_requests_processed_billion_per_month) * BILLION
 
-    # HELP: I want to know which of these is a default. Use server emissions as priority.
     def get_server_emissions_g_co2e_per_month(self) -> Decimal:
         """Returns server emissions per month in grams"""
         if self.depreciation_dollars_per_month:
