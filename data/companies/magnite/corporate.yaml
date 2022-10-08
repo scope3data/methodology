@@ -1,0 +1,13 @@
+---
+type: corporate
+name: Magnite
+template: atp
+facts:
+  - number_of_employees: 876
+    source_id: 1
+    reference: page page 12
+sources:
+  - id: 1
+    year: 2021
+    url: >-
+      https://investor.magnite.com/static-files/6f6ff06d-45ce-4092-b33e-af228d66b931
