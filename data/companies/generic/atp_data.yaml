@@ -1,6 +1,6 @@
 ---
 type: atp
-company: Generic ATPs
+name: Generic ATPs
 products:
   - name: Generic SSP
     template: ssp
