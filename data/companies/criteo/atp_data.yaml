@@ -15,6 +15,8 @@ products:
       - corporate_emissions_g_co2e_per_bid_request: 0.00015648471735020598
         calculation: true 
         comment: 'Output of model Sept 20, 2022'
+      - server_emissions_mt_per_dollar_of_depreciation: 0.000486
+        calculation: true
     raw_facts:
       - servers: 40000
         reference: page 7
@@ -31,9 +33,17 @@ products:
         calculation: true 
         reference: page 85
         comment: no adjustment needed because embodied emissions are included
+      - depreciation_and_amortization_year: 88402000
+        reference: page 131
+        comment: using full d&a number not just datacenters as this seems like the common practice
+        source_id: 2
     sources:
       - id: 1
         year: 2021
         url: >-
           https://filecache.investorroom.com/mr5ir_criteo/1674/Criteo_CSR_Report_2021.pdf
         file: Criteo_CSR_Report_2021.pdf
+      - id: 2
+        year: 2021
+        url: >-
+          https://criteo.investorroom.com/download/2021+Annual+Report.pdf
