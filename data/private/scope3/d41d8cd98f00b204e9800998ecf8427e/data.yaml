@@ -11,5 +11,5 @@ company:
       facts:
       -
           bid_requests_processed_billion_per_month: 75168
-          bid_request_rejection_pct: 20.7
+          bid_requests_processed_from_ad_tech_platforms: 79.3
           reference: provided by company to Scope3 (extrapolated from qps with 2x multiplier)
