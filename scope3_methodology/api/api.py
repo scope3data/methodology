@@ -1,8 +1,10 @@
+# flake8: noqa
+
 """ Expose a simple API for calculating emissions and pulling in computed defaults """
 import os
 
 import uvicorn
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.openapi.docs import get_redoc_html
 
 from scope3_methodology.ad_tech_platform.model import AdTechPlatform
@@ -60,9 +62,6 @@ async def startup_event():
     adtech_platform_defaults[ATPTemplate.SSP] = AdTechPlatform.load_default_yaml(
         ATPTemplate.SSP.value, atp_defaults_file_path
     )
-    adtech_platform_defaults[ATPTemplate.NETWORK] = AdTechPlatform.load_default_yaml(
-        ATPTemplate.NETWORK.value, atp_defaults_file_path
-    )
     organization_defaults[OrganizationType.GENERIC] = CorporateEmissions.load_default_yaml(
         OrganizationType.GENERIC.value, organization_defaults_file_path
     )
@@ -102,6 +101,11 @@ def calculate_corporate_emissions(data: CorporateInput):
 @app.post("/calculate/atp_primary_emissions")
 def calculate_atp_emissions(data: ATPInput):
     """Returns computed primary emissions for an ad tech platform in g co2e"""
+    if data.atp_template == ATPTemplate.NETWORK:
+        raise HTTPException(
+            status_code=501, detail="calculate_atp_emissions is not supported for NETWORK"
+        )
+
     unmodeled = AdTechPlatform(
         allocation_of_company_servers_pct=data.allocation_of_company_servers_pct,
         allocation_of_corporate_emissions_pct=data.allocation_of_corporate_emissions_pct,
@@ -144,12 +148,15 @@ def calculate_atp_secondary_bid_request_emissions(data: ATPSecondaryEmissionsInp
 @app.get("/defaults/atp/{template}")
 def get_atp_template_defaults(template: ATPTemplate):
     """
-    Template options: dsp, ssp, network
+    Template options: dsp, ssp
     Returns following defaults for a specific ATP template
         - corporate_emissions_g_co2e_per_bid_request
         - atp_block_rate
         - publisher_block_rate
     """
+    if template == ATPTemplate.NETWORK:
+        raise HTTPException(status_code=501, detail=f"/defaults/atp/{template} is not supported")
+
     defaults = adtech_platform_defaults[template]
     corporate_emissions = defaults.corporate_emissions_g_co2e_per_bid_request
     return ATPDefaultsResponse(
