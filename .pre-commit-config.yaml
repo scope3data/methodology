@@ -55,6 +55,8 @@ repos:
             "too-many-locals",
             "--disable",
             "too-many-ancestors",
+            "--disable",
+            "line-too-long",
             "--extension-pkg-whitelist='pydantic'"
           ]
 

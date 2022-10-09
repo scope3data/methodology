@@ -1,0 +1,23 @@
+---
+type: atp
+company: Magnite
+products:
+  - name: Magnite
+    template: ssp
+    identifier: magnite.com
+    facts:
+      - depreciation_dollars_per_month: 2925000
+        calculation: true
+        comment: 1/12 of the annual server leasing cost
+      - server_emissions_mt_co2e_per_month: 1422
+        calculation: true
+        comment: Used platform average emissions/depreciation 10/22
+    raw_facts:
+      - server_leasing_dollars_per_year: 35100000
+        reference: adjusted ebitda reconciliation
+        source_id: 1
+    sources:
+      - id: 1
+        year: 2021
+        url: >-
+          https://investor.magnite.com/static-files/6f6ff06d-45ce-4092-b33e-af228d66b931

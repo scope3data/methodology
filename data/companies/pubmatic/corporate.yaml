@@ -3,10 +3,11 @@ type: corporate
 name: Pubmatic
 template: atp
 facts:
-  - number_of_employees: 812
+  - number_of_employees: 713
     source_id: 1
+    reference: page 15
 sources:
   - id: 1
     year: 2021
     url: >-
-      https://www.linkedin.com/company/pubmatic/insights/
+      https://investors.pubmatic.com/static-files/99531669-bad5-423c-b0cb-7eb105398748

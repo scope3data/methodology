@@ -3,11 +3,7 @@ template:
   name: ssp
   template: ssp
   type: atp
-  bid_requests_processed_from_ad_tech_platforms_pct: 30
-  servers_processing_bid_requests_pct: 95
-  servers_processing_cookie_syncs_pct: 5
+  servers_processing_bid_requests_pct: 99
+  servers_processing_cookie_syncs_pct: 1
   servers_processing_creative_serving_pct: 0
-  cookie_syncs_processed_per_bid_request: 0.01        # once per 100 bid requests
-  cookie_sync_distribution_ratio: 1                   # send to every distribution partner every time
-  creative_serving_processed_billion_per_month: 30    # made up & definitely wrong (not used yet)
-  bid_request_rejection_pct: 30
+  cookie_sync_distribution_ratio: 0.2                 # send to 1/5 of distribution partners

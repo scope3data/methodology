@@ -59,6 +59,12 @@ class AdTechPlatform(CustomBaseModel):
     bid_request_size_in_bytes: Optional[Decimal] = field(
         default=None, metadata={"default_eligible": True}
     )
+    depreciation_dollars_per_month: Optional[Decimal] = field(
+        default=None, metadata={"default_eligible": False}
+    )
+    server_emissions_mt_per_dollar_of_depreciation: Optional[Decimal] = field(
+        default=None, metadata={"default_eligible": True}
+    )
     server_to_server_emissions_g_co2e_per_gb: Optional[Decimal] = field(
         default=None, metadata={"default_eligible": True}
     )
@@ -102,11 +108,17 @@ class AdTechPlatform(CustomBaseModel):
         self.defaults = defaults
 
     def get_bid_requests_processed_per_month(self) -> Decimal:
-        """Returns bif requests total processed per month"""
+        """Returns bid requests total processed per month"""
         return not_none(self.bid_requests_processed_billion_per_month) * BILLION
 
     def get_server_emissions_g_co2e_per_month(self) -> Decimal:
         """Returns server emissions per month in grams"""
+        if self.depreciation_dollars_per_month:
+            return (
+                not_none(self.server_emissions_mt_per_dollar_of_depreciation)
+                * self.depreciation_dollars_per_month
+                * G_PER_MT
+            )
         return not_none(self.server_emissions_mt_co2e_per_month) * G_PER_MT
 
     def get_cookie_syncs_processed_per_month(self) -> Decimal | None:
@@ -209,9 +221,15 @@ class AdTechPlatform(CustomBaseModel):
         depth: int,
     ) -> Decimal:
         """Compute the server emissions per bid request in grams CO2e"""
+        server_emissions_g = self.get_server_emissions_g_co2e_per_month()
+        log_result(
+            "server emissions g co2e per month",
+            f"{server_emissions_g:.6f}",
+            depth - 1,
+        )
         server_emissions_g_co2e_per_bid_request = (
             self.get_allocation_of_company_servers_rate()
-            * self.get_server_emissions_g_co2e_per_month()
+            * server_emissions_g
             * self.get_servers_processing_bid_requests_rate()
         ) / self.get_bid_requests_processed_per_month()
 
