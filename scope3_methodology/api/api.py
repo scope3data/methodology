@@ -2,6 +2,7 @@
 
 """ Expose a simple API for calculating emissions and pulling in computed defaults """
 import os
+from decimal import Decimal
 
 import uvicorn
 from fastapi import FastAPI, HTTPException
@@ -106,9 +107,19 @@ def calculate_atp_emissions(data: ATPInput):
             status_code=501, detail="calculate_atp_emissions is not supported for NETWORK"
         )
 
+    company_servers_pct = (
+        data.allocation_of_company_servers_pct
+        if data.allocation_of_company_servers_pct
+        else Decimal("100.0")
+    )
+    corporate_emissions_pct = (
+        data.allocation_of_corporate_emissions_pct
+        if data.allocation_of_corporate_emissions_pct
+        else Decimal("100.0")
+    )
     unmodeled = AdTechPlatform(
-        allocation_of_company_servers_pct=data.allocation_of_company_servers_pct,
-        allocation_of_corporate_emissions_pct=data.allocation_of_corporate_emissions_pct,
+        allocation_of_company_servers_pct=company_servers_pct,
+        allocation_of_corporate_emissions_pct=corporate_emissions_pct,
         corporate_emissions_g_co2e_per_bid_request=data.corporate_emissions_g_co2e_per_bid_request,
         bid_requests_processed_from_ad_tech_platforms_pct=data.bid_requests_processed_from_ad_tech_platforms_pct,
         bid_requests_processed_from_publishers_pct=data.bid_requests_processed_from_publishers_pct,
@@ -125,6 +136,7 @@ def calculate_atp_emissions(data: ATPInput):
         cookie_syncs_processed_billion_per_month=data.cookie_syncs_processed_billion_per_month,
         data_transfer_emissions_mt_co2e_per_month=data.data_transfer_emissions_mt_co2e_per_month,
     )
+
     return unmodeled.model_product(
         name=data.name,
         identifier=data.identifier,

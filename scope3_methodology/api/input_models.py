@@ -50,8 +50,8 @@ class ATPInput(BaseModel):
     identifier: str = ""
     atp_template: ATPTemplate
     corporate_emissions_g_co2e: Optional[Decimal]
-    allocation_of_company_servers_pct: Optional[Decimal] = Decimal("100.0")
-    allocation_of_corporate_emissions_pct: Optional[Decimal] = Decimal("100.0")
+    allocation_of_company_servers_pct: Optional[Decimal]
+    allocation_of_corporate_emissions_pct: Optional[Decimal]
     corporate_emissions_g_co2e_per_bid_request: Optional[Decimal]
     bid_requests_processed_from_publishers_pct: Optional[Decimal]
     bid_requests_processed_from_ad_tech_platforms_pct: Optional[Decimal]
