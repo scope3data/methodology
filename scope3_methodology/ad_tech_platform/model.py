@@ -92,9 +92,6 @@ class AdTechPlatform(CustomBaseModel):
     bid_requests_processed_billion_per_month: Optional[Decimal] = field(
         default=None, metadata={"default_eligible": True}
     )
-    ad_tech_platform_bid_requests_processed_billion_per_month: Optional[Decimal] = field(
-        default=None, metadata={"default_eligible": False}
-    )
     cookie_syncs_processed_billion_per_month: Optional[Decimal] = field(
         default=None, metadata={"default_eligible": False}
     )
@@ -172,26 +169,6 @@ class AdTechPlatform(CustomBaseModel):
         """
         return 1 - self.get_bid_requests_processed_from_publishers_rate()
 
-    def comp_external_request_rate(self, depth: int) -> Decimal:
-        """
-        Compute the external request rate.
-
-        We assume that server-to-server requests (generally from ad tech platforms) incur core
-        networking costs that are not accounted for in client device data transfer emissions.
-        Therefore we need to figure out what portion of inbound requests are S2S.
-        """
-        if (
-            self.ad_tech_platform_bid_requests_processed_billion_per_month
-            and self.bid_requests_processed_billion_per_month
-        ):
-            rate = (
-                self.ad_tech_platform_bid_requests_processed_billion_per_month
-                / self.bid_requests_processed_billion_per_month
-            )
-            log_result("external request rate", f"{rate}%", depth)
-            return rate
-        return self.get_bid_requests_processed_from_ad_tech_platforms_rate()
-
     def comp_bid_request_size_gb(self) -> Decimal:
         """Compute the bid requests size in GB"""
         return not_none(self.bid_request_size_in_bytes) / BYTES_PER_GB
@@ -205,8 +182,7 @@ class AdTechPlatform(CustomBaseModel):
             return data_transfer_emissions_g_co2e_per_month
 
         data_transfer_emissions_g_co2e_per_bid_request = (
-            self.comp_external_request_rate(depth - 1)
-            * self.comp_bid_request_size_gb()
+            self.comp_bid_request_size_gb()
             * not_none(self.server_to_server_emissions_g_co2e_per_gb)
         ) / self.get_bid_requests_processed_per_month()
         log_result(

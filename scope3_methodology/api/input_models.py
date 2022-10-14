@@ -65,7 +65,6 @@ class ATPInput(BaseModel):
     servers_processing_cookie_syncs_pct: Optional[Decimal]
     cookie_sync_distribution_ratio: Optional[Decimal]
     bid_requests_processed_billion_per_month: Optional[Decimal]
-    ad_tech_platform_bid_requests_processed_billion_per_month: Optional[Decimal]
     cookie_syncs_processed_billion_per_month: Optional[Decimal]
     data_transfer_emissions_mt_co2e_per_month: Optional[Decimal]
 
