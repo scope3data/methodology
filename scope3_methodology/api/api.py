@@ -122,7 +122,6 @@ def calculate_atp_emissions(data: ATPInput):
         servers_processing_cookie_syncs_pct=data.servers_processing_cookie_syncs_pct,
         cookie_sync_distribution_ratio=data.cookie_sync_distribution_ratio,
         bid_requests_processed_billion_per_month=data.bid_requests_processed_billion_per_month,
-        ad_tech_platform_bid_requests_processed_billion_per_month=data.ad_tech_platform_bid_requests_processed_billion_per_month,
         cookie_syncs_processed_billion_per_month=data.cookie_syncs_processed_billion_per_month,
         data_transfer_emissions_mt_co2e_per_month=data.data_transfer_emissions_mt_co2e_per_month,
     )
