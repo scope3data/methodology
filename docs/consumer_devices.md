@@ -8,7 +8,7 @@ Production is done around the world, not where consumer use occurs, whereas we n
 
 $PEPS = {PE \over 365 • UL • DU • 3600}$
 
-To calculate the *Lifecycle Emissions Per Second of Use* (LEPS), we multiply the grid intensity of the consumer's location (GI) and the usage energy of the consumer device (UEPS) and add this to the production energy per second.
+To calculate the *Lifecycle Emissions Per Second of Use* (LEPS), we multiply the grid intensity of the consumer's location (GI) and the usage energy of the consumer device (UEPS) and add this to the production energy per second (PEPS).
 
 $LEPS = {PEPS + GI • UEPS}$
 
