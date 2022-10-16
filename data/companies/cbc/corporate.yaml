@@ -1,0 +1,33 @@
+---
+type: corporate
+name: CBC/Radio Canada
+template: publisher
+facts:
+  - number_of_employees: 7743
+    source_id: 2
+    reference: https://cbc.radio-canada.ca/en/impact-and-accountability/finances/annual-reports/ar-2021-2022/people/our-workforce
+  - office_emissions_mt_co2e_per_employee_per_month: 0.241
+    calculation: true
+  - travel_emissions_mt_co2e_per_employee_per_month: 0.009
+    calculation: true
+raw_data:
+  - office emissions mt: 22372
+    source_id: 1
+  - office emissions kg per sq ft: 1.3
+    source_id: 1
+  - kwh per sq ft: 22.9
+    source_id: 1
+  - water liters per sq ft: 28
+    source_id: 1
+  - travel emissions mt: 821
+    source_id: 1
+    comment: air + rail + rental
+reference_files:
+  - year: 2021
+    id: 1
+    url: >-
+      https://cbc.radio-canada.ca/en/impact-and-accountability/environment/environment-reports/environmental-report-2020-2021/scorecard-2020-2021
+  - year: 2021
+    id: 2
+    url: >-
+      https://cbc.radio-canada.ca/en/impact-and-accountability/finances/annual-reports/ar-2021-2022
