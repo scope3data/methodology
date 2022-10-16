@@ -30,7 +30,7 @@ We model ad tech in three steps:
 
 1. Determine the waterfall used by the publisher so we can differentiate direct buys from programmatic buys, including the number of auctions run at each stage
 2. Determine the ad tech graph
-3. Use the [Ad Tech Platform Model](adTechModel.md) to determine emissions for each ad tech platform
+3. Use the [Ad Tech Platform Model](ad_tech_model.md) to determine emissions for each ad tech platform
 
 ### The Monetization Waterfall
 
@@ -73,13 +73,15 @@ For purposes of this open-source model, a simpler way to get the basic data abou
 
 ### Measuring energy use of consumer devices
 
-This [2019 paper](https://www.researchgate.net/publication/335911295_Residential_Consumer_Electronics_Energy_Consumption_in_the_United_States_in_2017) models the use of various consumer devices in the US in 2017. Based on the analysis, about 3.5 billion devices in 119 million homes consumed 148 TWh.
+To calculate the *Lifecycle Emissions Per Second of Use* (LEPS), we multiply the grid intensity of the consumer's location (GI) and the power draw of the consumer device (UEPS) and add this to the production energy per second (PEPS).
 
-This study estimates, for instance, desktop computer + monitor as using 115W when active and 59W when idle and a laptop as using 22W active and 11W idle. We can use these data to map to the loading/browsing times calculated above.
+$LEPS = {PEPS + GI • UEPS}$
 
-As an example, SimilarWeb shows [BZ](https://www.similarweb.com/website/bz-berlin.de/#overview) as having 2.24 pages per visit and average visit duration of 120 seconds. [Pingdom](https://tools.pingdom.com/#60b937d3cb000000) shows a load time of 1.35 seconds. For a laptop, we would model this as 3 seconds of active use per visit at 22W plus 117 seconds of idle time for a total of 0.376Wh per visit. (TODO: this should include embodied emissions).
+See [consumer device emissions](./consumer_devices.md) for details on how we calculate the UEPS and PEPS for each device type.
 
-In the open source version, we ask for the above data as inputs into the calculation (in the `publisher.properties` object). In the Scope3 version, we operate a crawler that simulates loading multiple pages of each website and measures actual CPU and network usage, creating a weighted average of consumer device emissions for each domain.
+We multiply the LEPS by the average session time for each property to find the lifecycle emissions per session.
+
+As an example, SimilarWeb shows [BZ](https://www.similarweb.com/website/bz-berlin.de/#overview) as having average visit duration of 120 seconds. For a personal computer with a power draw of 53.2 watts and a grid intensity of 500 gCO2e/kWh, we calculate use energy of 0.0073 gCO2e/s. Added to the production emissions of 0.007 gCO2e/s, we get a total of 0.0143 gCO2e/s. For a 120 second session, that would be a total of 1.716 gCO2e, which we would then divide by the number of ads seen.
 
 ### Assessing the carbon footprint of network traffic
 
@@ -145,6 +147,7 @@ Instead of using the actual ads we detect, we decided to use a "quality ad load"
 Future state: Get an attention measurement company to open source some attention data to compute these metrics for various channels and property types
 
 ### Sample publisher YAML
+
 This is an example of the minimal YAML that would be passed into `./scope3methodology/cli/model_publisher_emissions.py` to produce an estimate of emissions. This does not include emissions from the ad tech supply chain.
 
 ```yaml

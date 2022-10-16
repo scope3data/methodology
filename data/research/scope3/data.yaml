@@ -1,0 +1,15 @@
+---
+sources:
+-
+  url: https://github.com/scope3data/methodology/docs/consumer_devices.md
+  comment: We aggregate multiple sources to create a synthetic model of energy use
+  facts:
+  -
+    personal_computer_production_energy_per_second: 0.007
+    personal_computer_power_draw_watts: 53.2
+    tablet_production_energy_per_second: .0016
+    tablet_power_draw_watts: 3
+    smartphone_production_energy_per_second: 0.0052
+    smartphone_power_draw_watts: 0.77
+    tv_system_production_energy_per_second: 0.021
+    tv_system_power_draw_watts: 87.4
