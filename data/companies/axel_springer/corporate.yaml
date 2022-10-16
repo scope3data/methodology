@@ -3,37 +3,39 @@ type: corporate
 name: Axel Springer
 template: publisher
 facts:
-  - number_of_employees: 16446
-  - office_emissions_mt_co2e_per_employee_per_month: 0.152
+  - employees: 17343
+    source_id: 1
+    reference: page 39
+  - office_emissions_mt_co2e_per_employee_per_month: 0.106
     calculation: true
-  - commuting_emissions_mt_co2e_per_employee_per_month: 0.0486
+  - commuting_emissions_mt_co2e_per_employee_per_month: 0.050
     calculation: true
-  - travel_emissions_mt_co2e_per_employee_per_month: 0.02
+  - travel_emissions_mt_co2e_per_employee_per_month: 0.017
     calculation: true
-  - datacenter_emissions_mt_co2e_per_employee_per_month: 0.0136
+  - datacenter_emissions_mt_co2e_per_employee_per_month: 0.362
     calculation: true
-  - overhead_emissions_mt_co2e_per_employee_per_month: 0.19
+  - overhead_emissions_mt_co2e_per_employee_per_month: 0.220
 raw_data:
-  - employees: 16446
-    source: sustainability_report_AS_EN_211001.pdf
+  - office emissions mt: 21966
+    source_id: 1
+    reference: page 31
+  - commuting emissions mt: 10442
+    source_id: 1
     reference: page 32
-  - office emissions mt per month: 2495
-    source: sustainability_report_AS_EN_211001.pdf
-    reference: page 25
-  - commuting emissions mt per month: 799.9
-    source: sustainability_report_AS_EN_211001.pdf
-    reference: page 26
-  - travel emissions mt per month: 331
-    source: sustainability_report_AS_EN_211001.pdf
-    reference: page 26
-  - datacenter emissions mt per month: 224
-    source: sustainability_report_AS_EN_211001.pdf
-    reference: page 27
-  - overhead emissions mt per month: 3129.5
-    source: sustainability_report_AS_EN_211001.pdf
-    reference: page 27
+    comment: subtracted the travel emissions from the total
+  - travel emissions mt: 3490
+    source_id: 1
+    reference: page 32
+  - datacenter emissions mt: 75315
+    source_id: 1
+    reference: page 33
+    comment: Data centers for websites + General IT infrastructure ... should this be 70%?
+  - overhead emissions mt: 45798
+    source_id: 1
+    reference: page 33
+    comment: 70% of overhead (allocated for % digital)
 reference_files:
-  - year: 2020
+  - year: 2021
+    id: 1
     url: >-
-      https://sustainability.axelspringer.com/wp-content/uploads/2021/10/sustainability_report_AS_EN_211001.pdf
-    file: sustainability_report_AS_EN_211001.pdf
+      https://sustainability.axelspringer.com/wp-content/uploads/2022/09/2021_Nachhaltigkeitsbilanz_komplett_ENG_29092022.pdf
