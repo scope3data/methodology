@@ -23,6 +23,12 @@ from scope3_methodology.api.response_models import (
 )
 from scope3_methodology.corporate.model import CorporateEmissions
 from scope3_methodology.publisher.model import Property
+from scope3_methodology.utils.public_yaml_files import (
+    PublicYamlInformation,
+    get_all_public_yaml_files,
+)
+from scope3_methodology.utils.utils import get_facts
+from scope3_methodology.utils.yaml_helpers import yaml_load
 
 app = FastAPI()
 
@@ -34,6 +40,7 @@ async def get_redoc_documentation():
     return get_redoc_html(openapi_url="/openapi.json", title="docs")
 
 
+public_yaml_files: dict[str, PublicYamlInformation] = get_all_public_yaml_files()
 organization_defaults: dict[OrganizationType, CorporateEmissions] = {}
 adtech_platform_defaults: dict[ATPTemplate, AdTechPlatform] = {}
 property_defaults: dict[PropertyTemplate, Property] = {}
@@ -45,8 +52,11 @@ property_defaults_file_path = os.environ.get("PROPERTY_DEFAULTS_FILE")
 @app.on_event("startup")
 async def startup_event():
     """
-    Startup will run before the API serves requests. It will load in all
-    defatults for usage in calculating emissions.
+    Startup will run before the API serves requests
+
+    It will load:
+    - all defatults for usage in calculating emissions
+    - all public yaml files
     """
     if (
         atp_defaults_file_path is None
@@ -191,6 +201,45 @@ def get_property_template_defaults(template: PropertyTemplate):
         template=template.value,
         corporate_emissions_g_co2e_per_impression=corporate_emissions,
     )
+
+
+@app.get("/public_yaml_files/list/{file_type}")
+def get_corporate_public_yaml_files(file_type: str):
+    """
+    Returns a list of all <file_type> yaml files
+    """
+    corporate_files = []
+    for file_info in public_yaml_files.values():
+        if file_info.file_type == file_type:
+            corporate_files.append(file_info)
+    return corporate_files
+
+
+@app.get("/public_yaml_files/parse/corporate/{identifier}")
+def parse_corporate_public_yaml_file(identifier: str):
+    """
+    Returns a parsed corporate yaml file factual information
+    """
+    try:
+        file_info = public_yaml_files[f"{identifier}corporate"]
+    except Exception as exc:
+        raise HTTPException(
+            status_code=500, detail=f"Unable to locate corporate file with '{identifier}'"
+        ) from exc
+
+    try:
+        with open(file_info.file_path, "r", encoding="UTF-8") as stream:
+            document = yaml_load(stream)
+            if "name" not in document:
+                raise Exception("No 'name' field found in company file")
+            facts = get_facts(document["facts"]) if "facts" in document else {}
+
+            return CorporateEmissions(**facts)  # type: ignore
+    except Exception as exc:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to open and parse corporate file '{file_info.file_path}'",
+        ) from exc
 
 
 if __name__ == "__main__":
