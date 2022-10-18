@@ -13,3 +13,11 @@ sources:
     smartphone_power_draw_watts: 0.77
     tv_system_production_energy_per_second: 0.021
     tv_system_power_draw_watts: 87.4
+-
+  url: https://github.com/scope3data/methodology/docs/data_transfer.md
+  comment: We aggregate multiple sources to create a synthetic model of data transfer power use
+  facts:
+  -
+    mobile_data_transfer_kwh_per_gb: 0.03
+    fixed_network_data_transfer_kwh_per_gb: 0.14
+    average_data_transfer_kwh_per_gb: 0.10
