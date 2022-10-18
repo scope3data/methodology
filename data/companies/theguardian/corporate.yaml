@@ -2,6 +2,7 @@
 type: corporate
 name: The Guardian
 template: publisher
+public_identifier: theguardian
 facts:
   - number_of_employees: 1489
   - office_emissions_mt_co2e_per_employee_per_month: 0.153

@@ -1,6 +1,7 @@
 ---
 type: publisher
 company: The Guardian
+public_identifier: theguardian
 properties:
   - template: news_with_print
     identifier: theguardian.com
