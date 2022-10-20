@@ -34,7 +34,7 @@ For mobile vs fixed data there is a great [2020 EU study](https://circabc.europa
 | Unknown | TV, PC, or Tablet | 0.14
 | Unknown | Unknown | 0.10
 
-When we don't know anything about the connection, we are using a value of 0.1 kWh per GB from the [most recent peer-reviewed study](https://www.mdpi.com/2071-1050/10/7/2494) we have found to estimate emissions from data transfer. 
+When we don't know anything about the connection, we are using a value of 0.1 kWh per GB from the [most recent peer-reviewed study on data transfer emissions](https://www.mdpi.com/2071-1050/10/7/2494).
 
 
 ## References
