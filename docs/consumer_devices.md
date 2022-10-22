@@ -1,5 +1,13 @@
 # Measuring Emissions for Consumer Devices
 
+## Overview of Emissions by Device
+
+This graphic, from [Malmodin and Lundén](#malmodin-and-lundén-2018), is a useful overview of emissions from production vs use phase. Note that the numbers here are slightly different than the aggregated conclusions we draw below.
+
+![Footprint by device](./footprint-by-device.webp)
+
+## Calculating Lifecycle Emissions Per Second of Use
+
 The *Lifecycle Annual Footprint* (LAF) of a particular device, per [Belkhir and Elmeligi](#belkhir-and-elmeligi-2018), is the Use Phase Energy (UPE) plus the Production Energy (PE) divided by the Useful Life (UL). In other words, "the Lifecycle Annual Footprint accounts for the annual footprint of both the use phase as well as the production energy, depreciating the production energy over the useful lifetime of the device.
 
 $LAF = {UPE + PE \over UL}$
@@ -117,3 +125,7 @@ Hischier, Roland & Baudin, Isabelle. (2010). [LCA study of a plasma television d
 ### Kwiecień et al, 2019
 
 Kwiecień, Klaudia & Kania, Gabriela & Malinowski, Mateusz. (2019). [The life cycle assessment (LCA) of selected TV models](https://www.researchgate.net/publication/341785058_The_life_cycle_assessment_LCA_of_selected_TV_models).
+
+### Malmodin and Lundén, 2018
+
+Malmodin J, Lundén D. [The Energy and Carbon Footprint of the Global ICT and E&M Sectors 2010–2015](https://doi.org/10.3390/su10093027). Sustainability. 2018; 10(9):3027.

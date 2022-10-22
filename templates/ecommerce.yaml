@@ -1,0 +1,12 @@
+---
+template:
+  name: ecommerce
+  template: ecommerce
+  type: property
+  comment: impressions include sponsored listings as well as banners
+  comment: realestate.com.au duration/page = 56.7s
+  comment: realestate.com.au ads/page = 5
+  comment: eg ads/duration = 0.088
+  comment: todo - need to gather similar data for multiple sites and make this a calculation
+  quality_impressions_per_duration_s: 0.088
+  revenue_allocation_to_digital_pct: 100
