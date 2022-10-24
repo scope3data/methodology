@@ -17,6 +17,6 @@ As of this writing (October 2022) we believe that all ad tech platforms still ac
 
 ## Sample emissions from cookies for a web site
 
-![An example of a website generating 18.9 mtCO2e from cookies](./web_cookies.png)
+To put this in a real-world context, using SimilarWeb we can pull estimated traffic data for yahoo.com. Using some heuristics for the number of ad tech partners and cookie syncs, we can estimate the annual emissions due to ad tech cookie synching as 4,295 mt CO2e - the same as burning 57 tanker trucks filled with gasoline.
 
-Assuming that all web traffic is similar, this would imply around 68,000 mt of CO2e are generated because of cookies each year (10B page views a day x 18.9 mt per billion page views).
+![An example of yahoo.com generating 18.9 mtCO2e from cookies](./web_cookies.png)
