@@ -204,15 +204,15 @@ def get_property_template_defaults(template: PropertyTemplate):
 
 
 @app.get("/public_yaml_files/list/{file_type}")
-def get_corporate_public_yaml_files(file_type: str):
+def get_public_yaml_files(file_type: str):
     """
     Returns a list of all <file_type> yaml files
     """
-    corporate_files = []
+    files = []
     for file_info in public_yaml_files.values():
         if file_info.file_type == file_type:
-            corporate_files.append(file_info)
-    return corporate_files
+            files.append(file_info)
+    return files
 
 
 @app.get("/public_yaml_files/parse/corporate/{identifier}")
