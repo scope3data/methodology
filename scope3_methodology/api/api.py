@@ -234,7 +234,10 @@ def parse_corporate_public_yaml_file(identifier: str):
                 raise Exception("No 'name' field found in company file")
             facts = get_facts(document["facts"]) if "facts" in document else {}
 
-            return CorporateEmissions(**facts)  # type: ignore
+            return {
+                "file_info": file_info,
+                "facts": CorporateEmissions(**facts),  # type: ignore
+            }
     except Exception as exc:
         raise HTTPException(
             status_code=500,
