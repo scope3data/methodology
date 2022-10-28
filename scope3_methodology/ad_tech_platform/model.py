@@ -400,10 +400,9 @@ class AdTechPlatform(CustomBaseModel):
             secondary_emissions_per_bid_request = (
                 self.comp_secondary_emissions_g_co2e_per_bid_request(distribution_partners, depth)
             )
-            # TODO once cookie sync logic is updated uncomment this code
-            # secondary_emissions_per_cookie_sync = (
-            #     self.comp_secondary_emissions_g_co2e_per_cookie_sync(distribution_partners, depth)
-            # )
+            secondary_emissions_per_cookie_sync = (
+                self.comp_secondary_emissions_g_co2e_per_cookie_sync(distribution_partners, depth)
+            )
 
         return ModeledAdTechPlatform(
             name,
