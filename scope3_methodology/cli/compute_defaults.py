@@ -87,7 +87,8 @@ def compute_defaults(
     template_defaults = {}
     template_defaults_sources = {}
 
-    for name, template in templates.items():
+    for _, template in templates.items():
+        name = template["name"]
         if str(template["type"]) != model:
             continue
 
@@ -161,7 +162,9 @@ def main():
             if "type" not in document["template"]:
                 raise Exception(f"'type' field not found in {file}")
             name = document["template"]["name"]
-            templates[name] = document["template"]
+            template_type = document["template"]["type"]
+            template_key = f"{name}-{template_type}"
+            templates[template_key] = document["template"]
 
     for model, keys in model_keys.items():
         compute_defaults(
