@@ -1,0 +1,13 @@
+---
+company:
+  private: true
+  type: ad tech platform
+  template: data
+  sources:
+  -
+    year: 2022
+    facts:
+    -
+      cookie_syncs_processed_per_month: 600000000000
+      grams_co2e_per_cookie_sync: .000365
+      data_transfer_bytes_per_cookie_sync: 1339

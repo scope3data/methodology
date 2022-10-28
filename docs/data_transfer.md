@@ -24,18 +24,17 @@ These bottom-up numbers indicate that the majority of emissions from broadband u
 
 ## Power usage by bandwidth
 
-For mobile vs fixed data there is a great [2020 EU study](https://circabc.europa.eu/sd/a/8b7319ba-ce4f-49ea-a6e6-b28df00b20d1/ICT%20impact%20study%20final.pdf) that provides 0.03 kWh/GB for fixed, 0.14 kWh/GB for mobile. The 0.03 kW/GB number aligns with what is in the graphic above (0.03 W/Mbps)?
-
-| Connection type | Device | KWh / GB
-| --- | --- | ---
-| Mobile | Any | 0.03
-| Fixed broadband | Any | 0.14
-| Unknown | Smartphone | 0.03
-| Unknown | TV, PC, or Tablet | 0.14
-| Unknown | Unknown | 0.10
+For mobile vs fixed data there is a great [2020 EU study](https://circabc.europa.eu/sd/a/8b7319ba-ce4f-49ea-a6e6-b28df00b20d1/ICT%20impact%20study%20final.pdf) that provides 0.03 kWh/GB for fixed, 0.14 kWh/GB for mobile. The 0.03 kWh/GB number aligns with what is in the graphic above (0.03 W/Mbps) at relatively low bandwidth.
 
 When we don't know anything about the connection, we are using a value of 0.1 kWh per GB from the [most recent peer-reviewed study on data transfer emissions](https://www.mdpi.com/2071-1050/10/7/2494).
 
+| Connection type | Device | KWh / GB
+| --- | --- | ---
+| Mobile | Any | 0.14
+| Fixed broadband | Any | 0.03
+| Unknown | Smartphone | 0.14
+| Unknown | TV, PC, or Tablet | 0.03
+| Unknown | Unknown | 0.10
 
 ## References
 
