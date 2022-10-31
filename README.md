@@ -7,6 +7,10 @@
 
 
 
+
+
+
+
 # An open framework for measurement advertising emissions
 
 Our goal with this project is to build a framework where the media and advertising industry can collaborate on best practices for measuring emissions from the advertising value chain. This project was originally developed by Scope3, and is the foundation of the v2 Scope3 methodology.
