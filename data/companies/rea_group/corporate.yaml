@@ -1,0 +1,43 @@
+---
+type: corporate
+name: REA Group Ltd
+template: publisher
+facts:
+  - number_of_employees: 3145
+    source_id: 1
+    reference: page 29
+  - office_emissions_mt_co2e_per_employee_per_month: 0.047
+    calculation: true
+		reference: page 57
+  - commuting_emissions_mt_co2e_per_employee_per_month: 0.039
+    calculation: true
+		reference: page 57
+  - travel_emissions_mt_co2e_per_employee_per_month: 0.0490
+    calculation: true
+		reference: page 57
+  - datacenter_emissions_mt_co2e_per_employee_per_month: 0.0144
+    calculation: true
+		reference: page 57
+  - overhead_emissions_mt_co2e_per_employee_per_month: 0.0539
+raw_data:
+  - office emissions mt: 1770.79
+    source_id: 1
+    reference: page 57
+		comment: documented as "Base building (elec & gas)" + "Electricity use in office tenancies"
+  - commuting emissions mt: 1,479.91
+    source_id: 1
+    reference: page 57
+    comment: documented as "Staff commute"
+  - travel emissions mt: 1825.64
+    source_id: 1
+    reference: page 57
+		comment: documented as "Flights" + "Fuel Cards" + "Hotel" + "Taxis and hire car" + "Fuel"
+  - datacenter emissions mt: 524.4
+    source_id: 1
+    reference: page 57
+    comment: documented as "Cloud storage" + "Data centre electricity"
+reference_files:
+  - year: 2022
+    id: 1
+    url: >-
+      https://cdn.rea-group.com/wp-content/uploads/2022/09/16091556/Sustainability-Report-2022.pdf
