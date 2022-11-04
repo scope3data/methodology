@@ -31,20 +31,63 @@ There are three well-documented methodologies that we have seen produced by the 
 
 ### Life cycle boundaries by methodology
 
-| Topic | DIMPACT | SRI | GroupM / EY
-|---| --- | --- | ---
-| Includes creative production | No | No | Yes
-| Includes content production | Partial | No | Yes
-| Includes ad selection | No | Partial | Yes
-| Includes consumption of media and creative | Media only | Creative only | No
-| Includes advertised emissions | No | No | No
-| Includes embodied emissions for consumer device | Optional | Yes | Yes
-| Includes embodied emissions for servers | Optional | No | Yes
-| Includes embodied emissions for networking equipment | Optional | No | Yes
-| Includes emissions from ad tech vendors | No | No | Yes
-| Requires location-based emissions | Recommended | No | No
+| Topic | DIMPACT | SRI | GroupM / EY | Scope3
+|---| --- | --- | --- | ---
+| Includes creative production | No | No | Yes | Yes
+| Includes content production | Partial (1) | No | Yes | Yes
+| Includes ad selection | No | Partial | Yes | Yes
+| Includes consumption of media and creative | Media only | Creative only | No | Yes
+| Includes advertised emissions | No | No | No | No
 
+### Inclusion of emboddied emissions
+
+Another key dimension to evaluate methodologies is whether they incorporate embodied emissions in each phase. To quote DIMPACT, "Use-phase emissions are those that result from the electricity and energy consumption of equipment used to process, transfer, and view content. What is excluded from this minimum boundary are the emissions from the raw material extraction, manufacturing, transport and installation of the equipment and devices used to serve and view digital content. These are known as ‘embodied emissions.'"
+
+As an example from the SRI methodology:
+![SRI scope by emissions phase](images/sri_phases.png)
+
+| Topic | DIMPACT | SRI | GroupM / EY | Scope3
+|---| --- | --- | --- | ---
+| Includes embodied emissions for consumer device | Optional | Yes | Yes | Yes
+| Includes embodied emissions for servers | Optional | No | Yes | Yes
+| Includes embodied emissions for networking equipment | Optional | No | Yes | Yes
+
+### Scope 2 / Electricity
+
+The GHG Protocol provides two methods for tracking Scope 2 emissions: the market-based method and the location-based method.
+
+- The market-based method: calculates emissions based on the electricity that organizations have chosen to purchase, often spelled out in contracts or instruments like Renewable Energy Certificates (RECs).
+
+- The location-based method: calculates emissions based on the emissions intensity of the local grid area where the electricity usage occurs.
+
+| Topic | DIMPACT | SRI | GroupM / EY | Scope3
+|---| --- | --- | --- | ---
+| Requires location-based emissions | Recommended | No | No | Yes
+
+### Ad Tech Supply Chain
+
+The ad tech supply chain is a critical component to understand emissions from media and advertising companies. It is opaque and has multiple layers of intermediaries, making it difficult to fully understand.
+
+| Topic | DIMPACT | SRI | GroupM / EY | Scope3
+|---| --- | --- | --- | ---
+| Includes emissions from programmatic vendors | No | No | Yes | Yes
+| Includes emissions from data and identity providers | Partial | No | ? | Yes
+| Includes emissions from technology embedded into creatives | No | No | Yes | Yes
+
+### Grid allocation
+
+Since the electricity grid is interconnected across regions, reducing energy in one region can actually impact the grid mix in an adjacent region. For instance, while Quebec is fully renewable on its own, it also exports green power to New York. Reducing electricity use in Quebec allows more to be exported to New York, which allows New York to turn off a "peaker" coal plant. This methodology is *marginal* emissions. More information can be found [in this article](https://adgefficiency.com/energy-basics-average-vs-marginal-carbon-emissions/).
+
+![Marginal vs Average grid mix](images/marginal_vs_average.jpg)
+
+| Topic | DIMPACT | SRI | GroupM / EY | Scope3
+|---| --- | --- | --- | ---
+| Grid allocation mechanism | Unspecified | Unspecified | Unspecified | Marginal
 
 ## Notes
 
-DIMPACT: Includes "content management and distribution," excludes "HR systems, back-office administration, corporate business travel, and so forth." Excludes content production except when "content production is so intertwined with the operational and distribution systems that exclusion becomes impractical."
+1: Includes "content management and distribution," excludes "HR systems, back-office administration, corporate business travel, and so forth." Excludes content production except when "content production is so intertwined with the operational and distribution systems that exclusion becomes impractical."
+
+## Further investigation
+
+- Should we incorporate other quantitative environmental issues into these methodologies? For instance, water intensity.
