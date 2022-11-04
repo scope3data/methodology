@@ -37,7 +37,7 @@ There are three well-documented methodologies that we have seen produced by the 
 | Includes content production | Partial (1) | No | Yes | Yes
 | Includes ad selection | No | Partial | Yes | Yes
 | Includes consumption of media and creative | Media only | Creative only | No | Yes
-| Includes advertised emissions | No | No | No | No
+| Includes consumer behavior after consuming the ad | No | No | No | No
 
 ### Inclusion of emboddied emissions
 
