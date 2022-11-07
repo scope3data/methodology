@@ -233,10 +233,18 @@ def parse_corporate_public_yaml_file(identifier: str):
             if "name" not in document:
                 raise Exception("No 'name' field found in company file")
             facts = get_facts(document["facts"]) if "facts" in document else {}
-
+            info = CorporateEmissions(**facts)  # type: ignore
             return {
                 "file_info": file_info,
-                "facts": CorporateEmissions(**facts),  # type: ignore
+                "facts": {
+                    "commuting_emissions_mt_co2e_per_employee_per_month": info.commuting_emissions_mt_co2e_per_employee_per_month,
+                    "overhead_emissions_mt_co2e_per_employee_per_month": info.overhead_emissions_mt_co2e_per_employee_per_month,
+                    "corporate_emissions_mt_co2e_per_month": info.corporate_emissions_mt_co2e_per_month,
+                    "travel_emissions_mt_co2e_per_employee_per_month": info.travel_emissions_mt_co2e_per_employee_per_month,
+                    "number_of_employees": info.number_of_employees,
+                    "office_emissions_mt_co2e_per_employee_per_month": info.office_emissions_mt_co2e_per_employee_per_month,
+                    "datacenter_emissions_mt_co2e_per_employee_per_month": info.datacenter_emissions_mt_co2e_per_employee_per_month,
+                },
             }
     except Exception as exc:
         raise HTTPException(
