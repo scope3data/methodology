@@ -7,14 +7,14 @@ From [Wikipedia](https://en.wikipedia.org/wiki/File:Life_cycle_analysis_and_GHG_
 
 ## Life Cycle Assessment of an Advertisement
 
-To "manufacture" an ad impression, our raw materials are media (content), creative (the ad itself), and human attention (via ears and/or eyes). Different channels will have different combinations of these ingredients. For instance, a billboard often doesn't have content, just the ad.
+To "manufacture" an ad impression, our raw materials are media (content), creative (the ad itself), and human attention (via ears and/or eyes). Different channels will have different combinations of these ingredients. For instance, a billboard often doesn't have content, just the ad. However, a billboard will have a disposal component when the vinyl is removed or recycled.
 
 The life cycle of an ad has five major components:
 
 1. Producing the creative
 2. Producing the content
 3. Selecting which ad to display
-4. Consumption of the media and creative
+4. Consumption of the media and creative, including disposal
 5. Consumer behavior after consuming the ad
 
 ![Lifecycle of an ad](images/lca_ad.png)
@@ -29,15 +29,25 @@ There are three well-documented methodologies that we have seen produced by the 
 - [SRI](https://www.sri-france.org/wp-content/uploads/2021/11/SRI_Calculating-the-carbon-footprint_VF.pdf)
 - [GroupM / EY](https://www.groupm.com/media-decarbonization-framework-groupm/)
 
+We also include [Scope3](https://scope3.com) as a vendor built on top of this project to compare coverage to these methodologies.
+
 ### Life cycle boundaries by methodology
 
 | Topic | DIMPACT | SRI | GroupM / EY | Scope3
 |---| --- | --- | --- | ---
-| Includes creative production | No | No | Yes | Yes
-| Includes content production | Partial (1) | No | Yes | Yes
+| Includes creative production | No | No | Yes | No
+| Includes content production | Partial (1) | No | Yes | Partial
 | Includes ad selection | No | Partial | Yes | Yes
 | Includes consumption of media and creative | Media only | Creative only | No | Yes
 | Includes consumer behavior after consuming the ad | No | No | No | No
+
+### Channels covered
+
+| Topic | DIMPACT | SRI | GroupM / EY | Scope3
+|---| --- | --- | --- | ---
+| Digital | Yes | Yes | Yes | Yes
+| OOH | No | No | Yes | No
+| Print | No | No | Yes | No
 
 ### Inclusion of emboddied emissions
 
@@ -62,7 +72,7 @@ The GHG Protocol provides two methods for tracking Scope 2 emissions: the market
 
 | Topic | DIMPACT | SRI | GroupM / EY | Scope3
 |---| --- | --- | --- | ---
-| Requires location-based emissions | Recommended | No | No | Yes
+| Requires location-based emissions | Recommended | No | Recommended | Yes
 
 ### Ad Tech Supply Chain
 
@@ -71,7 +81,7 @@ The ad tech supply chain is a critical component to understand emissions from me
 | Topic | DIMPACT | SRI | GroupM / EY | Scope3
 |---| --- | --- | --- | ---
 | Includes emissions from programmatic vendors | No | No | Yes | Yes
-| Includes emissions from data and identity providers | Partial | No | ? | Yes
+| Includes emissions from data and identity providers | Partial | No | No | Yes
 | Includes emissions from technology embedded into creatives | No | No | Yes | Yes
 
 ### Grid allocation
