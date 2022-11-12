@@ -36,8 +36,8 @@ We also include [Scope3](https://scope3.com) as a vendor built on top of this pr
 | Topic | DIMPACT | SRI | GroupM / EY | Scope3
 |---| --- | --- | --- | ---
 | Includes creative production | No | No | Yes | No
-| Includes content production | Partial (1) | No | Yes | Partial
-| Includes ad selection | No | Partial | Yes | Yes
+| Includes content production | Partial (1) | No | Yes | Yes
+| Includes ad selection | No | Partial (2) | Yes | Yes
 | Includes consumption of media and creative | Media only | Creative only | No | Yes
 | Includes consumer behavior after consuming the ad | No | No | No | No
 
@@ -81,7 +81,7 @@ The ad tech supply chain is a critical component to understand emissions from me
 | Topic | DIMPACT | SRI | GroupM / EY | Scope3
 |---| --- | --- | --- | ---
 | Includes emissions from programmatic vendors | No | No | Yes | Yes
-| Includes emissions from data and identity providers | Partial | No | No | Yes
+| Includes emissions from data and identity providers | No | No | No | Yes
 | Includes emissions from technology embedded into creatives | No | No | Yes | Yes
 
 ### Grid allocation
@@ -97,6 +97,8 @@ Since the electricity grid is interconnected across regions, reducing energy in 
 ## Notes
 
 1: Includes "content management and distribution," excludes "HR systems, back-office administration, corporate business travel, and so forth." Excludes content production except when "content production is so intertwined with the operational and distribution systems that exclusion becomes impractical."
+
+2: The SRI methodology says it includes "The allocation of advertising space, both direct and programmatic, which, through various data exchanges, algorithms and bidding systems, assigns an advertising placement to a request" but provides no details or guidance on how this might be collected, modeled, or incorporated.
 
 ## Further investigation
 
