@@ -8,22 +8,18 @@ facts:
     reference: page 29
   - office_emissions_mt_co2e_per_employee_per_month: 0.047
     calculation: true
-		reference: page 57
+    reference: page 57
   - commuting_emissions_mt_co2e_per_employee_per_month: 0.039
     calculation: true
-		reference: page 57
+    reference: page 57
   - travel_emissions_mt_co2e_per_employee_per_month: 0.0490
     calculation: true
-		reference: page 57
-  - datacenter_emissions_mt_co2e_per_employee_per_month: 0.0144
-    calculation: true
-		reference: page 57
-  - overhead_emissions_mt_co2e_per_employee_per_month: 0.0539
+    reference: page 57
 raw_data:
   - office emissions mt: 1770.79
     source_id: 1
     reference: page 57
-		comment: documented as "Base building (elec & gas)" + "Electricity use in office tenancies"
+    comment: documented as "Base building (elec & gas)" + "Electricity use in office tenancies"
   - commuting emissions mt: 1,479.91
     source_id: 1
     reference: page 57
@@ -31,7 +27,7 @@ raw_data:
   - travel emissions mt: 1825.64
     source_id: 1
     reference: page 57
-		comment: documented as "Flights" + "Fuel Cards" + "Hotel" + "Taxis and hire car" + "Fuel"
+    comment: documented as "Flights" + "Fuel Cards" + "Hotel" + "Taxis and hire car" + "Fuel"
   - datacenter emissions mt: 524.4
     source_id: 1
     reference: page 57

@@ -1,0 +1,68 @@
+---
+type: publisher
+company: REA Group
+public_identifier: rea_group
+properties:
+  - template: display-generic
+    identifier: realestate.com.au
+    facts:
+      - visits_per_month: 56400000
+        source_id: 1
+      - average_visit_duration_s: 392
+        source_id: 1
+  - template: display-generic
+    identifier: realcommercial.com.au
+    facts:
+      - visits_per_month: 1700000
+        source_id: 1
+      - average_visit_duration_s: 204
+        source_id: 1
+  - template: display-generic
+    identifier: flatmates.com.au
+    facts:
+      - visits_per_month: 2500000
+        source_id: 1
+      - average_visit_duration_s: 392
+        source_id: 1
+  - template: display-generic
+    identifier: housing.com
+    facts:
+      - visits_per_month: 19900000
+        source_id: 1
+      - average_visit_duration_s: 202
+        source_id: 1
+  - template: display-generic
+    identifier: makaan.com
+    facts:
+      - visits_per_month: 1700000
+        source_id: 1
+      - average_visit_duration_s: 179
+        source_id: 1
+  - template: display-generic
+    identifier: proptiger.com
+    facts:
+      - visits_per_month: 1100000
+        source_id: 1
+      - average_visit_duration_s: 276
+        source_id: 1
+
+raw_facts:
+  - corporate_emissions_g_co2e_per_month: 2550595000
+    source_id: 3
+    comment: Output of model Nov 14, 2022
+  - quality_impressions_per_month: 2806330000
+    calculation: true
+    comment: 0.1 qimps/sec x sessions/mo x time/session x % display
+  - corporate_emissions_g_co2e_per_impression: 0.909
+    calculation: true
+    comment: this seems high?
+sources:
+  - id: 1
+    year: 2022
+    month: 9
+    url: https://www.similarweb.com/website/realestate.com.au/#overview
+  - id: 2
+    year: 2022
+    month: 11
+    url: https://github.com/scope3data/methodology
+    comment: ./scope3_methodology/cli/model_corporate_emissions.py publisher data/companies/theguardian/corporate.yaml 
