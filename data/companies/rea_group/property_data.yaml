@@ -10,6 +10,8 @@ properties:
         source_id: 1
       - average_visit_duration_s: 392
         source_id: 1
+      - corporate_emissions_g_co2e_per_impression: 0.0791
+        calculation: true
   - template: display-generic
     identifier: realcommercial.com.au
     facts:
@@ -50,12 +52,14 @@ raw_facts:
   - corporate_emissions_g_co2e_per_month: 2550595000
     source_id: 3
     comment: Output of model Nov 14, 2022
+  - revenue_allocation_to_display_pct: 8.7
+    source_id: 3
+    comment: 96.9/1115.6
   - quality_impressions_per_month: 2806330000
     calculation: true
     comment: 0.1 qimps/sec x sessions/mo x time/session x % display
-  - corporate_emissions_g_co2e_per_impression: 0.909
+  - corporate_emissions_g_co2e_per_impression: 0.0791
     calculation: true
-    comment: this seems high?
 sources:
   - id: 1
     year: 2022
@@ -66,3 +70,7 @@ sources:
     month: 11
     url: https://github.com/scope3data/methodology
     comment: ./scope3_methodology/cli/model_corporate_emissions.py publisher data/companies/theguardian/corporate.yaml 
+  - id: 3
+    year: 2022
+    month: 10
+    url: https://rea3.irmau.com/site/pdf/5145f68f-b0b6-4192-8039-382acf1e0a37/REA-Group-Investor-and-Analyst-Presentation.pdf
