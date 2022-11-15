@@ -3,32 +3,49 @@ type: publisher
 company: The Guardian
 public_identifier: theguardian
 properties:
-  - template: news_with_print
+  - channel: display
+    template: generic 
     identifier: theguardian.com
     facts:
-      - visits_per_month: 359200000
+      - visits_per_month: 404400000
         source_id: 1
-      - pages_per_visit:  3.35
+      - pages_per_visit:  3.43
         source_id: 1
-      - average_visit_duration_s: 290
+      - average_visit_duration_s: 291
         source_id: 1
       - page_size_mb: 3.0
         source_id: 2
       - load_time_s: 1.89
         source_id: 2
-      - corporate_emissions_g_co2e_per_impression: 0.017779455902004453
+      - corporate_emissions_g_co2e_per_impression: 0.019
         calculation: true
-        comment: Output of model Sept 20, 2022
-      - revenue_allocation_to_ads_pct: 33.3
+      - revenue_allocation_to_display_pct: 14.9
+        source_id: 4
+        comment: advertising is £73.7/£255.8; assuming digital is 51.6% as with reader rev
     raw_facts:
       - requests_per_page: 219
         source_id: 2
+      - corporate_emissions_g_co2e_per_month: 1497934000
+        source_id: 3
+        comment: Output of model Nov 14, 2022
+      - quality_impressions_per_month: 11,768,040,000
+        calculation: true
+        comment: 0.1 qimps/sec x sessions/mo x time/session x % display
     sources:
       - id: 1
         year: 2022
-        month: 7
+        month: 9
         url: https://www.similarweb.com/website/theguardian.com/#overview
       - id: 2
         year: 2022
         month: 7
         url: https://tools.pingdom.com/#60bbdd2e2a800000
+      - id: 3
+        year: 2022
+        month: 11
+        url: https://github.com/scope3data/methodology
+        comment: ./scope3_methodology/cli/model_corporate_emissions.py publisher data/companies/theguardian/corporate.yaml 
+      - id: 4
+        year: 2022
+        month: 4
+        url: https://uploads.guim.co.uk/2022/07/20/GMG_Financial_Statements_2022.pdf

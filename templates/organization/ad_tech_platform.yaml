@@ -1,5 +1,4 @@
 ---
 template:
   name: atp
-  template: atp 
   type: organization

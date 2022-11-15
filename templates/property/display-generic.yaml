@@ -1,7 +1,8 @@
 ---
 template:
   name: generic
-  template: generic
+  channel: display
+  generic: true
   type: property
   quality_impressions_per_duration_s: 0.1
   revenue_allocation_to_digital_pct: 100

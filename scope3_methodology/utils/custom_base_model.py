@@ -1,6 +1,7 @@
 """ Base Model that is inherited by publisher, ad tech platform and corporate models"""
 from dataclasses import dataclass, fields
 from decimal import Decimal
+from typing import Optional
 
 from scope3_methodology.utils.yaml_helpers import yaml_load
 
@@ -15,17 +16,27 @@ class CustomBaseModel:
         return [f.name for f in fields(cls) if f.metadata.get("default_eligible")]
 
     @classmethod
-    def load_default_yaml(cls, template: str, defaults_file: str):
+    def load_default_yaml(
+        cls,
+        template: str,
+        defaults_file: str,
+        channel: Optional[str] = None,
+    ):
         """
         Takes a yaml file and loads in all default facts into the
         fields eligible for default
         """
         with open(defaults_file, "r", encoding="UTF-8") as defaults_stream:
             defaults_document = yaml_load(defaults_stream)
+            doc_defaults = defaults_document["defaults"]
+            if channel:
+                if channel not in defaults_document["defaults"]:
+                    raise Exception(f"Channel {channel} not found in defaults")
+                doc_defaults = defaults_document["defaults"][channel]
 
-            if template not in defaults_document["defaults"]:
+            if template not in doc_defaults:
                 raise Exception(f"Template {template} not found in defaults")
-            defaults: dict[str, Decimal] = defaults_document["defaults"][template]
+            defaults: dict[str, Decimal] = doc_defaults[template]
             keys = [f.name for f in fields(cls) if f.metadata.get("default_eligible")]
             return cls(**{k: v for k, v in defaults.items() if k in keys})
 

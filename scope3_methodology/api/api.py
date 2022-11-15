@@ -15,7 +15,7 @@ from scope3_methodology.api.input_models import (
     ATPTemplate,
     CorporateInput,
     OrganizationType,
-    PropertyTemplate,
+    PropertyChannel,
 )
 from scope3_methodology.api.response_models import (
     ATPDefaultsResponse,
@@ -43,12 +43,13 @@ async def get_redoc_documentation():
 public_yaml_files: dict[str, PublicYamlInformation] = get_all_public_yaml_files()
 organization_defaults: dict[OrganizationType, CorporateEmissions] = {}
 adtech_platform_defaults: dict[ATPTemplate, AdTechPlatform] = {}
-property_defaults: dict[PropertyTemplate, Property] = {}
+property_defaults: dict[PropertyChannel, Property] = {}
 atp_defaults_file_path = os.environ.get("ATP_DEFAULTS_FILE")
 organization_defaults_file_path = os.environ.get("ORGANIZATION_DEFAULTS_FILE")
 property_defaults_file_path = os.environ.get("PROPERTY_DEFAULTS_FILE")
 
 
+# TODO Clean up start_up data load. issue #66
 @app.on_event("startup")
 async def startup_event():
     """
@@ -82,8 +83,11 @@ async def startup_event():
     organization_defaults[OrganizationType.ATP] = CorporateEmissions.load_default_yaml(
         OrganizationType.ATP.value, organization_defaults_file_path
     )
-    property_defaults[PropertyTemplate.NEWS_WITH_PRINT] = Property.load_default_yaml(
-        PropertyTemplate.NEWS_WITH_PRINT.value, property_defaults_file_path
+    property_defaults[PropertyChannel.DISPLAY] = Property.load_default_yaml(
+        "generic", property_defaults_file_path, PropertyChannel.DISPLAY.value
+    )
+    property_defaults[PropertyChannel.STREAMING] = Property.load_default_yaml(
+        "generic", property_defaults_file_path, PropertyChannel.STREAMING.value
     )
 
 
@@ -188,17 +192,19 @@ def get_atp_template_defaults(template: ATPTemplate):
     )
 
 
-@app.get("/defaults/property/{template}")
-def get_property_template_defaults(template: PropertyTemplate):
+@app.get("/defaults/property/{channel}")
+def get_property_template_defaults(channel: PropertyChannel):
     """
-    Template options: news_with_print
-    Returns following defaults for a specific property template
+    Channel options: display | streaming
+    Returns following defaults for a specific property channel
+        - right now there is only a single generic template for each channel
         - corporate_emissions_g_co2e_per_impressions
     """
-    defaults = property_defaults[template]
+    defaults = property_defaults[channel]
     corporate_emissions = defaults.corporate_emissions_g_co2e_per_impression
     return PropertyDefaultsResponse(
-        template=template.value,
+        channel=channel.value,
+        template="generic",
         corporate_emissions_g_co2e_per_impression=corporate_emissions,
     )
 
