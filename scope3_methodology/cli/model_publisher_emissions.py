@@ -96,16 +96,21 @@ def process_property(
     :return: ModeledProperty
     """
     # Validate property & get property facts
-    if "identifier" not in publisher_property or "template" not in publisher_property:
-        raise Exception("Each property must have an identifier and a template")
+    if (
+        "identifier" not in publisher_property
+        or "template" not in publisher_property
+        or "channel" not in publisher_property
+    ):
+        raise Exception("Each property must have an identifier and a template and a channel")
     template = publisher_property["template"]
+    channel = publisher_property["channel"]
     facts = get_facts(publisher_property["facts"])  # type: ignore
 
     # Add in additional facts not parsed from yaml
     facts["environment"] = environment
     facts["grid_intensity_g_co2e_per_kwh"] = grid_intensity_g_co2e_per_kwh
     unmodeled_property = Property(**facts)  # type: ignore
-    defaults = Property.load_default_yaml(str(template), defaults_file)
+    defaults = Property.load_default_yaml(str(template), defaults_file, str(channel))
     return unmodeled_property.model_property(str(publisher_property["identifier"]), defaults, depth)
 
 

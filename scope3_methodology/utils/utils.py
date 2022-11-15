@@ -19,6 +19,7 @@ class Fact:
         is_calculation: bool,
         value: Decimal,
         template: str,
+        channel: str | None,
         key: str,
     ) -> None:
         self.company = company
@@ -26,10 +27,13 @@ class Fact:
         self.is_calculation = is_calculation
         self.value = value
         self.template = template
+        self.channel = channel
         self.key = key
 
     def __repr__(self):
         calc = " (calculation)" if self.is_calculation else ""
+        if self.channel:
+            return f"{self.company}({self.channel}{self.template}){calc} {self.key}: {self.value}"
         return f"{self.company}({self.template}){calc} {self.key}: {self.value}"
 
 
@@ -63,7 +67,9 @@ def get_facts(facts: list[dict[str, Decimal]]) -> dict[str, Decimal | str]:
     return raw_facts
 
 
-def populate_facts(facts: dict[str, list[Fact]], company: str, template: str, sources) -> None:
+def populate_facts(
+    facts: dict[str, list[Fact]], company: str, template: str, channel: str | None, sources
+) -> None:
     """Extract all raw facts from sources and adds to all facts dictionary"""
     for source in sources:
         is_calculation = "calculation" in source
@@ -75,13 +81,16 @@ def populate_facts(facts: dict[str, list[Fact]], company: str, template: str, so
             for key in keys:
                 if key not in facts:
                     facts[key] = []
-                facts[key].append(Fact(company, url, is_calculation, fact[key], template, key))
+                facts[key].append(
+                    Fact(company, url, is_calculation, fact[key], template, channel, key)
+                )
 
 
 def populate_raw_facts(
     all_facts: dict[str, list[Fact]],
     company: str,
     template: str,
+    channel: str | None,
     facts: dict[str, Decimal],
 ) -> None:
     """Extract all raw facts from list of facts dictionaries and adds to all facts dictionary"""
@@ -97,6 +106,7 @@ def populate_raw_facts(
                     is_calculation="calculation" in fact,
                     value=fact[key],  # type: ignore
                     template=template,
+                    channel=channel,
                     key=key,
                 )
             )
@@ -119,20 +129,37 @@ def get_all_facts() -> dict[str, list[Fact]]:
                     if "template" in document["company"]
                     else GENERAL_FACT
                 )
+                channel = (
+                    document["company"]["channel"] if "channel" in document["company"] else None
+                )
                 populate_facts(
-                    facts, "/".join(pth.parts[-2:]), template, document["company"]["sources"]
+                    facts,
+                    "/".join(pth.parts[-2:]),
+                    template,
+                    channel,
+                    document["company"]["sources"],
                 )
             if "sources" in document:
                 template = document["template"] if "template" in document else GENERAL_FACT
-                populate_facts(facts, "/".join(pth.parts[-2:]), template, document["sources"])
+                channel = document["channel"] if "channel" in document else None
+                populate_facts(
+                    facts, "/".join(pth.parts[-2:]), template, channel, document["sources"]
+                )
             if "facts" in document:
                 template = document["template"] if "template" in document else GENERAL_FACT
-                populate_raw_facts(facts, "/".join(pth.parts[-2:]), template, document["facts"])
+                channel = document["channel"] if "channel" in document else None
+                populate_raw_facts(
+                    facts, "/".join(pth.parts[-2:]), template, channel, document["facts"]
+                )
             if "products" in document:
                 for product in document["products"]:
                     if "facts" in product:
                         populate_raw_facts(
-                            facts, "/".join(pth.parts[-2:]), product["template"], product["facts"]
+                            facts,
+                            "/".join(pth.parts[-2:]),
+                            product["template"],
+                            None,
+                            product["facts"],
                         )
             if "properties" in document:
                 for publisher_property in document["properties"]:
@@ -140,6 +167,7 @@ def get_all_facts() -> dict[str, list[Fact]]:
                         facts,
                         "/".join(pth.parts[-2:]),
                         publisher_property["template"],
+                        publisher_property["channel"],
                         publisher_property["facts"],
                     )
     return facts

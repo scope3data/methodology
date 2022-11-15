@@ -2,7 +2,8 @@
 type: publisher
 company: Washington Post
 properties:
-  - template: news_with_print
+  - template: generic
+    channel: display
     identifier: washingtonpost.com
     facts:
       - visits_per_month: 176200000

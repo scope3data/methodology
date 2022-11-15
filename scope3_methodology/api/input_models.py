@@ -16,10 +16,11 @@ class ATPTemplate(Enum):
     NETWORK = "network"
 
 
-class PropertyTemplate(Enum):
+class PropertyChannel(Enum):
     """Property Template Types"""
 
-    NEWS_WITH_PRINT = "news_with_print"
+    DISPLAY = "display"
+    STREAMING = "streaming"
 
 
 class OrganizationType(Enum):

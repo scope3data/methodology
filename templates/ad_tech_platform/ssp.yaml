@@ -1,7 +1,6 @@
 ---
 template:
   name: ssp
-  template: ssp
   type: atp
   servers_processing_bid_requests_pct: 99
   servers_processing_cookie_syncs_pct: 1

@@ -3,7 +3,8 @@ type: publisher
 company: The Guardian
 public_identifier: theguardian
 properties:
-  - template: display
+  - channel: display
+    template: generic 
     identifier: theguardian.com
     facts:
       - visits_per_month: 404400000

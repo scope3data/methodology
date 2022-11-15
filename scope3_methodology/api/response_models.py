@@ -15,7 +15,8 @@ class ATPDefaultsResponse(BaseModel):
 
 
 class PropertyDefaultsResponse(BaseModel):
-    """Response for /defaults/property/{template}"""
+    """Response for /defaults/property/{channel}"""
 
+    channel: str
     template: str
     corporate_emissions_g_co2e_per_impression: Optional[Decimal]

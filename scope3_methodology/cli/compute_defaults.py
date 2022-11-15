@@ -4,6 +4,7 @@ import argparse
 from dataclasses import dataclass
 from decimal import Decimal
 from glob import glob
+from typing import Optional
 
 from scope3_methodology.ad_tech_platform.model import AdTechPlatform
 from scope3_methodology.corporate.model import CorporateEmissions
@@ -24,13 +25,15 @@ class FactAverages:
 
 def build_fact_averages(
     template: str,
+    channel: Optional[str],
     facts: dict[str, list[Fact]],
     model_inputs: set[str],
 ):
     """
     Build a view of average across all templates within the model
     (i.e. model: atp templates: ssp, dsp, network) AND build a view specific to the template
-    we are looking at (i.e. average of only DSP facts)
+    we are looking at (i.e. average of only DSP facts) If a channel is provided, the an average
+    of the channel-template view is built (i.e. average of only display channel facts)
     :return: FactAverages
     """
     all_average_defaults: dict[str, Decimal] = {}
@@ -38,6 +41,7 @@ def build_fact_averages(
     template_average_defaults: dict[str, Decimal] = {}
     template_average_defaults_source_list: dict[str, list[Fact]] = {}
 
+    template_key = "{channel}-{template}" if channel else template
     for key in facts:
         all_fact_source_list: list[Fact] = []
         template_specific_source_list: list[Fact] = []
@@ -47,7 +51,8 @@ def build_fact_averages(
             template_fact_count = 0
             for fact in facts[key]:
                 all_fact_source_list.append(fact)
-                if fact.template == template:
+                fact_key = "{fact.channel}-{fact.template}" if fact.channel else fact.template
+                if fact_key == template_key:
                     template_specific_source_list.append(fact)
                     template_specific_sum += fact.value
                     template_fact_count += 1
@@ -69,6 +74,59 @@ def build_fact_averages(
     )
 
 
+@dataclass
+class BuiltDefaults:
+    """Build and return default and default source list"""
+
+    defaults: dict[str, Decimal]
+    defaults_source_list: dict[str, list[str]]
+
+
+def build_defaults_and_source_list(
+    channel_name: str | None,
+    template_name: str,
+    facts: dict[str, list[Fact]],
+    model_inputs: set[str],
+    template_info: dict[str, Decimal],
+):
+    """Compute defaults for a template type"""
+    global_defaults: dict[str, Decimal] = {
+        # TODO - get some actual data on this from customers
+        "bid_request_size_in_bytes": Decimal("10000.0"),
+        "bid_request_distribution_rate": Decimal("1.0"),
+    }
+
+    # Determine fact averages
+    averages_info = build_fact_averages(template_name, channel_name, facts, model_inputs)
+
+    # Determine which defaults to use and build list of the final source list
+    defaults: dict[str, Decimal] = {}
+    defaults_source_list: dict[str, list[str]] = {}
+    for key_input in model_inputs:
+        # First check is we have a template specific average
+        if key_input in averages_info.template_average_defaults:
+            defaults[key_input] = averages_info.template_average_defaults[key_input]
+            defaults_source_list[key_input] = averages_info.template_average_defaults_source_list[
+                key_input
+            ]
+        # Then check if we have a template specific override (from /template/<type>.yaml)
+        elif key_input in template_info:
+            defaults[key_input] = template_info[key_input]
+            defaults_source_list[key_input] = ["template default"]
+        # Then check if there is an average across all the model templates
+        elif key_input in averages_info.all_average_defaults:
+            defaults[key_input] = averages_info.all_average_defaults[key_input]
+            defaults_source_list[key_input] = averages_info.all_average_defaults_source_list[
+                key_input
+            ]
+        # Then check global defaults
+        elif key_input in global_defaults:
+            defaults[key_input] = global_defaults[key_input]
+            defaults_source_list[key_input] = ["global default"]
+
+    return BuiltDefaults(defaults=defaults, defaults_source_list=defaults_source_list)
+
+
 def compute_defaults(
     model: str,
     templates: dict[str, dict[str, Decimal]],
@@ -78,50 +136,31 @@ def compute_defaults(
     dry_run: bool,
 ):
     """Compute defaults for a template type"""
-    global_defaults: dict[str, Decimal] = {
-        # TODO - get some actual data on this from customers
-        "bid_request_size_in_bytes": Decimal("10000.0"),
-        "bid_request_distribution_rate": Decimal("1.0"),
-    }
-
-    template_defaults = {}
-    template_defaults_sources = {}
-
+    template_defaults = {}  # type: ignore
+    template_defaults_sources = {}  # type: ignore
     for _, template in templates.items():
-        name = template["name"]
+        template_name = str(template["name"])
         if str(template["type"]) != model:
             continue
-
-        # Determine fact averages
-        averages_info = build_fact_averages(str(template["template"]), facts, model_inputs)
+        channel_name = str(template["channel"]) if "channel" in template else None
 
         # Determine which defaults to use and build list of the final source list
-        defaults: dict[str, Decimal] = {}
-        defaults_source_list: dict[str, list[str]] = {}
-        for key_input in model_inputs:
-            # First check is we have a template specific average
-            if key_input in averages_info.template_average_defaults:
-                defaults[key_input] = averages_info.template_average_defaults[key_input]
-                defaults_source_list[
-                    key_input
-                ] = averages_info.template_average_defaults_source_list[key_input]
-            # Then check if we have a template specific override (from /template/<type>.yaml)
-            elif key_input in template:
-                defaults[key_input] = template[key_input]
-                defaults_source_list[key_input] = ["template default"]
-            # Then check if there is an average across all the model templates
-            elif key_input in averages_info.all_average_defaults:
-                defaults[key_input] = averages_info.all_average_defaults[key_input]
-                defaults_source_list[key_input] = averages_info.all_average_defaults_source_list[
-                    key_input
-                ]
-            # Then check global defaults
-            elif key_input in global_defaults:
-                defaults[key_input] = global_defaults[key_input]
-                defaults_source_list[key_input] = ["global default"]
+        built_defaults = build_defaults_and_source_list(
+            channel_name, template_name, facts, model_inputs, template
+        )
 
-        template_defaults[name] = defaults
-        template_defaults_sources[name] = defaults_source_list
+        if channel_name:
+            if channel_name not in template_defaults:
+                template_defaults[channel_name] = {}
+                template_defaults_sources[channel_name] = {}
+
+            template_defaults[channel_name][template_name] = built_defaults.defaults
+            template_defaults_sources[channel_name][
+                template_name
+            ] = built_defaults.defaults_source_list
+        else:
+            template_defaults[template_name] = built_defaults.defaults
+            template_defaults_sources[template_name] = built_defaults.defaults_source_list
 
     output = yaml_dump({"defaults": template_defaults, "sources": template_defaults_sources})
     if dry_run:
@@ -151,7 +190,7 @@ def main():
     facts = get_all_facts()
 
     templates = {}
-    template_files = glob("templates/*.yaml")
+    template_files = glob("templates/*/*.yaml")
     for file in template_files:
         with open(file, "r", encoding="UTF-8") as stream:
             document = yaml_load(stream)
@@ -163,7 +202,8 @@ def main():
                 raise Exception(f"'type' field not found in {file}")
             name = document["template"]["name"]
             template_type = document["template"]["type"]
-            template_key = f"{name}-{template_type}"
+            channel = document["template"]["channel"] if "channel" in document["template"] else ""
+            template_key = f"{name}-{template_type}-${channel}"
             templates[template_key] = document["template"]
 
     for model, keys in model_keys.items():

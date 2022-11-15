@@ -1,6 +1,6 @@
 ---
 template:
-  name: display-generic
+  name: generic
   channel: display
   generic: true
   type: property

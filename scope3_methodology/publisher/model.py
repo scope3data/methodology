@@ -83,9 +83,12 @@ class Property(CustomBaseModel):
     revenue_allocation_to_digital_pct: Optional[Decimal] = field(
         default=None, metadata={"default_eligible": True}
     )
-    revenue_allocation_to_ads_pct: Optional[Decimal] = field(
+    revenue_allocation_to_display_pct: Optional[Decimal] = field(
         default=None, metadata={"default_eligible": True}
     )
+    # revenue_allocation_to_ads_pct: Optional[Decimal] = field(
+    #    default=None, metadata={"default_eligible": True}
+    # )
     computer_active_electricity_use_watts: Optional[Decimal] = field(
         default=None, metadata={"default_eligible": True}
     )
@@ -125,6 +128,10 @@ class Property(CustomBaseModel):
     def get_revenue_allocation_to_digital_rate(self) -> Decimal:
         """Return the revenue allocation to digitial rate (decimal fraction)"""
         return not_none(self.revenue_allocation_to_digital_pct) / ONE_HUNDRED
+
+    def get_revenue_allocation_to_display_rate(self) -> Decimal:
+        """Return the revenue allocation to display rate (decimal fraction)"""
+        return not_none(self.revenue_allocation_to_display_pct) / ONE_HUNDRED
 
     def get_revenue_allocation_to_ads_rate(self) -> Decimal:
         """Return the revenue allocation to ads rate (decimal fraction)"""

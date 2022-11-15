@@ -3,7 +3,8 @@
 type: publisher
 company: Axel Springer
 properties:
-  - template: news_with_print
+  - template: generic
+    channel: display
     identifier: autobild.de
     facts:
       - visits_per_month: 8800000
@@ -30,7 +31,8 @@ properties:
         url: https://tools.pingdom.com/#60b937435c800000
         environment: desktop
         country: DE
-  - template: news_with_print
+  - template: generic
+    channel: display
     identifier: bild.de
     facts:
       - visits_per_month: 209500000
@@ -57,7 +59,8 @@ properties:
         url: https://tools.pingdom.com/#60b93574d4800000
         environment: desktop
         country: DE
-  - template: news_with_print
+  - template: generic
+    channel: display
     identifier: businessinsider.de
     facts:
       - visits_per_month: 10100000
@@ -84,7 +87,8 @@ properties:
         url: https://tools.pingdom.com/#60b937a239400000
         environment: desktop
         country: DE
-  - template: news_with_print
+  - template: generic
+    channel: display
     identifier: bz-berlin.de
     facts:
       - visits_per_month: 17600000

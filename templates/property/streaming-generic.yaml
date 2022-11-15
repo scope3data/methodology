@@ -1,10 +1,11 @@
 ---
 template:
-  name: streaming-generic
+  name: generic
   channel: streaming
   generic: true
   type: property
-  comment: see https://www.hollywoodreporter.com/business/digital/netflix-disney-data-privacy-ads-1235234652/
-  comment: 11.54 ads/hour is the average for streaming
+  comment:
+    - see https://www.hollywoodreporter.com/business/digital/netflix-disney-data-privacy-ads-1235234652/
+    - 11.54 ads/hour is the average for streaming
   quality_impressions_per_duration_s: 0.0032
   revenue_allocation_to_digital_pct: 100
