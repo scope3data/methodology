@@ -170,6 +170,28 @@ def calculate_atp_secondary_bid_request_emissions(data: ATPSecondaryEmissionsInp
     )
 
 
+@app.get("/defaults/atp")
+def get_all_atp_template_defaults():
+    """
+    Returns following defaults for a all ATP templates
+        - corporate_emissions_g_co2e_per_bid_request
+        - atp_block_rate
+        - publisher_block_rate
+    """
+    response = []
+    for template, defaults in adtech_platform_defaults.items():
+        corporate_emissions = defaults.corporate_emissions_g_co2e_per_bid_request
+        response.append(
+            ATPDefaultsResponse(
+                template=template.value,
+                corporate_emissions_g_co2e_per_bid_request=corporate_emissions,
+                adtech_platform_block_rate=defaults.get_atp_block_rate(),
+                publisher_block_rate=defaults.get_publisher_block_rate(),
+            )
+        )
+    return response
+
+
 @app.get("/defaults/atp/{template}")
 def get_atp_template_defaults(template: ATPTemplate):
     """
@@ -190,6 +212,24 @@ def get_atp_template_defaults(template: ATPTemplate):
         adtech_platform_block_rate=defaults.get_atp_block_rate(),
         publisher_block_rate=defaults.get_publisher_block_rate(),
     )
+
+
+@app.get("/defaults/property")
+def get_all_property_template_defaults():
+    """
+    Returns corporate_emissions_g_co2e_per_impression default for all property channels
+    """
+    response = []
+    for channel, defaults in property_defaults.items():
+        corporate_emissions = defaults.corporate_emissions_g_co2e_per_impression
+        response.append(
+            PropertyDefaultsResponse(
+                channel=channel.value,
+                template="generic",
+                corporate_emissions_g_co2e_per_impression=corporate_emissions,
+            )
+        )
+    return response
 
 
 @app.get("/defaults/property/{channel}")
