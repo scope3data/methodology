@@ -179,12 +179,14 @@ class AdTechPlatform(CustomBaseModel):
             self.get_data_transfer_emissions_g_co2e_per_month()
         )
         if data_transfer_emissions_g_co2e_per_month:
-            return data_transfer_emissions_g_co2e_per_month
+            return (
+                data_transfer_emissions_g_co2e_per_month
+                / self.get_bid_requests_processed_per_month()
+            )
 
-        data_transfer_emissions_g_co2e_per_bid_request = (
-            self.comp_bid_request_size_gb()
-            * not_none(self.server_to_server_emissions_g_co2e_per_gb)
-        ) / self.get_bid_requests_processed_per_month()
+        data_transfer_emissions_g_co2e_per_bid_request = self.comp_bid_request_size_gb() * not_none(
+            self.server_to_server_emissions_g_co2e_per_gb
+        )
         log_result(
             "data transfer emissions g co2e per bid request",
             f"{data_transfer_emissions_g_co2e_per_bid_request:.8f}",
