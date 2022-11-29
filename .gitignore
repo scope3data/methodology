@@ -2,6 +2,7 @@
 atp-defaults.yaml
 organization-defaults.yaml
 property-defaults.yaml
+end_user_device-defaults.yaml
 
 # git
 *.swp

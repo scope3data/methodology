@@ -15,5 +15,6 @@ RUN  python "./scope3_methodology/cli/compute_defaults.py"
 ENV ATP_DEFAULTS_FILE /app/atp-defaults.yaml
 ENV ORGANIZATION_DEFAULTS_FILE /app/organization-defaults.yaml
 ENV PROPERTY_DEFAULTS_FILE /app/property-defaults.yaml
+ENV  END_USER_DEVICE_DEFAULTS_FILE /app/end_user_device-defaults.yaml
 
 CMD ["python", "scope3_methodology/api/api.py"]
