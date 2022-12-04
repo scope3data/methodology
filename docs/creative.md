@@ -32,58 +32,57 @@ For each vendor that participates in delivering and tracking the creative, we ne
 
 ## Input parameters
 
-| Parameter    | Values                                                  | Required | Comments                                                                                                                                                       |
-| ------------ | ------------------------------------------------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Payload Size | bytes                                                 | yes      | The number of bytes transferred to fully display the creative                                                                                                  |
-| Duration     | seconds                                                   | yes      | This is how long the creative plays, used for consumer device calculation. For banners/native this should be 1.                                                 |
-| Impressions  | integer                                                 | yes      |                                                                                                                                                                |
-| Network Type | fixed, mobile                                  | yes       |                                                                                                                                          |
-| Device Type  | mobile, pc, tablet, tv, ooh                    | yes       |                                                                                                                                         |
+| Parameter    | Values                      | Required | Comments                                                                    |
+| ------------ | --------------------------- | -------- | --------------------------------------------------------------------------- |
+| Payload Size | bytes                       | yes      | Bytes transferred to fully display the creative                             |
+| Duration     | seconds                     | yes      | Used for consumer device calculation. For banners/native this should be 1.  |
+| Impressions  | integer                     | yes      |                                                                             |
+| Network Type | fixed, mobile               | yes      |                                                                             |
+| Device Type  | mobile, pc, tablet, tv, ooh | yes      |                                                                             |
 
 ### Output parameters
 
-| Parameter     | Values | Comments                                                         |
-| ------------- | ------ | ---------------------------------------------------------------- |
-| Device Energy       | kWh  |        |
-| Device Embodied Emissions       | gCO2e  | 
-| Data Transfer Energy | kWh  |    |
+| Parameter                 | Values |
+| ------------------------- | ------ |
+| Device Energy             | kWh    |
+| Device Embodied Emissions | gCO2e  |
+| Data Transfer Energy      | kWh    |
 
-## Use Case: Banner Ad 
+## Use Case: Banner Ad
 
-| Parameter    | Values                          | Comments                                               |
-| ------------ | ------------------------------- | ------------------------------------------------------ |
-| Payload Size | 24882                           | The size of the creative in bytes                      |
-| Duration     | 1                               | Recommended value for banners |
-| Impressions  | 831211                          |                                                        |
-| Network Type | mobile                         | 
-| Device Type  | mobile                         |   |
+| Parameter    | Values        | Comments                                               |
+| ------------ | ------------- | ------------------------------------------------------ |
+| Payload Size | 24882         | The size of the creative in bytes                      |
+| Duration     | 1             | Recommended value for banners                          |
+| Impressions  | 831211        |                                                        |
+| Network Type | mobile        |                                                        |
+| Device Type  | mobile        |                                                        |
 
 This will output:
 | Parameter | Value | Comments |
 | -- | -- | -- |
 | Device Energy | 0.18 kWh | 1 x 831211 x 0.77 / 3600 / 1000 |
 | Device Embodied Emissions | 4322.3 gCO2e | 1 x 831211 x 0.0052|
-| Data Transfer Energy | 2.70 kWh | 0.14 x 24882 / 1024 / 1024 / 1024 * 831211
+| Data Transfer Energy | 2.70 kWh | 0.14 x 24882 / 1024 / 1024 / 1024 * 831211 |
 
 At 390 g/kWh, this creative execution would generate 5.4 kg of CO2e.
 
-
 ## Use Case: Video ad on CTV
 
-| Parameter    | Values                         | Comments                                                                    |
-| ------------ | ------------------------------ | --------------------------------------------------------------------------- |
+| Parameter    | Value    | Comments        |
+| ------------ | -------- | --------------- |
 | Payload Size | 1875000  | 500kbit/s x 30s |
-| Duration     | 30    |   |
-| Impressions  | 831211  |  |
-| Network Type | fixed | |
-| Device Type  | tv      |      |
+| Duration     | 30       |                 |
+| Impressions  | 831211   |                 |
+| Network Type | fixed    |                 |
+| Device Type  | tv       |                 |
 
 This will output:
 
 | Parameter | Value | Comments |
 | -- | -- | -- |
 | Device Energy | 605.4 kWh | 30 x 831211 x 87.4 / 3600 / 1000 |
-| Device Embodied Emissions | 523662.9 gCO2e | 30 x 831211 x 0.021|
-| Data Transfer Energy | 43.5 kWh | 0.03 x 1875000 / 1024 / 1024 / 1024 * 831211
+| Device Embodied Emissions | 523662.9 gCO2e | 30 x 831211 x 0.021 |
+| Data Transfer Energy | 43.5 kWh | 0.03 x 1875000 / 1024 / 1024 / 1024 * 831211 |
 
 At 390 g/kWh, this creative execution would generate 777 kg of CO2e.
