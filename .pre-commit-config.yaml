@@ -33,8 +33,7 @@ repos:
         entry: pylint
         language: system
         types: [python]
-        args:
-          [
+        args: [
             "-rn", # Only display messages
             "-sn", # Don't display the score
             # TODO remove these disables, but enabling pylint on commit
@@ -57,7 +56,7 @@ repos:
             "too-many-ancestors",
             "--disable",
             "line-too-long",
-            "--extension-pkg-whitelist='pydantic'"
+            "--extension-pkg-whitelist='pydantic'",
           ]
 
   - repo: local
@@ -71,10 +70,15 @@ repos:
         types: [python]
 
   - repo: https://github.com/python-poetry/poetry
-    rev: '1.2.1'
+    rev: "1.2.1"
     hooks:
       - id: poetry-check
       - id: poetry-lock
         args: ["--no-update"]
       - id: poetry-export
         args: ["-f", "requirements.txt", "-o", "requirements.txt"]
+
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: "" # Use the sha or tag you want to point at
+    hooks:
+      - id: prettier

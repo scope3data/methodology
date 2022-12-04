@@ -1,10 +1,10 @@
-# An open framework for measurement advertising emissions
+# An open framework for measuring digital advertising emissions
 
-Our goal with this project is to build a framework where the media and advertising industry can collaborate on best practices for measuring emissions from the advertising value chain. This project was originally developed by Scope3, and is the foundation of the v2 Scope3 methodology.
+Our goal with this project is to build a framework where the media and advertising industry can collaborate on best practices for measuring emissions from the advertising value chain. This project was originally developed by Scope3 and is used to produce the Scope3 dataset.
 
 Measuring emissions is extremely complicated in general. In the words of one industry leader, "it took us 100 years to figure out how to do financial accounting... and now we're trying to figure out carbon accounting in 2 or 3." As such, we feel like it's critical to learn in public and to be honest about what we know and what we don't know. Assuming the carbon accounting will require the same auditing and assurance process as the financial accounting world, we hope that this project will enable every step of the process to be traced and validated.
 
-Our measurement process, at a high level, works as follows:
+This measurement process, at a high level, works as follows:
 
 1. Gather public materials referencing sustainability and other related data from industry participants
 2. Pull out factual statements from these reports and normalize them into a common framework
@@ -19,17 +19,17 @@ This project is an attempt to "show our work" as we fill in the gaps in our know
 In this project you will find:
 
 - Public sustainability materials and the structured "fact" data from them. These are in the `data/companies` directory
-- Scope3 has received confidential sustainability data from a number of companies. Some of this data is useful for producing default values, and is included anonymously in `data/private/scope3`.
+- Scope3 has received confidential sustainability data from a number of companies. Some of this data is useful for producing default values, and is aggregated and included anonymously in `data/private/scope3`.
 - A script to scan through the source data and produce industry defaults for various types of company. The script is `./scope3_methodology/compute_defaults.py` and the templates are in `templates`. Also see `./scope3_methodology/fact_finder.py` to see how defaults are derived from the data sources we have analyzed.
 - A script to model the emissions for ad tech platforms (ssps, dsps, ad networks, dmps, creative ad servers, etc). See [ad tech platform docs](docs/ad_tech_model.md).
 - A script to model the emissions for publishers. See [publisher docs](docs/publisher_model.md).
-- Notes on methodology in the `docs` directory
+- Documentation of our calculations and assumptions in the `docs` directory
 
 ## Installation
 
 [poetry](https://python-poetry.org/docs/) is used for python dependency management. See the poetry docs for offical instructions.
 
-On Mac you can also install poetry via [brew](https://brew.sh/) 
+On Mac you can also install poetry via [brew](https://brew.sh/)
 
 ```sh
 brew install poetry
