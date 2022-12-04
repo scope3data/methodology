@@ -14,7 +14,7 @@ At the bottom of this document we list some [concerns and caveats](#caveats-comp
 
 ## Visualizing the publisher model
 
-![Visual representation of the publisher model](publisher_model.jpg)
+![Visual representation of the publisher model](images/publisher_model.jpg)
 
 ## Computing Emissions from Ad Tech
 
@@ -73,7 +73,7 @@ For purposes of this open-source model, a simpler way to get the basic data abou
 
 ### Measuring energy use of consumer devices
 
-To calculate the *Lifecycle Emissions Per Second of Use* (LEPS), we multiply the grid intensity of the consumer's location (GI) and the power draw of the consumer device (UEPS) and add this to the production energy per second (PEPS).
+To calculate the _Lifecycle Emissions Per Second of Use_ (LEPS), we multiply the grid intensity of the consumer's location (GI) and the power draw of the consumer device (UEPS) and add this to the production energy per second (PEPS).
 
 $LEPS = {PEPS + GI • UEPS}$
 
@@ -144,7 +144,7 @@ properties:
     facts:
       - visits_per_month: 359200000
         source_id: 1
-      - pages_per_visit:  3.35
+      - pages_per_visit: 3.35
         source_id: 1
       - average_visit_duration_s: 290
         source_id: 1
