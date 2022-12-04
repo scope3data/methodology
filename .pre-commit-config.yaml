@@ -79,6 +79,6 @@ repos:
         args: ["-f", "requirements.txt", "-o", "requirements.txt"]
 
   - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: "" # Use the sha or tag you want to point at
+    rev: v2.7.1
     hooks:
       - id: prettier
