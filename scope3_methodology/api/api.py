@@ -48,12 +48,33 @@ adtech_platform_defaults: dict[ATPTemplate, AdTechPlatform] = {}
 property_defaults: dict[PropertyChannel, Property] = {}
 end_user_device_defaults: dict[EndUserDevices, EndUserDevice] = {}
 
-atp_defaults_file_path = os.environ.get("ATP_DEFAULTS_FILE")
-organization_defaults_file_path = os.environ.get("ORGANIZATION_DEFAULTS_FILE")
-property_defaults_file_path = os.environ.get("PROPERTY_DEFAULTS_FILE")
-end_user_device_file_path = os.environ.get("END_USER_DEVICE_DEFAULTS_FILE")
 
-# TODO Clean up start_up data load. issue #66
+def load_default_files(
+    adtech_platform_defaults_file: str,
+    organization_defaults_file_path: str,
+    property_defaults_file_path: str,
+    end_user_device_file_path: str,
+):
+    """Load all default files into memory"""
+    for atp_template in ATPTemplate:
+        adtech_platform_defaults[atp_template] = AdTechPlatform.load_default_yaml(
+            atp_template.value, adtech_platform_defaults_file
+        )
+    for org_type in OrganizationType:
+        organization_defaults[org_type] = CorporateEmissions.load_default_yaml(
+            org_type.value, organization_defaults_file_path
+        )
+    for channel in PropertyChannel:
+        property_defaults[channel] = Property.load_default_yaml(
+            "generic", property_defaults_file_path, channel.value
+        )
+
+    for device in EndUserDevices:
+        end_user_device_defaults[device] = EndUserDevice.load_default_yaml(
+            device.value, end_user_device_file_path
+        )
+
+
 @app.on_event("startup")
 async def startup_event():
     """
@@ -63,6 +84,12 @@ async def startup_event():
     - all defatults for usage in calculating emissions
     - all public yaml files
     """
+
+    atp_defaults_file_path = os.environ.get("ATP_DEFAULTS_FILE")
+    organization_defaults_file_path = os.environ.get("ORGANIZATION_DEFAULTS_FILE")
+    property_defaults_file_path = os.environ.get("PROPERTY_DEFAULTS_FILE")
+    end_user_device_file_path = os.environ.get("END_USER_DEVICE_DEFAULTS_FILE")
+
     if (
         atp_defaults_file_path is None
         or organization_defaults_file_path is None
@@ -71,23 +98,12 @@ async def startup_event():
     ):
         raise Exception("Must provide environment variables for default files")
 
-    for atp_template in ATPTemplate:
-        adtech_platform_defaults[atp_template] = AdTechPlatform.load_default_yaml(
-            atp_template.value, atp_defaults_file_path
-        )
-    for org_type in OrganizationType:
-        organization_defaults[org_type] = CorporateEmissions.load_default_yaml(
-            org_type.value, organization_defaults_file_path
-        )
-    for channel in PropertyChannel:
-        property_defaults[channel] = Property.load_default_yaml(
-            "generic", property_defaults_file_path, PropertyChannel.DISPLAY.value
-        )
-
-    for device in EndUserDevices:
-        end_user_device_defaults[device] = EndUserDevice.load_default_yaml(
-            device.value, end_user_device_file_path
-        )
+    load_default_files(
+        atp_defaults_file_path,
+        organization_defaults_file_path,
+        property_defaults_file_path,
+        end_user_device_file_path,
+    )
 
 
 @app.get("/healthz")
