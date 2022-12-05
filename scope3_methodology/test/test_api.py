@@ -16,10 +16,10 @@ from scope3_methodology.api.input_models import (
     PropertyChannel,
 )
 
-TEST_DEVICE_DEFAULTS_FILE = "scope3_methodology/test/defaults/end_user_device-defaults.yaml"
-TEST_PROPERTY_DEFAULTS_FILE = "scope3_methodology/test/defaults/property-defaults.yaml"
-TEST_ORGANIZATION_DEFAULTS_FILE = "scope3_methodology/test/defaults/organization-defaults.yaml"
-TEST_ATP_DEFAULTS_FILE = "scope3_methodology/test/defaults/atp-defaults.yaml"
+TEST_DEVICE_DEFAULTS_FILE = "defaults/end_user_device-defaults.yaml"
+TEST_PROPERTY_DEFAULTS_FILE = "defaults/property-defaults.yaml"
+TEST_ORGANIZATION_DEFAULTS_FILE = "defaults/organization-defaults.yaml"
+TEST_ATP_DEFAULTS_FILE = "defaults/atp-defaults.yaml"
 
 
 class TestAPI(unittest.TestCase):
