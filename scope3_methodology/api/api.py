@@ -14,6 +14,7 @@ from scope3_methodology.api.input_models import (
     ATPSecondaryEmissionsInput,
     ATPTemplate,
     CorporateInput,
+    EndUserDevices,
     OrganizationType,
     PropertyChannel,
 )
@@ -22,6 +23,7 @@ from scope3_methodology.api.response_models import (
     PropertyDefaultsResponse,
 )
 from scope3_methodology.corporate.model import CorporateEmissions
+from scope3_methodology.end_user_device.model import EndUserDevice
 from scope3_methodology.publisher.model import Property
 from scope3_methodology.utils.public_yaml_files import (
     PublicYamlInformation,
@@ -44,10 +46,12 @@ public_yaml_files: dict[str, PublicYamlInformation] = get_all_public_yaml_files(
 organization_defaults: dict[OrganizationType, CorporateEmissions] = {}
 adtech_platform_defaults: dict[ATPTemplate, AdTechPlatform] = {}
 property_defaults: dict[PropertyChannel, Property] = {}
+end_user_device_defaults: dict[EndUserDevices, EndUserDevice] = {}
+
 atp_defaults_file_path = os.environ.get("ATP_DEFAULTS_FILE")
 organization_defaults_file_path = os.environ.get("ORGANIZATION_DEFAULTS_FILE")
 property_defaults_file_path = os.environ.get("PROPERTY_DEFAULTS_FILE")
-
+end_user_device_file_path = os.environ.get("END_USER_DEVICE_DEFAULTS_FILE")
 
 # TODO Clean up start_up data load. issue #66
 @app.on_event("startup")
@@ -63,32 +67,27 @@ async def startup_event():
         atp_defaults_file_path is None
         or organization_defaults_file_path is None
         or property_defaults_file_path is None
+        or end_user_device_file_path is None
     ):
-        raise Exception(
-            "Must provide environment variables ATP_DEFAULTS_FILE and ORGANIZATION_DEFAULTS_FILE"
+        raise Exception("Must provide environment variables for default files")
+
+    for atp_template in ATPTemplate:
+        adtech_platform_defaults[atp_template] = AdTechPlatform.load_default_yaml(
+            atp_template.value, atp_defaults_file_path
+        )
+    for org_type in OrganizationType:
+        organization_defaults[org_type] = CorporateEmissions.load_default_yaml(
+            org_type.value, organization_defaults_file_path
+        )
+    for channel in PropertyChannel:
+        property_defaults[channel] = Property.load_default_yaml(
+            "generic", property_defaults_file_path, PropertyChannel.DISPLAY.value
         )
 
-    adtech_platform_defaults[ATPTemplate.DSP] = AdTechPlatform.load_default_yaml(
-        ATPTemplate.DSP.value, atp_defaults_file_path
-    )
-    adtech_platform_defaults[ATPTemplate.SSP] = AdTechPlatform.load_default_yaml(
-        ATPTemplate.SSP.value, atp_defaults_file_path
-    )
-    organization_defaults[OrganizationType.GENERIC] = CorporateEmissions.load_default_yaml(
-        OrganizationType.GENERIC.value, organization_defaults_file_path
-    )
-    organization_defaults[OrganizationType.PUBLISHER] = CorporateEmissions.load_default_yaml(
-        OrganizationType.PUBLISHER.value, organization_defaults_file_path
-    )
-    organization_defaults[OrganizationType.ATP] = CorporateEmissions.load_default_yaml(
-        OrganizationType.ATP.value, organization_defaults_file_path
-    )
-    property_defaults[PropertyChannel.DISPLAY] = Property.load_default_yaml(
-        "generic", property_defaults_file_path, PropertyChannel.DISPLAY.value
-    )
-    property_defaults[PropertyChannel.STREAMING] = Property.load_default_yaml(
-        "generic", property_defaults_file_path, PropertyChannel.STREAMING.value
-    )
+    for device in EndUserDevices:
+        end_user_device_defaults[device] = EndUserDevice.load_default_yaml(
+            device.value, end_user_device_file_path
+        )
 
 
 @app.get("/healthz")
@@ -116,11 +115,6 @@ def calculate_corporate_emissions(data: CorporateInput):
 @app.post("/calculate/atp_primary_emissions")
 def calculate_atp_emissions(data: ATPInput):
     """Returns computed primary emissions for an ad tech platform in g co2e"""
-    if data.atp_template == ATPTemplate.NETWORK:
-        raise HTTPException(
-            status_code=501, detail="calculate_atp_emissions is not supported for NETWORK"
-        )
-
     company_servers_pct = (
         data.allocation_of_company_servers_pct
         if data.allocation_of_company_servers_pct
@@ -201,9 +195,6 @@ def get_atp_template_defaults(template: ATPTemplate):
         - atp_block_rate
         - publisher_block_rate
     """
-    if template == ATPTemplate.NETWORK:
-        raise HTTPException(status_code=501, detail=f"/defaults/atp/{template} is not supported")
-
     defaults = adtech_platform_defaults[template]
     corporate_emissions = defaults.corporate_emissions_g_co2e_per_bid_request
     return ATPDefaultsResponse(
@@ -297,6 +288,26 @@ def parse_corporate_public_yaml_file(identifier: str):
             status_code=500,
             detail=f"Failed to open and parse corporate file '{file_info.file_path}'",
         ) from exc
+
+
+@app.get("/defaults/end_user_device")
+def get_all_end_user_device_defaults():
+    """
+    Returns all end user device defaults
+    """
+    response = []
+    for device, device_defaults in end_user_device_defaults.items():
+        for channel, channel_defaults in property_defaults.items():
+            if channel_defaults.quality_impressions_per_duration_s:
+                modeled_end_user_device = device_defaults.model_end_user_device(
+                    device.value,
+                    channel.value,
+                    "generic",
+                    channel_defaults.quality_impressions_per_duration_s,
+                )
+                if modeled_end_user_device is not None:
+                    response.append(modeled_end_user_device)
+    return response
 
 
 if __name__ == "__main__":

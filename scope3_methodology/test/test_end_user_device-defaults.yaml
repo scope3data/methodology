@@ -1,0 +1,24 @@
+defaults:
+  personal_computer:
+    data_transfer_kwh_per_gb: 0.030000000
+    draw_watts: 53.200000000
+    production_emissions_gco2e_per_duration_s: 0.007000000
+  smartphone:
+    data_transfer_kwh_per_gb: 0.140000000
+    draw_watts: 0.770000000
+    production_emissions_gco2e_per_duration_s: 0.005200000
+sources:
+  personal_computer:
+    data_transfer_kwh_per_gb:
+    - template default
+    draw_watts:
+    - template default
+    production_emissions_gco2e_per_duration_s:
+    - template default
+  smartphone:
+    data_transfer_kwh_per_gb:
+    - template default
+    draw_watts:
+    - template default
+    production_emissions_gco2e_per_duration_s:
+    - template default

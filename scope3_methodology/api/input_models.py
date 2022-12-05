@@ -13,7 +13,6 @@ class ATPTemplate(Enum):
 
     DSP = "dsp"
     SSP = "ssp"
-    NETWORK = "network"
 
 
 class PropertyChannel(Enum):
@@ -21,6 +20,15 @@ class PropertyChannel(Enum):
 
     DISPLAY = "display"
     STREAMING = "streaming"
+
+
+class EndUserDevices(Enum):
+    """End user devices"""
+
+    PERSONAL_COMPUTER = "personal_computer"
+    SMARTPHONE = "smartphone"
+    TABLET = "tablet"
+    TV_SYSTEM = "tv_system"
 
 
 class OrganizationType(Enum):
