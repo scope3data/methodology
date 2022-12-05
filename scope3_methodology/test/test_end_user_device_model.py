@@ -7,7 +7,7 @@ from scope3_methodology.end_user_device.model import EndUserDevice, ModeledEndUs
 TEST_DEVICE = "personal_computer"
 TEST_CHANNEL = "display"
 TEST_TEMPLATE = "generic"
-TEST_DEFAULTS_FILE = "scope3_methodology/test/test_end_user_device-defaults.yaml"
+TEST_DEFAULTS_FILE = "scope3_methodology/test/defaults/end_user_device-defaults.yaml"
 TEST_QUALITY_IMPRESSIONS_PER_SEC = Decimal("0.1")
 
 

@@ -1,0 +1,265 @@
+defaults:
+  dsp:
+    bid_request_size_in_bytes: 10000.000000000
+    bid_requests_processed_billion_per_month: 38109.000000000
+    bid_requests_processed_from_ad_tech_platforms_pct: 56.150000000
+    bid_requests_processed_from_publishers_pct: 100.000000000
+    cookie_sync_distribution_ratio: 0.000000000
+    cookie_syncs_processed_per_bid_request: 0.005900000
+    corporate_emissions_g_co2e_per_bid_request: 0.000020400
+    datacenter_water_intensity_h2o_m_3_per_mwh: 7.100000000
+    server_emissions_g_co2e_per_kwh: 649.800000000
+    server_emissions_mt_co2e_per_month: 3583.000000000
+    server_emissions_mt_per_dollar_of_depreciation: 0.000486000
+    server_to_server_emissions_g_co2e_per_gb: 0.379000000
+    servers_processing_bid_requests_pct: 93
+    servers_processing_cookie_syncs_pct: 7
+  ssp:
+    bid_request_size_in_bytes: 10000.000000000
+    bid_requests_processed_billion_per_month: 6100.600000000
+    bid_requests_processed_from_ad_tech_platforms_pct: 56.150000000
+    bid_requests_processed_from_publishers_pct: 100.000000000
+    cookie_sync_distribution_ratio: 0.200000000
+    cookie_syncs_processed_per_bid_request: 0.005900000
+    corporate_emissions_g_co2e_per_bid_request: 0.000016300
+    datacenter_water_intensity_h2o_m_3_per_mwh: 7.100000000
+    server_emissions_g_co2e_per_kwh: 514.400000000
+    server_emissions_mt_co2e_per_month: 1422.000000000
+    server_emissions_mt_per_dollar_of_depreciation: 0.000486000
+    server_to_server_emissions_g_co2e_per_gb: 0.379000000
+    servers_processing_bid_requests_pct: 99
+    servers_processing_cookie_syncs_pct: 1
+sources:
+  dsp:
+    bid_request_size_in_bytes:
+    - global default
+    bid_requests_processed_billion_per_month:
+    - channel: null
+      company: d41d8cd98f00b204e9800998ecf8427e/data.yaml
+      is_calculation: false
+      key: bid_requests_processed_billion_per_month
+      template: dsp
+      url: n/a
+      value: 75168
+    - channel: null
+      company: 8c32df930283f9a3203ae411c72e3f69/data.yaml
+      is_calculation: false
+      key: bid_requests_processed_billion_per_month
+      template: dsp
+      url: n/a
+      value: 1050
+    bid_requests_processed_from_ad_tech_platforms_pct:
+    - channel: null
+      company: d41d8cd98f00b204e9800998ecf8427e/data.yaml
+      is_calculation: false
+      key: bid_requests_processed_from_ad_tech_platforms_pct
+      template: dsp
+      url: n/a
+      value: 79.300000000
+    - channel: null
+      company: 8c32df930283f9a3203ae411c72e3f69/data.yaml
+      is_calculation: false
+      key: bid_requests_processed_from_ad_tech_platforms_pct
+      template: dsp
+      url: n/a
+      value: 33
+    bid_requests_processed_from_publishers_pct:
+    - channel: null
+      company: 8c32df930283f9a3203ae411c72e3f69/data.yaml
+      is_calculation: false
+      key: bid_requests_processed_from_publishers_pct
+      template: dsp
+      url: n/a
+      value: 100
+    cookie_sync_distribution_ratio:
+    - channel: null
+      company: 8c32df930283f9a3203ae411c72e3f69/data.yaml
+      is_calculation: false
+      key: cookie_sync_distribution_ratio
+      template: dsp
+      url: n/a
+      value: 0
+    cookie_syncs_processed_per_bid_request:
+    - channel: null
+      company: 8c32df930283f9a3203ae411c72e3f69/data.yaml
+      is_calculation: false
+      key: cookie_syncs_processed_per_bid_request
+      template: dsp
+      url: n/a
+      value: 0.005900000
+    corporate_emissions_g_co2e_per_bid_request:
+    - channel: null
+      company: criteo/atp_data.yaml
+      is_calculation: true
+      key: corporate_emissions_g_co2e_per_bid_request
+      template: dsp
+      url: n/a
+      value: 0.000020400
+    datacenter_water_intensity_h2o_m_3_per_mwh:
+    - channel: null
+      company: environmental_research_letters/data.yaml
+      is_calculation: false
+      key: datacenter_water_intensity_h2o_m_3_per_mwh
+      template: GENERAL
+      url: https://iopscience.iop.org/article/10.1088/1748-9326/abfba1
+      value: 7.100000000
+    server_emissions_g_co2e_per_kwh:
+    - channel: null
+      company: criteo/atp_data.yaml
+      is_calculation: true
+      key: server_emissions_g_co2e_per_kwh
+      template: dsp
+      url: n/a
+      value: 649.800000000
+    server_emissions_mt_co2e_per_month:
+    - channel: null
+      company: criteo/atp_data.yaml
+      is_calculation: true
+      key: server_emissions_mt_co2e_per_month
+      template: dsp
+      url: n/a
+      value: 3583
+    server_emissions_mt_per_dollar_of_depreciation:
+    - channel: null
+      company: criteo/atp_data.yaml
+      is_calculation: true
+      key: server_emissions_mt_per_dollar_of_depreciation
+      template: dsp
+      url: n/a
+      value: 0.000486000
+    server_to_server_emissions_g_co2e_per_gb:
+    - channel: null
+      company: cloudcarbonfootprint/data.yaml
+      is_calculation: false
+      key: server_to_server_emissions_g_co2e_per_gb
+      template: GENERAL
+      url: n/a
+      value: 0.379000000
+    servers_processing_bid_requests_pct:
+    - template default
+    servers_processing_cookie_syncs_pct:
+    - template default
+  ssp:
+    bid_request_size_in_bytes:
+    - global default
+    bid_requests_processed_billion_per_month:
+    - channel: null
+      company: 69fda82128a64dfe78d2de19a5687a9ba0eeabc3/data.yaml
+      is_calculation: false
+      key: bid_requests_processed_billion_per_month
+      template: ssp
+      url: n/a
+      value: 1504.400000000
+    - channel: null
+      company: 0fdec0263bebbd29daccf076313e1ef20f619841/data.yaml
+      is_calculation: false
+      key: bid_requests_processed_billion_per_month
+      template: ssp
+      url: n/a
+      value: 8303
+    - channel: null
+      company: 3ecd3addec8013af084f585696cc8088cf2e4be4/data.yaml
+      is_calculation: false
+      key: bid_requests_processed_billion_per_month
+      template: ssp
+      url: n/a
+      value: 2529.000000000
+    - channel: null
+      company: pubmatic/atp_data.yaml
+      is_calculation: false
+      key: bid_requests_processed_billion_per_month
+      template: ssp
+      url: n/a
+      value: 12066
+    bid_requests_processed_from_ad_tech_platforms_pct:
+    - channel: null
+      company: d41d8cd98f00b204e9800998ecf8427e/data.yaml
+      is_calculation: false
+      key: bid_requests_processed_from_ad_tech_platforms_pct
+      template: dsp
+      url: n/a
+      value: 79.300000000
+    - channel: null
+      company: 8c32df930283f9a3203ae411c72e3f69/data.yaml
+      is_calculation: false
+      key: bid_requests_processed_from_ad_tech_platforms_pct
+      template: dsp
+      url: n/a
+      value: 33
+    bid_requests_processed_from_publishers_pct:
+    - channel: null
+      company: 8c32df930283f9a3203ae411c72e3f69/data.yaml
+      is_calculation: false
+      key: bid_requests_processed_from_publishers_pct
+      template: dsp
+      url: n/a
+      value: 100
+    cookie_sync_distribution_ratio:
+    - template default
+    cookie_syncs_processed_per_bid_request:
+    - channel: null
+      company: 8c32df930283f9a3203ae411c72e3f69/data.yaml
+      is_calculation: false
+      key: cookie_syncs_processed_per_bid_request
+      template: dsp
+      url: n/a
+      value: 0.005900000
+    corporate_emissions_g_co2e_per_bid_request:
+    - channel: null
+      company: pubmatic/atp_data.yaml
+      is_calculation: true
+      key: corporate_emissions_g_co2e_per_bid_request
+      template: ssp
+      url: n/a
+      value: 0.000016300
+    datacenter_water_intensity_h2o_m_3_per_mwh:
+    - channel: null
+      company: environmental_research_letters/data.yaml
+      is_calculation: false
+      key: datacenter_water_intensity_h2o_m_3_per_mwh
+      template: GENERAL
+      url: https://iopscience.iop.org/article/10.1088/1748-9326/abfba1
+      value: 7.100000000
+    server_emissions_g_co2e_per_kwh:
+    - channel: null
+      company: cloudcarbonfootprint/data.yaml
+      is_calculation: false
+      key: server_emissions_g_co2e_per_kwh
+      template: GENERAL
+      url: https://www.cloudcarbonfootprint.org/docs/methodology/#appendix-iv-recent-networking-studies
+      value: 379
+    - channel: null
+      company: criteo/atp_data.yaml
+      is_calculation: true
+      key: server_emissions_g_co2e_per_kwh
+      template: dsp
+      url: n/a
+      value: 649.800000000
+    server_emissions_mt_co2e_per_month:
+    - channel: null
+      company: magnite/atp_data.yaml
+      is_calculation: true
+      key: server_emissions_mt_co2e_per_month
+      template: ssp
+      url: n/a
+      value: 1422
+    server_emissions_mt_per_dollar_of_depreciation:
+    - channel: null
+      company: criteo/atp_data.yaml
+      is_calculation: true
+      key: server_emissions_mt_per_dollar_of_depreciation
+      template: dsp
+      url: n/a
+      value: 0.000486000
+    server_to_server_emissions_g_co2e_per_gb:
+    - channel: null
+      company: cloudcarbonfootprint/data.yaml
+      is_calculation: false
+      key: server_to_server_emissions_g_co2e_per_gb
+      template: GENERAL
+      url: n/a
+      value: 0.379000000
+    servers_processing_bid_requests_pct:
+    - template default
+    servers_processing_cookie_syncs_pct:
+    - template default
