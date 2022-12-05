@@ -42,7 +42,7 @@ class TestAPI(unittest.TestCase):
             organization_defaults[
                 OrganizationType.ATP
             ].travel_emissions_mt_co2e_per_employee_per_month,
-            Decimal("0.011"),
+            Decimal("0.01222221"),
         )
         self.assertTrue(organization_defaults[OrganizationType.PUBLISHER])
         self.assertEqual(
