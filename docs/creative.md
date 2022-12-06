@@ -1,7 +1,5 @@
 # Creative
 
-The Creative API supports multiple digital channels and formats so some specific examples are provided below for common use cases.
-
 ## Methodology
 
 The lifecycle of a creative starts with its production. Depending on the channel and format, creative production can be very lightweight (typing a couple of lines of text into a search tool) or have a significant carbon footprint (an on-location shoot with a full crew). Currently, this project does not include modeling creative production, but we are considering this for future development.
