@@ -6,12 +6,12 @@ Life cycle assessment or LCA (also known as life cycle analysis) is a methodolog
 
 To "manufacture" an ad impression, our raw materials are media (content), creative (the ad itself), and human attention (via ears and/or eyes). Different channels will have different combinations of these ingredients. For instance, a billboard often doesn't have content, just the ad. However, a billboard will have a disposal component when the vinyl is removed or recycled.
 
-The life cycle of an ad can be broken down into two stages: production and use. The production phase includes media production and creative production. The use phase has four components:
+The life cycle of an ad can be broken down into two stages: production and distribution. The production phase includes media production and creative production. The distribution phase has four components:
 
 1. Media distribution
 1. Ad selection
 1. Consumer engagement - the impression
-1. Disposal
+1. Ad and media disposal
 
 ![Lifecycle of an ad](images/lca_ad.png)
 
@@ -75,11 +75,11 @@ The ad tech supply chain is a critical component to understand emissions from me
 
 DIMPACT is omitted as its methodology does not currently include ad selection.
 
-| Topic                                                      | SRI | GroupM |
-| ---------------------------------------------------------- | --- | ------ |
-| Includes emissions from programmatic vendors               | No  | Yes    |
-| Includes emissions from data and identity providers        | No  | No     |
-| Includes emissions from technology embedded into creatives | No  | Yes?   |
+| Topic                                                      | SRI         | GroupM      |
+| ---------------------------------------------------------- | ----------- | ----------- |
+| Includes emissions from programmatic vendors               | Yes         | Yes         |
+| Includes emissions from data and identity providers        | Unspecified | Unspecified |
+| Includes emissions from technology embedded into creatives | Unspecified | Unspecified |
 
 ### Grid allocation
 
