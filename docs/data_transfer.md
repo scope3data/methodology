@@ -1,10 +1,12 @@
 # Emissions from Data Transfer
 
 ## Approaches
+
 As a starting point in understanding all the various approaches for understanding the carbon footprint of various networks, we recommend [this article by Gauthier Roussilhe](https://gauthierroussilhe.com/articles/explications-sur-l-empreinte-carbone-du-streaming-et-du-transfert-de-donnees).
 
 ## Carbon Footprint of the ICT Sector as a Whole
-![Global ICT footprint vs bandwidth](./malmodin-sweden-2018.png)
+
+![Global ICT footprint vs bandwidth](images/malmodin-sweden-2018.png)
 
 As a sanity check on the total environmental impact of network infrastructure, this paper: [The electricity consumption and operational carbon emissions of ICT network operators](https://www.diva-portal.org/smash/get/diva2:1177210/FULLTEXT01.pdf) uses confidential information provided by network operators to produce an estimate of the total and per-subscriber emissions.
 
@@ -18,9 +20,9 @@ The paper shows that electricity use and emissions per subscriber are relatively
 The paper calculates emissions per fixed broadband (37 kgCO2e/sub) and mobile (14 kgCO2e/sub) subscribers, with an average of 19 kgCO2e per subscriber.
 
 The same author, Jens Malmodin, produced a graphic showing the sources of power usage per user at the [Science & Society Forum](https://www.youtube.com/watch?v=Xo0PB5i_b4Y&t=2520s) in Sweden in 2020:
-![Real power figures per user](malmodin2020.png)
+![Real power figures per user](images/malmodin2020.png)
 
-These bottom-up numbers indicate that the majority of emissions from broadband users are fixed and change little based on data transfer, while mobile emissions are somewhat based upon data transfer (presumably because the access network uses energy to transmit more actively). An expansion of this analysis that compares to other assessments of emissions from network use can be found in *IEA (2020), [The carbon footprint of streaming video: fact-checking the headlines]( https://www.iea.org/commentaries/the-carbon-footprint-of-streaming-video-fact-checking-the-headlines), IEA, Paris*
+These bottom-up numbers indicate that the majority of emissions from broadband users are fixed and change little based on data transfer, while mobile emissions are somewhat based upon data transfer (presumably because the access network uses energy to transmit more actively). An expansion of this analysis that compares to other assessments of emissions from network use can be found in _IEA (2020), [The carbon footprint of streaming video: fact-checking the headlines](https://www.iea.org/commentaries/the-carbon-footprint-of-streaming-video-fact-checking-the-headlines), IEA, Paris_
 
 ## Power usage by bandwidth
 
@@ -28,19 +30,19 @@ For mobile vs fixed data the [2020 EU ICT impact study](https://circabc.europa.e
 
 The 0.03 kWh/GB number aligns with what is in the graphic above (0.03 W/Mbps) at relatively low bandwidth. [Aslan et al](https://onlinelibrary.wiley.com/doi/10.1111/jiec.12630) suggest that fixed-line networks should be 0.06 kWh/GB in 2020 and halving every two years. This is consistent with the 0.03 kWh/GB figure.
 
-SRI shared their calculations with us and their numbers, as of June 2022, are 0.036 kWh/GB for fixed and 0.249 for mobile, referencing "Evaluation environnementale des équipements et infrastructures numériques en France (2ème volet), ADEME-ARCEP, 2022  (p.71)."
+SRI shared their calculations with us and their numbers, as of June 2022, are 0.036 kWh/GB for fixed and 0.249 for mobile, referencing "Evaluation environnementale des équipements et infrastructures numériques en France (2ème volet), ADEME-ARCEP, 2022 (p.71)."
 
 Per DIMPACT methodology, "Range 0.1 – 1.0 kWh/GB (2020). After review of the available data the Carbon Trust used a value of 0.1 kWh/GB based on [Pihkoka et al](https://www.mdpi.com/2071-1050/10/7/2494) in their Whitepaper ‘Carbon impact of video streaming’ (2021)"
 
 When we don't know anything about the connection, we are using a value of 0.1 kWh per GB from [Pihkoka et al](https://www.mdpi.com/2071-1050/10/7/2494).
 
-| Connection type | Device | KWh / GB
-| --- | --- | ---
-| Mobile | Any | 0.14
-| Fixed broadband | Any | 0.03
-| Unknown | Smartphone | 0.14
-| Unknown | TV, PC, or Tablet | 0.03
-| Unknown | Unknown | 0.10
+| Connection type | Device            | KWh / GB |
+| --------------- | ----------------- | -------- |
+| Mobile          | Any               | 0.14     |
+| Fixed broadband | Any               | 0.03     |
+| Unknown         | Smartphone        | 0.14     |
+| Unknown         | TV, PC, or Tablet | 0.03     |
+| Unknown         | Unknown           | 0.10     |
 
 ## References
 

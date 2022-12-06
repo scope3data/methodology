@@ -19,4 +19,4 @@ As of this writing (October 2022) we believe that all ad tech platforms still ac
 
 To put this in a real-world context, using SimilarWeb we can pull estimated traffic data for yahoo.com. Using some heuristics for the number of ad tech partners and cookie syncs, we can estimate the annual emissions due to ad tech cookie synching as 4,295 mt CO2e - the same as burning 57 tanker trucks filled with gasoline.
 
-![An example of yahoo.com generating 18.9 mtCO2e from cookies](./web_cookies.png)
+![An example of yahoo.com generating 18.9 mtCO2e from cookies](images/web_cookies.png)

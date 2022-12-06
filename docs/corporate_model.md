@@ -6,18 +6,18 @@ This idealized company does not exist, though Google, Microsoft, Axel Springer, 
 
 We need a way to estimate corporate emissions based on the information we have available. We can translate the spectrum above into a table that translates what we know into a methodology to fill in the gaps of what we don't know:
 
-What we know | Estimation methodology
----|---
-Nothing | Use industry-average emissions per impression
-Number of employees | Use industry-average emissions per employee
-Sustainability report with missing or aggregated scope 3 categories | Use industry-average emissions per employee for missing categories
-Complete sustainability report with suboptimal methodology (market-based vs location-based, or omitting embodied emissions, for instance) | Use industry average correction factors
+| What we know                                                                                                                              | Estimation methodology                                             |
+| ----------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
+| Nothing                                                                                                                                   | Use industry-average emissions per impression                      |
+| Number of employees                                                                                                                       | Use industry-average emissions per employee                        |
+| Sustainability report with missing or aggregated scope 3 categories                                                                       | Use industry-average emissions per employee for missing categories |
+| Complete sustainability report with suboptimal methodology (market-based vs location-based, or omitting embodied emissions, for instance) | Use industry average correction factors                            |
 
 ## Mapping emissions into business units
 
- For a company like Google, the corporate sustainability report will be produced for the entire company. Some business units, like YouTube, will be broken out with specific emissions data; other business units will not be.
+For a company like Google, the corporate sustainability report will be produced for the entire company. Some business units, like YouTube, will be broken out with specific emissions data; other business units will not be.
 
- For a business unit like ad tech inside Google, we need to allocate a percentage of the overall corporate emissions based on percentage of revenue or another method.
+For a business unit like ad tech inside Google, we need to allocate a percentage of the overall corporate emissions based on percentage of revenue or another method.
 
 ## Calculating industry-average emissions factors
 
@@ -42,7 +42,6 @@ In other words, a publisher should be including programmatic supply chain emissi
 In practice, at least in 2022, when we have asked companies - both publishers and ad tech companies - they have told us that these emissions are not included in their reporting boundaries today. Therefore we are not making any additional exclusions. In the future, we suggest that companies be explicit about what parts of their value chain are included recursively so that a de-duplication is possible (h/t Benjamin Davy for pointing this out!)
 
 For the purposes of the current project, we are assuming the following categories of scope 3 emissions are fairly comprehensive for companies in the media and advertising space:
-
 
 ### offsets, RECs, and PPAs
 
@@ -77,7 +76,6 @@ sources:
     url: >-
       https://filecache.investorroom.com/mr5ir_criteo/1674/Criteo_CSR_Report_2021.pdf
     file: Criteo_CSR_Report_2021.pdf
-
 ```
 
 The file must have:
