@@ -15,6 +15,7 @@ from scope3_methodology.api.input_models import (
     ATPTemplate,
     CorporateInput,
     EndUserDevices,
+    NetworkingConnectionType,
     OrganizationType,
     PropertyChannel,
 )
@@ -24,6 +25,7 @@ from scope3_methodology.api.response_models import (
 )
 from scope3_methodology.corporate.model import CorporateEmissions
 from scope3_methodology.end_user_device.model import EndUserDevice
+from scope3_methodology.networking.model import NetworkingConnection
 from scope3_methodology.publisher.model import Property
 from scope3_methodology.utils.public_yaml_files import (
     PublicYamlInformation,
@@ -47,6 +49,7 @@ organization_defaults: dict[OrganizationType, CorporateEmissions] = {}
 adtech_platform_defaults: dict[ATPTemplate, AdTechPlatform] = {}
 property_defaults: dict[PropertyChannel, Property] = {}
 end_user_device_defaults: dict[EndUserDevices, EndUserDevice] = {}
+networking_connection_defaults: dict[NetworkingConnectionType, NetworkingConnection] = {}
 
 
 def load_default_files(
@@ -54,6 +57,7 @@ def load_default_files(
     organization_defaults_file_path: str,
     property_defaults_file_path: str,
     end_user_device_file_path: str,
+    networking_file_path: str,
 ):
     """Load all default files into memory"""
     for atp_template in ATPTemplate:
@@ -74,6 +78,11 @@ def load_default_files(
             device.value, end_user_device_file_path
         )
 
+    for connection_type in NetworkingConnectionType:
+        networking_connection_defaults[connection_type] = NetworkingConnection.load_default_yaml(
+            connection_type.value, networking_file_path
+        )
+
 
 @app.on_event("startup")
 async def startup_event():
@@ -89,12 +98,14 @@ async def startup_event():
     organization_defaults_file_path = os.environ.get("ORGANIZATION_DEFAULTS_FILE")
     property_defaults_file_path = os.environ.get("PROPERTY_DEFAULTS_FILE")
     end_user_device_file_path = os.environ.get("END_USER_DEVICE_DEFAULTS_FILE")
+    networking_file_path = os.environ.get("NETWORKING_DEFAULTS_FILE")
 
     if (
         atp_defaults_file_path is None
         or organization_defaults_file_path is None
         or property_defaults_file_path is None
         or end_user_device_file_path is None
+        or networking_file_path is None
     ):
         raise Exception("Must provide environment variables for default files")
 
@@ -103,6 +114,7 @@ async def startup_event():
         organization_defaults_file_path,
         property_defaults_file_path,
         end_user_device_file_path,
+        networking_file_path,
     )
 
 
@@ -323,6 +335,19 @@ def get_all_end_user_device_defaults():
                 )
                 if modeled_end_user_device is not None:
                     response.append(modeled_end_user_device)
+    return response
+
+
+@app.get("/defaults/networking")
+def get_all_networking_connection_device_defaults():
+    """
+    Returns all networking connection device defaults
+    """
+    response = []
+    for connection_type, defaults in networking_connection_defaults.items():
+        for device in EndUserDevices:
+            modeled_device_networking = defaults.model_device(device.value, connection_type)
+            response.append(modeled_device_networking)
     return response
 
 

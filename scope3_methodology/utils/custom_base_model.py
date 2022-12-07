@@ -38,7 +38,7 @@ class CustomBaseModel:
                 raise Exception(f"Template {template} not found in defaults")
             defaults: dict[str, Decimal] = doc_defaults[template]
             keys = [f.name for f in fields(cls) if f.metadata.get("default_eligible")]
-            return cls(**{k: v for k, v in defaults.items() if k in keys})
+            return cls(**{k: v for k, v in defaults.items() if k in keys and v is not None})
 
     def __getattribute__(self, name):
         if object.__getattribute__(self, name) is not None:
@@ -47,7 +47,11 @@ class CustomBaseModel:
         default_eligible = [
             f.name for f in fields(object.__class__(self)) if f.metadata.get("default_eligible")
         ]
-        if object.__getattribute__(self, "defaults") and name in default_eligible:
+        if (
+            hasattr(self, "defaults")
+            and object.__getattribute__(self, "defaults")
+            and name in default_eligible
+        ):
             default = object.__getattribute__(object.__getattribute__(self, "defaults"), name)
             if default is not None:
                 return default

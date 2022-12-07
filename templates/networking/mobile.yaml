@@ -1,0 +1,6 @@
+---
+template:
+  name: mobile
+  generic: true
+  type: networking
+  generic_kwh_per_gb: 0.14

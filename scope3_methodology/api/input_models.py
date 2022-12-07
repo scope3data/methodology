@@ -8,6 +8,14 @@ from pydantic import BaseModel
 from scope3_methodology.ad_tech_platform.model import DistributionPartner
 
 
+class NetworkingConnectionType(Enum):
+    """Networking Connection Types"""
+
+    FIXED = "fixed"
+    MOBILE = "mobile"
+    UNKNOWN = "unknown"
+
+
 class ATPTemplate(Enum):
     """ATP Template Types"""
 
