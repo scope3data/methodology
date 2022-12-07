@@ -11,10 +11,10 @@ COPY pyproject.toml /app
 ENV PYTHONPATH=${PYTHONPATH}:${PWD}
 RUN pip install -r requirements.txt
 
-RUN  python "./scope3_methodology/cli/compute_defaults.py"
-ENV ATP_DEFAULTS_FILE /app/atp-defaults.yaml
-ENV ORGANIZATION_DEFAULTS_FILE /app/organization-defaults.yaml
-ENV PROPERTY_DEFAULTS_FILE /app/property-defaults.yaml
-ENV  END_USER_DEVICE_DEFAULTS_FILE /app/end_user_device-defaults.yaml
+RUN python "./scope3_methodology/cli/compute_defaults.py"
+ENV ATP_DEFAULTS_FILE /app/defaults/atp-defaults.yaml
+ENV ORGANIZATION_DEFAULTS_FILE /app/defaults/organization-defaults.yaml
+ENV PROPERTY_DEFAULTS_FILE /app/defaults/property-defaults.yaml
+ENV END_USER_DEVICE_DEFAULTS_FILE /app/defaults/end_user_device-defaults.yaml
 
 CMD ["python", "scope3_methodology/api/api.py"]

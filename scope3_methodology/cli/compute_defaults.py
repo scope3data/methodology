@@ -135,6 +135,7 @@ def compute_defaults(
     model_defaults_file: str,
     model_inputs: set[str],
     dry_run: bool,
+    defaults_directory: str,
 ):
     """Compute defaults for a template type"""
     template_defaults = {}  # type: ignore
@@ -167,7 +168,8 @@ def compute_defaults(
     if dry_run:
         print(output)
     else:
-        with open(model_defaults_file, "w", encoding="UTF-8") as write_stream:
+        file_path = f"{defaults_directory}/{model_defaults_file}"
+        with open(file_path, "w", encoding="UTF-8") as write_stream:
             write_stream.write(output)
             write_stream.close()
 
@@ -179,6 +181,12 @@ def main():
         "--dry-run",
         action="store_true",
         help="Print the defaults but don't write to file",
+    )
+    parser.add_argument(
+        "-d",
+        "--defaults_directory",
+        default="defaults",
+        help="Set the defaults file directory to use",
     )
     args = parser.parse_args()
 
@@ -216,6 +224,7 @@ def main():
             model + "-defaults.yaml",
             keys,
             args.dry_run,
+            args.defaults_directory,
         )
 
 

@@ -1,8 +1,8 @@
 """ Model for computing corporate emissions for an organization """
 
 from dataclasses import dataclass, field
-from typing import Optional
 from decimal import Decimal
+from typing import Optional
 
 from scope3_methodology.utils.constants import G_PER_MT
 from scope3_methodology.utils.custom_base_model import CustomBaseModel

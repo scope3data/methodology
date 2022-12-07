@@ -1,9 +1,4 @@
-# Output files
-atp-defaults.yaml
-organization-defaults.yaml
-property-defaults.yaml
-end_user_device-defaults.yaml
-
+test_defaults/* 
 # git
 *.swp
 
