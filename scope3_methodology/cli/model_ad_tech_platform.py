@@ -21,7 +21,7 @@ def parse_args():
     parser.add_argument(
         "-d",
         "--defaultsFile",
-        default="atp-defaults.yaml",
+        default="defaults/atp-defaults.yaml",
         help="Set the defaults file to use (overrides atp-defaults.yaml)",
     )
     parser.add_argument("-v", "--verbose", action="store_true", help="Show derivation of output")

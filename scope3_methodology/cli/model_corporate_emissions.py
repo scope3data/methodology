@@ -18,7 +18,7 @@ def main():
     parser.add_argument(
         "-d",
         "--defaultsFile",
-        default="organization-defaults.yaml",
+        default="defaults/organization-defaults.yaml",
         help="Set the defaults file to use (overrides organization-defaults.yaml)",
     )
     parser.add_argument("-v", "--verbose", action="store_true", help="Show derivation of output")
