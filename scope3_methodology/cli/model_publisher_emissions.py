@@ -16,7 +16,7 @@ def parse_args():
     parser.add_argument(
         "-d",
         "--defaultsFile",
-        default="property-defaults.yaml",
+        default="defaults/property-defaults.yaml",
         help="Set the defaults file to use (overrides property-defaults.yaml)",
     )
     parser.add_argument(

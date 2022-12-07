@@ -15,13 +15,13 @@ def parse_args():
     parser.add_argument(
         "-d",
         "--defaultsFile",
-        default="end_user_device-defaults.yaml",
+        default="defaults/end_user_device-defaults.yaml",
         help="Set the end user device defaults file to use",
     )
     parser.add_argument(
         "-p",
         "--propertyDefaultsFile",
-        default="property-defaults.yaml",
+        default="defaults/property-defaults.yaml",
         help="Set the property defaults file to use",
     )
     parser.add_argument("-v", "--verbose", action="store_true", help="Show derivation of output")
