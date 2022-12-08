@@ -16,6 +16,8 @@ class ModeledEndUserDevice:
     template: str
     power_kwh_per_imp: Decimal
     production_gco2e_per_imp: Decimal
+    power_kwh_per_second: Decimal
+    production_gco2e_per_second: Decimal
 
 
 @dataclass
@@ -43,6 +45,12 @@ class EndUserDevice(CustomBaseModel):
         log_result("power_emissions_kwh_per_imp", kwh_per_imp, 2)
         return kwh_per_imp
 
+    def compute_power_emissions_kwh_per_second(self):
+        """Device kilowatts"""
+        kwh_per_second = (self.draw_watts) / Decimal("1000") / Decimal("3600")
+        log_result("power_emissions_kwh_per_second", kwh_per_second, 2)
+        return kwh_per_second
+
     def model_end_user_device(
         self,
         device: str,
@@ -58,6 +66,7 @@ class EndUserDevice(CustomBaseModel):
         power_kwh_per_imp = self.compute_power_emissions_kwh_per_imp(
             quality_impressions_per_duration_s
         )
+        power_kwh_per_second = self.compute_power_emissions_kwh_per_second()
         production_gco2e_per_imp = self.compute_production_emissions_gco2e_per_imp(
             quality_impressions_per_duration_s
         )
@@ -68,4 +77,6 @@ class EndUserDevice(CustomBaseModel):
             template,
             power_kwh_per_imp,
             production_gco2e_per_imp,
+            power_kwh_per_second,
+            self.production_emissions_gco2e_per_duration_s,
         )

@@ -34,12 +34,18 @@ class TestEndUserDeviceModel(unittest.TestCase):
         self.assertEqual(production_gco2e_per_imp, Decimal("0.07000000"))
 
     def test_compute_power_emissions_kwh_per_imp(self):
-        """Test compute power emissions"""
+        """Test compute power emissions per imp"""
         device = EndUserDevice.load_default_yaml(TEST_DEVICE, TEST_DEFAULTS_FILE)
         power_kwh_per_imp = device.compute_power_emissions_kwh_per_imp(
             TEST_QUALITY_IMPRESSIONS_PER_SEC
         )
         self.assertEqual(power_kwh_per_imp, Decimal("0.0001477777777777777777777777778"))
+
+    def test_compute_power_emissions_kwh_per_second(self):
+        """Test compute power emissions per second"""
+        device = EndUserDevice.load_default_yaml(TEST_DEVICE, TEST_DEFAULTS_FILE)
+        power_kwh_per_second = device.compute_power_emissions_kwh_per_second()
+        self.assertEqual(power_kwh_per_second, Decimal("0.00001477777777777777777777777778"))
 
     def test_model_end_user_device_personal_computer(self):
         """Test model end user devices"""
@@ -55,6 +61,8 @@ class TestEndUserDeviceModel(unittest.TestCase):
                 TEST_TEMPLATE,
                 Decimal("0.0001477777777777777777777777778"),
                 Decimal("0.07000000"),
+                Decimal("0.00001477777777777777777777777778"),
+                device.production_emissions_gco2e_per_duration_s,
             ),
         )
 
@@ -73,6 +81,8 @@ class TestEndUserDeviceModel(unittest.TestCase):
                 TEST_TEMPLATE,
                 Decimal("0.000002138888888888888888888888889"),
                 Decimal("0.052000000"),
+                Decimal("0.0000002138888888888888888888888889"),
+                device.production_emissions_gco2e_per_duration_s,
             ),
         )
 
