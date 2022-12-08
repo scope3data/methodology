@@ -9,6 +9,7 @@ from typing import Optional
 from scope3_methodology.ad_tech_platform.model import AdTechPlatform
 from scope3_methodology.corporate.model import CorporateEmissions
 from scope3_methodology.end_user_device.model import EndUserDevice
+from scope3_methodology.networking.model import NetworkingConnection
 from scope3_methodology.publisher.model import Property
 from scope3_methodology.utils.utils import Fact, get_all_facts
 from scope3_methodology.utils.yaml_helpers import yaml_dump, yaml_load
@@ -195,6 +196,7 @@ def main():
     model_keys["property"] = Property.default_fields()
     model_keys["atp"] = AdTechPlatform.default_fields()
     model_keys["end_user_device"] = EndUserDevice.default_fields()
+    model_keys["networking"] = NetworkingConnection.default_fields()
 
     # get a list of all facts from our sources
     facts = get_all_facts()

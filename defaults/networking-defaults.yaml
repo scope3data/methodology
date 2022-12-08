@@ -1,0 +1,24 @@
+defaults:
+  fixed:
+    generic_kwh_per_gb: 0.030000000
+  mobile:
+    generic_kwh_per_gb: 0.140000000
+  unknown:
+    generic_kwh_per_gb: 0.100000000
+    kwh_per_gb_per_device:
+      personal_computer: 0.030000000
+      smartphone: 0.140000000
+      tablet: 0.030000000
+      tv_system: 0.030000000
+sources:
+  fixed:
+    generic_kwh_per_gb:
+    - template default
+  mobile:
+    generic_kwh_per_gb:
+    - template default
+  unknown:
+    generic_kwh_per_gb:
+    - template default
+    kwh_per_gb_per_device:
+    - template default

@@ -5,6 +5,7 @@ from decimal import Decimal
 from scope3_methodology.api.api import (
     adtech_platform_defaults,
     end_user_device_defaults,
+    get_all_networking_connection_device_defaults,
     load_default_files,
     organization_defaults,
     property_defaults,
@@ -12,6 +13,7 @@ from scope3_methodology.api.api import (
 from scope3_methodology.api.input_models import (
     ATPTemplate,
     EndUserDevices,
+    NetworkingConnectionType,
     OrganizationType,
     PropertyChannel,
 )
@@ -20,6 +22,7 @@ TEST_DEVICE_DEFAULTS_FILE = "defaults/end_user_device-defaults.yaml"
 TEST_PROPERTY_DEFAULTS_FILE = "defaults/property-defaults.yaml"
 TEST_ORGANIZATION_DEFAULTS_FILE = "defaults/organization-defaults.yaml"
 TEST_ATP_DEFAULTS_FILE = "defaults/atp-defaults.yaml"
+TEST_NETWORKING_DEFAULTS_FILE = "defaults/networking-defaults.yaml"
 
 
 class TestAPI(unittest.TestCase):
@@ -32,6 +35,7 @@ class TestAPI(unittest.TestCase):
             TEST_ORGANIZATION_DEFAULTS_FILE,
             TEST_PROPERTY_DEFAULTS_FILE,
             TEST_DEVICE_DEFAULTS_FILE,
+            TEST_NETWORKING_DEFAULTS_FILE,
         )
 
         # verify the correct count and a field that should be different across
@@ -98,6 +102,34 @@ class TestAPI(unittest.TestCase):
         self.assertEqual(
             end_user_device_defaults[EndUserDevices.TV_SYSTEM].draw_watts, Decimal("87.4")
         )
+
+    def test_get_all_networking_connection_device_defaults(self):
+        """Test get_all_networking_connection_device_defaults returns expected output"""
+        load_default_files(
+            TEST_ATP_DEFAULTS_FILE,
+            TEST_ORGANIZATION_DEFAULTS_FILE,
+            TEST_PROPERTY_DEFAULTS_FILE,
+            TEST_DEVICE_DEFAULTS_FILE,
+            TEST_NETWORKING_DEFAULTS_FILE,
+        )
+
+        response = get_all_networking_connection_device_defaults()
+        self.assertEqual(len(response), 12)
+
+        for device_network_connection in response:
+            if device_network_connection.connection_type == NetworkingConnectionType.FIXED:
+                self.assertEqual(device_network_connection.power_usage_kwh_per_gb, Decimal("0.03"))
+            elif device_network_connection.connection_type == NetworkingConnectionType.MOBILE:
+                self.assertEqual(device_network_connection.power_usage_kwh_per_gb, Decimal("0.14"))
+            elif device_network_connection.connection_type == NetworkingConnectionType.UNKNOWN:
+                if device_network_connection.device == EndUserDevices.SMARTPHONE.value:
+                    self.assertEqual(
+                        device_network_connection.power_usage_kwh_per_gb, Decimal("0.14")
+                    )
+                else:
+                    self.assertEqual(
+                        device_network_connection.power_usage_kwh_per_gb, Decimal("0.03")
+                    )
 
     # TODO add in testing for API endpoints issue: #53
 
