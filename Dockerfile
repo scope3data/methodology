@@ -16,5 +16,6 @@ ENV ATP_DEFAULTS_FILE /app/defaults/atp-defaults.yaml
 ENV ORGANIZATION_DEFAULTS_FILE /app/defaults/organization-defaults.yaml
 ENV PROPERTY_DEFAULTS_FILE /app/defaults/property-defaults.yaml
 ENV END_USER_DEVICE_DEFAULTS_FILE /app/defaults/end_user_device-defaults.yaml
+ENV NETWORKING_DEFAULTS_FILE /app/defaults/networking-defaults.yaml
 
 CMD ["python", "scope3_methodology/api/api.py"]
