@@ -79,7 +79,7 @@ Fixed Network Energy = 9.55W + 0.03W/Mbps
 We use the same numbers as Carbon Trust
 
 ```equation
-Mobile Network Energy (Amn) = 1.2W + 1.53W/mbps
+Mobile Network Energy (Amn) = 1.2W + 1.53W/Mbps
 ```
 
 ### Power model coefficients
@@ -90,7 +90,7 @@ Mobile Network Energy (Amn) = 1.2W + 1.53W/mbps
 | Fixed           | 9.55         | 0.03              |
 
 Data transmission rates
-| Quality | Transmission rate |
+| Quality | Transmission rate (Mbps) |
 | -- | --
 | Low (480p) | 0.56
 | Medium (720p) | 2.22
