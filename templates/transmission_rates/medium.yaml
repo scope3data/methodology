@@ -1,0 +1,7 @@
+---
+template:
+  name: medium
+  generic: true
+  type: transmission_rate
+  resolution: 720p
+  transmission_rate_mbps: 2.22

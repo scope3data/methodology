@@ -5,6 +5,7 @@ import logging
 
 from scope3_methodology.api.input_models import NetworkingConnectionType
 from scope3_methodology.networking.model import NetworkingConnection
+from scope3_methodology.networking.transmission_rate_model import TransmissionRate
 from scope3_methodology.utils.yaml_helpers import yaml_dump
 
 
@@ -17,6 +18,12 @@ def parse_args():
         "--defaultsFile",
         default="defaults/networking-defaults.yaml",
         help="Set the defaults file to use (overrides networking-defaults.yaml)",
+    )
+    parser.add_argument(
+        "-t",
+        "--transmissionRatesdefaultsFile",
+        default="defaults/transmission_rate-defaults.yaml",
+        help="Set the defaults file to use (overrides transmission_rate-defaults.yaml)",
     )
     parser.add_argument(
         "-c",
@@ -52,7 +59,12 @@ def main():
     device = str(args.device)
     connection = str(args.connection)
     connection_networking = NetworkingConnection.load_default_yaml(connection, args.defaultsFile)
-    modeled_emissions = connection_networking.model_device(device, connection)
+    transmission_rates = TransmissionRate.load_default_yaml(
+        connection_networking.streaming_resolution_per_device[device],
+        args.transmissionRatesdefaultsFile,
+    )
+    modeled_emissions = connection_networking.model_device(device, connection, transmission_rates)
+
     print(yaml_dump({"networking": modeled_emissions}))
 
 

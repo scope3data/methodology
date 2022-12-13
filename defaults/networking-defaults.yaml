@@ -1,24 +1,50 @@
 defaults:
   fixed:
-    generic_kwh_per_gb: 0.030000000
+    conventional_model_generic_kwh_per_gb: 0.030000000
+    power_model_constant_watt: 9.550000000
+    power_model_variable_watt_per_mbps: 0.030000000
+    streaming_resolution_per_device:
+      personal_computer: high
+      smartphone: medium
+      tablet: high
+      tv_system: ultra
   mobile:
-    generic_kwh_per_gb: 0.140000000
+    conventional_model_generic_kwh_per_gb: 0.140000000
+    power_model_constant_watt: 1.200000000
+    power_model_variable_watt_per_mbps: 1.530000000
+    streaming_resolution_per_device:
+      personal_computer: high
+      smartphone: medium
+      tablet: high
+      tv_system: ultra
   unknown:
-    generic_kwh_per_gb: 0.100000000
-    kwh_per_gb_per_device:
+    conventional_model_generic_kwh_per_gb: 0.100000000
+    conventional_model_kwh_per_gb_per_device:
       personal_computer: 0.030000000
       smartphone: 0.140000000
       tablet: 0.030000000
       tv_system: 0.030000000
 sources:
   fixed:
-    generic_kwh_per_gb:
+    conventional_model_generic_kwh_per_gb:
+    - template default
+    power_model_constant_watt:
+    - template default
+    power_model_variable_watt_per_mbps:
+    - template default
+    streaming_resolution_per_device:
     - template default
   mobile:
-    generic_kwh_per_gb:
+    conventional_model_generic_kwh_per_gb:
+    - template default
+    power_model_constant_watt:
+    - template default
+    power_model_variable_watt_per_mbps:
+    - template default
+    streaming_resolution_per_device:
     - template default
   unknown:
-    generic_kwh_per_gb:
+    conventional_model_generic_kwh_per_gb:
     - template default
-    kwh_per_gb_per_device:
+    conventional_model_kwh_per_gb_per_device:
     - template default
