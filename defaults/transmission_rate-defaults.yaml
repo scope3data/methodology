@@ -1,0 +1,46 @@
+defaults:
+  high:
+    name: high
+    resolution: 1080p
+    transmission_rate_mbps: 6.670000000
+  low:
+    name: low
+    resolution: 480p
+    transmission_rate_mbps: 0.560000000
+  medium:
+    name: medium
+    resolution: 720p
+    transmission_rate_mbps: 2.220000000
+  ultra:
+    name: ultra
+    resolution: 4k
+    transmission_rate_mbps: 15.560000000
+sources:
+  high:
+    name:
+    - template default
+    resolution:
+    - template default
+    transmission_rate_mbps:
+    - template default
+  low:
+    name:
+    - template default
+    resolution:
+    - template default
+    transmission_rate_mbps:
+    - template default
+  medium:
+    name:
+    - template default
+    resolution:
+    - template default
+    transmission_rate_mbps:
+    - template default
+  ultra:
+    name:
+    - template default
+    resolution:
+    - template default
+    transmission_rate_mbps:
+    - template default

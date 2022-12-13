@@ -1,0 +1,7 @@
+---
+template:
+  name: ultra
+  generic: true
+  type: transmission_rate
+  resolution: 4k
+  transmission_rate_mbps: 15.56

@@ -18,6 +18,7 @@ from scope3_methodology.api.input_models import (
     NetworkingConnectionType,
     OrganizationType,
     PropertyChannel,
+    StreamingResolution,
 )
 from scope3_methodology.api.response_models import (
     ATPDefaultsResponse,
@@ -26,6 +27,7 @@ from scope3_methodology.api.response_models import (
 from scope3_methodology.corporate.model import CorporateEmissions
 from scope3_methodology.end_user_device.model import EndUserDevice
 from scope3_methodology.networking.model import NetworkingConnection
+from scope3_methodology.networking.transmission_rate_model import TransmissionRate
 from scope3_methodology.publisher.model import Property
 from scope3_methodology.utils.public_yaml_files import (
     PublicYamlInformation,
@@ -50,6 +52,7 @@ adtech_platform_defaults: dict[ATPTemplate, AdTechPlatform] = {}
 property_defaults: dict[PropertyChannel, Property] = {}
 end_user_device_defaults: dict[EndUserDevices, EndUserDevice] = {}
 networking_connection_defaults: dict[NetworkingConnectionType, NetworkingConnection] = {}
+transmission_rate_defaults: dict[StreamingResolution, TransmissionRate] = {}
 
 
 def load_default_files(
@@ -58,6 +61,7 @@ def load_default_files(
     property_defaults_file_path: str,
     end_user_device_file_path: str,
     networking_file_path: str,
+    transmission_rates_file_path,
 ):
     """Load all default files into memory"""
     for atp_template in ATPTemplate:
@@ -83,6 +87,11 @@ def load_default_files(
             connection_type.value, networking_file_path
         )
 
+    for resolution in StreamingResolution:
+        transmission_rate_defaults[resolution] = TransmissionRate.load_default_yaml(
+            resolution.value, transmission_rates_file_path
+        )
+
 
 @app.on_event("startup")
 async def startup_event():
@@ -99,15 +108,20 @@ async def startup_event():
     property_defaults_file_path = os.environ.get("PROPERTY_DEFAULTS_FILE")
     end_user_device_file_path = os.environ.get("END_USER_DEVICE_DEFAULTS_FILE")
     networking_file_path = os.environ.get("NETWORKING_DEFAULTS_FILE")
+    transmission_rates_file_path = os.environ.get("TRANSMISSION_RATE_FILE")
 
-    if (
-        atp_defaults_file_path is None
-        or organization_defaults_file_path is None
-        or property_defaults_file_path is None
-        or end_user_device_file_path is None
-        or networking_file_path is None
-    ):
-        raise Exception("Must provide environment variables for default files")
+    if atp_defaults_file_path is None:
+        raise Exception("Must provide environment variable: ATP_DEFAULTS_FILE")
+    if organization_defaults_file_path is None:
+        raise Exception("Must provide environment variable: ORGANIZATION_DEFAULTS_FILE")
+    if property_defaults_file_path is None:
+        raise Exception("Must provide environment variable: PROPERTY_DEFAULTS_FILE")
+    if end_user_device_file_path is None:
+        raise Exception("Must provide environment variable: END_USER_DEVICE_DEFAULTS_FILE")
+    if networking_file_path is None:
+        raise Exception("Must provide environment variable: NETWORKING_DEFAULTS_FILE")
+    if transmission_rates_file_path is None:
+        raise Exception("Must provide environment variable: TRANSMISSION_RATE_FILE")
 
     load_default_files(
         atp_defaults_file_path,
@@ -115,6 +129,7 @@ async def startup_event():
         property_defaults_file_path,
         end_user_device_file_path,
         networking_file_path,
+        transmission_rates_file_path,
     )
 
 
@@ -346,7 +361,17 @@ def get_all_networking_connection_device_defaults():
     response = []
     for connection_type, defaults in networking_connection_defaults.items():
         for device in EndUserDevices:
-            modeled_device_networking = defaults.model_device(device.value, connection_type)
+
+            transmission_rate = None
+            if defaults.streaming_resolution_per_device:
+                transmission_rate = transmission_rate_defaults[
+                    StreamingResolution(defaults.streaming_resolution_per_device[device.value])
+                ]
+
+            modeled_device_networking = defaults.model_device(
+                device.value, connection_type, transmission_rate
+            )
+
             response.append(modeled_device_networking)
     return response
 

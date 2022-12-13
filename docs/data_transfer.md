@@ -102,9 +102,9 @@ Streaming energy use by device, connection, and duration
 | -- | -- | -- | -- |
 | TV | Fixed | Ultra | 10.0W
 | PC or Tablet | Fixed | High | 9.75W
-| Mobile | Fixed | Medium | 9.6W
-| PC or Tablet | Mobile | High | 12.2W
-| Mobile | Mobile | Medium | 4.6W
+| Smartphone | Fixed | Medium | 9.6W
+| PC or Tablet | Mobile | High | 11.4W
+| Smartphone | Mobile | Medium | 4.6W
 
 ## References
 

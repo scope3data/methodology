@@ -8,6 +8,15 @@ from pydantic import BaseModel
 from scope3_methodology.ad_tech_platform.model import DistributionPartner
 
 
+class StreamingResolution(Enum):
+    """Networking Connection Types"""
+
+    LOW = "low"
+    MEDIUM = "medium"
+    HIGH = "high"
+    ULTRA = "ultra"
+
+
 class NetworkingConnectionType(Enum):
     """Networking Connection Types"""
 
