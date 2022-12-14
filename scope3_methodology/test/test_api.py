@@ -141,7 +141,7 @@ class TestAPI(unittest.TestCase):
             Decimal("15.56"),
         )
 
-    def test_get_all_networking_connection_device_defaults(self):
+    def test_get_all_networking_connection_device_fixed_defaults(self):
         """Test get_all_networking_connection_device_defaults returns expected output"""
         load_default_files(
             TEST_ATP_DEFAULTS_FILE,
@@ -188,7 +188,79 @@ class TestAPI(unittest.TestCase):
                         device_network_connection.power_model_transmission_rate,
                         TEST_TRANSMISSION_RATE_HIGH,
                     )
-            elif device_network_connection.connection_type == NetworkingConnectionType.MOBILE:
+
+    def test_get_all_networking_connection_device_unknown_defaults(self):
+        """Test get_all_networking_connection_device_defaults returns expected output"""
+        load_default_files(
+            TEST_ATP_DEFAULTS_FILE,
+            TEST_ORGANIZATION_DEFAULTS_FILE,
+            TEST_PROPERTY_DEFAULTS_FILE,
+            TEST_DEVICE_DEFAULTS_FILE,
+            TEST_NETWORKING_DEFAULTS_FILE,
+            TEST_TRANSMISSION_RATES_DEFAULTS_FILE,
+        )
+
+        response = get_all_networking_connection_device_defaults()
+        self.assertEqual(len(response), 12)
+
+        for device_network_connection in response:
+            if device_network_connection.connection_type == NetworkingConnectionType.UNKNOWN:
+
+                if device_network_connection.device == EndUserDevices.SMARTPHONE.value:
+                    self.assertEqual(
+                        device_network_connection.conventional_model_power_usage_kwh_per_gb,
+                        Decimal("0.14"),
+                    )
+                else:
+                    self.assertEqual(
+                        device_network_connection.conventional_model_power_usage_kwh_per_gb,
+                        Decimal("0.03"),
+                    )
+
+                if device_network_connection.device == EndUserDevices.TV_SYSTEM.value:
+                    self.assertEqual(
+                        device_network_connection.power_model_energy_usage_kwh_per_second,
+                        Decimal("0.000002782444444444444444444444444"),
+                    )
+                    self.assertEqual(
+                        device_network_connection.power_model_transmission_rate,
+                        TEST_TRANSMISSION_RATE_ULTRA,
+                    )
+                elif device_network_connection.device == EndUserDevices.SMARTPHONE.value:
+                    self.assertEqual(
+                        device_network_connection.power_model_energy_usage_kwh_per_second,
+                        Decimal("0.000001276833333333333333333333333"),
+                    )
+                    self.assertEqual(
+                        device_network_connection.power_model_transmission_rate,
+                        TEST_TRANSMISSION_RATE_MEDIUM,
+                    )
+                else:
+                    self.assertEqual(
+                        device_network_connection.power_model_energy_usage_kwh_per_second,
+                        Decimal("0.000002708361111111111111111111111"),
+                    )
+                    self.assertEqual(
+                        device_network_connection.power_model_transmission_rate,
+                        TEST_TRANSMISSION_RATE_HIGH,
+                    )
+
+    def test_get_all_networking_connection_device_mobile_defaults(self):
+        """Test get_all_networking_connection_device_defaults returns expected output"""
+        load_default_files(
+            TEST_ATP_DEFAULTS_FILE,
+            TEST_ORGANIZATION_DEFAULTS_FILE,
+            TEST_PROPERTY_DEFAULTS_FILE,
+            TEST_DEVICE_DEFAULTS_FILE,
+            TEST_NETWORKING_DEFAULTS_FILE,
+            TEST_TRANSMISSION_RATES_DEFAULTS_FILE,
+        )
+
+        response = get_all_networking_connection_device_defaults()
+        self.assertEqual(len(response), 12)
+
+        for device_network_connection in response:
+            if device_network_connection.connection_type == NetworkingConnectionType.MOBILE:
                 self.assertEqual(
                     device_network_connection.conventional_model_power_usage_kwh_per_gb,
                     Decimal("0.14"),
@@ -219,21 +291,6 @@ class TestAPI(unittest.TestCase):
                     self.assertEqual(
                         device_network_connection.power_model_transmission_rate,
                         TEST_TRANSMISSION_RATE_HIGH,
-                    )
-            elif device_network_connection.connection_type == NetworkingConnectionType.UNKNOWN:
-                self.assertEqual(
-                    device_network_connection.power_model_energy_usage_kwh_per_second, None
-                )
-                self.assertEqual(device_network_connection.power_model_transmission_rate, None)
-                if device_network_connection.device == EndUserDevices.SMARTPHONE.value:
-                    self.assertEqual(
-                        device_network_connection.conventional_model_power_usage_kwh_per_gb,
-                        Decimal("0.14"),
-                    )
-                else:
-                    self.assertEqual(
-                        device_network_connection.conventional_model_power_usage_kwh_per_gb,
-                        Decimal("0.03"),
                     )
 
     # TODO add in testing for API endpoints issue: #53

@@ -39,6 +39,24 @@ class TestNetworkingConnection(unittest.TestCase):
                     "tablet": Decimal("0.030000000"),
                     "tv_system": Decimal("0.030000000"),
                 },
+                power_model_constant_watt_per_device={
+                    "personal_computer": Decimal("9.550000000"),
+                    "smartphone": Decimal("1.200000000"),
+                    "tablet": Decimal("9.550000000"),
+                    "tv_system": Decimal("9.550000000"),
+                },
+                power_model_variable_watt_per_mbps_per_device={
+                    "personal_computer": Decimal("0.030000000"),
+                    "smartphone": Decimal("1.530000000"),
+                    "tablet": Decimal("0.030000000"),
+                    "tv_system": Decimal("0.030000000"),
+                },
+                streaming_resolution_per_device={
+                    EndUserDevices.PERSONAL_COMPUTER.value: StreamingResolution.HIGH.value,
+                    EndUserDevices.SMARTPHONE.value: StreamingResolution.MEDIUM.value,
+                    EndUserDevices.TABLET.value: StreamingResolution.HIGH.value,
+                    EndUserDevices.TV_SYSTEM.value: StreamingResolution.ULTRA.value,
+                },
             ),
         )
 
@@ -92,8 +110,10 @@ class TestNetworkingConnection(unittest.TestCase):
                 device=EndUserDevices.PERSONAL_COMPUTER.value,
                 connection_type=NetworkingConnectionType.UNKNOWN,
                 conventional_model_power_usage_kwh_per_gb=Decimal("0.03"),
-                power_model_transmission_rate=None,
-                power_model_energy_usage_kwh_per_second=None,
+                power_model_transmission_rate=TEST_TRANSMISSION_RATE,
+                power_model_energy_usage_kwh_per_second=Decimal(
+                    "0.000002708361111111111111111111111"
+                ),
             ),
         )
 
