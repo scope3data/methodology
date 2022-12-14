@@ -9,3 +9,18 @@ template:
     personal_computer: 0.03
     tv_system: 0.03
     tablet: 0.03
+  power_model_constant_watt_per_device:
+    smartphone: 1.2
+    personal_computer: 9.55
+    tv_system: 9.55
+    tablet: 9.55
+  power_model_variable_watt_per_mbps_per_device:
+    smartphone: 1.53
+    personal_computer: 0.03
+    tv_system: 0.03
+    tablet: 0.03
+  streaming_resolution_per_device:
+    smartphone: medium
+    personal_computer: high
+    tv_system: ultra
+    tablet: high

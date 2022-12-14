@@ -43,6 +43,12 @@ class NetworkingConnection(CustomBaseModel):
     power_model_variable_watt_per_mbps: Optional[Decimal] = field(
         default=None, metadata={"default_eligible": True}
     )
+    power_model_constant_watt_per_device: Optional[dict[str, Decimal]] = field(
+        default=None, metadata={"default_eligible": True}
+    )
+    power_model_variable_watt_per_mbps_per_device: Optional[dict[str, Decimal]] = field(
+        default=None, metadata={"default_eligible": True}
+    )
 
     def get_power_usage_kwh_per_gb(self, device: str):
         """Get the networking kwh_per_gb for a specific device"""
@@ -53,20 +59,41 @@ class NetworkingConnection(CustomBaseModel):
             return round(self.conventional_model_kwh_per_gb_per_device[device], 5)
         return round(self.conventional_model_generic_kwh_per_gb, 5)
 
+    def get_power_model_constant_watt(self, device: str) -> Decimal | None:
+        """Get the networking power_model_constant_watt for a specific device"""
+        if (
+            self.power_model_constant_watt_per_device
+            and device in self.power_model_constant_watt_per_device
+        ):
+            return self.power_model_constant_watt_per_device[device]
+        return self.power_model_constant_watt
+
+    def get_power_model_variable_watt_per_mbps(self, device: str) -> Decimal | None:
+        """Get the networking power_model_variable_watt_per_mbps for a specific device"""
+        if (
+            self.power_model_variable_watt_per_mbps_per_device
+            and device in self.power_model_variable_watt_per_mbps_per_device
+        ):
+            return self.power_model_variable_watt_per_mbps_per_device[device]
+        return self.power_model_variable_watt_per_mbps
+
     def calculate_power_energy_usage_kwh_per_second(
-        self, quality_transmission_rate: Optional[TransmissionRate]
+        self, device: str, quality_transmission_rate: Optional[TransmissionRate]
     ):
         """Calculate the power streaming energy usage based on quality transmission rate"""
+        power_model_constant_watt = self.get_power_model_constant_watt(device)
+        power_model_variable_watt_per_mbps = self.get_power_model_variable_watt_per_mbps(device)
+
         if (
             quality_transmission_rate
-            and self.power_model_constant_watt
-            and self.power_model_variable_watt_per_mbps
+            and power_model_constant_watt
+            and power_model_variable_watt_per_mbps
         ):
             return (
                 (
-                    self.power_model_constant_watt
+                    power_model_constant_watt
                     + (
-                        self.power_model_variable_watt_per_mbps
+                        power_model_variable_watt_per_mbps
                         * quality_transmission_rate.transmission_rate_mbps
                     )
                 )
@@ -87,7 +114,7 @@ class NetworkingConnection(CustomBaseModel):
         :return: ModeledNetworking
         """
         power_energy_usage_kwh_per_second = self.calculate_power_energy_usage_kwh_per_second(
-            transmission_rate
+            device, transmission_rate
         )
 
         return ModeledDeviceNetworking(
