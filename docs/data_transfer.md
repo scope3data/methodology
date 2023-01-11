@@ -46,7 +46,7 @@ When we don't know anything about the connection, we are using a value of 0.1 kW
 
 ## Power usage by time and bandwidth (Power Model)
 
-Per [Media Trust](https://ctprodstorageaccountp.blob.core.windows.net/prod-drupal-files/documents/resource/public/Carbon-impact-of-video-streaming.pdf):
+Per [Carbon Trust](https://ctprodstorageaccountp.blob.core.windows.net/prod-drupal-files/documents/resource/public/Carbon-impact-of-video-streaming.pdf):
 
 This white paper also presents a power model approach, which uses a marginal allocation methodology, where a baseload power is allocated per user, and a marginal energy component is allocated related to the data volume used. The power model approach recognises that the dynamic relation of energy to data volume in a network is very flat – i.e. there is a high fixed power baseload which does not vary in relation to the data volume, with
 only a small increase in power consumption in response
