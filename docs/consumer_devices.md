@@ -40,7 +40,7 @@ From [Urban et al](#urban-et-al-2019):
 | Laptop  | 122                | 11 (idle), 22 (active) | 3.0 (idle), 3.7 (active) |
 | Monitor | 101                | 30                     | 5.5                      |
 
-Since we do not know the exact device a consumer is using (most reporting is aggregated to device type), we use install base to create a synthetic "personal computer". See [PC emissions model](./pc_emissions_model.xlsx). Based on this analysis, a personal computer uses an average of 53.2 W of energy while in use, and has Production Energy of 0.007 gCO2e per second of use.
+Since we do not know the exact device a consumer is using (most reporting is aggregated to device type), we use install base to create a synthetic "personal computer". See [PC emissions model](./pc_emissions_model.xlsx). Based on this analysis, a personal conputer uses an average of 53.2 W of energy while in use, and has Production Energy of 0.007 gCO2e per second of use.
 
 ![Visual representation of the PC emissions model](images/pc_emissions_model.png)
 
