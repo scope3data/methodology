@@ -43,7 +43,7 @@ We have seen three well-documented methodologies for the use phase of media and 
 
 DIMPACT and SRI are digital-only. The GroupM methodology includes both digital and broadcast channels, including TV, OOH, cinema, and radio.
 
-### Inclusion of emboddied emissions
+### Inclusion of embodied emissions
 
 Another key dimension to evaluate methodologies is whether they incorporate embodied emissions in each phase. To quote DIMPACT, "Use-phase emissions are those that result from the electricity and energy consumption of equipment used to process, transfer, and view content. What is excluded from this minimum boundary are the emissions from the raw material extraction, manufacturing, transport and installation of the equipment and devices used to serve and view digital content. These are known as ‘embodied emissions.'"
 
