@@ -20,7 +20,7 @@ For a banner or native ad that does not have an inherent duration and does not g
 
 ### Data Transfer Emissions
 
-For video creatives, we use a slightly modified version of the the Carbon Trust "Power Model" to calculate emissions as described in the data transfer methodology](./data_transfer.md). This uses the duration, network type, and device type to calculate the marginal impact of the creative on network infrastructure.
+For video creatives, we use a slightly modified version of the the Carbon Trust "Power Model" to calculate emissions as described in the [data transfer methodology](./data_transfer.md). This uses the duration, network type, and device type to calculate the marginal impact of the creative on network infrastructure.
 
 For banner and text ads, we use the conventional model based on the payload of a creative (the number of bytes transferred to display the ad). We calculate the energy used per GB from the [data transfer methodology](./data_transfer.md) based on the network type.
 
