@@ -1,0 +1,90 @@
+
+---
+type: publisher
+company: Alma Media 
+properties:
+  - template: generic
+    channel: display
+    identifier: iltalehti.fi
+    facts:
+      - visits_per_month: 65900000
+        source_id: 1
+      - pages_per_visit: 4.47
+        source_id: 1
+      - average_visit_duration_s: 390
+        source_id: 1
+      - page_size_mb: 0.529
+        source_id: 2
+      - load_time_s: 0.383
+        source_id: 2
+    raw_facts:
+      - requests_per_page: 45
+        source_id: 2
+    sources:
+      - id: 1
+        year: 2022
+        month: 12
+        url: https://www.similarweb.com/website/iltalehti.fi/
+      - id: 2
+        year: 2023
+        month: 2
+        url: https://tools.pingdom.com/#61a13bb2b3c00000
+        environment: desktop
+        country: DE
+  - template: generic
+    channel: display
+    identifier: etuovi.com 
+    facts:
+      - visits_per_month: 10600000
+        source_id: 1
+      - pages_per_visit: 6.07
+        source_id: 1
+      - average_visit_duration_s: 473
+        source_id: 1
+      - page_size_mb: 4.7
+        source_id: 2
+      - load_time_s: 2.51
+        source_id: 2
+    raw_facts:
+      - requests_per_page: 61
+        source_id: 2
+    sources:
+      - id: 1
+        year: 2022
+        month: 7
+        url: https://www.similarweb.com/website/etuovi.fi/
+      - id: 2
+        year: 2023
+        month: 2
+        url: https://tools.pingdom.com/#61a13bf0e7000000
+        environment: desktop
+        country: DE
+         - template: generic
+    channel: display
+    identifier: jobly.fi 
+    facts:
+      - visits_per_month: 484000
+        source_id: 1
+      - pages_per_visit: 5.09
+        source_id: 1
+      - average_visit_duration_s: 324
+        source_id: 1
+      - page_size_mb: 2.1
+        source_id: 2
+      - load_time_s: 0.949
+        source_id: 2
+    raw_facts:
+      - requests_per_page: 73
+        source_id: 2
+    sources:
+      - id: 1
+        year: 2022
+        month: 12
+        url: https://www.similarweb.com/website/jobly.fi/
+      - id: 2
+        year: 2023
+        month: 2
+        url: https://tools.pingdom.com/#61a13b52b8800000
+        environment: desktop
+        country: DE
+ 

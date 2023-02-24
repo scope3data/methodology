@@ -1,0 +1,22 @@
+---
+type: corporate
+name: Alma Media
+template: publisher
+comment: methodology question - if we are excluding print emissions, how do we exclude print employees?
+facts:
+  - number_of_employees: 1690
+    source_id: 1
+    reference: page 161
+  - corporate_emissions_mt_co2e_per_month: 1255
+    source_id: 2 
+    reference: page 153
+    calculation: true
+    reported_value: 15062 annual
+reference_files:
+  - year: 2021
+    id: 1
+    url: >-
+	https://www.almamedia.fi/wp-content/uploads/2022/03/Alma-Media-Annual-Report-2021.pdf
+    id: 2 
+    url: >-
+	https://www.almamedia.fi/wp-content/uploads/2022/03/Sustainability-Report-2021-1.pdf
