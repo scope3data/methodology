@@ -4,7 +4,7 @@ type: publisher
 company: Axel Springer
 properties:
   - template: generic
-    channel: display
+    channel: display-web
     identifier: autobild.de
     facts:
       - visits_per_month: 8800000
@@ -32,7 +32,7 @@ properties:
         environment: desktop
         country: DE
   - template: generic
-    channel: display
+    channel: display-web
     identifier: bild.de
     facts:
       - visits_per_month: 209500000
@@ -60,7 +60,7 @@ properties:
         environment: desktop
         country: DE
   - template: generic
-    channel: display
+    channel: display-web
     identifier: businessinsider.de
     facts:
       - visits_per_month: 10100000
@@ -88,7 +88,7 @@ properties:
         environment: desktop
         country: DE
   - template: generic
-    channel: display
+    channel: display-web
     identifier: bz-berlin.de
     facts:
       - visits_per_month: 17600000

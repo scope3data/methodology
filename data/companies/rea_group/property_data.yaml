@@ -3,7 +3,7 @@ type: publisher
 company: REA Group
 public_identifier: rea_group
 properties:
-  - channel: display
+  - channel: display-web
     template: generic
     identifier: realestate.com.au
     facts:
@@ -13,7 +13,7 @@ properties:
         source_id: 1
       - corporate_emissions_g_co2e_per_impression: 0.0791
         calculation: true
-  - channel: display
+  - channel: display-web
     template: generic
     identifier: realcommercial.com.au
     facts:
@@ -21,7 +21,7 @@ properties:
         source_id: 1
       - average_visit_duration_s: 204
         source_id: 1
-  - channel: display
+  - channel: display-web
     template: generic
     identifier: flatmates.com.au
     facts:
@@ -29,7 +29,7 @@ properties:
         source_id: 1
       - average_visit_duration_s: 392
         source_id: 1
-  - channel: display
+  - channel: display-web
     template: generic
     identifier: housing.com
     facts:
@@ -37,7 +37,7 @@ properties:
         source_id: 1
       - average_visit_duration_s: 202
         source_id: 1
-  - channel: display
+  - channel: display-web
     template: generic
     identifier: makaan.com
     facts:
@@ -45,7 +45,7 @@ properties:
         source_id: 1
       - average_visit_duration_s: 179
         source_id: 1
-  - channel: display
+  - channel: display-web
     template: generic
     identifier: proptiger.com
     facts:
