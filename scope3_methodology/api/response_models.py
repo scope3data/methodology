@@ -20,3 +20,4 @@ class PropertyDefaultsResponse(BaseModel):
     channel: str
     template: str
     corporate_emissions_g_co2e_per_impression: Optional[Decimal]
+    quality_impressions_per_duration_s: Optional[Decimal]

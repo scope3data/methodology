@@ -1,9 +1,8 @@
 ---
 template:
-  deprecated: true
   name: generic
-  channel: streaming
-  generic: true
+  channel: streaming-video
+  generic: false
   type: property
   comment:
     - see https://www.hollywoodreporter.com/business/digital/netflix-disney-data-privacy-ads-1235234652/

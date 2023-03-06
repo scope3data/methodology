@@ -1,8 +1,7 @@
 ---
 template:
-  deprecated: true
   name: generic
-  channel: display
+  channel: display-web
   generic: true
   type: property
   quality_impressions_per_duration_s: 0.1
