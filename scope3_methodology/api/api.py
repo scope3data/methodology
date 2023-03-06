@@ -256,11 +256,13 @@ def get_all_property_template_defaults():
     response = []
     for channel, defaults in property_defaults.items():
         corporate_emissions = defaults.corporate_emissions_g_co2e_per_impression
+        imps_per_second = defaults.quality_impressions_per_duration_s
         response.append(
             PropertyDefaultsResponse(
                 channel=channel.value,
                 template="generic",
                 corporate_emissions_g_co2e_per_impression=corporate_emissions,
+                quality_impressions_per_duration_s=imps_per_second,
             )
         )
     return response
@@ -276,10 +278,12 @@ def get_property_template_defaults(channel: PropertyChannel):
     """
     defaults = property_defaults[channel]
     corporate_emissions = defaults.corporate_emissions_g_co2e_per_impression
+    imps_per_second = defaults.quality_impressions_per_duration_s
     return PropertyDefaultsResponse(
         channel=channel.value,
         template="generic",
         corporate_emissions_g_co2e_per_impression=corporate_emissions,
+        quality_impressions_per_duration_s=imps_per_second,
     )
 
 

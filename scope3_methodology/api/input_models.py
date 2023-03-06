@@ -36,7 +36,10 @@ class PropertyChannel(Enum):
     """Property Template Types"""
 
     DISPLAY = "display"
+    DISPLAY_APP = "display-web"
+    DISPLAY_WEB = "display-app"
     STREAMING = "streaming"
+    STREAMING_VIDEO = "streaming-video"
 
 
 class EndUserDevices(Enum):
