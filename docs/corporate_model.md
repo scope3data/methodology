@@ -19,6 +19,8 @@ For a company like Google, the corporate sustainability report will be produced 
 
 For a business unit like ad tech inside Google, we need to allocate a percentage of the overall corporate emissions based on percentage of revenue or another method.
 
+The method of allocating emissions to a business unit will depend on the information that is either publicly available by the corporation. We ask that all derived emissions metrics are traceable back to the original corporate statments. See an example spreadsheet for [Alphabet](../sources/companies/google/alphabet.xlsx) in the google directory.
+
 ## Calculating industry-average emissions factors
 
 In this repository we aggregate public data from companies who produce sustainability reports - for instance, [Axel Springer](../sources/companies/axel%20springer/data.yaml). We pull facts from these reports and use them to produce industry average values including:

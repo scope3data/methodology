@@ -9,12 +9,10 @@ raw_facts:
   - water_withdrawal_million_gallons: 6297
     reference: page 12
     source_id: 1
-  - carbon_intensity_per_unit_of_revenue_mt_per_million_usd: 7.25
-    reference: page 11
-    source_id: 1
-  - carbon_intensity_mt_per_employee: 12.87
-    reference: page 11
-    source_id: 1
+  - carbon_intensity_per_unit_of_revenue_mt_per_million_usd: 36
+    source_id: 2
+  - carbon_intensity_mt_per_employee: 59.9
+    source_id: 2
   - business_travel_and_commuting_mt: 136,000
     reference: page 11
     source_id: 1
@@ -24,3 +22,5 @@ sources:
     url: >-
       https://www.gstatic.com/gumdrop/sustainability/google-2022-environmental-report.pdf
     file: google-2022-environmental-report.pdf
+  - id: 2
+    file: alphabet.xlsx
