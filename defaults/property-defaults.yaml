@@ -6,7 +6,7 @@ defaults:
       corporate_emissions_g_co2e_per_impression: 0.049050000
       end_user_data_transfer_electricity_use_kwh_per_gb: 0.100000000
       quality_impressions_per_duration_s: 0.100000000
-      revenue_allocation_to_ads_pct: 95.300000000
+      revenue_allocation_to_ads_pct: 100.000000000
       revenue_allocation_to_digital_pct: 100
       revenue_allocation_to_display_pct: 14.900000000
   display-app:
@@ -15,7 +15,7 @@ defaults:
       corporate_emissions_g_co2e_per_impression: 0.049050000
       end_user_data_transfer_electricity_use_kwh_per_gb: 0.100000000
       quality_impressions_per_duration_s: 0.100000000
-      revenue_allocation_to_ads_pct: 95.300000000
+      revenue_allocation_to_ads_pct: 100.000000000
       revenue_allocation_to_digital_pct: 100
       revenue_allocation_to_display_pct: 14.900000000
   display-web:
@@ -35,7 +35,7 @@ defaults:
       corporate_emissions_g_co2e_per_impression: 0.049050000
       end_user_data_transfer_electricity_use_kwh_per_gb: 0.100000000
       quality_impressions_per_duration_s: 0.003200000
-      revenue_allocation_to_ads_pct: 95.300000000
+      revenue_allocation_to_ads_pct: 100.000000000
       revenue_allocation_to_digital_pct: 100
       revenue_allocation_to_display_pct: 14.900000000
   streaming-video:
@@ -44,7 +44,7 @@ defaults:
       corporate_emissions_g_co2e_per_impression: 0.049050000
       end_user_data_transfer_electricity_use_kwh_per_gb: 0.100000000
       quality_impressions_per_duration_s: 0.003200000
-      revenue_allocation_to_ads_pct: 95.300000000
+      revenue_allocation_to_ads_pct: 100.000000000
       revenue_allocation_to_digital_pct: 100
       revenue_allocation_to_display_pct: 14.900000000
 sources:
@@ -90,7 +90,21 @@ sources:
           key: revenue_allocation_to_ads_pct
           template: social
           url: n/a
-          value: 95.300000000
+          value: 100.000000000
+        - channel: social
+          company: meta/property_data.yaml
+          is_calculation: false
+          key: revenue_allocation_to_ads_pct
+          template: social
+          url: n/a
+          value: 100.000000000
+        - channel: social
+          company: meta/property_data.yaml
+          is_calculation: false
+          key: revenue_allocation_to_ads_pct
+          template: social
+          url: n/a
+          value: 100.000000000
       revenue_allocation_to_digital_pct:
         - template default
       revenue_allocation_to_display_pct:
@@ -143,7 +157,21 @@ sources:
           key: revenue_allocation_to_ads_pct
           template: social
           url: n/a
-          value: 95.300000000
+          value: 100.000000000
+        - channel: social
+          company: meta/property_data.yaml
+          is_calculation: false
+          key: revenue_allocation_to_ads_pct
+          template: social
+          url: n/a
+          value: 100.000000000
+        - channel: social
+          company: meta/property_data.yaml
+          is_calculation: false
+          key: revenue_allocation_to_ads_pct
+          template: social
+          url: n/a
+          value: 100.000000000
       revenue_allocation_to_digital_pct:
         - template default
       revenue_allocation_to_display_pct:
@@ -241,7 +269,21 @@ sources:
           key: revenue_allocation_to_ads_pct
           template: social
           url: n/a
-          value: 95.300000000
+          value: 100.000000000
+        - channel: social
+          company: meta/property_data.yaml
+          is_calculation: false
+          key: revenue_allocation_to_ads_pct
+          template: social
+          url: n/a
+          value: 100.000000000
+        - channel: social
+          company: meta/property_data.yaml
+          is_calculation: false
+          key: revenue_allocation_to_ads_pct
+          template: social
+          url: n/a
+          value: 100.000000000
       revenue_allocation_to_digital_pct:
         - template default
       revenue_allocation_to_display_pct:
@@ -294,7 +336,21 @@ sources:
           key: revenue_allocation_to_ads_pct
           template: social
           url: n/a
-          value: 95.300000000
+          value: 100.000000000
+        - channel: social
+          company: meta/property_data.yaml
+          is_calculation: false
+          key: revenue_allocation_to_ads_pct
+          template: social
+          url: n/a
+          value: 100.000000000
+        - channel: social
+          company: meta/property_data.yaml
+          is_calculation: false
+          key: revenue_allocation_to_ads_pct
+          template: social
+          url: n/a
+          value: 100.000000000
       revenue_allocation_to_digital_pct:
         - template default
       revenue_allocation_to_display_pct:
