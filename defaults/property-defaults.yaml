@@ -6,6 +6,7 @@ defaults:
       corporate_emissions_g_co2e_per_impression: 0.049050000
       end_user_data_transfer_electricity_use_kwh_per_gb: 0.100000000
       quality_impressions_per_duration_s: 0.100000000
+      revenue_allocation_to_ads_pct: 95.300000000
       revenue_allocation_to_digital_pct: 100
       revenue_allocation_to_display_pct: 14.900000000
   display-app:
@@ -14,22 +15,27 @@ defaults:
       corporate_emissions_g_co2e_per_impression: 0.049050000
       end_user_data_transfer_electricity_use_kwh_per_gb: 0.100000000
       quality_impressions_per_duration_s: 0.100000000
+      revenue_allocation_to_ads_pct: 95.300000000
       revenue_allocation_to_digital_pct: 100
       revenue_allocation_to_display_pct: 14.900000000
   display-web:
     generic:
+      computer_active_electricity_use_watts: 120
+      computer_idle_electricity_use_watts: 40
       core_internet_data_transfer_electricity_use_kwh_per_gb: 0.000066700
       corporate_emissions_g_co2e_per_impression: 0.049050000
       end_user_data_transfer_electricity_use_kwh_per_gb: 0.100000000
       quality_impressions_per_duration_s: 0.100000000
+      revenue_allocation_to_ads_pct: 100
       revenue_allocation_to_digital_pct: 100
-      revenue_allocation_to_display_pct: 14.900000000
+      revenue_allocation_to_display_pct: 100
   streaming:
     generic:
       core_internet_data_transfer_electricity_use_kwh_per_gb: 0.000066700
       corporate_emissions_g_co2e_per_impression: 0.049050000
       end_user_data_transfer_electricity_use_kwh_per_gb: 0.100000000
       quality_impressions_per_duration_s: 0.003200000
+      revenue_allocation_to_ads_pct: 95.300000000
       revenue_allocation_to_digital_pct: 100
       revenue_allocation_to_display_pct: 14.900000000
   streaming-video:
@@ -38,6 +44,7 @@ defaults:
       corporate_emissions_g_co2e_per_impression: 0.049050000
       end_user_data_transfer_electricity_use_kwh_per_gb: 0.100000000
       quality_impressions_per_duration_s: 0.003200000
+      revenue_allocation_to_ads_pct: 95.300000000
       revenue_allocation_to_digital_pct: 100
       revenue_allocation_to_display_pct: 14.900000000
 sources:
@@ -76,6 +83,14 @@ sources:
           value: 0.100000000
       quality_impressions_per_duration_s:
         - template default
+      revenue_allocation_to_ads_pct:
+        - channel: social
+          company: meta/property_data.yaml
+          is_calculation: false
+          key: revenue_allocation_to_ads_pct
+          template: social
+          url: n/a
+          value: 95.300000000
       revenue_allocation_to_digital_pct:
         - template default
       revenue_allocation_to_display_pct:
@@ -121,6 +136,14 @@ sources:
           value: 0.100000000
       quality_impressions_per_duration_s:
         - template default
+      revenue_allocation_to_ads_pct:
+        - channel: social
+          company: meta/property_data.yaml
+          is_calculation: false
+          key: revenue_allocation_to_ads_pct
+          template: social
+          url: n/a
+          value: 95.300000000
       revenue_allocation_to_digital_pct:
         - template default
       revenue_allocation_to_display_pct:
@@ -133,6 +156,10 @@ sources:
           value: 14.900000000
   display-web:
     generic:
+      computer_active_electricity_use_watts:
+        - template default
+      computer_idle_electricity_use_watts:
+        - template default
       core_internet_data_transfer_electricity_use_kwh_per_gb:
         - channel: null
           company: malmodin/data.yaml
@@ -166,16 +193,12 @@ sources:
           value: 0.100000000
       quality_impressions_per_duration_s:
         - template default
+      revenue_allocation_to_ads_pct:
+        - template default
       revenue_allocation_to_digital_pct:
         - template default
       revenue_allocation_to_display_pct:
-        - channel: display-web
-          company: theguardian/property_data.yaml
-          is_calculation: false
-          key: revenue_allocation_to_display_pct
-          template: generic
-          url: n/a
-          value: 14.900000000
+        - template default
   streaming:
     generic:
       core_internet_data_transfer_electricity_use_kwh_per_gb:
@@ -211,6 +234,14 @@ sources:
           value: 0.100000000
       quality_impressions_per_duration_s:
         - template default
+      revenue_allocation_to_ads_pct:
+        - channel: social
+          company: meta/property_data.yaml
+          is_calculation: false
+          key: revenue_allocation_to_ads_pct
+          template: social
+          url: n/a
+          value: 95.300000000
       revenue_allocation_to_digital_pct:
         - template default
       revenue_allocation_to_display_pct:
@@ -256,6 +287,14 @@ sources:
           value: 0.100000000
       quality_impressions_per_duration_s:
         - template default
+      revenue_allocation_to_ads_pct:
+        - channel: social
+          company: meta/property_data.yaml
+          is_calculation: false
+          key: revenue_allocation_to_ads_pct
+          template: social
+          url: n/a
+          value: 95.300000000
       revenue_allocation_to_digital_pct:
         - template default
       revenue_allocation_to_display_pct:
