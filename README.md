@@ -20,7 +20,7 @@ In this project you will find:
 
 - Public sustainability materials and the structured "fact" data from them. These are in the `data/companies` directory
 - Scope3 has received confidential sustainability data from a number of companies. Some of this data is useful for producing default values, and is aggregated and included anonymously in `data/private/scope3`.
-- A script to scan through the source data and produce industry defaults for various types of company. The script is `./scope3_methodology/compute_defaults.py` and the templates are in `templates`. Also see `./scope3_methodology/fact_finder.py` to see how defaults are derived from the data sources we have analyzed.
+- A script to scan through the source data and produce industry defaults for various types of company. The script is `./scope3_methodology/cli/compute_defaults.py` and the templates are in `templates`. Also see `./scope3_methodology/cli/fact_finder.py` to see how defaults are derived from the data sources we have analyzed.
 - A script to model the emissions for ad tech platforms (ssps, dsps, ad networks, dmps, creative ad servers, etc). See [ad tech platform docs](docs/ad_tech_model.md).
 - A script to model the emissions for publishers. See [publisher docs](docs/publisher_model.md).
 - Documentation of our calculations and assumptions in the `docs` directory

@@ -68,7 +68,7 @@ class Property(CustomBaseModel):
 
     environment: str = field(default="computer", metadata={"default_eligible": False})
     grid_intensity_g_co2e_per_kwh: Decimal = field(
-        default=Decimal("539.0"), metadata={"default_eligible": False}  # TODO Document
+        default=Decimal("539.0"), metadata={"default_eligible": False}
     )
     visits_per_month: Optional[Decimal] = field(default=None, metadata={"default_eligible": False})
     average_visit_duration_s: Optional[Decimal] = field(
@@ -86,9 +86,9 @@ class Property(CustomBaseModel):
     revenue_allocation_to_display_pct: Optional[Decimal] = field(
         default=None, metadata={"default_eligible": True}
     )
-    # revenue_allocation_to_ads_pct: Optional[Decimal] = field(
-    #    default=None, metadata={"default_eligible": True}
-    # )
+    revenue_allocation_to_ads_pct: Optional[Decimal] = field(
+        default=None, metadata={"default_eligible": True}
+    )
     computer_active_electricity_use_watts: Optional[Decimal] = field(
         default=None, metadata={"default_eligible": True}
     )
