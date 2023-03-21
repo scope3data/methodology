@@ -132,7 +132,7 @@ Future state: Get an attention measurement company to open source some attention
 
 ### Sample publisher YAML
 
-This is an example of the minimal YAML that would be passed into `./scope3methodology/cli/model_publisher_emissions.py` to produce an estimate of emissions. This does not include emissions from the ad tech supply chain.
+This is an example of the minimal YAML that would be passed into `./scope3_methodology/cli/model_publisher_emissions.py` to produce an estimate of emissions. This does not include emissions from the ad tech supply chain.
 
 ```yaml
 ---
