@@ -15,6 +15,9 @@ facts:
   - travel_emissions_mt_co2e_per_employee_per_month: 0.0490
     calculation: true
     reference: page 57
+  - revenue_allocation_to_digital_ads_pct: 8.7
+    source_id: 2
+    comment: 96.9/1115.6
 raw_data:
   - office emissions mt: 1770.79
     source_id: 1
@@ -37,3 +40,7 @@ reference_files:
     id: 1
     url: >-
       https://cdn.rea-group.com/wp-content/uploads/2022/09/16091556/Sustainability-Report-2022.pdf
+  - id: 2
+    year: 2022
+    month: 10
+    url: https://rea3.irmau.com/site/pdf/5145f68f-b0b6-4192-8039-382acf1e0a37/REA-Group-Investor-and-Analyst-Presentation.pdf

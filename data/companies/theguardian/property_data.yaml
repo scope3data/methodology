@@ -9,7 +9,7 @@ properties:
     facts:
       - visits_per_month: 404400000
         source_id: 1
-      - pages_per_visit:  3.43
+      - pages_per_visit: 3.43
         source_id: 1
       - average_visit_duration_s: 291
         source_id: 1
@@ -17,17 +17,16 @@ properties:
         source_id: 2
       - load_time_s: 1.89
         source_id: 2
-      - corporate_emissions_g_co2e_per_impression: 0.019
+      - corporate_emissions_g_co2e_per_impression: 0.018965959
         calculation: true
-      - revenue_allocation_to_display_pct: 14.9
-        source_id: 4
-        comment: advertising is £73.7/£255.8; assuming digital is 51.6% as with reader rev
+        comment: Output of model March 21, 2023
     raw_facts:
       - requests_per_page: 219
         source_id: 2
-      - corporate_emissions_g_co2e_per_month: 1497934000
-        source_id: 3
-        comment: Output of model Nov 14, 2022
+      - total_corporate_emissions_g_co2e_per_month: 1497934000.000000000
+        comment: Output of model Mar 21, 2023
+      - digital_ads_allocation_corporate_emissions_g_co2e_per_month: 223192166.000000000
+        comment: Output of model Mar 21, 2023
       - quality_impressions_per_month: 11,768,040,000
         calculation: true
         comment: 0.1 qimps/sec x sessions/mo x time/session x % display
@@ -44,7 +43,7 @@ properties:
         year: 2022
         month: 11
         url: https://github.com/scope3data/methodology
-        comment: ./scope3_methodology/cli/model_corporate_emissions.py publisher data/companies/theguardian/corporate.yaml 
+        comment: ./scope3_methodology/cli/model_corporate_emissions.py publisher data/companies/theguardian/corporate.yaml
       - id: 4
         year: 2022
         month: 4

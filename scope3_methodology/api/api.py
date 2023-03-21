@@ -149,6 +149,7 @@ def calculate_corporate_emissions(data: CorporateInput):
         commuting_emissions_mt_co2e_per_employee_per_month=data.commuting_emissions_mt_co2e_per_employee_per_month,
         overhead_emissions_mt_co2e_per_employee_per_month=data.overhead_emissions_mt_co2e_per_employee_per_month,
         corporate_emissions_mt_co2e_per_month=data.corporate_emissions_mt_co2e_per_month,
+        revenue_allocation_to_digital_ads_pct=data.revenue_allocation_to_digital_ads_pct,
         number_of_employees=data.number_of_employees,
     )
 

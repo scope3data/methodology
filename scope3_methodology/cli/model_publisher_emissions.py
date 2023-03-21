@@ -69,14 +69,14 @@ def parse_args():
         const=1,
         type=Decimal,
         nargs="?",
-        help="Provide the corporate emissions for organization",
+        help="Provide the corporate emissions allocated to digital advertising for organization",
     )
     parser.add_argument(
         "--corporateEmissionsGPerImp",
         const=1,
         type=Decimal,
         nargs="?",
-        help="Provide the corporate emissions for organization per impression",
+        help="Provide the corporate emissions per impression for organization",
     )
     parser.add_argument("-v", "--verbose", action="store_true", help="Show derivation of output")
     parser.add_argument("companyFile", nargs=1, help="The company file to parse in YAML format")

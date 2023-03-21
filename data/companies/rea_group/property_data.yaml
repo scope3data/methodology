@@ -11,8 +11,9 @@ properties:
         source_id: 1
       - average_visit_duration_s: 392
         source_id: 1
-      - corporate_emissions_g_co2e_per_impression: 0.0791
+      - corporate_emissions_g_co2e_per_impression: 0.079071871
         calculation: true
+        comment: Output of model March 21, 2023
   - channel: display-web
     template: generic
     identifier: realcommercial.com.au
@@ -55,17 +56,16 @@ properties:
         source_id: 1
 
 raw_facts:
-  - corporate_emissions_g_co2e_per_month: 2550595000
-    source_id: 3
-    comment: Output of model Nov 14, 2022
-  - revenue_allocation_to_display_pct: 8.7
-    source_id: 3
-    comment: 96.9/1115.6
+  - total_corporate_emissions_g_co2e_per_month: 2550595000
+    comment: Output of model Mar 21, 2023
+  - digital_ads_allocation_corporate_emissions_g_co2e_per_month: 221901765.000000000
+    comment: Output of model Mar 21, 2023
   - quality_impressions_per_month: 2806330000
     calculation: true
     comment: 0.1 qimps/sec x sessions/mo x time/session x % display
-  - corporate_emissions_g_co2e_per_impression: 0.0791
+  - corporate_emissions_g_co2e_per_impression: 0.079071871
     calculation: true
+    comment: Output of model Mar 21, 2023
 sources:
   - id: 1
     year: 2022

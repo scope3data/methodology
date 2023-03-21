@@ -4,11 +4,7 @@ from decimal import Decimal
 from enum import Enum
 from typing import Optional
 
-from scope3_methodology.utils.constants import (
-    MB_BYTES_PER_GB,
-    ONE_HUNDRED,
-    SEC_PER_HOUR,
-)
+from scope3_methodology.utils.constants import MB_BYTES_PER_GB, SEC_PER_HOUR
 from scope3_methodology.utils.custom_base_model import CustomBaseModel
 from scope3_methodology.utils.utils import log_result, not_none
 
@@ -35,24 +31,17 @@ class ModeledProperty:
 
     identifier: str
     impressions: Decimal
-    ad_revenue_allocation_pct: Decimal
-    data_transfer_electricity_kwh: Decimal
-    page_load_electricity_kwh: Decimal
-    client_device_emissions_g_co2e_per_imp: Decimal
+    data_transfer_electricity_kwh: Optional[Decimal]
+    page_load_electricity_kwh: Optional[Decimal]
+    client_device_emissions_g_co2e_per_imp: Optional[Decimal]
     corporate_emissions_g_co2e_per_impression: Decimal | None
-
-    def get_ad_revenue_allocation_rate(self):
-        """Return the ad revenue allocation rate (decimal fraction)"""
-        return self.ad_revenue_allocation_pct / ONE_HUNDRED
 
     def set_corporate_emissions_g_co2e_per_impression(
         self, emissions_g: Decimal | None, emissions_g_per_imp: Decimal | None
     ) -> None:
         """Compute and set the corporate emissions per impression in grams CO2e"""
         if emissions_g:
-            self.corporate_emissions_g_co2e_per_impression = (
-                emissions_g * self.get_ad_revenue_allocation_rate() / self.impressions
-            )
+            self.corporate_emissions_g_co2e_per_impression = emissions_g / self.impressions
         else:
             self.corporate_emissions_g_co2e_per_impression = emissions_g_per_imp
         log_result(
@@ -78,15 +67,6 @@ class Property(CustomBaseModel):
     load_time_s: Optional[Decimal] = field(default=None, metadata={"default_eligible": False})
     page_size_mb: Optional[Decimal] = field(default=None, metadata={"default_eligible": False})
     quality_impressions_per_duration_s: Optional[Decimal] = field(
-        default=None, metadata={"default_eligible": True}
-    )
-    revenue_allocation_to_digital_pct: Optional[Decimal] = field(
-        default=None, metadata={"default_eligible": True}
-    )
-    revenue_allocation_to_display_pct: Optional[Decimal] = field(
-        default=None, metadata={"default_eligible": True}
-    )
-    revenue_allocation_to_ads_pct: Optional[Decimal] = field(
         default=None, metadata={"default_eligible": True}
     )
     computer_active_electricity_use_watts: Optional[Decimal] = field(
@@ -125,18 +105,6 @@ class Property(CustomBaseModel):
         """Set defaults to be used as fallback in computations"""
         self.defaults = defaults
 
-    def get_revenue_allocation_to_digital_rate(self) -> Decimal:
-        """Return the revenue allocation to digitial rate (decimal fraction)"""
-        return not_none(self.revenue_allocation_to_digital_pct) / ONE_HUNDRED
-
-    def get_revenue_allocation_to_display_rate(self) -> Decimal:
-        """Return the revenue allocation to display rate (decimal fraction)"""
-        return not_none(self.revenue_allocation_to_display_pct) / ONE_HUNDRED
-
-    def get_revenue_allocation_to_ads_rate(self) -> Decimal:
-        """Return the revenue allocation to ads rate (decimal fraction)"""
-        return not_none(self.revenue_allocation_to_ads_pct) / ONE_HUNDRED
-
     def comp_ads_per_visit(self) -> Decimal:
         """Compute the ads per visit"""
         return not_none(self.average_visit_duration_s) * not_none(
@@ -146,13 +114,6 @@ class Property(CustomBaseModel):
     def comp_impressions(self) -> Decimal:
         """Compute the impressions for the property"""
         return not_none(self.visits_per_month) * not_none(self.comp_ads_per_visit())
-
-    def comp_ad_revenue_allocation_pct(self) -> Decimal:
-        """Compute ad revenue allocation percentage"""
-        return (
-            self.get_revenue_allocation_to_digital_rate()
-            * self.get_revenue_allocation_to_ads_rate()
-        ) * ONE_HUNDRED
 
     def comp_active_page_load_time(self) -> Decimal:
         """Compute active page load time"""
@@ -239,28 +200,28 @@ class Property(CustomBaseModel):
         impressions = self.comp_impressions()
         log_result("impressions per month", impressions, 2)
 
-        ad_revenue_allocation_pct = self.comp_ad_revenue_allocation_pct()
-        log_result("ad_revenue_allocation_pct", ad_revenue_allocation_pct, 2)
+        page_load_electricity_kwh = None
+        data_transfer_electricity_kwh = None
+        client_device_emissions_g_co2e_per_imp = None
+        if self.load_time_s:
+            page_load_electricity_kwh = self.comp_page_load_electricity_kwh(depth)
+            log_result("page_load_electricity_kwh", page_load_electricity_kwh, 2)
 
-        page_load_electricity_kwh = self.comp_page_load_electricity_kwh(depth)
-        log_result("page_load_electricity_kwh", page_load_electricity_kwh, 2)
+            data_transfer_electricity_kwh = self.comp_data_transfer_electricity_kwh()
+            log_result("data_transfer_electricity_kwh", data_transfer_electricity_kwh, 2)
 
-        data_transfer_electricity_kwh = self.comp_data_transfer_electricity_kwh()
-        log_result("data_transfer_electricity_kwh", data_transfer_electricity_kwh, 2)
-
-        client_device_emissions_g_co2e_per_imp = (
-            self.comp_client_device_emissions_g_co2e_per_impression(depth)
-        )
-        log_result(
-            "client_device_emissions_g_co2e_per_impression",
-            client_device_emissions_g_co2e_per_imp,
-            2,
-        )
+            client_device_emissions_g_co2e_per_imp = (
+                self.comp_client_device_emissions_g_co2e_per_impression(depth)
+            )
+            log_result(
+                "client_device_emissions_g_co2e_per_impression",
+                client_device_emissions_g_co2e_per_imp,
+                2,
+            )
 
         return ModeledProperty(
             identifier,
             impressions,
-            ad_revenue_allocation_pct,
             data_transfer_electricity_kwh,
             page_load_electricity_kwh,
             client_device_emissions_g_co2e_per_imp,
