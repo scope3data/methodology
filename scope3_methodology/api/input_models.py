@@ -70,6 +70,7 @@ class CorporateInput(BaseModel):
     commuting_emissions_mt_co2e_per_employee_per_month: Optional[Decimal]
     overhead_emissions_mt_co2e_per_employee_per_month: Optional[Decimal]
     corporate_emissions_mt_co2e_per_month: Optional[Decimal]
+    revenue_allocation_to_digital_ads_pct: Optional[Decimal]
 
 
 class ATPInput(BaseModel):

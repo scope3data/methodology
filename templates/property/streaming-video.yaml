@@ -8,8 +8,6 @@ template:
     - see https://www.hollywoodreporter.com/business/digital/netflix-disney-data-privacy-ads-1235234652/
     - 11.54 ads/hour is the average for streaming
   quality_impressions_per_duration_s: 0.0032
-  revenue_allocation_to_digital_pct: 100
-  revenue_allocation_to_ads_pct: 100
   computer_active_electricity_use_watts: 120
   computer_idle_electricity_use_watts: 40
   grid_intensity_g_co2e_per_kwh: 539.0

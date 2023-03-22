@@ -11,6 +11,9 @@ facts:
     calculation: true
   - travel_emissions_mt_co2e_per_employee_per_month: 0.137
     calculation: true
+  - revenue_allocation_to_digital_ads_pct: 14.9
+    source_id: 3
+    comment: advertising is £73.7/£255.8; assuming digital is 51.6% as with reader rev
 raw_data:
   - advertising_revenue_gbp_per_year: 73.7
     source_id: 1
@@ -39,3 +42,7 @@ reference_files:
     url: >-
       https://uploads.guim.co.uk/2021/08/25/Positive_Impact_Sustainability_Report_1920.pdf
     file: Positive_Impact_Sustainability_Report_1920.pdf
+  - id: 3
+    year: 2022
+    month: 4
+    url: https://uploads.guim.co.uk/2022/07/20/GMG_Financial_Statements_2022.pdf

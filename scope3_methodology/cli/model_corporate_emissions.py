@@ -45,7 +45,7 @@ def main():
         defaults = CorporateEmissions.load_default_yaml(args.type, args.defaultsFile)
         org_emissions = corp.comp_emissions_g_co2e_per_month(defaults, depth - 1)
 
-    print(yaml_dump({"corporate_emissions_g_co2e_per_month": org_emissions}))
+    print(yaml_dump(org_emissions))
 
 
 if __name__ == "__main__":

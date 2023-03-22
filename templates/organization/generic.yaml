@@ -2,3 +2,4 @@
 template:
   name: generic
   type: organization
+  revenue_allocation_to_digital_ads_pct: 100

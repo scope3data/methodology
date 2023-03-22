@@ -4,9 +4,18 @@ from dataclasses import dataclass, field
 from decimal import Decimal
 from typing import Optional
 
-from scope3_methodology.utils.constants import G_PER_MT
+from scope3_methodology.utils.constants import G_PER_MT, ONE_HUNDRED
 from scope3_methodology.utils.custom_base_model import CustomBaseModel
 from scope3_methodology.utils.utils import log_result, not_none
+
+
+@dataclass
+class ModeledCorporateEmissions:
+    """A modeled corporate emissions for an organization"""
+
+    total_corporate_emissions_g_co2e_per_month: Decimal
+    digital_ads_allocation_corporate_emissions_g_co2e_per_month: Decimal
+    revenue_allocation_to_digital_ads_pct: Optional[Decimal]
 
 
 @dataclass
@@ -27,6 +36,9 @@ class CorporateEmissions(CustomBaseModel):
     )
     overhead_emissions_mt_co2e_per_employee_per_month: Optional[Decimal] = field(
         default=None, metadata={"default_eligible": True}
+    )
+    revenue_allocation_to_digital_ads_pct: Optional[Decimal] = field(
+        default=Decimal("100"), metadata={"default_eligible": True}
     )
     corporate_emissions_mt_co2e_per_month: Optional[Decimal] = field(
         default=None, metadata={"default_eligible": False}
@@ -51,6 +63,10 @@ class CorporateEmissions(CustomBaseModel):
                 """
             )
 
+    def get_ad_revenue_allocation_rate(self):
+        """Return the ad revenue allocation to digital ads rate (decimal fraction)"""
+        return not_none(self.revenue_allocation_to_digital_ads_pct) / ONE_HUNDRED
+
     def comp_emissions_mt_co2e_per_month(
         self, defaults: "CorporateEmissions", depth: int
     ) -> Decimal | None:
@@ -71,13 +87,29 @@ class CorporateEmissions(CustomBaseModel):
 
     def comp_emissions_g_co2e_per_month(
         self, defaults: "CorporateEmissions", depth: int
-    ) -> Decimal | None:
+    ) -> ModeledCorporateEmissions | None:
         """Computes the corporate emisisons per month in grams CO2e"""
         self.validate()
         self.set_defaults(defaults)
         corporate_emissions_mt = self.comp_emissions_mt_co2e_per_month(defaults, depth)
         if corporate_emissions_mt:
-            corporate_emissions = corporate_emissions_mt * G_PER_MT
-            log_result("corporate emissions g co2e per month", f"{corporate_emissions:.2f}", depth)
-            return corporate_emissions
+            total_emissions = corporate_emissions_mt * G_PER_MT
+            log_result(
+                "total corporate emissions g co2e per month",
+                f"{total_emissions:.2f}",
+                depth,
+            )
+
+            digital_ad_emissions = self.get_ad_revenue_allocation_rate() * total_emissions
+            log_result(
+                "digital ads allocation of corporate emissions g co2e per month",
+                f"{digital_ad_emissions:.2f}",
+                depth,
+            )
+
+            return ModeledCorporateEmissions(
+                total_corporate_emissions_g_co2e_per_month=total_emissions,
+                digital_ads_allocation_corporate_emissions_g_co2e_per_month=digital_ad_emissions,
+                revenue_allocation_to_digital_ads_pct=self.revenue_allocation_to_digital_ads_pct,
+            )
         return None
