@@ -2,6 +2,7 @@
 type: corporate
 name: REA Group Ltd
 template: publisher
+public_identifier: rea_group_ltd
 facts:
   - number_of_employees: 3145
     source_id: 1

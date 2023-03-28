@@ -2,6 +2,7 @@
 type: corporate
 name: Magnite
 template: atp
+public_identifier: magnite
 facts:
   - number_of_employees: 876
     source_id: 1

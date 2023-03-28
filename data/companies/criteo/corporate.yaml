@@ -2,6 +2,7 @@
 type: corporate
 name: Criteo
 template: atp
+public_identifier: criteo
 facts:
   - travel_emissions_mt_co2e_per_employee_per_month: 0.011
     calculation: true

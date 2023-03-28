@@ -2,6 +2,7 @@
 type: corporate
 name: Pubmatic
 template: atp
+public_identifier: pubmatic
 facts:
   - number_of_employees: 713
     source_id: 1

@@ -2,6 +2,7 @@
 type: corporate
 name: CBC/Radio Canada
 template: publisher
+public_identifier: cbc_radio_canada
 facts:
   - number_of_employees: 7743
     source_id: 2

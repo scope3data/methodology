@@ -2,6 +2,7 @@
 type: corporate
 name: Axel Springer
 template: publisher
+public_identifier: axel_springer
 comment: methodology question - if we are excluding print emissions, how do we exclude print employees?
 facts:
   - number_of_employees: 17343

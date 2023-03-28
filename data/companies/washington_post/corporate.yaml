@@ -2,6 +2,7 @@
 type: corporate
 name: Washington Post
 template: publisher
+public_identifier: washington_post
 facts:
   - number_of_employees: 3662
     source_id: 1
