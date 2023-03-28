@@ -163,11 +163,12 @@ def get_all_facts() -> dict[str, list[Fact]]:
                         )
             if "properties" in document:
                 for publisher_property in document["properties"]:
-                    populate_raw_facts(
-                        facts,
-                        "/".join(pth.parts[-2:]),
-                        publisher_property["template"],
-                        publisher_property["channel"],
-                        publisher_property["facts"],
-                    )
+                    if "facts" in publisher_property:
+                        populate_raw_facts(
+                            facts,
+                            "/".join(pth.parts[-2:]),
+                            publisher_property["template"],
+                            publisher_property["channel"],
+                            publisher_property["facts"],
+                        )
     return facts
