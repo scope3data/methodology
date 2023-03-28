@@ -1,7 +1,10 @@
 ---
 type: corporate
-name: Google
-template: generic
+name: Alphabet
+template: publisher
+public_identifier: alphabet
+fact:
+  - number_of_employees: 190234
 raw_facts:
   - percentage_of_hourly_carbon_neutral_data_center_electricity_use: 66
     reference: page 2
@@ -18,9 +21,16 @@ raw_facts:
   - business_travel_and_commuting_mt: 136,000
     reference: page 11
     source_id: 1
+  - number_of_employees: 190234
+    reference: page 8
+    source_id: 2
 sources:
   - id: 1
     year: 2021
     url: >-
       https://www.gstatic.com/gumdrop/sustainability/google-2022-environmental-report.pdf
     file: google-2022-environmental-report.pdf
+  - id: 2
+    year: 2022
+    url: >-
+      https://www.sec.gov/Archives/edgar/data/1652044/000165204423000016/goog-20221231.htm

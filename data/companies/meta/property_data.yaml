@@ -1,0 +1,16 @@
+---
+type: publisher
+company: Meta
+properties:
+  - template: generic
+    channel: display-web
+    identifier: facebook.com
+    facts:
+      - carbon_intensity_mt_per_million_usd_revenue: 110
+        note: "Annual basis"
+  - template: generic
+    channel: display-app
+    identifier: instagram.com
+    facts:
+      - carbon_intensity_mt_per_million_usd_revenue: 110
+        note: "Annual basis"

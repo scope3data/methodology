@@ -1,0 +1,10 @@
+---
+type: publisher
+company: Snap
+properties:
+  - template: generic
+    channel: display-app
+    identifier: snapchat.com
+    facts:
+      - carbon_intensity_mt_per_million_usd_revenue: 45
+        note: "Annual basis"

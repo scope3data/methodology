@@ -1,0 +1,10 @@
+---
+type: publisher
+company: Pinterest
+properties:
+  - template: generic
+    channel: display-web
+    identifier: pinterest.com
+    facts:
+      - carbon_intensity_mt_per_million_usd_revenue: 54
+        note: "Annual basis"

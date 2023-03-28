@@ -1,0 +1,13 @@
+---
+type: corporate
+name: Meta
+template: generic
+public_identifier: meta
+facts:
+  - number_of_employees: 86482
+    source_id: 1
+  - carbon_intensity_mt_per_employee: 149.7
+    source_id: 1
+sources:
+  - id: 1
+    file: meta.xlsx
