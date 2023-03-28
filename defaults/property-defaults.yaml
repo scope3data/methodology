@@ -24,6 +24,14 @@ defaults:
       corporate_emissions_g_co2e_per_impression: 0.049018915
       end_user_data_transfer_electricity_use_kwh_per_gb: 0.100000000
       quality_impressions_per_duration_s: 0.100000000
+  social:
+    generic:
+      computer_active_electricity_use_watts: 120
+      computer_idle_electricity_use_watts: 40
+      core_internet_data_transfer_electricity_use_kwh_per_gb: 0.000066700
+      corporate_emissions_g_co2e_per_impression: 0.049018915
+      end_user_data_transfer_electricity_use_kwh_per_gb: 0.100000000
+      quality_impressions_per_duration_s: 0.100000000
   streaming:
     generic:
       computer_active_electricity_use_watts: 120
@@ -120,6 +128,45 @@ sources:
       quality_impressions_per_duration_s:
         - template default
   display-web:
+    generic:
+      computer_active_electricity_use_watts:
+        - template default
+      computer_idle_electricity_use_watts:
+        - template default
+      core_internet_data_transfer_electricity_use_kwh_per_gb:
+        - channel: null
+          company: malmodin/data.yaml
+          is_calculation: false
+          key: core_internet_data_transfer_electricity_use_kwh_per_gb
+          template: GENERAL
+          url: https://www.youtube.com/watch?v=Xo0PB5i_b4Y&t=2520s
+          value: 0.000066700
+      corporate_emissions_g_co2e_per_impression:
+        - channel: display-web
+          company: theguardian/property_data.yaml
+          is_calculation: true
+          key: corporate_emissions_g_co2e_per_impression
+          template: generic
+          url: n/a
+          value: 0.018965959
+        - channel: display-web
+          company: rea_group/property_data.yaml
+          is_calculation: true
+          key: corporate_emissions_g_co2e_per_impression
+          template: generic
+          url: n/a
+          value: 0.079071871
+      end_user_data_transfer_electricity_use_kwh_per_gb:
+        - channel: null
+          company: VTT/data.yaml
+          is_calculation: false
+          key: end_user_data_transfer_electricity_use_kwh_per_gb
+          template: GENERAL
+          url: https://www.mdpi.com/2071-1050/10/7/2494
+          value: 0.100000000
+      quality_impressions_per_duration_s:
+        - template default
+  social:
     generic:
       computer_active_electricity_use_watts:
         - template default

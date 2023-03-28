@@ -1,0 +1,12 @@
+---
+type: corporate
+name: Snap
+template: publisher
+facts:
+  - number_of_employees: 5288
+    source_id: 1
+  - carbon_intensity_mt_per_employee: 34.8
+    source_id: 1
+sources:
+  - id: 1
+    file: SnapCorporate.xlsx

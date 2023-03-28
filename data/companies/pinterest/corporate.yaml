@@ -1,0 +1,12 @@
+---
+type: corporate
+name: Pinterest
+template: publisher
+facts:
+  - number_of_employees: 3225
+    source_id: 1
+  - carbon_intensity_mt_per_employee: 43.2
+    source_id: 1
+sources:
+  - id: 1
+    file: PinterestCorporate.xlsx
