@@ -1,0 +1,10 @@
+---
+type: corporate
+name: TikTok
+template: publisher
+fact:
+  - number_of_employees: 3225
+    source_id: 1
+sources:
+  - id: 1
+    file: TikTokCorporate.xlsx

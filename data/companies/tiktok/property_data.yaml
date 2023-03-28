@@ -1,0 +1,7 @@
+---
+type: publisher
+company: TikTok
+properties:
+  - template: generic
+    channel: display-app
+    identifier: tiktok.com
