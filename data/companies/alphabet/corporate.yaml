@@ -1,7 +1,8 @@
 ---
 type: corporate
-name: Google
+name: Alphabet
 template: publisher
+public_identifier: alphabet
 fact:
   - number_of_employees: 190234
 raw_facts:

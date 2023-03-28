@@ -2,6 +2,7 @@
 type: corporate
 name: Snap
 template: publisher
+public_identifier: snap
 facts:
   - number_of_employees: 5288
     source_id: 1

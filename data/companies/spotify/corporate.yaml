@@ -2,6 +2,7 @@
 type: corporate
 name: Spotify
 template: publisher
+public_identifier: spotify
 facts:
   - number_of_employees: 8359
     source_id: 1
