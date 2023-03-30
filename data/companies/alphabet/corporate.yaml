@@ -3,7 +3,7 @@ type: corporate
 name: Alphabet
 template: publisher
 public_identifier: alphabet
-fact:
+facts:
   - number_of_employees: 190234
 raw_facts:
   - percentage_of_hourly_carbon_neutral_data_center_electricity_use: 66
