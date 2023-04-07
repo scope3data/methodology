@@ -75,7 +75,11 @@ From [Urban et al](#urban-bryan-and-roth-2019):
 
 We combine these using install base to create a synthetic "TV System" that represents the full power draw of the consumer setup. The weighted power draw of a typical setup is 87.4 watts.
 
-From the [Negaoctet database](#Negaoctet), the production emissions from a 45" television (98.6% LCD, 1.4% OLED) are 45 kgCO2e per year over an 8 year useful life. We do not have data on the embodied emissions from set top boxes or sound bars so these are omitted from the current analysis. Based on 3.9 hours/day of usage, the embodied emissions from a TV are 0.0088 gCO2e/s.
+From the [Negaoctet database](#Negaoctet), the production emissions from a 45" television (98.6% LCD, 1.4% OLED) are 45 kgCO2e per year over an 8 year useful life.
+
+Based on the above Urban data, 58.8% of TVs have set top boxes. From the Negaoctet data, the production emissions from a set top box are 7.22 kgCO2e per year for a "Modem; use mix, personal and professional use; xDSL, FTTx, 5 years lifespan; RAS"
+
+Based on 3.9 hours/day of usage, the embodied emissions from a TV and set top box are 0.0096 gCO2e/s.
 
 A detailed study of many TV models can be found at [ecocostsavings.com](https://ecocostsavings.com/tv-wattage/), indicating that the average power draw of a TV in the US is 59W active, 0.5W standby. This data is not tied to a scientific study but does indicate that overall power usage may have declined since the Urban study above.
 
@@ -86,7 +90,7 @@ A detailed study of many TV models can be found at [ecocostsavings.com](https://
 | Personal computer | 53.2           | 0.007          |
 | Tablet            | 3              | 0.0029         |
 | Smartphone        | 0.77           | 0.0058         |
-| TV System         | 87.4           | 0.0046         |
+| TV System         | 87.4           | 0.0096         |
 
 ## Notes and Caveats
 

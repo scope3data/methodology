@@ -2,7 +2,7 @@
 defaults:
   personal_computer:
     draw_watts: 53.200000000
-    production_emissions_gco2e_per_duration_s: 0.004600000
+    production_emissions_gco2e_per_duration_s: 0.004640000
   smartphone:
     draw_watts: 0.770000000
     production_emissions_gco2e_per_duration_s: 0.005830000
@@ -11,7 +11,7 @@ defaults:
     production_emissions_gco2e_per_duration_s: 0.002870000
   tv_system:
     draw_watts: 87.400000000
-    production_emissions_gco2e_per_duration_s: 0.008800000
+    production_emissions_gco2e_per_duration_s: 0.009600000
 sources:
   personal_computer:
     draw_watts:
