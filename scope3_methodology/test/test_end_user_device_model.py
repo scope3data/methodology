@@ -18,7 +18,7 @@ class TestEndUserDeviceModel(unittest.TestCase):
         """Test load defaults"""
         device = EndUserDevice.load_default_yaml(TEST_DEVICE, TEST_DEFAULTS_FILE)
         self.assertEqual(device.draw_watts, Decimal("53.200000000"))
-        self.assertEqual(device.production_emissions_gco2e_per_duration_s, Decimal("0.007000000"))
+        self.assertEqual(device.production_emissions_gco2e_per_duration_s, Decimal("0.004640000"))
 
     def test_load_defaults_invalid_device(self):
         """Test load defaults"""
@@ -31,7 +31,7 @@ class TestEndUserDeviceModel(unittest.TestCase):
         production_gco2e_per_imp = device.compute_production_emissions_gco2e_per_imp(
             TEST_QUALITY_IMPRESSIONS_PER_SEC
         )
-        self.assertEqual(production_gco2e_per_imp, Decimal("0.07000000"))
+        self.assertEqual(production_gco2e_per_imp, Decimal("0.0464000000"))
 
     def test_compute_power_emissions_kwh_per_imp(self):
         """Test compute power emissions per imp"""
@@ -60,7 +60,7 @@ class TestEndUserDeviceModel(unittest.TestCase):
                 TEST_CHANNEL,
                 TEST_TEMPLATE,
                 Decimal("0.0001477777777777777777777777778"),
-                Decimal("0.07000000"),
+                Decimal("0.0464000000"),
                 Decimal("0.00001477777777777777777777777778"),
                 device.production_emissions_gco2e_per_duration_s,
             ),
@@ -80,7 +80,7 @@ class TestEndUserDeviceModel(unittest.TestCase):
                 TEST_CHANNEL,
                 TEST_TEMPLATE,
                 Decimal("0.000002138888888888888888888888889"),
-                Decimal("0.052000000"),
+                Decimal("0.0583000000"),
                 Decimal("0.0000002138888888888888888888888889"),
                 device.production_emissions_gco2e_per_duration_s,
             ),
