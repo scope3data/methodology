@@ -24,13 +24,13 @@ The following sections outline the sources and assumptions used to calculate the
 
 ## Personal Computer
 
-From [Belkhir and Elmeligi](#belkhir-and-elmeligi-2018):
+From [Negaoctet](Negaoctet):
 
-| Device      | Production Energy (kgCO2e) | Useful Life (years) |
-| ----------- | -------------------------- | ------------------- |
-| Desktop     | 218 - 628                  | 5.5                 |
-| Laptop      | 281 - 468                  | 7                   |
-| LCD Monitor | 95                         | 6.6                 |
+| Device  | Production Energy (kgCO2e) | Description                                                                                                                                                 |
+| ------- | -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Desktop | 277                        | Desktop; personal use; average configuration: 1 CPU, 10 GB RAM, 1173 GB HDD, 442 GB SSD, mix of integrated or separated graphic card, 6 years lifespan; RAS |
+| Laptop  | 175                        | Laptop; use mix, personal use; average configuration: 14,6 inches screen, 1 CPU, 11 GB RAM, 497 GB SSD, 5 years lifespan; RAS                               |
+| Monitor | 69                         | Computer monitors; use mix, personal and professional use; average dimension (24 inches) and technology (98.6% LCD, 1.4% OLED), 6,6 years lifespan; RAS     |
 
 From [Urban et al](#urban-et-al-2019):
 
@@ -40,31 +40,25 @@ From [Urban et al](#urban-et-al-2019):
 | Laptop  | 122                | 11 (idle), 22 (active) | 3.0 (idle), 3.7 (active) |
 | Monitor | 101                | 30                     | 5.5                      |
 
-Since we do not know the exact device a consumer is using (most reporting is aggregated to device type), we use install base to create a synthetic "personal computer". See [PC emissions model](supporting/pc_emissions_model.xlsx). Based on this analysis, a personal computer uses an average of 53.2 W of energy while in use, and has Production Energy of 0.007 gCO2e per second of use.
+Since we do not know the exact device a consumer is using (most reporting is aggregated to device type), we use install base to create a synthetic "personal computer". See [PC emissions model](supporting/pc_emissions_model.xlsx). Based on this analysis, a personal computer uses an average of 53.2 W of energy while in use, and has Production Energy of 0.005 gCO2e per second of use.
 
 ![Visual representation of the PC emissions model](images/pc_emissions_model.png)
 
 ## Tablet
 
-From [Belkhir and Elmeligi](#belkhir-and-elmeligi-2018):
-| Device | Production Energy (kgCO2e) | Useful Life (years)
-| --- | --- | ---
-| Tablet | 80 - 116 | 7
+From [Negaoctet](Negaoctet), a "Tablet; use mix, personal or professional use; average configuration: 10.44 inches screen mix of LCD screen, 4 GB RAM, 121 GB memory, 3 years lifespan; RAS" has 25.3 kgCO2e per year of embodied emissions.
 
-We don't have a stat on daily usage of tablets. Assuming that people use them in lieu of a laptop, taking the laptop number of 6.7 hours a day. This yields a PEPS of 0.0016 gCO2e/s.
+We don't have a stat on daily usage of tablets. Assuming that people use them in lieu of a laptop, taking the laptop number of 6.7 hours a day. This yields a PEPS of 0.00287 gCO2e/s.
 
 For energy use, [iBatteryLife](https://ibatterylife.com/ipad-battery-life-test/) compares multiple iPad models and battery life is around 10 hours for each. The average iPad, per [Sir Apfelot](https://sir-apfelot.de/en/battery-capacity-ipad-mah-19060/), has around 30 Wh of battery capacity. Thus, a tablet has an average power draw of 3W.
 
 ## Smartphone
 
-From [Belkhir and Elmeligi](#belkhir-and-elmeligi-2018):
-| Device | Production Energy (kgCO2e) | Useful Life (years)
-| --- | --- | ---
-| Smartphone | 40 - 80 | 2
+From [Negaoctet](Negaoctet), a "smartphone; use mix, personal use; average configuration: 6,61 inches screen mix of LCD and OLED technologies, 7,3 GB RAM, 180 GB memory, 2,5 years lifespan; RAS" has 33.6 kgCO2e per year of embodied emissions.
+
+The typical person uses her phone for 4 hours and 23 minutes a day per [Statista](https://www.statista.com/statistics/1045353/mobile-device-daily-usage-time-in-the-us/). This yields a PEPS of 0.0058 gCO2e/s. (Note: SRI uses a 3 hrs/day number)
 
 As an example, per [GSM Arena](#gsmarena), the Apple iPhone 13 takes 16 hours and 8 minutes to run out of battery when browsing the internet (similar to video playback). In idle mode, it takes 174 hours to discharge. It has 12.41Wh of battery capacity per [Macworld](#macworld). Thus, the iphone consumes 0.77W when active, and 0.071W when idle.
-
-The typical person uses her phone for 4 hours and 23 minutes a day per [Statista](https://www.statista.com/statistics/1045353/mobile-device-daily-usage-time-in-the-us/). This yields a PEPS of 0.0052 gCO2e/s.
 
 ## Television
 
@@ -81,16 +75,18 @@ From [Urban et al](#urban-bryan-and-roth-2019):
 
 We combine these using install base to create a synthetic "TV System" that represents the full power draw of the consumer setup. The weighted power draw of a typical setup is 87.4 watts.
 
-From [Hischier and Baudin](#hischier-and-baudin-2010), the production energy of a 42" plasma television is 637kg. Per [Kwiecień et al](#kwiecień-et-al-2019) the average useful life of a plasma TV is 6 years. We do not have data on the embodied emissions from set top boxes or sound bars so these are omitted from the current analysis. Based on the 3.9 hours a day of usage, the embodied emissions from a plasma TV are 0.021 gCO2e/s.
+From the [Negaoctet database](#Negaoctet), the production emissions from a 45" television (98.6% LCD, 1.4% OLED) are 45 kgCO2e per year over an 8 year useful life. We do not have data on the embodied emissions from set top boxes or sound bars so these are omitted from the current analysis. Based on 3.9 hours/day of usage, the embodied emissions from a TV are 0.0088 gCO2e/s.
+
+A detailed study of many TV models can be found at [ecocostsavings.com](https://ecocostsavings.com/tv-wattage/), indicating that the average power draw of a TV in the US is 59W active, 0.5W standby. This data is not tied to a scientific study but does indicate that overall power usage may have declined since the Urban study above.
 
 ## Summary
 
 | Device            | Power Draw (W) | PEPS (gCO2e/s) |
 | ----------------- | -------------- | -------------- |
 | Personal computer | 53.2           | 0.007          |
-| Tablet            | 3              | 0.0016         |
-| Smartphone        | 0.77           | 0.0052         |
-| TV System         | 87.4           | 0.021          |
+| Tablet            | 3              | 0.0029         |
+| Smartphone        | 0.77           | 0.0058         |
+| TV System         | 87.4           | 0.0046         |
 
 ## Notes and Caveats
 
@@ -127,3 +123,9 @@ Kwiecień, Klaudia & Kania, Gabriela & Malinowski, Mateusz. (2019). [The life cy
 ### Malmodin and Lundén, 2018
 
 Malmodin J, Lundén D. [The Energy and Carbon Footprint of the Global ICT and E&M Sectors 2010–2015](https://doi.org/10.3390/su10093027). Sustainability. 2018; 10(9):3027.
+
+### Negaoctet
+
+[Description of Negaoctet](https://codde.fr/en/our-software/negaoctet/database)
+
+[Negaoctet ADEME database 1.4](https://base-impacts.ademe.fr/documents/Negaoctet1.4.zip)

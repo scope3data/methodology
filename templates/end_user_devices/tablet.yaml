@@ -3,6 +3,6 @@ template:
   name: tablet
   type: end_user_device
   draw_watts: 3
-  production_emissions_gco2e_per_duration_s: 0.0016
+  production_emissions_gco2e_per_duration_s: 0.00287
   url: https://github.com/scope3data/methodology/docs/consumer_devices.md
   comment: We aggregate multiple sources to create a synthetic model of energy use
