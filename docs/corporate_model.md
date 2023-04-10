@@ -43,9 +43,12 @@ In practice, at least in 2022, when we have asked companies - both publishers an
 
 For the purposes of the current project, we are assuming the following categories of scope 3 emissions are fairly comprehensive for companies in the media and advertising space:
 
-### offsets, RECs, and PPAs
+### Carbon offsets, RECs, and PPAs
 
-to discuss
+We do not remove the equivalent emissions of offsets, REC's or PPAS as offsets to electricity consumption unless they meet the following criteria.
+REC's will be removed from a corporations emissions if they are matched with renewable power generation on an hourly basis in the same region as the consumpion.
+Offsets and credits will be removed if they meet the following criteria [Criteria for high quality carbon dioxide removal](/https://d13en5kcqwfled.cloudfront.net/files/Criteria-Doc_FY23_April-2022.pdf).
+PPA (power purchase agreements) as in offsets must be located in the region where energy is used for its emissions to offset the corporate emissions.
 
 ## Usage
 

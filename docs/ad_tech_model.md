@@ -23,6 +23,15 @@ Our model outputs the primary emissions from an ATP, in other words, what happen
 
 We do provide functions that can take a list of the edges (`DistributionPartner` objects) and will compute the secondary emissions. At Scope3, we first model all of the primary emissions then use our graph of ATP relationships to compute the fully-loaded cost of each type of request.
 
+## Measuring ATP cloud Infrastructure
+
+Along with the primary and secondary emission measurements from the Use Phase Energy (UPE) of providing services to it an ad tech's customers
+. We need to measure the Production Energy per Use Second (PEPS) of the ad tech
+provider's infrastructure. The PEPS or Life Cycle Assessment (LCA) of the physical infrastructure is the measure of the emissions due to the production of the resources, this includes servers, network gear cabinets, power supplies, cabling etc.
+This hardware may be deployed in public or private cloud and its and is
+generally not publicly available. See this spreadsheet template [ATP Template](/docs/supporting/Scope3ATPTemplate.xlsx) on the information what we collect to measure an ATP.
+See the description of [corporate emissions](/docs/corporate_model.md) that describe how we treat carbon offsets, REC's and PPA.
+
 ## Usage
 
 Create a YAML file that describes the company you would like to model. The YAML file should look like this:
