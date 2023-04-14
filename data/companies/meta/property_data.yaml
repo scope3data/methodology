@@ -1,16 +1,21 @@
 ---
 type: publisher
 company: Meta
+channel: social
+template: social
 properties:
-  - template: generic
-    channel: display-web
+  - template: social
+    channel: social
     identifier: facebook.com
     facts:
       - carbon_intensity_mt_per_million_usd_revenue: 110
         note: "Annual basis"
-  - template: generic
-    channel: display-app
+      - quality_impressions_per_duration_s: 0.4
+      - carbon_intensity_mt_per_employee: 10000
+  - template: social
+    channel: social
     identifier: instagram.com
     facts:
       - carbon_intensity_mt_per_million_usd_revenue: 110
         note: "Annual basis"
+      - quality_impressions_per_duration_s: 0.2

@@ -1,0 +1,6 @@
+---
+template:
+  name: generic
+  channel: social
+  generic: true
+  type: property
