@@ -99,7 +99,7 @@ class TestAPI(unittest.TestCase):
             Decimal("6100.6"),
         )
 
-        self.assertEqual(len(property_defaults), 5)
+        self.assertEqual(len(property_defaults), 6)
         self.assertTrue(property_defaults[PropertyChannel.DISPLAY])
         self.assertEqual(
             property_defaults[PropertyChannel.DISPLAY].quality_impressions_per_duration_s,
