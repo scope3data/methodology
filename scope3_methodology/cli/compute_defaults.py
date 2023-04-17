@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" Compute defaults for all templates types [atp, property, organization ] """
+""" Compute defaults for all templates types """
 import argparse
 from dataclasses import dataclass
 from decimal import Decimal
@@ -53,7 +53,7 @@ def build_fact_averages(
             template_specific_sum = Decimal(0)
             template_fact_count = 0
             for fact in facts[key]:
-                """If the fact is only for a specific channel do not include in all defaults"""
+                # If the fact is only for a specific channel do not include in all defaults
                 if fact.channel is not None:
                     if fact.channel != channel:
                         continue
@@ -214,11 +214,11 @@ def main():
         with open(file, "r", encoding="UTF-8") as stream:
             document = yaml_load(stream)
             if "template" not in document:
-                raise Exception(f"'template' field not found in {file}")
+                raise LookupError(f"'template' field not found in {file}")
             if "name" not in document["template"]:
-                raise Exception(f"'name' field not found in {file}")
+                raise LookupError(f"'name' field not found in {file}")
             if "type" not in document["template"]:
-                raise Exception(f"'type' field not found in {file}")
+                raise LookupError(f"'type' field not found in {file}")
             name = document["template"]["name"]
             template_type = document["template"]["type"]
             channel = document["template"]["channel"] if "channel" in document["template"] else ""
