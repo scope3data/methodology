@@ -9,7 +9,7 @@ properties:
       - carbon_intensity_mt_per_million_usd_revenue: 36
         note: "Annual basis"
   - template: generic
-    channel: display-web
+    channel: social
     identifier: youtube.com
     facts:
       - carbon_intensity_mt_per_million_usd_revenue: 36

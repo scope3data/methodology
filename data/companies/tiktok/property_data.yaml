@@ -3,5 +3,5 @@ type: publisher
 company: TikTok
 properties:
   - template: generic
-    channel: display-app
+    channel: social
     identifier: tiktok.com

@@ -99,6 +99,13 @@ class Property(CustomBaseModel):
     corporate_emissions_g_co2e_per_impression: Optional[Decimal] = field(
         default=None, metadata={"default_eligible": True}
     )
+    carbon_intensity_mt_per_million_usd_revenue: Optional[Decimal] = field(
+        default=None, metadata={"default_eligible": True}
+    )
+    carbon_intensity_mt_per_employee: Optional[Decimal] = field(
+        default=None, metadata={"default_eligible": True}
+    )
+
     defaults: Optional["Property"] = field(default=None, metadata={"default_eligible": False})
 
     def set_defaults(self, defaults: "Property"):

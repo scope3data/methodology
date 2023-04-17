@@ -1,0 +1,20 @@
+---
+type: corporate
+name:  Schibsted
+template: publisher
+public_identifier: schibsted
+comment: methodology question - if we are excluding print emissions, how do we exclude print employees?
+facts:
+  - number_of_employees: 5689
+    source_id: 2
+    reference: page 31
+reference_files:
+  - year: 2021
+    id: 1
+    url: >-
+       https://static.schibsted.com/wp-content/uploads/2022/04/07102011/Sustainability-Report-2021-FINAL.pdf
+  - year: 2021
+    id: 2 
+    url: >-
+       https://static.schibsted.com/wp-content/uploads/2022/04/07164038/Schibsted-Annual-Report-2021.pdf
+  - file: SchibstedCorporate.xlsx

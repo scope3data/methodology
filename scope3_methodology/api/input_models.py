@@ -40,6 +40,7 @@ class PropertyChannel(Enum):
     DISPLAY_WEB = "display-app"
     STREAMING = "streaming"
     STREAMING_VIDEO = "streaming-video"
+    SOCIAL = "social"
 
 
 class EndUserDevices(Enum):

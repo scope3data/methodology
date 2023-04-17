@@ -2,3 +2,5 @@
 template:
   name: publisher
   type: organization
+  fact: carbon_intensity_mt_per_million_usd_revenue
+  carbon_intensity_mt_per_million_usd_revenue: 1

@@ -3,8 +3,7 @@ type: publisher
 company: REA Group
 public_identifier: rea_group
 properties:
-  - channel: display-web
-    template: generic
+  - template: generic
     identifier: realestate.com.au
     facts:
       - visits_per_month: 56400000
@@ -14,40 +13,35 @@ properties:
       - corporate_emissions_g_co2e_per_impression: 0.079071871
         calculation: true
         comment: Output of model March 21, 2023
-  - channel: display-web
-    template: generic
+  - template: generic
     identifier: realcommercial.com.au
     facts:
       - visits_per_month: 1700000
         source_id: 1
       - average_visit_duration_s: 204
         source_id: 1
-  - channel: display-web
-    template: generic
+  - template: generic
     identifier: flatmates.com.au
     facts:
       - visits_per_month: 2500000
         source_id: 1
       - average_visit_duration_s: 392
         source_id: 1
-  - channel: display-web
-    template: generic
+  - template: generic
     identifier: housing.com
     facts:
       - visits_per_month: 19900000
         source_id: 1
       - average_visit_duration_s: 202
         source_id: 1
-  - channel: display-web
-    template: generic
+  - template: generic
     identifier: makaan.com
     facts:
       - visits_per_month: 1700000
         source_id: 1
       - average_visit_duration_s: 179
         source_id: 1
-  - channel: display-web
-    template: generic
+  - template: generic
     identifier: proptiger.com
     facts:
       - visits_per_month: 1100000

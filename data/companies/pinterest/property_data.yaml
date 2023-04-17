@@ -3,7 +3,7 @@ type: publisher
 company: Pinterest
 properties:
   - template: generic
-    channel: display-web
+    channel: social
     identifier: pinterest.com
     facts:
       - carbon_intensity_mt_per_million_usd_revenue: 54
