@@ -99,9 +99,6 @@ class Property(CustomBaseModel):
     corporate_emissions_g_co2e_per_impression: Optional[Decimal] = field(
         default=None, metadata={"default_eligible": True}
     )
-    quality_impressions_per_duration_s: Optional[Decimal] = field(
-        default=None, metadata={"default_eligible": True}
-    )
     carbon_intensity_mt_per_million_usd_revenue: Optional[Decimal] = field(
         default=None, metadata={"default_eligible": True}
     )

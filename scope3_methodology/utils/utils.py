@@ -168,7 +168,9 @@ def get_all_facts() -> dict[str, list[Fact]]:
                             facts,
                             "/".join(pth.parts[-2:]),
                             publisher_property["template"],
-                            publisher_property["channel"],
+                            publisher_property["channel"]
+                            if "channel" in publisher_property
+                            else None,
                             publisher_property["facts"],
                         )
     return facts

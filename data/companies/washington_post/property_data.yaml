@@ -3,12 +3,11 @@ type: publisher
 company: Washington Post
 properties:
   - template: generic
-    channel: display-web
     identifier: washingtonpost.com
     facts:
       - visits_per_month: 176200000
         source_id: 1
-      - pages_per_visit:  2.52
+      - pages_per_visit: 2.52
         source_id: 1
       - average_visit_duration_s: 185
         source_id: 1

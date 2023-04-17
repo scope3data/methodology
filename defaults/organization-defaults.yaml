@@ -10,7 +10,7 @@ defaults:
   generic:
     commuting_emissions_mt_co2e_per_employee_per_month: 0.043000000
     datacenter_emissions_mt_co2e_per_employee_per_month: 0.362000000
-    office_emissions_mt_co2e_per_employee_per_month: 0.112920000
+    office_emissions_mt_co2e_per_employee_per_month: 0.094100000
     overhead_emissions_mt_co2e_per_employee_per_month: 0.314000000
     revenue_allocation_to_digital_ads_pct: 100
     travel_emissions_mt_co2e_per_employee_per_month: 0.044600000

@@ -10,12 +10,9 @@ properties:
     facts:
       - carbon_intensity_mt_per_million_usd_revenue: 110
         note: "Annual basis"
-      - quality_impressions_per_duration_s: 0.4
-      - carbon_intensity_mt_per_employee: 10000
   - template: social
     channel: social
     identifier: instagram.com
     facts:
       - carbon_intensity_mt_per_million_usd_revenue: 110
         note: "Annual basis"
-      - quality_impressions_per_duration_s: 0.2

@@ -53,6 +53,10 @@ def build_fact_averages(
             template_specific_sum = Decimal(0)
             template_fact_count = 0
             for fact in facts[key]:
+                """If the fact is only for a specific channel do not include in all defaults"""
+                if fact.channel is not None:
+                    if fact.channel != channel:
+                        continue
                 all_fact_source_list.append(fact)
                 fact_key = "{fact.channel}-{fact.template}" if fact.channel else fact.template
                 if fact_key == template_key:
