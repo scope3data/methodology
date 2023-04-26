@@ -17,6 +17,9 @@ facts:
   - datacenter_emissions_mt_co2e_per_employee_per_month: 0.362
     calculation: true
   - overhead_emissions_mt_co2e_per_employee_per_month: 0.314
+  - revenue_allocation_to_digital_ads_pct: 73.3
+    source_id: 2
+    comment: based on latest publicly available report from 2019.
 raw_data:
   - office emissions mt: 21966
     source_id: 1
@@ -40,3 +43,7 @@ reference_files:
     id: 1
     url: >-
       https://sustainability.axelspringer.com/wp-content/uploads/2022/09/2021_Nachhaltigkeitsbilanz_komplett_ENG_29092022.pdf
+  - year: 2019
+    id: 2
+    url: >-
+      https://www.axelspringer.com/data/uploads/2020/03/annual_report_2019.pdf
