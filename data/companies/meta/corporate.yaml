@@ -7,7 +7,7 @@ channel: social
 facts:
   - number_of_employees: 86482
     source_id: 1
-  - carbon_intensity_mt_per_employee: 149.7
+  - carbon_intensity_mt_per_employee: 58.5
     source_id: 1
   - office_emissions_mt_co2e_per_employee_per_month: 33.3333
     source_id: 1
