@@ -26,6 +26,16 @@ These bottom-up numbers indicate that the majority of emissions from broadband u
 
 ## Power usage by bandwidth (Conventional Model)
 
+[Base Station Energy Use in Dense Urban and Suburban Areas](https://ieeexplore.ieee.org/document/10005276?source=authoralert) includes a table of the base station (RAT) energy use for 3G, 4G, and 5G:
+
+| RAT | kWh/GB |
+| --- | ------ |
+| 3G  | 2.8    |
+| 4G  | 0.104  |
+| 5G  | 0.0104 |
+
+[Power consumption evaluation of mobile radio access networks using a bottom-up approach](https://hera.futuregenerations.be/sites/www.futuregenerations.be/files/summary_masterthesis4g5g_louisgolard.pdf) proposes 10 kbit/J for 4G base stations, equivalent to 0.23 kWh/GB. It suggests 5G is 3-4x more efficient, approximately 0.06 kWh/GB.
+
 For mobile vs fixed data the [2020 EU ICT impact study](https://circabc.europa.eu/sd/a/8b7319ba-ce4f-49ea-a6e6-b28df00b20d1/ICT%20impact%20study%20final.pdf) suggests 0.03 kWh/GB for fixed, 0.14 kWh/GB for mobile.
 
 The 0.03 kWh/GB number aligns with what is in the graphic above (0.03 W/Mbps) at relatively low bandwidth. [Aslan et al](https://onlinelibrary.wiley.com/doi/10.1111/jiec.12630) suggest that fixed-line networks should be 0.06 kWh/GB in 2020 and halving every two years. This is consistent with the 0.03 kWh/GB figure.
