@@ -32,8 +32,8 @@ defaults:
       quality_impressions_per_duration_s: 0.100000000
   social:
     generic:
-      carbon_intensity_mt_per_employee: 67.500000000
-      carbon_intensity_mt_per_million_usd_revenue: 55.242857143
+      carbon_intensity_mt_per_employee: 44.700000000
+      carbon_intensity_mt_per_million_usd_revenue: 36.100000000
       core_internet_data_transfer_electricity_use_kwh_per_gb: 0.000066700
       corporate_emissions_g_co2e_per_impression: 0.049018915
       end_user_data_transfer_electricity_use_kwh_per_gb: 0.100000000
@@ -289,7 +289,7 @@ sources:
           key: carbon_intensity_mt_per_employee
           template: social
           url: n/a
-          value: 149.700000000
+          value: 58.500000000
         - channel: null
           company: snap/corporate.yaml
           is_calculation: false
@@ -318,14 +318,14 @@ sources:
           key: carbon_intensity_mt_per_million_usd_revenue
           template: social
           url: n/a
-          value: 110
+          value: 43
         - channel: social
           company: meta/property_data.yaml
           is_calculation: false
           key: carbon_intensity_mt_per_million_usd_revenue
           template: social
           url: n/a
-          value: 110
+          value: 43
         - channel: social
           company: alphabet/property_data.yaml
           is_calculation: false
