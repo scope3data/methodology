@@ -19,29 +19,29 @@ defaults:
 sources:
   high:
     name:
-      - template default
+    - template default
     resolution:
-      - template default
+    - template default
     transmission_rate_mbps:
-      - template default
+    - template default
   low:
     name:
-      - template default
+    - template default
     resolution:
-      - template default
+    - template default
     transmission_rate_mbps:
-      - template default
+    - template default
   medium:
     name:
-      - template default
+    - template default
     resolution:
-      - template default
+    - template default
     transmission_rate_mbps:
-      - template default
+    - template default
   ultra:
     name:
-      - template default
+    - template default
     resolution:
-      - template default
+    - template default
     transmission_rate_mbps:
-      - template default
+    - template default
