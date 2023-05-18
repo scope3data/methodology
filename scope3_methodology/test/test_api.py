@@ -77,7 +77,7 @@ class TestAPI(unittest.TestCase):
         )
         self.assertEqual(
             organization_defaults[OrganizationType.PUBLISHER].revenue_allocation_to_digital_ads_pct,
-            Decimal("11.122500000"),
+            Decimal("11.698000000"),
         )
         self.assertTrue(organization_defaults[OrganizationType.GENERIC])
         self.assertEqual(

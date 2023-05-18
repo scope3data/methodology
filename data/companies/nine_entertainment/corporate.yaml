@@ -1,0 +1,48 @@
+---
+type: corporate
+name: Nine Entertainment
+template: publisher
+public_identifier: nine_entertainment
+facts:
+  - number_of_employees: 4204
+    calculation: true
+    comment: total Nine employees minus total Domain employees.
+  - revenue_allocation_to_digital_ads_pct: 14
+    calculation: true
+    comment: 6.4% (9now) + 7.6% (Nine Publishing)
+raw_data:
+  - total Nine employees: 5254
+    source_id: 1
+    reference: page 32
+  - total Domain employees: 1050
+    source_id: 2
+    reference: page 154
+    comment: This number will be substracted  to the total employee number as Domain is partially owned by Nine, and digital advertising represents a small percentage for Domain.
+  - total Nine revenue: 2.7B
+    source_id: 1
+    reference: page 2
+  - total Domain revenue: 325.5M
+    source_id: 2
+    reference: page 7
+    comment: Therefore estimating that Nine (minus Domain)'s revenue is 2.375M
+  - 9NOW revenue: 151M
+    source_id: 1
+    reference: page 4
+    comment: Therefore estimating that 9now represents 6.4% of Nine (minus Domain)' total revenue. Assuming all of which is from digital advertising.
+  - Nine Publishing - Total revenue: 600M
+    source_id: 1
+    reference: page 23
+    comment: exact number not provided, using estimate from the pie chart.
+  - Nine Publishing - Pct Digital Advertising: 30
+    source_id: 1
+    reference: page 22
+    comment: exact number not provided, using estimate from the pie chart. Therefore estimating that digital ads revenue from Nine Publishing is 180M and represents 7.6% of Nine (minus Domain)' revenue.
+reference_files:
+  - year: 2022
+    id: 1
+    url: >-
+      https://www.nineforbrands.com.au/wp-content/uploads/2022/09/Nine-2022-Annual-Report-Web.pdf
+  - year: 2022
+    id: 2
+    url: >-
+      https://shareholders.domain.com.au/FormBuilder/_Resource/_module/9sTGPYyyL06UZMFtMvhLPw/file/2022-Annual-Report.pdf
