@@ -73,7 +73,7 @@ yaml.add_representer(Decimal, represent_decimal)
 
 def yaml_load(stream, **kwargs):
     """Custom yaml load to correctly read Decimal fields"""
-    return yaml.load(stream, Loader, **kwargs)
+    return yaml.load(stream, Loader, **kwargs)  # type: ignore
 
 
 def yaml_dump(obj: object):
