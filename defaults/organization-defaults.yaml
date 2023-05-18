@@ -5,21 +5,21 @@ defaults:
     datacenter_emissions_mt_co2e_per_employee_per_month: 0.362000000
     office_emissions_mt_co2e_per_employee_per_month: 0.017600000
     overhead_emissions_mt_co2e_per_employee_per_month: 0.314000000
-    revenue_allocation_to_digital_ads_pct: 10.933333333
+    revenue_allocation_to_digital_ads_pct: 11.122500000
     travel_emissions_mt_co2e_per_employee_per_month: 0.011000000
   generic:
     commuting_emissions_mt_co2e_per_employee_per_month: 0.055250000
     datacenter_emissions_mt_co2e_per_employee_per_month: 0.362000000
-    office_emissions_mt_co2e_per_employee_per_month: 0.089357143
+    office_emissions_mt_co2e_per_employee_per_month: 0.101562500
     overhead_emissions_mt_co2e_per_employee_per_month: 0.314000000
     revenue_allocation_to_digital_ads_pct: 100
     travel_emissions_mt_co2e_per_employee_per_month: 0.077616667
   publisher:
     commuting_emissions_mt_co2e_per_employee_per_month: 0.055250000
     datacenter_emissions_mt_co2e_per_employee_per_month: 0.362000000
-    office_emissions_mt_co2e_per_employee_per_month: 0.121580000
+    office_emissions_mt_co2e_per_employee_per_month: 0.132483333
     overhead_emissions_mt_co2e_per_employee_per_month: 0.314000000
-    revenue_allocation_to_digital_ads_pct: 10.933333333
+    revenue_allocation_to_digital_ads_pct: 11.122500000
     travel_emissions_mt_co2e_per_employee_per_month: 0.090940000
 sources:
   atp:
@@ -77,6 +77,13 @@ sources:
         url: n/a
         value: 0.314000000
     revenue_allocation_to_digital_ads_pct:
+      - channel: null
+        company: dpg_media/corporate.yaml
+        is_calculation: true
+        key: revenue_allocation_to_digital_ads_pct
+        template: publisher
+        url: n/a
+        value: 11.690000000
       - channel: null
         company: theguardian/corporate.yaml
         is_calculation: false
@@ -145,6 +152,13 @@ sources:
         url: n/a
         value: 0.362000000
     office_emissions_mt_co2e_per_employee_per_month:
+      - channel: null
+        company: dpg_media/corporate.yaml
+        is_calculation: true
+        key: office_emissions_mt_co2e_per_employee_per_month
+        template: publisher
+        url: n/a
+        value: 0.187000000
       - channel: null
         company: theguardian/corporate.yaml
         is_calculation: true
@@ -280,6 +294,13 @@ sources:
         value: 0.362000000
     office_emissions_mt_co2e_per_employee_per_month:
       - channel: null
+        company: dpg_media/corporate.yaml
+        is_calculation: true
+        key: office_emissions_mt_co2e_per_employee_per_month
+        template: publisher
+        url: n/a
+        value: 0.187000000
+      - channel: null
         company: theguardian/corporate.yaml
         is_calculation: true
         key: office_emissions_mt_co2e_per_employee_per_month
@@ -323,6 +344,13 @@ sources:
         url: n/a
         value: 0.314000000
     revenue_allocation_to_digital_ads_pct:
+      - channel: null
+        company: dpg_media/corporate.yaml
+        is_calculation: true
+        key: revenue_allocation_to_digital_ads_pct
+        template: publisher
+        url: n/a
+        value: 11.690000000
       - channel: null
         company: theguardian/corporate.yaml
         is_calculation: false

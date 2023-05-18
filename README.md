@@ -61,6 +61,12 @@ To write defaults from latest sources:
 ./scope3_methodology/cli/compute_defaults.py
 ```
 
+To run tests:
+
+```sh
+python -m unittest
+```
+
 To compute the corporate emissions, pass in its YAML file and org type (which will make defaults more accurate):
 
 ```sh

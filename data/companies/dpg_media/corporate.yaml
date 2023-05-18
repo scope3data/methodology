@@ -1,0 +1,33 @@
+---
+type: corporate
+name: DPG Media
+template: publisher
+public_identifier: dpg_media
+facts:
+  - number_of_employees: 5867
+    source_id: 1
+    reference: page 4
+  - revenue_allocation_to_digital_ads_pct: 11.69
+    calculation: true
+  - office_emissions_mt_co2e_per_employee_per_month: 0.187
+    calculation: true
+    comment: 13200/(12*5867)
+raw_data:
+  - total_revenue_per_year: 1831M euros
+    source_id: 1
+    reference: page 4
+  - digital_advertising_revenue_per_year: 214M euros
+    source_id: 1
+    reference: page 4
+  - office_emissions_mt_per_year: 13200
+    source_id: 1
+    reference: page 36
+  - vehicle_fleet_emissions: 4200
+    source_id: 1
+    reference: page 36
+    comment: not used in the model as it's only part of business_travel and commuting emissions
+reference_files:
+  - year: 2022
+    id: 1
+    url: >-
+      https://annualreport.dpgmediagroup.com/2022-en/this_is_dpg_media
