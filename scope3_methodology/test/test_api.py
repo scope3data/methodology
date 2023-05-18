@@ -73,18 +73,18 @@ class TestAPI(unittest.TestCase):
             organization_defaults[
                 OrganizationType.PUBLISHER
             ].travel_emissions_mt_co2e_per_employee_per_month,
-            Decimal("0.053"),
+            Decimal("0.090940000"),
         )
         self.assertEqual(
             organization_defaults[OrganizationType.PUBLISHER].revenue_allocation_to_digital_ads_pct,
-            Decimal("11.8"),
+            Decimal("11.700000000"),
         )
         self.assertTrue(organization_defaults[OrganizationType.GENERIC])
         self.assertEqual(
             organization_defaults[
                 OrganizationType.GENERIC
             ].travel_emissions_mt_co2e_per_employee_per_month,
-            Decimal("0.0446"),
+            Decimal("0.077616667"),
         )
 
         self.assertEqual(len(adtech_platform_defaults), 2)

@@ -1,0 +1,46 @@
+---
+type: corporate
+name: ITV
+template: publisher
+public_identifier: itv
+facts:
+  - number_of_employees: 7346
+    source_id: 2
+    reference: page 58
+  - revenue_allocation_to_digital_ads_pct: 9.2
+    calculation: true
+    comment: £343 million / £3,728 million
+  - office_emissions_mt_co2e_per_employee_per_month: 0.0609
+    calculation: true
+    comment: 5372 / (12*7346)
+  - travel_emissions_mt_co2e_per_employee_per_month: 0.2427
+    calculation: true
+    comment: 21392 / (12*7346)
+  - commuting_emissions_mt_co2e_per_employee_per_month: 0.0920
+    calculation: true
+    comment: 8113 / (12*7346)
+raw_data:
+  - total revenue: £3,728 million
+    source_id: 1
+    reference: page 1
+  - total digital advertising revenue: £343 million
+    source_id: 1
+    reference: page 42
+  - office_emissions_mt_co2e: 5372
+    source_id: 2
+    reference: page 58
+  - business_travel_emissions_mt_co2e: 21392
+    source_id: 2
+    reference: page 58
+  - commuting_emissions_mt_co2e: 8113
+    source_id: 2
+    reference: page 58
+reference_files:
+  - year: 2022
+    id: 1
+    url: >-
+      https://www.itvplc.com/~/media/Files/I/ITV-PLC/documents/reports-and-results/annual-result-2022-v2.pdf
+  - year: 2022
+    id: 2
+    url: >-
+      https://www.itvplc.com/~/media/Files/I/ITV-PLC/download/2022-itv-social-purpose-report.pdf
