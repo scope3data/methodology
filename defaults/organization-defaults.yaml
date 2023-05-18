@@ -5,7 +5,7 @@ defaults:
     datacenter_emissions_mt_co2e_per_employee_per_month: 0.362000000
     office_emissions_mt_co2e_per_employee_per_month: 0.017600000
     overhead_emissions_mt_co2e_per_employee_per_month: 0.314000000
-    revenue_allocation_to_digital_ads_pct: 11.700000000
+    revenue_allocation_to_digital_ads_pct: 10.933333333
     travel_emissions_mt_co2e_per_employee_per_month: 0.011000000
   generic:
     commuting_emissions_mt_co2e_per_employee_per_month: 0.055250000
@@ -19,7 +19,7 @@ defaults:
     datacenter_emissions_mt_co2e_per_employee_per_month: 0.362000000
     office_emissions_mt_co2e_per_employee_per_month: 0.121580000
     overhead_emissions_mt_co2e_per_employee_per_month: 0.314000000
-    revenue_allocation_to_digital_ads_pct: 11.700000000
+    revenue_allocation_to_digital_ads_pct: 10.933333333
     travel_emissions_mt_co2e_per_employee_per_month: 0.090940000
 sources:
   atp:
@@ -91,13 +91,6 @@ sources:
         template: publisher
         url: n/a
         value: 8.700000000
-      - channel: null
-        company: sbs/corporate.yaml
-        is_calculation: true
-        key: revenue_allocation_to_digital_ads_pct
-        template: publisher
-        url: n/a
-        value: 14
       - channel: null
         company: itv/corporate.yaml
         is_calculation: true
@@ -344,13 +337,6 @@ sources:
         template: publisher
         url: n/a
         value: 8.700000000
-      - channel: null
-        company: sbs/corporate.yaml
-        is_calculation: true
-        key: revenue_allocation_to_digital_ads_pct
-        template: publisher
-        url: n/a
-        value: 14
       - channel: null
         company: itv/corporate.yaml
         is_calculation: true
