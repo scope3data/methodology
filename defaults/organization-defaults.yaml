@@ -24,401 +24,401 @@ defaults:
 sources:
   atp:
     commuting_emissions_mt_co2e_per_employee_per_month:
-      - channel: null
-        company: theguardian/corporate.yaml
-        is_calculation: true
-        key: commuting_emissions_mt_co2e_per_employee_per_month
-        template: publisher
-        url: n/a
-        value: 0.040000000
-      - channel: null
-        company: rea_group/corporate.yaml
-        is_calculation: true
-        key: commuting_emissions_mt_co2e_per_employee_per_month
-        template: publisher
-        url: n/a
-        value: 0.039000000
-      - channel: null
-        company: axel_springer/corporate.yaml
-        is_calculation: true
-        key: commuting_emissions_mt_co2e_per_employee_per_month
-        template: publisher
-        url: n/a
-        value: 0.050000000
-      - channel: null
-        company: itv/corporate.yaml
-        is_calculation: true
-        key: commuting_emissions_mt_co2e_per_employee_per_month
-        template: publisher
-        url: n/a
-        value: 0.092000000
+    - channel: null
+      company: theguardian/corporate.yaml
+      is_calculation: true
+      key: commuting_emissions_mt_co2e_per_employee_per_month
+      template: publisher
+      url: n/a
+      value: 0.040000000
+    - channel: null
+      company: rea_group/corporate.yaml
+      is_calculation: true
+      key: commuting_emissions_mt_co2e_per_employee_per_month
+      template: publisher
+      url: n/a
+      value: 0.039000000
+    - channel: null
+      company: axel_springer/corporate.yaml
+      is_calculation: true
+      key: commuting_emissions_mt_co2e_per_employee_per_month
+      template: publisher
+      url: n/a
+      value: 0.050000000
+    - channel: null
+      company: itv/corporate.yaml
+      is_calculation: true
+      key: commuting_emissions_mt_co2e_per_employee_per_month
+      template: publisher
+      url: n/a
+      value: 0.092000000
     datacenter_emissions_mt_co2e_per_employee_per_month:
-      - channel: null
-        company: axel_springer/corporate.yaml
-        is_calculation: true
-        key: datacenter_emissions_mt_co2e_per_employee_per_month
-        template: publisher
-        url: n/a
-        value: 0.362000000
+    - channel: null
+      company: axel_springer/corporate.yaml
+      is_calculation: true
+      key: datacenter_emissions_mt_co2e_per_employee_per_month
+      template: publisher
+      url: n/a
+      value: 0.362000000
     office_emissions_mt_co2e_per_employee_per_month:
-      - channel: null
-        company: criteo/corporate.yaml
-        is_calculation: true
-        key: office_emissions_mt_co2e_per_employee_per_month
-        template: atp
-        url: n/a
-        value: 0.017600000
+    - channel: null
+      company: criteo/corporate.yaml
+      is_calculation: true
+      key: office_emissions_mt_co2e_per_employee_per_month
+      template: atp
+      url: n/a
+      value: 0.017600000
     overhead_emissions_mt_co2e_per_employee_per_month:
-      - channel: null
-        company: axel_springer/corporate.yaml
-        is_calculation: false
-        key: overhead_emissions_mt_co2e_per_employee_per_month
-        template: publisher
-        url: n/a
-        value: 0.314000000
+    - channel: null
+      company: axel_springer/corporate.yaml
+      is_calculation: false
+      key: overhead_emissions_mt_co2e_per_employee_per_month
+      template: publisher
+      url: n/a
+      value: 0.314000000
     revenue_allocation_to_digital_ads_pct:
-      - channel: null
-        company: dpg_media/corporate.yaml
-        is_calculation: true
-        key: revenue_allocation_to_digital_ads_pct
-        template: publisher
-        url: n/a
-        value: 11.690000000
-      - channel: null
-        company: theguardian/corporate.yaml
-        is_calculation: false
-        key: revenue_allocation_to_digital_ads_pct
-        template: publisher
-        url: n/a
-        value: 14.900000000
-      - channel: null
-        company: rea_group/corporate.yaml
-        is_calculation: false
-        key: revenue_allocation_to_digital_ads_pct
-        template: publisher
-        url: n/a
-        value: 8.700000000
-      - channel: null
-        company: nine_entertainment/corporate.yaml
-        is_calculation: true
-        key: revenue_allocation_to_digital_ads_pct
-        template: publisher
-        url: n/a
-        value: 14
-      - channel: null
-        company: itv/corporate.yaml
-        is_calculation: true
-        key: revenue_allocation_to_digital_ads_pct
-        template: publisher
-        url: n/a
-        value: 9.200000000
+    - channel: null
+      company: dpg_media/corporate.yaml
+      is_calculation: true
+      key: revenue_allocation_to_digital_ads_pct
+      template: publisher
+      url: n/a
+      value: 11.690000000
+    - channel: null
+      company: theguardian/corporate.yaml
+      is_calculation: false
+      key: revenue_allocation_to_digital_ads_pct
+      template: publisher
+      url: n/a
+      value: 14.900000000
+    - channel: null
+      company: rea_group/corporate.yaml
+      is_calculation: false
+      key: revenue_allocation_to_digital_ads_pct
+      template: publisher
+      url: n/a
+      value: 8.700000000
+    - channel: null
+      company: nine_entertainment/corporate.yaml
+      is_calculation: true
+      key: revenue_allocation_to_digital_ads_pct
+      template: publisher
+      url: n/a
+      value: 14
+    - channel: null
+      company: itv/corporate.yaml
+      is_calculation: true
+      key: revenue_allocation_to_digital_ads_pct
+      template: publisher
+      url: n/a
+      value: 9.200000000
     travel_emissions_mt_co2e_per_employee_per_month:
-      - channel: null
-        company: criteo/corporate.yaml
-        is_calculation: true
-        key: travel_emissions_mt_co2e_per_employee_per_month
-        template: atp
-        url: n/a
-        value: 0.011000000
+    - channel: null
+      company: criteo/corporate.yaml
+      is_calculation: true
+      key: travel_emissions_mt_co2e_per_employee_per_month
+      template: atp
+      url: n/a
+      value: 0.011000000
   generic:
     commuting_emissions_mt_co2e_per_employee_per_month:
-      - channel: null
-        company: theguardian/corporate.yaml
-        is_calculation: true
-        key: commuting_emissions_mt_co2e_per_employee_per_month
-        template: publisher
-        url: n/a
-        value: 0.040000000
-      - channel: null
-        company: rea_group/corporate.yaml
-        is_calculation: true
-        key: commuting_emissions_mt_co2e_per_employee_per_month
-        template: publisher
-        url: n/a
-        value: 0.039000000
-      - channel: null
-        company: axel_springer/corporate.yaml
-        is_calculation: true
-        key: commuting_emissions_mt_co2e_per_employee_per_month
-        template: publisher
-        url: n/a
-        value: 0.050000000
-      - channel: null
-        company: itv/corporate.yaml
-        is_calculation: true
-        key: commuting_emissions_mt_co2e_per_employee_per_month
-        template: publisher
-        url: n/a
-        value: 0.092000000
+    - channel: null
+      company: theguardian/corporate.yaml
+      is_calculation: true
+      key: commuting_emissions_mt_co2e_per_employee_per_month
+      template: publisher
+      url: n/a
+      value: 0.040000000
+    - channel: null
+      company: rea_group/corporate.yaml
+      is_calculation: true
+      key: commuting_emissions_mt_co2e_per_employee_per_month
+      template: publisher
+      url: n/a
+      value: 0.039000000
+    - channel: null
+      company: axel_springer/corporate.yaml
+      is_calculation: true
+      key: commuting_emissions_mt_co2e_per_employee_per_month
+      template: publisher
+      url: n/a
+      value: 0.050000000
+    - channel: null
+      company: itv/corporate.yaml
+      is_calculation: true
+      key: commuting_emissions_mt_co2e_per_employee_per_month
+      template: publisher
+      url: n/a
+      value: 0.092000000
     datacenter_emissions_mt_co2e_per_employee_per_month:
-      - channel: null
-        company: axel_springer/corporate.yaml
-        is_calculation: true
-        key: datacenter_emissions_mt_co2e_per_employee_per_month
-        template: publisher
-        url: n/a
-        value: 0.362000000
+    - channel: null
+      company: axel_springer/corporate.yaml
+      is_calculation: true
+      key: datacenter_emissions_mt_co2e_per_employee_per_month
+      template: publisher
+      url: n/a
+      value: 0.362000000
     office_emissions_mt_co2e_per_employee_per_month:
-      - channel: null
-        company: dpg_media/corporate.yaml
-        is_calculation: true
-        key: office_emissions_mt_co2e_per_employee_per_month
-        template: publisher
-        url: n/a
-        value: 0.187000000
-      - channel: null
-        company: theguardian/corporate.yaml
-        is_calculation: true
-        key: office_emissions_mt_co2e_per_employee_per_month
-        template: publisher
-        url: n/a
-        value: 0.153000000
-      - channel: null
-        company: rea_group/corporate.yaml
-        is_calculation: true
-        key: office_emissions_mt_co2e_per_employee_per_month
-        template: publisher
-        url: n/a
-        value: 0.047000000
-      - channel: null
-        company: cbc/corporate.yaml
-        is_calculation: true
-        key: office_emissions_mt_co2e_per_employee_per_month
-        template: publisher
-        url: n/a
-        value: 0.241000000
-      - channel: null
-        company: axel_springer/corporate.yaml
-        is_calculation: true
-        key: office_emissions_mt_co2e_per_employee_per_month
-        template: publisher
-        url: n/a
-        value: 0.106000000
-      - channel: null
-        company: criteo/corporate.yaml
-        is_calculation: true
-        key: office_emissions_mt_co2e_per_employee_per_month
-        template: atp
-        url: n/a
-        value: 0.017600000
-      - channel: null
-        company: itv/corporate.yaml
-        is_calculation: true
-        key: office_emissions_mt_co2e_per_employee_per_month
-        template: publisher
-        url: n/a
-        value: 0.060900000
+    - channel: null
+      company: dpg_media/corporate.yaml
+      is_calculation: true
+      key: office_emissions_mt_co2e_per_employee_per_month
+      template: publisher
+      url: n/a
+      value: 0.187000000
+    - channel: null
+      company: theguardian/corporate.yaml
+      is_calculation: true
+      key: office_emissions_mt_co2e_per_employee_per_month
+      template: publisher
+      url: n/a
+      value: 0.153000000
+    - channel: null
+      company: rea_group/corporate.yaml
+      is_calculation: true
+      key: office_emissions_mt_co2e_per_employee_per_month
+      template: publisher
+      url: n/a
+      value: 0.047000000
+    - channel: null
+      company: cbc/corporate.yaml
+      is_calculation: true
+      key: office_emissions_mt_co2e_per_employee_per_month
+      template: publisher
+      url: n/a
+      value: 0.241000000
+    - channel: null
+      company: axel_springer/corporate.yaml
+      is_calculation: true
+      key: office_emissions_mt_co2e_per_employee_per_month
+      template: publisher
+      url: n/a
+      value: 0.106000000
+    - channel: null
+      company: criteo/corporate.yaml
+      is_calculation: true
+      key: office_emissions_mt_co2e_per_employee_per_month
+      template: atp
+      url: n/a
+      value: 0.017600000
+    - channel: null
+      company: itv/corporate.yaml
+      is_calculation: true
+      key: office_emissions_mt_co2e_per_employee_per_month
+      template: publisher
+      url: n/a
+      value: 0.060900000
     overhead_emissions_mt_co2e_per_employee_per_month:
-      - channel: null
-        company: axel_springer/corporate.yaml
-        is_calculation: false
-        key: overhead_emissions_mt_co2e_per_employee_per_month
-        template: publisher
-        url: n/a
-        value: 0.314000000
+    - channel: null
+      company: axel_springer/corporate.yaml
+      is_calculation: false
+      key: overhead_emissions_mt_co2e_per_employee_per_month
+      template: publisher
+      url: n/a
+      value: 0.314000000
     revenue_allocation_to_digital_ads_pct:
-      - template default
+    - template default
     travel_emissions_mt_co2e_per_employee_per_month:
-      - channel: null
-        company: theguardian/corporate.yaml
-        is_calculation: true
-        key: travel_emissions_mt_co2e_per_employee_per_month
-        template: publisher
-        url: n/a
-        value: 0.137000000
-      - channel: null
-        company: rea_group/corporate.yaml
-        is_calculation: true
-        key: travel_emissions_mt_co2e_per_employee_per_month
-        template: publisher
-        url: n/a
-        value: 0.049000000
-      - channel: null
-        company: cbc/corporate.yaml
-        is_calculation: true
-        key: travel_emissions_mt_co2e_per_employee_per_month
-        template: publisher
-        url: n/a
-        value: 0.009000000
-      - channel: null
-        company: axel_springer/corporate.yaml
-        is_calculation: true
-        key: travel_emissions_mt_co2e_per_employee_per_month
-        template: publisher
-        url: n/a
-        value: 0.017000000
-      - channel: null
-        company: criteo/corporate.yaml
-        is_calculation: true
-        key: travel_emissions_mt_co2e_per_employee_per_month
-        template: atp
-        url: n/a
-        value: 0.011000000
-      - channel: null
-        company: itv/corporate.yaml
-        is_calculation: true
-        key: travel_emissions_mt_co2e_per_employee_per_month
-        template: publisher
-        url: n/a
-        value: 0.242700000
+    - channel: null
+      company: theguardian/corporate.yaml
+      is_calculation: true
+      key: travel_emissions_mt_co2e_per_employee_per_month
+      template: publisher
+      url: n/a
+      value: 0.137000000
+    - channel: null
+      company: rea_group/corporate.yaml
+      is_calculation: true
+      key: travel_emissions_mt_co2e_per_employee_per_month
+      template: publisher
+      url: n/a
+      value: 0.049000000
+    - channel: null
+      company: cbc/corporate.yaml
+      is_calculation: true
+      key: travel_emissions_mt_co2e_per_employee_per_month
+      template: publisher
+      url: n/a
+      value: 0.009000000
+    - channel: null
+      company: axel_springer/corporate.yaml
+      is_calculation: true
+      key: travel_emissions_mt_co2e_per_employee_per_month
+      template: publisher
+      url: n/a
+      value: 0.017000000
+    - channel: null
+      company: criteo/corporate.yaml
+      is_calculation: true
+      key: travel_emissions_mt_co2e_per_employee_per_month
+      template: atp
+      url: n/a
+      value: 0.011000000
+    - channel: null
+      company: itv/corporate.yaml
+      is_calculation: true
+      key: travel_emissions_mt_co2e_per_employee_per_month
+      template: publisher
+      url: n/a
+      value: 0.242700000
   publisher:
     commuting_emissions_mt_co2e_per_employee_per_month:
-      - channel: null
-        company: theguardian/corporate.yaml
-        is_calculation: true
-        key: commuting_emissions_mt_co2e_per_employee_per_month
-        template: publisher
-        url: n/a
-        value: 0.040000000
-      - channel: null
-        company: rea_group/corporate.yaml
-        is_calculation: true
-        key: commuting_emissions_mt_co2e_per_employee_per_month
-        template: publisher
-        url: n/a
-        value: 0.039000000
-      - channel: null
-        company: axel_springer/corporate.yaml
-        is_calculation: true
-        key: commuting_emissions_mt_co2e_per_employee_per_month
-        template: publisher
-        url: n/a
-        value: 0.050000000
-      - channel: null
-        company: itv/corporate.yaml
-        is_calculation: true
-        key: commuting_emissions_mt_co2e_per_employee_per_month
-        template: publisher
-        url: n/a
-        value: 0.092000000
+    - channel: null
+      company: theguardian/corporate.yaml
+      is_calculation: true
+      key: commuting_emissions_mt_co2e_per_employee_per_month
+      template: publisher
+      url: n/a
+      value: 0.040000000
+    - channel: null
+      company: rea_group/corporate.yaml
+      is_calculation: true
+      key: commuting_emissions_mt_co2e_per_employee_per_month
+      template: publisher
+      url: n/a
+      value: 0.039000000
+    - channel: null
+      company: axel_springer/corporate.yaml
+      is_calculation: true
+      key: commuting_emissions_mt_co2e_per_employee_per_month
+      template: publisher
+      url: n/a
+      value: 0.050000000
+    - channel: null
+      company: itv/corporate.yaml
+      is_calculation: true
+      key: commuting_emissions_mt_co2e_per_employee_per_month
+      template: publisher
+      url: n/a
+      value: 0.092000000
     datacenter_emissions_mt_co2e_per_employee_per_month:
-      - channel: null
-        company: axel_springer/corporate.yaml
-        is_calculation: true
-        key: datacenter_emissions_mt_co2e_per_employee_per_month
-        template: publisher
-        url: n/a
-        value: 0.362000000
+    - channel: null
+      company: axel_springer/corporate.yaml
+      is_calculation: true
+      key: datacenter_emissions_mt_co2e_per_employee_per_month
+      template: publisher
+      url: n/a
+      value: 0.362000000
     office_emissions_mt_co2e_per_employee_per_month:
-      - channel: null
-        company: dpg_media/corporate.yaml
-        is_calculation: true
-        key: office_emissions_mt_co2e_per_employee_per_month
-        template: publisher
-        url: n/a
-        value: 0.187000000
-      - channel: null
-        company: theguardian/corporate.yaml
-        is_calculation: true
-        key: office_emissions_mt_co2e_per_employee_per_month
-        template: publisher
-        url: n/a
-        value: 0.153000000
-      - channel: null
-        company: rea_group/corporate.yaml
-        is_calculation: true
-        key: office_emissions_mt_co2e_per_employee_per_month
-        template: publisher
-        url: n/a
-        value: 0.047000000
-      - channel: null
-        company: cbc/corporate.yaml
-        is_calculation: true
-        key: office_emissions_mt_co2e_per_employee_per_month
-        template: publisher
-        url: n/a
-        value: 0.241000000
-      - channel: null
-        company: axel_springer/corporate.yaml
-        is_calculation: true
-        key: office_emissions_mt_co2e_per_employee_per_month
-        template: publisher
-        url: n/a
-        value: 0.106000000
-      - channel: null
-        company: itv/corporate.yaml
-        is_calculation: true
-        key: office_emissions_mt_co2e_per_employee_per_month
-        template: publisher
-        url: n/a
-        value: 0.060900000
+    - channel: null
+      company: dpg_media/corporate.yaml
+      is_calculation: true
+      key: office_emissions_mt_co2e_per_employee_per_month
+      template: publisher
+      url: n/a
+      value: 0.187000000
+    - channel: null
+      company: theguardian/corporate.yaml
+      is_calculation: true
+      key: office_emissions_mt_co2e_per_employee_per_month
+      template: publisher
+      url: n/a
+      value: 0.153000000
+    - channel: null
+      company: rea_group/corporate.yaml
+      is_calculation: true
+      key: office_emissions_mt_co2e_per_employee_per_month
+      template: publisher
+      url: n/a
+      value: 0.047000000
+    - channel: null
+      company: cbc/corporate.yaml
+      is_calculation: true
+      key: office_emissions_mt_co2e_per_employee_per_month
+      template: publisher
+      url: n/a
+      value: 0.241000000
+    - channel: null
+      company: axel_springer/corporate.yaml
+      is_calculation: true
+      key: office_emissions_mt_co2e_per_employee_per_month
+      template: publisher
+      url: n/a
+      value: 0.106000000
+    - channel: null
+      company: itv/corporate.yaml
+      is_calculation: true
+      key: office_emissions_mt_co2e_per_employee_per_month
+      template: publisher
+      url: n/a
+      value: 0.060900000
     overhead_emissions_mt_co2e_per_employee_per_month:
-      - channel: null
-        company: axel_springer/corporate.yaml
-        is_calculation: false
-        key: overhead_emissions_mt_co2e_per_employee_per_month
-        template: publisher
-        url: n/a
-        value: 0.314000000
+    - channel: null
+      company: axel_springer/corporate.yaml
+      is_calculation: false
+      key: overhead_emissions_mt_co2e_per_employee_per_month
+      template: publisher
+      url: n/a
+      value: 0.314000000
     revenue_allocation_to_digital_ads_pct:
-      - channel: null
-        company: dpg_media/corporate.yaml
-        is_calculation: true
-        key: revenue_allocation_to_digital_ads_pct
-        template: publisher
-        url: n/a
-        value: 11.690000000
-      - channel: null
-        company: theguardian/corporate.yaml
-        is_calculation: false
-        key: revenue_allocation_to_digital_ads_pct
-        template: publisher
-        url: n/a
-        value: 14.900000000
-      - channel: null
-        company: rea_group/corporate.yaml
-        is_calculation: false
-        key: revenue_allocation_to_digital_ads_pct
-        template: publisher
-        url: n/a
-        value: 8.700000000
-      - channel: null
-        company: nine_entertainment/corporate.yaml
-        is_calculation: true
-        key: revenue_allocation_to_digital_ads_pct
-        template: publisher
-        url: n/a
-        value: 14
-      - channel: null
-        company: itv/corporate.yaml
-        is_calculation: true
-        key: revenue_allocation_to_digital_ads_pct
-        template: publisher
-        url: n/a
-        value: 9.200000000
+    - channel: null
+      company: dpg_media/corporate.yaml
+      is_calculation: true
+      key: revenue_allocation_to_digital_ads_pct
+      template: publisher
+      url: n/a
+      value: 11.690000000
+    - channel: null
+      company: theguardian/corporate.yaml
+      is_calculation: false
+      key: revenue_allocation_to_digital_ads_pct
+      template: publisher
+      url: n/a
+      value: 14.900000000
+    - channel: null
+      company: rea_group/corporate.yaml
+      is_calculation: false
+      key: revenue_allocation_to_digital_ads_pct
+      template: publisher
+      url: n/a
+      value: 8.700000000
+    - channel: null
+      company: nine_entertainment/corporate.yaml
+      is_calculation: true
+      key: revenue_allocation_to_digital_ads_pct
+      template: publisher
+      url: n/a
+      value: 14
+    - channel: null
+      company: itv/corporate.yaml
+      is_calculation: true
+      key: revenue_allocation_to_digital_ads_pct
+      template: publisher
+      url: n/a
+      value: 9.200000000
     travel_emissions_mt_co2e_per_employee_per_month:
-      - channel: null
-        company: theguardian/corporate.yaml
-        is_calculation: true
-        key: travel_emissions_mt_co2e_per_employee_per_month
-        template: publisher
-        url: n/a
-        value: 0.137000000
-      - channel: null
-        company: rea_group/corporate.yaml
-        is_calculation: true
-        key: travel_emissions_mt_co2e_per_employee_per_month
-        template: publisher
-        url: n/a
-        value: 0.049000000
-      - channel: null
-        company: cbc/corporate.yaml
-        is_calculation: true
-        key: travel_emissions_mt_co2e_per_employee_per_month
-        template: publisher
-        url: n/a
-        value: 0.009000000
-      - channel: null
-        company: axel_springer/corporate.yaml
-        is_calculation: true
-        key: travel_emissions_mt_co2e_per_employee_per_month
-        template: publisher
-        url: n/a
-        value: 0.017000000
-      - channel: null
-        company: itv/corporate.yaml
-        is_calculation: true
-        key: travel_emissions_mt_co2e_per_employee_per_month
-        template: publisher
-        url: n/a
-        value: 0.242700000
+    - channel: null
+      company: theguardian/corporate.yaml
+      is_calculation: true
+      key: travel_emissions_mt_co2e_per_employee_per_month
+      template: publisher
+      url: n/a
+      value: 0.137000000
+    - channel: null
+      company: rea_group/corporate.yaml
+      is_calculation: true
+      key: travel_emissions_mt_co2e_per_employee_per_month
+      template: publisher
+      url: n/a
+      value: 0.049000000
+    - channel: null
+      company: cbc/corporate.yaml
+      is_calculation: true
+      key: travel_emissions_mt_co2e_per_employee_per_month
+      template: publisher
+      url: n/a
+      value: 0.009000000
+    - channel: null
+      company: axel_springer/corporate.yaml
+      is_calculation: true
+      key: travel_emissions_mt_co2e_per_employee_per_month
+      template: publisher
+      url: n/a
+      value: 0.017000000
+    - channel: null
+      company: itv/corporate.yaml
+      is_calculation: true
+      key: travel_emissions_mt_co2e_per_employee_per_month
+      template: publisher
+      url: n/a
+      value: 0.242700000
