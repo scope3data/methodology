@@ -19,9 +19,10 @@ class ModeledDeviceNetworking:
 
     device: str
     connection_type: NetworkingConnectionType
-    conventional_model_power_usage_kwh_per_gb: Decimal
+    conventional_model_power_usage_kwh_per_gb: Optional[Decimal]
     power_model_energy_usage_kwh_per_second: Optional[Decimal]
     power_model_transmission_rate: Optional[TransmissionRate]
+    channel: Optional[str]
 
 
 @dataclass
@@ -34,7 +35,7 @@ class NetworkingConnection(CustomBaseModel):
     conventional_model_kwh_per_gb_per_device: Optional[dict[str, Decimal]] = field(
         default=None, metadata={"default_eligible": True}
     )
-    streaming_resolution_per_device: Optional[dict[str, str]] = field(
+    transmission_rate_quality_per_channel_per_device: Optional[dict[str, dict[str, str]]] = field(
         default=None, metadata={"default_eligible": True}
     )
     power_model_constant_watt: Optional[Decimal] = field(
@@ -102,15 +103,33 @@ class NetworkingConnection(CustomBaseModel):
             )
         return None
 
-    def model_device(
+    def model_device_conventional_model(
         self,
         device: str,
         connection: NetworkingConnectionType,
-        transmission_rate: Optional[TransmissionRate],
     ) -> ModeledDeviceNetworking | None:
         """
-        Model conventional networking emissions based on the provided device, and
-        power model streaming energy by device, connection, and duration
+        Model conventional networking emissions based on the provided device
+        :return: ModeledNetworking
+        """
+        return ModeledDeviceNetworking(
+            device=device,
+            connection_type=connection,
+            conventional_model_power_usage_kwh_per_gb=self.get_power_usage_kwh_per_gb(device),
+            power_model_energy_usage_kwh_per_second=None,
+            power_model_transmission_rate=None,
+            channel=None,
+        )
+
+    def model_device_power_model(
+        self,
+        device: str,
+        connection: NetworkingConnectionType,
+        transmission_rate: TransmissionRate,
+        channel=str,
+    ) -> ModeledDeviceNetworking | None:
+        """
+        Model power model streaming energy by device, connection, and duration
         :return: ModeledNetworking
         """
         power_energy_usage_kwh_per_second = self.calculate_power_energy_usage_kwh_per_second(
@@ -118,9 +137,12 @@ class NetworkingConnection(CustomBaseModel):
         )
 
         return ModeledDeviceNetworking(
-            device,
-            connection,
-            self.get_power_usage_kwh_per_gb(device),
-            power_energy_usage_kwh_per_second,
-            transmission_rate if power_energy_usage_kwh_per_second else None,
+            device=device,
+            connection_type=connection,
+            conventional_model_power_usage_kwh_per_gb=None,
+            power_model_energy_usage_kwh_per_second=power_energy_usage_kwh_per_second,
+            power_model_transmission_rate=transmission_rate
+            if power_energy_usage_kwh_per_second
+            else None,
+            channel=channel if power_energy_usage_kwh_per_second else None,
         )

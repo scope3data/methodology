@@ -99,22 +99,30 @@ Mobile Network Energy (Amn) = 1.2W + 1.53W/Mbps
 | Mobile          | 1.2          | 1.53              |
 | Fixed           | 9.55         | 0.03              |
 
-Data transmission rates
-| Quality | Transmission rate (Mbps) |
-| -- | --
-| Low (480p) | 0.56
-| Medium (720p) | 2.22
-| High (1080p) | 6.67
-| Ultra (4K) | 15.56
+Channel Based Data transmission rates
+| Channel | Quality | Transmission rate (Mbps) |
+| -- | -- | --
+| Streaming Video | Low (480p) | 0.56
+| Streaming Video | Medium (720p) | 2.22
+| Streaming Video | High (1080p) | 6.67
+| Streaming Video | Ultra (4K) | 15.56
+| Digital Audio | Low | 0.024
+| Digital Audio | Medium | 0.096
+| Digital Audio | High | 0.16
 
 Streaming energy use by device, connection, and duration
-| Device type | Connection Type | Rate | Energy Use
-| -- | -- | -- | -- |
-| TV | Fixed | Ultra | 10.0W
-| PC or Tablet | Fixed | High | 9.75W
-| Smartphone | Fixed | Medium | 9.6W
-| PC or Tablet | Mobile | High | 11.4W
-| Smartphone | Mobile | Medium | 4.6W
+| Channel | Device type | Connection Type | Rate | Energy Use
+| -- | -- | -- | -- | -- |
+| Streaming Video | TV | Fixed | Ultra | 10.0W
+| Streaming Video | PC or Tablet | Fixed | High | 9.75W
+| Streaming Video | Smartphone | Fixed | Medium | 9.6W
+| Streaming Video | PC or Tablet | Mobile | High | 11.4W
+| Streaming Video | Smartphone | Mobile | Medium | 4.6W
+| Digital Audio | TV | Fixed | High | 9.55W
+| Digital Audio | PC or Tablet | Fixed | High | 9.55W
+| Digital Audio | Smartphone | Fixed | Medium | 9.55W
+| Digital Audio | PC or Tablet | Mobile | High | 1.44W
+| Digital Audio | Smartphone | Mobile | Medium | 1.35W
 
 ## References
 

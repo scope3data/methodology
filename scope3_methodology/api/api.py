@@ -52,7 +52,8 @@ adtech_platform_defaults: dict[ATPTemplate, AdTechPlatform] = {}
 property_defaults: dict[PropertyChannel, Property] = {}
 end_user_device_defaults: dict[EndUserDevices, EndUserDevice] = {}
 networking_connection_defaults: dict[NetworkingConnectionType, NetworkingConnection] = {}
-transmission_rate_defaults: dict[StreamingResolution, TransmissionRate] = {}
+transmission_rate_defaults: dict[PropertyChannel, dict[StreamingResolution, TransmissionRate]] = {}
+power_model_channels = [PropertyChannel.STREAMING_VIDEO, PropertyChannel.DIGITAL_AUDIO]
 
 
 def load_default_files(
@@ -87,10 +88,16 @@ def load_default_files(
             connection_type.value, networking_file_path
         )
 
-    for resolution in StreamingResolution:
-        transmission_rate_defaults[resolution] = TransmissionRate.load_default_yaml(
-            resolution.value, transmission_rates_file_path
-        )
+    for channel in power_model_channels:
+        resolution_defaults: dict[StreamingResolution, TransmissionRate] = {}
+        for resolution in StreamingResolution:
+            if channel == PropertyChannel.DIGITAL_AUDIO and resolution == StreamingResolution.ULTRA:
+                continue
+
+            resolution_defaults[resolution] = TransmissionRate.load_default_yaml(
+                resolution.value, transmission_rates_file_path, channel.value
+            )
+        transmission_rate_defaults[channel] = resolution_defaults
 
 
 @app.on_event("startup")
@@ -111,17 +118,17 @@ async def startup_event():
     transmission_rates_file_path = os.environ.get("TRANSMISSION_RATE_FILE")
 
     if atp_defaults_file_path is None:
-        raise Exception("Must provide environment variable: ATP_DEFAULTS_FILE")
+        raise UnboundLocalError("Must provide environment variable: ATP_DEFAULTS_FILE")
     if organization_defaults_file_path is None:
-        raise Exception("Must provide environment variable: ORGANIZATION_DEFAULTS_FILE")
+        raise UnboundLocalError("Must provide environment variable: ORGANIZATION_DEFAULTS_FILE")
     if property_defaults_file_path is None:
-        raise Exception("Must provide environment variable: PROPERTY_DEFAULTS_FILE")
+        raise UnboundLocalError("Must provide environment variable: PROPERTY_DEFAULTS_FILE")
     if end_user_device_file_path is None:
-        raise Exception("Must provide environment variable: END_USER_DEVICE_DEFAULTS_FILE")
+        raise UnboundLocalError("Must provide environment variable: END_USER_DEVICE_DEFAULTS_FILE")
     if networking_file_path is None:
-        raise Exception("Must provide environment variable: NETWORKING_DEFAULTS_FILE")
+        raise UnboundLocalError("Must provide environment variable: NETWORKING_DEFAULTS_FILE")
     if transmission_rates_file_path is None:
-        raise Exception("Must provide environment variable: TRANSMISSION_RATE_FILE")
+        raise UnboundLocalError("Must provide environment variable: TRANSMISSION_RATE_FILE")
 
     load_default_files(
         atp_defaults_file_path,
@@ -316,7 +323,7 @@ def parse_corporate_public_yaml_file(identifier: str):
         with open(file_info.file_path, "r", encoding="UTF-8") as stream:
             document = yaml_load(stream)
             if "name" not in document:
-                raise Exception("No 'name' field found in company file")
+                raise LookupError("No 'name' field found in company file")
             facts = get_facts(document["facts"]) if "facts" in document else {}
             return {
                 "file_info": file_info,
@@ -357,20 +364,27 @@ def get_all_networking_connection_device_defaults():
     response = []
     for connection_type, defaults in networking_connection_defaults.items():
         for device in EndUserDevices:
-
-            transmission_rate = None
-            if defaults.streaming_resolution_per_device:
-                transmission_rate = transmission_rate_defaults[
-                    StreamingResolution(defaults.streaming_resolution_per_device[device.value])
-                ]
-
-            modeled_device_networking = defaults.model_device(
-                device.value, connection_type, transmission_rate
+            modeled_device_networking = defaults.model_device_conventional_model(
+                device.value, connection_type
             )
-
             response.append(modeled_device_networking)
+
+        for channel in power_model_channels:
+            channel_rate_defaults = transmission_rate_defaults[channel]
+            if defaults.transmission_rate_quality_per_channel_per_device:
+                channel_resolution_defaults = (
+                    defaults.transmission_rate_quality_per_channel_per_device[channel.value]
+                )
+                for device in EndUserDevices:
+                    transmission_rate = channel_rate_defaults[
+                        StreamingResolution(channel_resolution_defaults[device.value])
+                    ]
+                    modeled_device_networking = defaults.model_device_power_model(
+                        device.value, connection_type, transmission_rate, channel.value
+                    )
+                    response.append(modeled_device_networking)
     return response
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, port=int(os.environ.get("PORT", 8080)), host="0.0.0.0")
+    uvicorn.run(app, port=int(os.environ.get("PORT", 8081)), host="0.0.0.0")
