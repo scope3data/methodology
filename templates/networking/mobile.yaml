@@ -6,8 +6,14 @@ template:
   conventional_model_generic_kwh_per_gb: 0.14
   power_model_constant_watt: 1.2
   power_model_variable_watt_per_mbps: 1.53
-  streaming_resolution_per_device:
-    smartphone: medium
-    personal_computer: high
-    tv_system: ultra
-    tablet: high
+  transmission_rate_quality_per_channel_per_device:
+    streaming-video:
+      smartphone: medium
+      personal_computer: high
+      tv_system: ultra
+      tablet: high
+    digital-audio:
+      smartphone: medium
+      personal_computer: high
+      tv_system: high
+      tablet: high

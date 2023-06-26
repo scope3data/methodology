@@ -1,0 +1,7 @@
+---
+template:
+  channel: digital-audio
+  name: high
+  generic: true
+  type: transmission_rate
+  transmission_rate_mbps: 0.16

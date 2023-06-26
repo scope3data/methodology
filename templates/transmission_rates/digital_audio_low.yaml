@@ -1,7 +1,7 @@
 ---
 template:
+  channel: digital-audio
   name: low
   generic: true
   type: transmission_rate
-  resolution: 480p
-  transmission_rate_mbps: 0.56
+  transmission_rate_mbps: 0.024

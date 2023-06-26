@@ -26,21 +26,38 @@ TEST_PROPERTY_DEFAULTS_FILE = "defaults/property-defaults.yaml"
 TEST_ORGANIZATION_DEFAULTS_FILE = "defaults/organization-defaults.yaml"
 TEST_ATP_DEFAULTS_FILE = "defaults/atp-defaults.yaml"
 TEST_NETWORKING_DEFAULTS_FILE = "defaults/networking-defaults.yaml"
-TEST_TRANSMISSION_RATES_DEFAULTS_FILE = "defaults/transmission_rate-defaults.yaml"
-
 TEST_TRANSMISSION_RATE_DEFAULTS_FILE = "defaults/transmission_rate-defaults.yaml"
 
 TEST_TRANSMISSION_RATE_HIGH = TransmissionRate.load_default_yaml(
-    StreamingResolution.HIGH.value, TEST_TRANSMISSION_RATE_DEFAULTS_FILE
+    StreamingResolution.HIGH.value,
+    TEST_TRANSMISSION_RATE_DEFAULTS_FILE,
+    PropertyChannel.STREAMING_VIDEO.value,
 )
 TEST_TRANSMISSION_RATE_LOW = TransmissionRate.load_default_yaml(
-    StreamingResolution.LOW.value, TEST_TRANSMISSION_RATE_DEFAULTS_FILE
+    StreamingResolution.LOW.value,
+    TEST_TRANSMISSION_RATE_DEFAULTS_FILE,
+    PropertyChannel.STREAMING_VIDEO.value,
 )
 TEST_TRANSMISSION_RATE_ULTRA = TransmissionRate.load_default_yaml(
-    StreamingResolution.ULTRA.value, TEST_TRANSMISSION_RATE_DEFAULTS_FILE
+    StreamingResolution.ULTRA.value,
+    TEST_TRANSMISSION_RATE_DEFAULTS_FILE,
+    PropertyChannel.STREAMING_VIDEO.value,
 )
 TEST_TRANSMISSION_RATE_MEDIUM = TransmissionRate.load_default_yaml(
-    StreamingResolution.MEDIUM.value, TEST_TRANSMISSION_RATE_DEFAULTS_FILE
+    StreamingResolution.MEDIUM.value,
+    TEST_TRANSMISSION_RATE_DEFAULTS_FILE,
+    PropertyChannel.STREAMING_VIDEO.value,
+)
+
+TEST_TRANSMISSION_RATE_DA_HIGH = TransmissionRate.load_default_yaml(
+    StreamingResolution.HIGH.value,
+    TEST_TRANSMISSION_RATE_DEFAULTS_FILE,
+    PropertyChannel.DIGITAL_AUDIO.value,
+)
+TEST_TRANSMISSION_RATE_DA_MEDIUM = TransmissionRate.load_default_yaml(
+    StreamingResolution.MEDIUM.value,
+    TEST_TRANSMISSION_RATE_DEFAULTS_FILE,
+    PropertyChannel.DIGITAL_AUDIO.value,
 )
 
 
@@ -55,7 +72,7 @@ class TestAPI(unittest.TestCase):
             TEST_PROPERTY_DEFAULTS_FILE,
             TEST_DEVICE_DEFAULTS_FILE,
             TEST_NETWORKING_DEFAULTS_FILE,
-            TEST_TRANSMISSION_RATES_DEFAULTS_FILE,
+            TEST_TRANSMISSION_RATE_DEFAULTS_FILE,
         )
 
         # verify the correct count and a field that should be different across
@@ -152,25 +169,41 @@ class TestAPI(unittest.TestCase):
             end_user_device_defaults[EndUserDevices.TV_SYSTEM].draw_watts, Decimal("87.4")
         )
 
-        self.assertEqual(len(transmission_rate_defaults), 4)
+        sv_tr = transmission_rate_defaults[PropertyChannel.STREAMING_VIDEO]
+        self.assertEqual(len(sv_tr), 4)
         self.assertEqual(
-            transmission_rate_defaults[StreamingResolution.HIGH].transmission_rate_mbps,
+            sv_tr[StreamingResolution.HIGH].transmission_rate_mbps,
             Decimal("6.67"),
         )
         self.assertEqual(
-            transmission_rate_defaults[StreamingResolution.MEDIUM].transmission_rate_mbps,
+            sv_tr[StreamingResolution.MEDIUM].transmission_rate_mbps,
             Decimal("2.22"),
         )
         self.assertEqual(
-            transmission_rate_defaults[StreamingResolution.LOW].transmission_rate_mbps,
+            sv_tr[StreamingResolution.LOW].transmission_rate_mbps,
             Decimal("0.56"),
         )
         self.assertEqual(
-            transmission_rate_defaults[StreamingResolution.ULTRA].transmission_rate_mbps,
+            sv_tr[StreamingResolution.ULTRA].transmission_rate_mbps,
             Decimal("15.56"),
         )
 
-    def test_get_all_networking_connection_device_fixed_defaults(self):
+        da_tr = transmission_rate_defaults[PropertyChannel.DIGITAL_AUDIO]
+        self.assertEqual(len(da_tr), 3)
+        self.assertEqual(
+            da_tr[StreamingResolution.HIGH].transmission_rate_mbps,
+            Decimal("0.16"),
+        )
+        self.assertEqual(
+            da_tr[StreamingResolution.MEDIUM].transmission_rate_mbps,
+            Decimal("0.096"),
+        )
+        self.assertEqual(
+            da_tr[StreamingResolution.LOW].transmission_rate_mbps,
+            Decimal("0.024"),
+        )
+
+    def test_get_all_con_networking_connection_device_fixed_defaults(self):
         """Test get_all_networking_connection_device_defaults returns expected output"""
         load_default_files(
             TEST_ATP_DEFAULTS_FILE,
@@ -178,18 +211,63 @@ class TestAPI(unittest.TestCase):
             TEST_PROPERTY_DEFAULTS_FILE,
             TEST_DEVICE_DEFAULTS_FILE,
             TEST_NETWORKING_DEFAULTS_FILE,
-            TEST_TRANSMISSION_RATES_DEFAULTS_FILE,
+            TEST_TRANSMISSION_RATE_DEFAULTS_FILE,
         )
 
         response = get_all_networking_connection_device_defaults()
-        self.assertEqual(len(response), 12)
+        self.assertEqual(len(response), 36)
 
         for device_network_connection in response:
-            if device_network_connection.connection_type == NetworkingConnectionType.FIXED:
+            if (
+                device_network_connection.connection_type == NetworkingConnectionType.FIXED
+                and device_network_connection.channel is None
+            ):
                 self.assertEqual(
                     device_network_connection.conventional_model_power_usage_kwh_per_gb,
-                    Decimal("0.03"),
+                    Decimal("0.00650"),
                 )
+
+    def test_get_all_power_networking_connection_device_fixed_defaults(self):
+        """Test get_all_networking_connection_device_defaults returns expected output"""
+        load_default_files(
+            TEST_ATP_DEFAULTS_FILE,
+            TEST_ORGANIZATION_DEFAULTS_FILE,
+            TEST_PROPERTY_DEFAULTS_FILE,
+            TEST_DEVICE_DEFAULTS_FILE,
+            TEST_NETWORKING_DEFAULTS_FILE,
+            TEST_TRANSMISSION_RATE_DEFAULTS_FILE,
+        )
+
+        response = get_all_networking_connection_device_defaults()
+        self.assertEqual(len(response), 36)
+
+        for device_network_connection in response:
+            if (
+                device_network_connection.connection_type == NetworkingConnectionType.FIXED
+                and device_network_connection.channel == PropertyChannel.DIGITAL_AUDIO.value
+            ):
+                if device_network_connection.device == EndUserDevices.SMARTPHONE.value:
+                    self.assertEqual(
+                        device_network_connection.power_model_energy_usage_kwh_per_second,
+                        Decimal("0.000002653577777777777777777777778"),
+                    )
+                    self.assertEqual(
+                        device_network_connection.power_model_transmission_rate,
+                        TEST_TRANSMISSION_RATE_DA_MEDIUM,
+                    )
+                else:
+                    self.assertEqual(
+                        device_network_connection.power_model_energy_usage_kwh_per_second,
+                        Decimal("0.000002654111111111111111111111111"),
+                    )
+                    self.assertEqual(
+                        device_network_connection.power_model_transmission_rate,
+                        TEST_TRANSMISSION_RATE_DA_HIGH,
+                    )
+            if (
+                device_network_connection.connection_type == NetworkingConnectionType.FIXED
+                and device_network_connection.channel == PropertyChannel.STREAMING_VIDEO.value
+            ):
                 if device_network_connection.device == EndUserDevices.TV_SYSTEM.value:
                     self.assertEqual(
                         device_network_connection.power_model_energy_usage_kwh_per_second,
@@ -218,7 +296,7 @@ class TestAPI(unittest.TestCase):
                         TEST_TRANSMISSION_RATE_HIGH,
                     )
 
-    def test_get_all_networking_connection_device_unknown_defaults(self):
+    def test_get_all_con_networking_connection_device_unknown_defaults(self):
         """Test get_all_networking_connection_device_defaults returns expected output"""
         load_default_files(
             TEST_ATP_DEFAULTS_FILE,
@@ -226,15 +304,17 @@ class TestAPI(unittest.TestCase):
             TEST_PROPERTY_DEFAULTS_FILE,
             TEST_DEVICE_DEFAULTS_FILE,
             TEST_NETWORKING_DEFAULTS_FILE,
-            TEST_TRANSMISSION_RATES_DEFAULTS_FILE,
+            TEST_TRANSMISSION_RATE_DEFAULTS_FILE,
         )
 
         response = get_all_networking_connection_device_defaults()
-        self.assertEqual(len(response), 12)
+        self.assertEqual(len(response), 36)
 
         for device_network_connection in response:
-            if device_network_connection.connection_type == NetworkingConnectionType.UNKNOWN:
-
+            if (
+                device_network_connection.connection_type == NetworkingConnectionType.UNKNOWN
+                and device_network_connection.channel is None
+            ):
                 if device_network_connection.device == EndUserDevices.SMARTPHONE.value:
                     self.assertEqual(
                         device_network_connection.conventional_model_power_usage_kwh_per_gb,
@@ -243,13 +323,54 @@ class TestAPI(unittest.TestCase):
                 else:
                     self.assertEqual(
                         device_network_connection.conventional_model_power_usage_kwh_per_gb,
-                        Decimal("0.03"),
+                        Decimal("0.00650"),
                     )
 
+    def test_get_all_power_networking_connection_device_unknown_defaults(self):
+        """Test get_all_networking_connection_device_defaults returns expected output"""
+        load_default_files(
+            TEST_ATP_DEFAULTS_FILE,
+            TEST_ORGANIZATION_DEFAULTS_FILE,
+            TEST_PROPERTY_DEFAULTS_FILE,
+            TEST_DEVICE_DEFAULTS_FILE,
+            TEST_NETWORKING_DEFAULTS_FILE,
+            TEST_TRANSMISSION_RATE_DEFAULTS_FILE,
+        )
+
+        response = get_all_networking_connection_device_defaults()
+        self.assertEqual(len(response), 36)
+
+        for device_network_connection in response:
+            if (
+                device_network_connection.connection_type == NetworkingConnectionType.UNKNOWN
+                and device_network_connection.channel == PropertyChannel.DIGITAL_AUDIO.value
+            ):
+                if device_network_connection.device == EndUserDevices.SMARTPHONE.value:
+                    self.assertEqual(
+                        device_network_connection.power_model_energy_usage_kwh_per_second,
+                        Decimal("3.741333333333333333333333333E-7"),
+                    )
+                    self.assertEqual(
+                        device_network_connection.power_model_transmission_rate,
+                        TEST_TRANSMISSION_RATE_DA_MEDIUM,
+                    )
+                else:
+                    self.assertEqual(
+                        device_network_connection.power_model_energy_usage_kwh_per_second,
+                        Decimal("4.169555555555555555555555556E-7"),
+                    )
+                    self.assertEqual(
+                        device_network_connection.power_model_transmission_rate,
+                        TEST_TRANSMISSION_RATE_DA_HIGH,
+                    )
+            if (
+                device_network_connection.connection_type == NetworkingConnectionType.UNKNOWN
+                and device_network_connection.channel == PropertyChannel.STREAMING_VIDEO.value
+            ):
                 if device_network_connection.device == EndUserDevices.TV_SYSTEM.value:
                     self.assertEqual(
                         device_network_connection.power_model_energy_usage_kwh_per_second,
-                        Decimal("0.000002782444444444444444444444444"),
+                        Decimal("4.447611111111111111111111111E-7"),
                     )
                     self.assertEqual(
                         device_network_connection.power_model_transmission_rate,
@@ -267,14 +388,14 @@ class TestAPI(unittest.TestCase):
                 else:
                     self.assertEqual(
                         device_network_connection.power_model_energy_usage_kwh_per_second,
-                        Decimal("0.000002708361111111111111111111111"),
+                        Decimal("4.287097222222222222222222222E-7"),
                     )
                     self.assertEqual(
                         device_network_connection.power_model_transmission_rate,
                         TEST_TRANSMISSION_RATE_HIGH,
                     )
 
-    def test_get_all_networking_connection_device_mobile_defaults(self):
+    def test_get_all_conventional_networking_connection_device_mobile_defaults(self):
         """Test get_all_networking_connection_device_defaults returns expected output"""
         load_default_files(
             TEST_ATP_DEFAULTS_FILE,
@@ -282,18 +403,63 @@ class TestAPI(unittest.TestCase):
             TEST_PROPERTY_DEFAULTS_FILE,
             TEST_DEVICE_DEFAULTS_FILE,
             TEST_NETWORKING_DEFAULTS_FILE,
-            TEST_TRANSMISSION_RATES_DEFAULTS_FILE,
+            TEST_TRANSMISSION_RATE_DEFAULTS_FILE,
         )
 
         response = get_all_networking_connection_device_defaults()
-        self.assertEqual(len(response), 12)
+        self.assertEqual(len(response), 36)
 
         for device_network_connection in response:
-            if device_network_connection.connection_type == NetworkingConnectionType.MOBILE:
+            if (
+                device_network_connection.connection_type == NetworkingConnectionType.MOBILE
+                and device_network_connection.channel is None
+            ):
                 self.assertEqual(
                     device_network_connection.conventional_model_power_usage_kwh_per_gb,
                     Decimal("0.14"),
                 )
+
+    def test_get_all_power_networking_connection_device_mobile_defaults(self):
+        """Test get_all_networking_connection_device_defaults returns expected output"""
+        load_default_files(
+            TEST_ATP_DEFAULTS_FILE,
+            TEST_ORGANIZATION_DEFAULTS_FILE,
+            TEST_PROPERTY_DEFAULTS_FILE,
+            TEST_DEVICE_DEFAULTS_FILE,
+            TEST_NETWORKING_DEFAULTS_FILE,
+            TEST_TRANSMISSION_RATE_DEFAULTS_FILE,
+        )
+
+        response = get_all_networking_connection_device_defaults()
+        self.assertEqual(len(response), 36)
+
+        for device_network_connection in response:
+            if (
+                device_network_connection.connection_type == NetworkingConnectionType.MOBILE
+                and device_network_connection.channel == PropertyChannel.DIGITAL_AUDIO.value
+            ):
+                if device_network_connection.device == EndUserDevices.SMARTPHONE.value:
+                    self.assertEqual(
+                        device_network_connection.power_model_energy_usage_kwh_per_second,
+                        Decimal("3.741333333333333333333333333E-7"),
+                    )
+                    self.assertEqual(
+                        device_network_connection.power_model_transmission_rate,
+                        TEST_TRANSMISSION_RATE_DA_MEDIUM,
+                    )
+                else:
+                    self.assertEqual(
+                        device_network_connection.power_model_energy_usage_kwh_per_second,
+                        Decimal("4.013333333333333333333333333E-7"),
+                    )
+                    self.assertEqual(
+                        device_network_connection.power_model_transmission_rate,
+                        TEST_TRANSMISSION_RATE_DA_HIGH,
+                    )
+            if (
+                device_network_connection.connection_type == NetworkingConnectionType.MOBILE
+                and device_network_connection.channel == PropertyChannel.STREAMING_VIDEO.value
+            ):
                 if device_network_connection.device == EndUserDevices.TV_SYSTEM.value:
                     self.assertEqual(
                         device_network_connection.power_model_energy_usage_kwh_per_second,

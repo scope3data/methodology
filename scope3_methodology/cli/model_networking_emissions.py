@@ -35,6 +35,14 @@ def parse_args():
         help="Networking connection type: unknown, fixed, mobile",
     )
     parser.add_argument(
+        "-s",
+        "--channel",
+        const=1,
+        type=str,
+        nargs="?",
+        help="Channel type: digital-audio, streaming-video",
+    )
+    parser.add_argument(
         "-d",
         "--device",
         const=1,
@@ -57,13 +65,23 @@ def main():
         logging.basicConfig(level=logging.INFO)
 
     device = str(args.device)
+    channel = str(args.channel) if args.channel else None
     connection = str(args.connection)
     connection_networking = NetworkingConnection.load_default_yaml(connection, args.defaultsFile)
-    transmission_rates = TransmissionRate.load_default_yaml(
-        connection_networking.streaming_resolution_per_device[device],
-        args.transmissionRatesdefaultsFile,
-    )
-    modeled_emissions = connection_networking.model_device(device, connection, transmission_rates)
+
+    if channel is not None:
+        transmission_rate = TransmissionRate.load_default_yaml(
+            connection_networking.transmission_rate_quality_per_channel_per_device[channel][device],
+            args.transmissionRatesdefaultsFile,
+            channel,
+        )
+        modeled_emissions = connection_networking.model_device_power_model(
+            device, connection, transmission_rate, channel
+        )
+    else:
+        modeled_emissions = connection_networking.model_device_conventional_model(
+            device, connection
+        )
 
     print(yaml_dump({"networking": modeled_emissions}))
 

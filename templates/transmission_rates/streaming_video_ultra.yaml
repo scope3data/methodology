@@ -1,5 +1,6 @@
 ---
 template:
+  channel: streaming-video
   name: ultra
   generic: true
   type: transmission_rate
