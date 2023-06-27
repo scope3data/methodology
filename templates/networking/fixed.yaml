@@ -3,7 +3,7 @@ template:
   name: fixed
   generic: true
   type: networking
-  conventional_model_generic_kwh_per_gb: 0.0065
+  conventional_model_generic_kwh_per_gb: 0.03
   power_model_constant_watt: 9.55
   power_model_variable_watt_per_mbps: 0.03
   transmission_rate_quality_per_channel_per_device:
