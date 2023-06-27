@@ -224,7 +224,7 @@ class TestAPI(unittest.TestCase):
             ):
                 self.assertEqual(
                     device_network_connection.conventional_model_power_usage_kwh_per_gb,
-                    Decimal("0.00650"),
+                    Decimal("0.030"),
                 )
 
     def test_get_all_power_networking_connection_device_fixed_defaults(self):
@@ -323,7 +323,7 @@ class TestAPI(unittest.TestCase):
                 else:
                     self.assertEqual(
                         device_network_connection.conventional_model_power_usage_kwh_per_gb,
-                        Decimal("0.00650"),
+                        Decimal("0.030"),
                     )
 
     def test_get_all_power_networking_connection_device_unknown_defaults(self):
@@ -357,7 +357,7 @@ class TestAPI(unittest.TestCase):
                 else:
                     self.assertEqual(
                         device_network_connection.power_model_energy_usage_kwh_per_second,
-                        Decimal("4.169555555555555555555555556E-7"),
+                        Decimal("0.000002654111111111111111111111111"),
                     )
                     self.assertEqual(
                         device_network_connection.power_model_transmission_rate,
@@ -370,7 +370,7 @@ class TestAPI(unittest.TestCase):
                 if device_network_connection.device == EndUserDevices.TV_SYSTEM.value:
                     self.assertEqual(
                         device_network_connection.power_model_energy_usage_kwh_per_second,
-                        Decimal("4.447611111111111111111111111E-7"),
+                        Decimal("0.000002782444444444444444444444444"),
                     )
                     self.assertEqual(
                         device_network_connection.power_model_transmission_rate,
@@ -388,7 +388,7 @@ class TestAPI(unittest.TestCase):
                 else:
                     self.assertEqual(
                         device_network_connection.power_model_energy_usage_kwh_per_second,
-                        Decimal("4.287097222222222222222222222E-7"),
+                        Decimal("0.000002708361111111111111111111111"),
                     )
                     self.assertEqual(
                         device_network_connection.power_model_transmission_rate,

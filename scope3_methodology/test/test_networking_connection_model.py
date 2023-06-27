@@ -60,7 +60,7 @@ class TestNetworkingConnection(unittest.TestCase):
                 ModeledDeviceNetworking(
                     device=device.value,
                     connection_type=NetworkingConnectionType.FIXED,
-                    conventional_model_power_usage_kwh_per_gb=Decimal("0.00650"),
+                    conventional_model_power_usage_kwh_per_gb=Decimal("0.030"),
                     power_model_transmission_rate=None,
                     power_model_energy_usage_kwh_per_second=None,
                     channel=None,
@@ -95,7 +95,7 @@ class TestNetworkingConnection(unittest.TestCase):
                     ModeledDeviceNetworking(
                         device=device.value,
                         connection_type=NetworkingConnectionType.UNKNOWN,
-                        conventional_model_power_usage_kwh_per_gb=Decimal("0.00650"),
+                        conventional_model_power_usage_kwh_per_gb=Decimal("0.030"),
                         power_model_transmission_rate=None,
                         power_model_energy_usage_kwh_per_second=None,
                         channel=None,
@@ -164,7 +164,7 @@ class TestNetworkingConnection(unittest.TestCase):
         self.assertEqual(
             fixed_networking_connection,
             NetworkingConnection(
-                conventional_model_generic_kwh_per_gb=Decimal("0.006500000"),
+                conventional_model_generic_kwh_per_gb=Decimal("0.0300000"),
                 conventional_model_kwh_per_gb_per_device=None,
                 power_model_constant_watt=Decimal("9.550000000"),
                 power_model_variable_watt_per_mbps=Decimal("0.03"),
@@ -188,7 +188,7 @@ class TestNetworkingConnection(unittest.TestCase):
         for device in EndUserDevices:
             self.assertEqual(
                 fixed_networking_connection.get_power_usage_kwh_per_gb(device.value),
-                Decimal("0.00650"),
+                Decimal("0.030"),
             )
             self.assertEqual(
                 fixed_networking_connection.model_device_power_model(
@@ -202,7 +202,9 @@ class TestNetworkingConnection(unittest.TestCase):
                     connection_type=NetworkingConnectionType.FIXED,
                     conventional_model_power_usage_kwh_per_gb=None,
                     power_model_transmission_rate=TEST_TRANSMISSION_RATE,
-                    power_model_energy_usage_kwh_per_second=Decimal("0.000002708361111111111111111111111"),
+                    power_model_energy_usage_kwh_per_second=Decimal(
+                        "0.000002708361111111111111111111111"
+                    ),
                     channel=PropertyChannel.STREAMING_VIDEO.value,
                 ),
             )
@@ -217,22 +219,22 @@ class TestNetworkingConnection(unittest.TestCase):
             NetworkingConnection(
                 conventional_model_generic_kwh_per_gb=Decimal("0.100000000"),
                 conventional_model_kwh_per_gb_per_device={
-                    "personal_computer": Decimal("0.00650"),
+                    "personal_computer": Decimal("0.030000000"),
                     "smartphone": Decimal("0.140000000"),
-                    "tablet": Decimal("0.00650"),
-                    "tv_system": Decimal("0.00650"),
+                    "tablet": Decimal("0.030000000"),
+                    "tv_system": Decimal("0.030000000"),
                 },
                 power_model_constant_watt_per_device={
-                    "personal_computer": Decimal("1.5"),
+                    "personal_computer": Decimal("9.55"),
                     "smartphone": Decimal("1.200000000"),
-                    "tablet": Decimal("1.5"),
-                    "tv_system": Decimal("1.5"),
+                    "tablet": Decimal("9.55"),
+                    "tv_system": Decimal("9.55"),
                 },
                 power_model_variable_watt_per_mbps_per_device={
-                    "personal_computer": Decimal("0.00650"),
+                    "personal_computer": Decimal("0.030000000"),
                     "smartphone": Decimal("1.530000000"),
-                    "tablet": Decimal("0.00650"),
-                    "tv_system": Decimal("0.00650"),
+                    "tablet": Decimal("0.030000000"),
+                    "tv_system": Decimal("0.030000000"),
                 },
                 transmission_rate_quality_per_channel_per_device={
                     PropertyChannel.STREAMING_VIDEO.value: {
@@ -259,19 +261,19 @@ class TestNetworkingConnection(unittest.TestCase):
         )
         self.assertEqual(
             unknown_networking_connection.get_power_usage_kwh_per_gb(EndUserDevices.TABLET.value),
-            Decimal("0.00650"),
+            Decimal("0.030"),
         )
         self.assertEqual(
             unknown_networking_connection.get_power_usage_kwh_per_gb(
                 EndUserDevices.PERSONAL_COMPUTER.value
             ),
-            Decimal("0.00650"),
+            Decimal("0.030"),
         )
         self.assertEqual(
             unknown_networking_connection.get_power_usage_kwh_per_gb(
                 EndUserDevices.TV_SYSTEM.value
             ),
-            Decimal("0.00650"),
+            Decimal("0.030"),
         )
         self.assertEqual(
             unknown_networking_connection.get_power_usage_kwh_per_gb("unknown"),
@@ -307,7 +309,9 @@ class TestNetworkingConnection(unittest.TestCase):
                 connection_type=NetworkingConnectionType.UNKNOWN,
                 conventional_model_power_usage_kwh_per_gb=None,
                 power_model_transmission_rate=TEST_TRANSMISSION_RATE,
-                power_model_energy_usage_kwh_per_second=Decimal("4.287097222222222222222222222E-7"),
+                power_model_energy_usage_kwh_per_second=Decimal(
+                    "0.000002708361111111111111111111111"
+                ),
                 channel=PropertyChannel.STREAMING_VIDEO.value,
             ),
         )
