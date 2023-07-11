@@ -10,15 +10,15 @@ This graphic, from [Malmodin and Lundén](#malmodin-and-lundén-2018), is a usef
 
 The _Lifecycle Annual Footprint_ (LAF) of a particular device, per [Belkhir and Elmeligi](#belkhir-and-elmeligi-2018), is the Use Phase Energy (UPE) plus the Production Energy (PE) divided by the Useful Life (UL). In other words, "the Lifecycle Annual Footprint accounts for the annual footprint of both the use phase as well as the production energy, depreciating the production energy over the useful lifetime of the device.
 
-$LAF = {UPE + PE \over UL}$
+`LAF = (UPE + PE) / UL`
 
 Production is done around the world, not where consumer use occurs, whereas we need to calculate the UPE based on the consumer's grid mix. We calculate _Production Energy per Use Second_ (PEPS) using the daily usage in hours (DU):
 
-$PEPS = {PE \over 365 • UL • DU • 3600}$
+`PEPS = PE / (365 • UL • DU • 3600)`
 
 To calculate the _Lifecycle Emissions Per Second of Use_ (LEPS), we multiply the grid intensity of the consumer's location (GI) and the usage energy of the consumer device (UEPS) and add this to the production energy per second (PEPS).
 
-$LEPS = {PEPS + GI • UEPS}$
+`LEPS = PEPS + GI • UEPS`
 
 The following sections outline the sources and assumptions used to calculate these metrics for various device types.
 
