@@ -6,6 +6,13 @@
     "light": "/images/logo/light.svg"
   },
   "favicon": "/images/favicon.png",
+  "anchors": [
+    {
+      "icon": "github",
+      "name": "GitHub",
+      "url": "https://github.com/scope3data/methodology"
+    }
+  ],
   "colors": {
     "primary": "#3FAE7A",
     "light": "#6DB48C",
@@ -32,7 +39,7 @@
   ],
   "footerSocials": {
     "twitter": "https://twitter.com/Scope3data",
-    "github": "https://github.com/scope3data",
+    "github": "https://github.com/scope3data/methodology",
     "linkedin": "https://www.linkedin.com/company/scope3data"
   },
   "backgroundImage": "/images/background.png"
