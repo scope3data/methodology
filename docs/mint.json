@@ -1,0 +1,39 @@
+{
+  "$schema": "https://mintlify.com/schema.json",
+  "name": "Scope3",
+  "logo": {
+    "dark": "/images/logo/dark.svg",
+    "light": "/images/logo/light.svg"
+  },
+  "favicon": "/images/favicon.png",
+  "colors": {
+    "primary": "#3FAE7A",
+    "light": "#6DB48C",
+    "dark": "#0E8545"
+  },
+  "topbarCtaButton": {
+    "name": "Website",
+    "url": "https://www.scope3.com"
+  },
+  "navigation": [
+    {
+      "group": "Methodology",
+      "pages": [
+        "lifecycle",
+        "data_transfer",
+        "corporate_model",
+        "publisher_model",
+        "consumer_devices",
+        "creative",
+        "ad_tech_model",
+        "cookie_sync_model"
+      ]
+    }
+  ],
+  "footerSocials": {
+    "twitter": "https://twitter.com/Scope3data",
+    "github": "https://github.com/scope3data",
+    "linkedin": "https://www.linkedin.com/company/scope3data"
+  },
+  "backgroundImage": "/images/background.png"
+}
