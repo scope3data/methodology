@@ -22,6 +22,10 @@
     "name": "Website",
     "url": "https://www.scope3.com"
   },
+  "modeToggle": {
+    "default": "light",
+    "isHidden": true
+  },
   "navigation": [
     {
       "group": "Methodology",
