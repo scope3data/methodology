@@ -116,7 +116,7 @@ class TestAPI(unittest.TestCase):
             Decimal("6100.6"),
         )
 
-        self.assertEqual(len(property_defaults), 7)
+        self.assertEqual(len(property_defaults), 8)
         self.assertTrue(property_defaults[PropertyChannel.DISPLAY])
         self.assertEqual(
             property_defaults[PropertyChannel.DISPLAY].quality_impressions_per_duration_s,
@@ -130,6 +130,11 @@ class TestAPI(unittest.TestCase):
         self.assertTrue(property_defaults[PropertyChannel.DISPLAY_APP])
         self.assertEqual(
             property_defaults[PropertyChannel.DISPLAY_APP].quality_impressions_per_duration_s,
+            Decimal("0.1"),
+        )
+        self.assertTrue(property_defaults[PropertyChannel.DOOH])
+        self.assertEqual(
+            property_defaults[PropertyChannel.DOOH].quality_impressions_per_duration_s,
             Decimal("0.1"),
         )
         self.assertTrue(property_defaults[PropertyChannel.STREAMING])

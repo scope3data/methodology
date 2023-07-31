@@ -1,0 +1,7 @@
+---
+template:
+  name: generic
+  channel: dooh
+  generic: true
+  type: property
+  quality_impressions_per_duration_s: 0.1

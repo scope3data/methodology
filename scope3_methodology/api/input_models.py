@@ -42,6 +42,7 @@ class PropertyChannel(Enum):
     STREAMING_VIDEO = "streaming-video"
     SOCIAL = "social"
     DIGITAL_AUDIO = "digital-audio"
+    DOOH = "dooh"
 
 
 class EndUserDevices(Enum):
