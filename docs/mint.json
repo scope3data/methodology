@@ -14,9 +14,13 @@
     }
   ],
   "colors": {
-    "primary": "#3FAE7A",
+    "primary": "#0D3B00",
     "light": "#6DB48C",
-    "dark": "#0E8545"
+    "dark": "#0E8545",
+    "background": {
+      "light": "#FAFFF0",
+      "dark": "#082400"
+    }
   },
   "topbarCtaButton": {
     "name": "Website",
@@ -45,6 +49,5 @@
     "twitter": "https://twitter.com/Scope3data",
     "github": "https://github.com/scope3data/methodology",
     "linkedin": "https://www.linkedin.com/company/scope3data"
-  },
-  "backgroundImage": "/images/background.png"
+  }
 }
