@@ -7,7 +7,7 @@ defaults:
       core_internet_data_transfer_electricity_use_kwh_per_gb: 0.000066700
       corporate_emissions_g_co2e_per_impression: 0.049018915
       end_user_data_transfer_electricity_use_kwh_per_gb: 0.100000000
-      quality_impressions_per_duration_s: 0.002100000
+      quality_impressions_per_duration_s: 0.003200000
   display:
     generic:
       carbon_intensity_mt_per_employee: 30.075000000
@@ -70,517 +70,517 @@ sources:
   digital-audio:
     generic:
       carbon_intensity_mt_per_employee:
-      - channel: null
-        company: pinterest/corporate.yaml
-        is_calculation: false
-        key: carbon_intensity_mt_per_employee
-        template: publisher
-        url: n/a
-        value: 43.200000000
-      - channel: null
-        company: spotify/corporate.yaml
-        is_calculation: false
-        key: carbon_intensity_mt_per_employee
-        template: publisher
-        url: n/a
-        value: 42.300000000
-      - channel: null
-        company: snap/corporate.yaml
-        is_calculation: false
-        key: carbon_intensity_mt_per_employee
-        template: publisher
-        url: n/a
-        value: 34.800000000
+        - channel: null
+          company: pinterest/corporate.yaml
+          is_calculation: false
+          key: carbon_intensity_mt_per_employee
+          template: publisher
+          url: n/a
+          value: 43.200000000
+        - channel: null
+          company: spotify/corporate.yaml
+          is_calculation: false
+          key: carbon_intensity_mt_per_employee
+          template: publisher
+          url: n/a
+          value: 42.300000000
+        - channel: null
+          company: snap/corporate.yaml
+          is_calculation: false
+          key: carbon_intensity_mt_per_employee
+          template: publisher
+          url: n/a
+          value: 34.800000000
       carbon_intensity_mt_per_million_usd_revenue:
-      - channel: null
-        company: spotify/property_data.yaml
-        is_calculation: false
-        key: carbon_intensity_mt_per_million_usd_revenue
-        template: generic
-        url: n/a
-        value: 31.700000000
+        - channel: null
+          company: spotify/property_data.yaml
+          is_calculation: false
+          key: carbon_intensity_mt_per_million_usd_revenue
+          template: generic
+          url: n/a
+          value: 31.700000000
       core_internet_data_transfer_electricity_use_kwh_per_gb:
-      - channel: null
-        company: malmodin/data.yaml
-        is_calculation: false
-        key: core_internet_data_transfer_electricity_use_kwh_per_gb
-        template: GENERAL
-        url: https://www.youtube.com/watch?v=Xo0PB5i_b4Y&t=2520s
-        value: 0.000066700
+        - channel: null
+          company: malmodin/data.yaml
+          is_calculation: false
+          key: core_internet_data_transfer_electricity_use_kwh_per_gb
+          template: GENERAL
+          url: https://www.youtube.com/watch?v=Xo0PB5i_b4Y&t=2520s
+          value: 0.000066700
       corporate_emissions_g_co2e_per_impression:
-      - channel: null
-        company: theguardian/property_data.yaml
-        is_calculation: true
-        key: corporate_emissions_g_co2e_per_impression
-        template: generic
-        url: n/a
-        value: 0.018965959
-      - channel: null
-        company: rea_group/property_data.yaml
-        is_calculation: true
-        key: corporate_emissions_g_co2e_per_impression
-        template: generic
-        url: n/a
-        value: 0.079071871
+        - channel: null
+          company: theguardian/property_data.yaml
+          is_calculation: true
+          key: corporate_emissions_g_co2e_per_impression
+          template: generic
+          url: n/a
+          value: 0.018965959
+        - channel: null
+          company: rea_group/property_data.yaml
+          is_calculation: true
+          key: corporate_emissions_g_co2e_per_impression
+          template: generic
+          url: n/a
+          value: 0.079071871
       end_user_data_transfer_electricity_use_kwh_per_gb:
-      - channel: null
-        company: VTT/data.yaml
-        is_calculation: false
-        key: end_user_data_transfer_electricity_use_kwh_per_gb
-        template: GENERAL
-        url: https://www.mdpi.com/2071-1050/10/7/2494
-        value: 0.100000000
+        - channel: null
+          company: VTT/data.yaml
+          is_calculation: false
+          key: end_user_data_transfer_electricity_use_kwh_per_gb
+          template: GENERAL
+          url: https://www.mdpi.com/2071-1050/10/7/2494
+          value: 0.100000000
       quality_impressions_per_duration_s:
-      - template default
+        - template default
   display:
     generic:
       carbon_intensity_mt_per_employee:
-      - channel: null
-        company: pinterest/corporate.yaml
-        is_calculation: false
-        key: carbon_intensity_mt_per_employee
-        template: publisher
-        url: n/a
-        value: 43.200000000
-      - channel: null
-        company: spotify/corporate.yaml
-        is_calculation: false
-        key: carbon_intensity_mt_per_employee
-        template: publisher
-        url: n/a
-        value: 42.300000000
-      - channel: null
-        company: snap/corporate.yaml
-        is_calculation: false
-        key: carbon_intensity_mt_per_employee
-        template: publisher
-        url: n/a
-        value: 34.800000000
+        - channel: null
+          company: pinterest/corporate.yaml
+          is_calculation: false
+          key: carbon_intensity_mt_per_employee
+          template: publisher
+          url: n/a
+          value: 43.200000000
+        - channel: null
+          company: spotify/corporate.yaml
+          is_calculation: false
+          key: carbon_intensity_mt_per_employee
+          template: publisher
+          url: n/a
+          value: 42.300000000
+        - channel: null
+          company: snap/corporate.yaml
+          is_calculation: false
+          key: carbon_intensity_mt_per_employee
+          template: publisher
+          url: n/a
+          value: 34.800000000
       carbon_intensity_mt_per_million_usd_revenue:
-      - channel: null
-        company: spotify/property_data.yaml
-        is_calculation: false
-        key: carbon_intensity_mt_per_million_usd_revenue
-        template: generic
-        url: n/a
-        value: 31.700000000
+        - channel: null
+          company: spotify/property_data.yaml
+          is_calculation: false
+          key: carbon_intensity_mt_per_million_usd_revenue
+          template: generic
+          url: n/a
+          value: 31.700000000
       computer_active_electricity_use_watts:
-      - template default
+        - template default
       computer_idle_electricity_use_watts:
-      - template default
+        - template default
       core_internet_data_transfer_electricity_use_kwh_per_gb:
-      - channel: null
-        company: malmodin/data.yaml
-        is_calculation: false
-        key: core_internet_data_transfer_electricity_use_kwh_per_gb
-        template: GENERAL
-        url: https://www.youtube.com/watch?v=Xo0PB5i_b4Y&t=2520s
-        value: 0.000066700
+        - channel: null
+          company: malmodin/data.yaml
+          is_calculation: false
+          key: core_internet_data_transfer_electricity_use_kwh_per_gb
+          template: GENERAL
+          url: https://www.youtube.com/watch?v=Xo0PB5i_b4Y&t=2520s
+          value: 0.000066700
       corporate_emissions_g_co2e_per_impression:
-      - channel: null
-        company: theguardian/property_data.yaml
-        is_calculation: true
-        key: corporate_emissions_g_co2e_per_impression
-        template: generic
-        url: n/a
-        value: 0.018965959
-      - channel: null
-        company: rea_group/property_data.yaml
-        is_calculation: true
-        key: corporate_emissions_g_co2e_per_impression
-        template: generic
-        url: n/a
-        value: 0.079071871
+        - channel: null
+          company: theguardian/property_data.yaml
+          is_calculation: true
+          key: corporate_emissions_g_co2e_per_impression
+          template: generic
+          url: n/a
+          value: 0.018965959
+        - channel: null
+          company: rea_group/property_data.yaml
+          is_calculation: true
+          key: corporate_emissions_g_co2e_per_impression
+          template: generic
+          url: n/a
+          value: 0.079071871
       end_user_data_transfer_electricity_use_kwh_per_gb:
-      - channel: null
-        company: VTT/data.yaml
-        is_calculation: false
-        key: end_user_data_transfer_electricity_use_kwh_per_gb
-        template: GENERAL
-        url: https://www.mdpi.com/2071-1050/10/7/2494
-        value: 0.100000000
+        - channel: null
+          company: VTT/data.yaml
+          is_calculation: false
+          key: end_user_data_transfer_electricity_use_kwh_per_gb
+          template: GENERAL
+          url: https://www.mdpi.com/2071-1050/10/7/2494
+          value: 0.100000000
       quality_impressions_per_duration_s:
-      - template default
+        - template default
   display-app:
     generic:
       carbon_intensity_mt_per_employee:
-      - channel: null
-        company: pinterest/corporate.yaml
-        is_calculation: false
-        key: carbon_intensity_mt_per_employee
-        template: publisher
-        url: n/a
-        value: 43.200000000
-      - channel: null
-        company: spotify/corporate.yaml
-        is_calculation: false
-        key: carbon_intensity_mt_per_employee
-        template: publisher
-        url: n/a
-        value: 42.300000000
-      - channel: null
-        company: snap/corporate.yaml
-        is_calculation: false
-        key: carbon_intensity_mt_per_employee
-        template: publisher
-        url: n/a
-        value: 34.800000000
+        - channel: null
+          company: pinterest/corporate.yaml
+          is_calculation: false
+          key: carbon_intensity_mt_per_employee
+          template: publisher
+          url: n/a
+          value: 43.200000000
+        - channel: null
+          company: spotify/corporate.yaml
+          is_calculation: false
+          key: carbon_intensity_mt_per_employee
+          template: publisher
+          url: n/a
+          value: 42.300000000
+        - channel: null
+          company: snap/corporate.yaml
+          is_calculation: false
+          key: carbon_intensity_mt_per_employee
+          template: publisher
+          url: n/a
+          value: 34.800000000
       carbon_intensity_mt_per_million_usd_revenue:
-      - channel: null
-        company: spotify/property_data.yaml
-        is_calculation: false
-        key: carbon_intensity_mt_per_million_usd_revenue
-        template: generic
-        url: n/a
-        value: 31.700000000
+        - channel: null
+          company: spotify/property_data.yaml
+          is_calculation: false
+          key: carbon_intensity_mt_per_million_usd_revenue
+          template: generic
+          url: n/a
+          value: 31.700000000
       computer_active_electricity_use_watts:
-      - template default
+        - template default
       computer_idle_electricity_use_watts:
-      - template default
+        - template default
       core_internet_data_transfer_electricity_use_kwh_per_gb:
-      - channel: null
-        company: malmodin/data.yaml
-        is_calculation: false
-        key: core_internet_data_transfer_electricity_use_kwh_per_gb
-        template: GENERAL
-        url: https://www.youtube.com/watch?v=Xo0PB5i_b4Y&t=2520s
-        value: 0.000066700
+        - channel: null
+          company: malmodin/data.yaml
+          is_calculation: false
+          key: core_internet_data_transfer_electricity_use_kwh_per_gb
+          template: GENERAL
+          url: https://www.youtube.com/watch?v=Xo0PB5i_b4Y&t=2520s
+          value: 0.000066700
       corporate_emissions_g_co2e_per_impression:
-      - channel: null
-        company: theguardian/property_data.yaml
-        is_calculation: true
-        key: corporate_emissions_g_co2e_per_impression
-        template: generic
-        url: n/a
-        value: 0.018965959
-      - channel: null
-        company: rea_group/property_data.yaml
-        is_calculation: true
-        key: corporate_emissions_g_co2e_per_impression
-        template: generic
-        url: n/a
-        value: 0.079071871
+        - channel: null
+          company: theguardian/property_data.yaml
+          is_calculation: true
+          key: corporate_emissions_g_co2e_per_impression
+          template: generic
+          url: n/a
+          value: 0.018965959
+        - channel: null
+          company: rea_group/property_data.yaml
+          is_calculation: true
+          key: corporate_emissions_g_co2e_per_impression
+          template: generic
+          url: n/a
+          value: 0.079071871
       end_user_data_transfer_electricity_use_kwh_per_gb:
-      - channel: null
-        company: VTT/data.yaml
-        is_calculation: false
-        key: end_user_data_transfer_electricity_use_kwh_per_gb
-        template: GENERAL
-        url: https://www.mdpi.com/2071-1050/10/7/2494
-        value: 0.100000000
+        - channel: null
+          company: VTT/data.yaml
+          is_calculation: false
+          key: end_user_data_transfer_electricity_use_kwh_per_gb
+          template: GENERAL
+          url: https://www.mdpi.com/2071-1050/10/7/2494
+          value: 0.100000000
       quality_impressions_per_duration_s:
-      - template default
+        - template default
   display-web:
     generic:
       carbon_intensity_mt_per_employee:
-      - channel: null
-        company: pinterest/corporate.yaml
-        is_calculation: false
-        key: carbon_intensity_mt_per_employee
-        template: publisher
-        url: n/a
-        value: 43.200000000
-      - channel: null
-        company: spotify/corporate.yaml
-        is_calculation: false
-        key: carbon_intensity_mt_per_employee
-        template: publisher
-        url: n/a
-        value: 42.300000000
-      - channel: null
-        company: snap/corporate.yaml
-        is_calculation: false
-        key: carbon_intensity_mt_per_employee
-        template: publisher
-        url: n/a
-        value: 34.800000000
+        - channel: null
+          company: pinterest/corporate.yaml
+          is_calculation: false
+          key: carbon_intensity_mt_per_employee
+          template: publisher
+          url: n/a
+          value: 43.200000000
+        - channel: null
+          company: spotify/corporate.yaml
+          is_calculation: false
+          key: carbon_intensity_mt_per_employee
+          template: publisher
+          url: n/a
+          value: 42.300000000
+        - channel: null
+          company: snap/corporate.yaml
+          is_calculation: false
+          key: carbon_intensity_mt_per_employee
+          template: publisher
+          url: n/a
+          value: 34.800000000
       carbon_intensity_mt_per_million_usd_revenue:
-      - channel: null
-        company: spotify/property_data.yaml
-        is_calculation: false
-        key: carbon_intensity_mt_per_million_usd_revenue
-        template: generic
-        url: n/a
-        value: 31.700000000
+        - channel: null
+          company: spotify/property_data.yaml
+          is_calculation: false
+          key: carbon_intensity_mt_per_million_usd_revenue
+          template: generic
+          url: n/a
+          value: 31.700000000
       computer_active_electricity_use_watts:
-      - template default
+        - template default
       computer_idle_electricity_use_watts:
-      - template default
+        - template default
       core_internet_data_transfer_electricity_use_kwh_per_gb:
-      - channel: null
-        company: malmodin/data.yaml
-        is_calculation: false
-        key: core_internet_data_transfer_electricity_use_kwh_per_gb
-        template: GENERAL
-        url: https://www.youtube.com/watch?v=Xo0PB5i_b4Y&t=2520s
-        value: 0.000066700
+        - channel: null
+          company: malmodin/data.yaml
+          is_calculation: false
+          key: core_internet_data_transfer_electricity_use_kwh_per_gb
+          template: GENERAL
+          url: https://www.youtube.com/watch?v=Xo0PB5i_b4Y&t=2520s
+          value: 0.000066700
       corporate_emissions_g_co2e_per_impression:
-      - channel: null
-        company: theguardian/property_data.yaml
-        is_calculation: true
-        key: corporate_emissions_g_co2e_per_impression
-        template: generic
-        url: n/a
-        value: 0.018965959
-      - channel: null
-        company: rea_group/property_data.yaml
-        is_calculation: true
-        key: corporate_emissions_g_co2e_per_impression
-        template: generic
-        url: n/a
-        value: 0.079071871
+        - channel: null
+          company: theguardian/property_data.yaml
+          is_calculation: true
+          key: corporate_emissions_g_co2e_per_impression
+          template: generic
+          url: n/a
+          value: 0.018965959
+        - channel: null
+          company: rea_group/property_data.yaml
+          is_calculation: true
+          key: corporate_emissions_g_co2e_per_impression
+          template: generic
+          url: n/a
+          value: 0.079071871
       end_user_data_transfer_electricity_use_kwh_per_gb:
-      - channel: null
-        company: VTT/data.yaml
-        is_calculation: false
-        key: end_user_data_transfer_electricity_use_kwh_per_gb
-        template: GENERAL
-        url: https://www.mdpi.com/2071-1050/10/7/2494
-        value: 0.100000000
+        - channel: null
+          company: VTT/data.yaml
+          is_calculation: false
+          key: end_user_data_transfer_electricity_use_kwh_per_gb
+          template: GENERAL
+          url: https://www.mdpi.com/2071-1050/10/7/2494
+          value: 0.100000000
       quality_impressions_per_duration_s:
-      - template default
+        - template default
   social:
     generic:
       carbon_intensity_mt_per_employee:
-      - channel: null
-        company: pinterest/corporate.yaml
-        is_calculation: false
-        key: carbon_intensity_mt_per_employee
-        template: publisher
-        url: n/a
-        value: 43.200000000
-      - channel: null
-        company: spotify/corporate.yaml
-        is_calculation: false
-        key: carbon_intensity_mt_per_employee
-        template: publisher
-        url: n/a
-        value: 42.300000000
-      - channel: social
-        company: meta/corporate.yaml
-        is_calculation: false
-        key: carbon_intensity_mt_per_employee
-        template: social
-        url: n/a
-        value: 58.500000000
-      - channel: null
-        company: snap/corporate.yaml
-        is_calculation: false
-        key: carbon_intensity_mt_per_employee
-        template: publisher
-        url: n/a
-        value: 34.800000000
+        - channel: null
+          company: pinterest/corporate.yaml
+          is_calculation: false
+          key: carbon_intensity_mt_per_employee
+          template: publisher
+          url: n/a
+          value: 43.200000000
+        - channel: null
+          company: spotify/corporate.yaml
+          is_calculation: false
+          key: carbon_intensity_mt_per_employee
+          template: publisher
+          url: n/a
+          value: 42.300000000
+        - channel: social
+          company: meta/corporate.yaml
+          is_calculation: false
+          key: carbon_intensity_mt_per_employee
+          template: social
+          url: n/a
+          value: 58.500000000
+        - channel: null
+          company: snap/corporate.yaml
+          is_calculation: false
+          key: carbon_intensity_mt_per_employee
+          template: publisher
+          url: n/a
+          value: 34.800000000
       carbon_intensity_mt_per_million_usd_revenue:
-      - channel: social
-        company: pinterest/property_data.yaml
-        is_calculation: false
-        key: carbon_intensity_mt_per_million_usd_revenue
-        template: generic
-        url: n/a
-        value: 54
-      - channel: null
-        company: spotify/property_data.yaml
-        is_calculation: false
-        key: carbon_intensity_mt_per_million_usd_revenue
-        template: generic
-        url: n/a
-        value: 31.700000000
-      - channel: social
-        company: meta/property_data.yaml
-        is_calculation: false
-        key: carbon_intensity_mt_per_million_usd_revenue
-        template: social
-        url: n/a
-        value: 43
-      - channel: social
-        company: meta/property_data.yaml
-        is_calculation: false
-        key: carbon_intensity_mt_per_million_usd_revenue
-        template: social
-        url: n/a
-        value: 43
-      - channel: social
-        company: alphabet/property_data.yaml
-        is_calculation: false
-        key: carbon_intensity_mt_per_million_usd_revenue
-        template: generic
-        url: n/a
-        value: 36
-      - channel: social
-        company: snap/property_data.yaml
-        is_calculation: false
-        key: carbon_intensity_mt_per_million_usd_revenue
-        template: generic
-        url: n/a
-        value: 45
+        - channel: social
+          company: pinterest/property_data.yaml
+          is_calculation: false
+          key: carbon_intensity_mt_per_million_usd_revenue
+          template: generic
+          url: n/a
+          value: 54
+        - channel: null
+          company: spotify/property_data.yaml
+          is_calculation: false
+          key: carbon_intensity_mt_per_million_usd_revenue
+          template: generic
+          url: n/a
+          value: 31.700000000
+        - channel: social
+          company: meta/property_data.yaml
+          is_calculation: false
+          key: carbon_intensity_mt_per_million_usd_revenue
+          template: social
+          url: n/a
+          value: 43
+        - channel: social
+          company: meta/property_data.yaml
+          is_calculation: false
+          key: carbon_intensity_mt_per_million_usd_revenue
+          template: social
+          url: n/a
+          value: 43
+        - channel: social
+          company: alphabet/property_data.yaml
+          is_calculation: false
+          key: carbon_intensity_mt_per_million_usd_revenue
+          template: generic
+          url: n/a
+          value: 36
+        - channel: social
+          company: snap/property_data.yaml
+          is_calculation: false
+          key: carbon_intensity_mt_per_million_usd_revenue
+          template: generic
+          url: n/a
+          value: 45
       core_internet_data_transfer_electricity_use_kwh_per_gb:
-      - channel: null
-        company: malmodin/data.yaml
-        is_calculation: false
-        key: core_internet_data_transfer_electricity_use_kwh_per_gb
-        template: GENERAL
-        url: https://www.youtube.com/watch?v=Xo0PB5i_b4Y&t=2520s
-        value: 0.000066700
+        - channel: null
+          company: malmodin/data.yaml
+          is_calculation: false
+          key: core_internet_data_transfer_electricity_use_kwh_per_gb
+          template: GENERAL
+          url: https://www.youtube.com/watch?v=Xo0PB5i_b4Y&t=2520s
+          value: 0.000066700
       corporate_emissions_g_co2e_per_impression:
-      - channel: null
-        company: theguardian/property_data.yaml
-        is_calculation: true
-        key: corporate_emissions_g_co2e_per_impression
-        template: generic
-        url: n/a
-        value: 0.018965959
-      - channel: null
-        company: rea_group/property_data.yaml
-        is_calculation: true
-        key: corporate_emissions_g_co2e_per_impression
-        template: generic
-        url: n/a
-        value: 0.079071871
+        - channel: null
+          company: theguardian/property_data.yaml
+          is_calculation: true
+          key: corporate_emissions_g_co2e_per_impression
+          template: generic
+          url: n/a
+          value: 0.018965959
+        - channel: null
+          company: rea_group/property_data.yaml
+          is_calculation: true
+          key: corporate_emissions_g_co2e_per_impression
+          template: generic
+          url: n/a
+          value: 0.079071871
       end_user_data_transfer_electricity_use_kwh_per_gb:
-      - channel: null
-        company: VTT/data.yaml
-        is_calculation: false
-        key: end_user_data_transfer_electricity_use_kwh_per_gb
-        template: GENERAL
-        url: https://www.mdpi.com/2071-1050/10/7/2494
-        value: 0.100000000
+        - channel: null
+          company: VTT/data.yaml
+          is_calculation: false
+          key: end_user_data_transfer_electricity_use_kwh_per_gb
+          template: GENERAL
+          url: https://www.mdpi.com/2071-1050/10/7/2494
+          value: 0.100000000
       quality_impressions_per_duration_s:
-      - template default
+        - template default
   streaming:
     generic:
       carbon_intensity_mt_per_employee:
-      - channel: null
-        company: pinterest/corporate.yaml
-        is_calculation: false
-        key: carbon_intensity_mt_per_employee
-        template: publisher
-        url: n/a
-        value: 43.200000000
-      - channel: null
-        company: spotify/corporate.yaml
-        is_calculation: false
-        key: carbon_intensity_mt_per_employee
-        template: publisher
-        url: n/a
-        value: 42.300000000
-      - channel: null
-        company: snap/corporate.yaml
-        is_calculation: false
-        key: carbon_intensity_mt_per_employee
-        template: publisher
-        url: n/a
-        value: 34.800000000
+        - channel: null
+          company: pinterest/corporate.yaml
+          is_calculation: false
+          key: carbon_intensity_mt_per_employee
+          template: publisher
+          url: n/a
+          value: 43.200000000
+        - channel: null
+          company: spotify/corporate.yaml
+          is_calculation: false
+          key: carbon_intensity_mt_per_employee
+          template: publisher
+          url: n/a
+          value: 42.300000000
+        - channel: null
+          company: snap/corporate.yaml
+          is_calculation: false
+          key: carbon_intensity_mt_per_employee
+          template: publisher
+          url: n/a
+          value: 34.800000000
       carbon_intensity_mt_per_million_usd_revenue:
-      - channel: null
-        company: spotify/property_data.yaml
-        is_calculation: false
-        key: carbon_intensity_mt_per_million_usd_revenue
-        template: generic
-        url: n/a
-        value: 31.700000000
+        - channel: null
+          company: spotify/property_data.yaml
+          is_calculation: false
+          key: carbon_intensity_mt_per_million_usd_revenue
+          template: generic
+          url: n/a
+          value: 31.700000000
       computer_active_electricity_use_watts:
-      - template default
+        - template default
       computer_idle_electricity_use_watts:
-      - template default
+        - template default
       core_internet_data_transfer_electricity_use_kwh_per_gb:
-      - channel: null
-        company: malmodin/data.yaml
-        is_calculation: false
-        key: core_internet_data_transfer_electricity_use_kwh_per_gb
-        template: GENERAL
-        url: https://www.youtube.com/watch?v=Xo0PB5i_b4Y&t=2520s
-        value: 0.000066700
+        - channel: null
+          company: malmodin/data.yaml
+          is_calculation: false
+          key: core_internet_data_transfer_electricity_use_kwh_per_gb
+          template: GENERAL
+          url: https://www.youtube.com/watch?v=Xo0PB5i_b4Y&t=2520s
+          value: 0.000066700
       corporate_emissions_g_co2e_per_impression:
-      - channel: null
-        company: theguardian/property_data.yaml
-        is_calculation: true
-        key: corporate_emissions_g_co2e_per_impression
-        template: generic
-        url: n/a
-        value: 0.018965959
-      - channel: null
-        company: rea_group/property_data.yaml
-        is_calculation: true
-        key: corporate_emissions_g_co2e_per_impression
-        template: generic
-        url: n/a
-        value: 0.079071871
+        - channel: null
+          company: theguardian/property_data.yaml
+          is_calculation: true
+          key: corporate_emissions_g_co2e_per_impression
+          template: generic
+          url: n/a
+          value: 0.018965959
+        - channel: null
+          company: rea_group/property_data.yaml
+          is_calculation: true
+          key: corporate_emissions_g_co2e_per_impression
+          template: generic
+          url: n/a
+          value: 0.079071871
       end_user_data_transfer_electricity_use_kwh_per_gb:
-      - channel: null
-        company: VTT/data.yaml
-        is_calculation: false
-        key: end_user_data_transfer_electricity_use_kwh_per_gb
-        template: GENERAL
-        url: https://www.mdpi.com/2071-1050/10/7/2494
-        value: 0.100000000
+        - channel: null
+          company: VTT/data.yaml
+          is_calculation: false
+          key: end_user_data_transfer_electricity_use_kwh_per_gb
+          template: GENERAL
+          url: https://www.mdpi.com/2071-1050/10/7/2494
+          value: 0.100000000
       quality_impressions_per_duration_s:
-      - template default
+        - template default
   streaming-video:
     generic:
       carbon_intensity_mt_per_employee:
-      - channel: null
-        company: pinterest/corporate.yaml
-        is_calculation: false
-        key: carbon_intensity_mt_per_employee
-        template: publisher
-        url: n/a
-        value: 43.200000000
-      - channel: null
-        company: spotify/corporate.yaml
-        is_calculation: false
-        key: carbon_intensity_mt_per_employee
-        template: publisher
-        url: n/a
-        value: 42.300000000
-      - channel: null
-        company: snap/corporate.yaml
-        is_calculation: false
-        key: carbon_intensity_mt_per_employee
-        template: publisher
-        url: n/a
-        value: 34.800000000
+        - channel: null
+          company: pinterest/corporate.yaml
+          is_calculation: false
+          key: carbon_intensity_mt_per_employee
+          template: publisher
+          url: n/a
+          value: 43.200000000
+        - channel: null
+          company: spotify/corporate.yaml
+          is_calculation: false
+          key: carbon_intensity_mt_per_employee
+          template: publisher
+          url: n/a
+          value: 42.300000000
+        - channel: null
+          company: snap/corporate.yaml
+          is_calculation: false
+          key: carbon_intensity_mt_per_employee
+          template: publisher
+          url: n/a
+          value: 34.800000000
       carbon_intensity_mt_per_million_usd_revenue:
-      - channel: null
-        company: spotify/property_data.yaml
-        is_calculation: false
-        key: carbon_intensity_mt_per_million_usd_revenue
-        template: generic
-        url: n/a
-        value: 31.700000000
+        - channel: null
+          company: spotify/property_data.yaml
+          is_calculation: false
+          key: carbon_intensity_mt_per_million_usd_revenue
+          template: generic
+          url: n/a
+          value: 31.700000000
       computer_active_electricity_use_watts:
-      - template default
+        - template default
       computer_idle_electricity_use_watts:
-      - template default
+        - template default
       core_internet_data_transfer_electricity_use_kwh_per_gb:
-      - channel: null
-        company: malmodin/data.yaml
-        is_calculation: false
-        key: core_internet_data_transfer_electricity_use_kwh_per_gb
-        template: GENERAL
-        url: https://www.youtube.com/watch?v=Xo0PB5i_b4Y&t=2520s
-        value: 0.000066700
+        - channel: null
+          company: malmodin/data.yaml
+          is_calculation: false
+          key: core_internet_data_transfer_electricity_use_kwh_per_gb
+          template: GENERAL
+          url: https://www.youtube.com/watch?v=Xo0PB5i_b4Y&t=2520s
+          value: 0.000066700
       corporate_emissions_g_co2e_per_impression:
-      - channel: null
-        company: theguardian/property_data.yaml
-        is_calculation: true
-        key: corporate_emissions_g_co2e_per_impression
-        template: generic
-        url: n/a
-        value: 0.018965959
-      - channel: null
-        company: rea_group/property_data.yaml
-        is_calculation: true
-        key: corporate_emissions_g_co2e_per_impression
-        template: generic
-        url: n/a
-        value: 0.079071871
+        - channel: null
+          company: theguardian/property_data.yaml
+          is_calculation: true
+          key: corporate_emissions_g_co2e_per_impression
+          template: generic
+          url: n/a
+          value: 0.018965959
+        - channel: null
+          company: rea_group/property_data.yaml
+          is_calculation: true
+          key: corporate_emissions_g_co2e_per_impression
+          template: generic
+          url: n/a
+          value: 0.079071871
       end_user_data_transfer_electricity_use_kwh_per_gb:
-      - channel: null
-        company: VTT/data.yaml
-        is_calculation: false
-        key: end_user_data_transfer_electricity_use_kwh_per_gb
-        template: GENERAL
-        url: https://www.mdpi.com/2071-1050/10/7/2494
-        value: 0.100000000
+        - channel: null
+          company: VTT/data.yaml
+          is_calculation: false
+          key: end_user_data_transfer_electricity_use_kwh_per_gb
+          template: GENERAL
+          url: https://www.mdpi.com/2071-1050/10/7/2494
+          value: 0.100000000
       quality_impressions_per_duration_s:
-      - template default
+        - template default
