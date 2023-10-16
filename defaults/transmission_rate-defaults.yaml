@@ -38,59 +38,59 @@ sources:
   digital-audio:
     high:
       channel:
-        - template default
+      - template default
       name:
-        - template default
+      - template default
       transmission_rate_mbps:
-        - template default
+      - template default
     low:
       channel:
-        - template default
+      - template default
       name:
-        - template default
+      - template default
       transmission_rate_mbps:
-        - template default
+      - template default
     medium:
       channel:
-        - template default
+      - template default
       name:
-        - template default
+      - template default
       transmission_rate_mbps:
-        - template default
+      - template default
   streaming-video:
     high:
       channel:
-        - template default
+      - template default
       name:
-        - template default
+      - template default
       resolution:
-        - template default
+      - template default
       transmission_rate_mbps:
-        - template default
+      - template default
     low:
       channel:
-        - template default
+      - template default
       name:
-        - template default
+      - template default
       resolution:
-        - template default
+      - template default
       transmission_rate_mbps:
-        - template default
+      - template default
     medium:
       channel:
-        - template default
+      - template default
       name:
-        - template default
+      - template default
       resolution:
-        - template default
+      - template default
       transmission_rate_mbps:
-        - template default
+      - template default
     ultra:
       channel:
-        - template default
+      - template default
       name:
-        - template default
+      - template default
       resolution:
-        - template default
+      - template default
       transmission_rate_mbps:
-        - template default
+      - template default

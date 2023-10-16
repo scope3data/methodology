@@ -61,30 +61,30 @@ defaults:
 sources:
   fixed:
     conventional_model_generic_kwh_per_gb:
-      - template default
+    - template default
     power_model_constant_watt:
-      - template default
+    - template default
     power_model_variable_watt_per_mbps:
-      - template default
+    - template default
     transmission_rate_quality_per_channel_per_device:
-      - template default
+    - template default
   mobile:
     conventional_model_generic_kwh_per_gb:
-      - template default
+    - template default
     power_model_constant_watt:
-      - template default
+    - template default
     power_model_variable_watt_per_mbps:
-      - template default
+    - template default
     transmission_rate_quality_per_channel_per_device:
-      - template default
+    - template default
   unknown:
     conventional_model_generic_kwh_per_gb:
-      - template default
+    - template default
     conventional_model_kwh_per_gb_per_device:
-      - template default
+    - template default
     power_model_constant_watt_per_device:
-      - template default
+    - template default
     power_model_variable_watt_per_mbps_per_device:
-      - template default
+    - template default
     transmission_rate_quality_per_channel_per_device:
-      - template default
+    - template default
