@@ -150,7 +150,7 @@ class TestAPI(unittest.TestCase):
         self.assertTrue(property_defaults[PropertyChannel.DIGITAL_AUDIO])
         self.assertEqual(
             property_defaults[PropertyChannel.DIGITAL_AUDIO].quality_impressions_per_duration_s,
-            Decimal("0.0021"),
+            Decimal("0.0032"),
         )
 
         self.assertEqual(len(end_user_device_defaults), 4)
