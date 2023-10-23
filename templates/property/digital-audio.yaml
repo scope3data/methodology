@@ -4,4 +4,4 @@ template:
   channel: digital-audio
   generic: true
   type: property
-  quality_impressions_per_duration_s: 0.0021
+  quality_impressions_per_duration_s: 0.003200000

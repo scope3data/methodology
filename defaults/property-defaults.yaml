@@ -7,7 +7,7 @@ defaults:
       core_internet_data_transfer_electricity_use_kwh_per_gb: 0.000066700
       corporate_emissions_g_co2e_per_impression: 0.049018915
       end_user_data_transfer_electricity_use_kwh_per_gb: 0.100000000
-      quality_impressions_per_duration_s: 0.002100000
+      quality_impressions_per_duration_s: 0.003200000
   display:
     generic:
       carbon_intensity_mt_per_employee: 30.075000000
