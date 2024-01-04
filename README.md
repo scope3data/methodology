@@ -53,6 +53,10 @@ If you want to commit code, install pre-commit hooks
 pre-commit install
 ```
 
+## Development
+
+See [Documentation README](docs/README.md)
+
 ## Usage
 
 To write defaults from latest sources:
