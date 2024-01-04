@@ -1,0 +1,61 @@
+# Digital out-of-home (DOOH)
+
+## Boundaries of measurement
+
+DOOH screens, like consumer devices, require energy to display an ad. Energy consumption during the use phase is in fact the highest source of emissions.
+However, on the contrary to consumer devices, billboards are owned or leased by media owners who therefore have a high level of operational control over the screen attributes that influence embodied and energy related emissions (venue category, manufacturer, model, size, location and positioning, operating hours, brightness settings etc...). For that reason, we are including emissions from screens' energy usage and production to "media distribution".
+
+| Emissions source            | Lifecycle category    | Status           |
+| --------------------------- | --------------------- | ---------------- |
+| Screens' embodied emissions | Media Distribution    | In-development   |
+| Screens' energy consumption | Media Distribution    | Included         |
+| Corporate emissions         | Media Distribution    | Included         |
+| Use of Ad Technology        | Ad Selection          | In-development   |
+| Creative data transfers     | Creative Distribution | Included         |
+| Screens' recycling/disposal | Disposal              | To be considered |
+
+## Calculating Screens' embodied emissions
+
+Coming soon
+
+## Calculating emissions from screens' energy consumption
+
+On the contrary to [consumer device emissions](./consumer_devices.mdx), we have found no credible research paper describing the power draw of large digital billboards. As such, we estimate for individual screens based on a variety of input data sources (listed in order from most accurate to least accurate):
+
+- Electricity metres installed on the screens themselves and monitoring power draw in near real-time.
+- Power bills received by media owners on a monthly, quaterly or yearly basis, for a group of or for individual screens.
+- Technical specifications from screen manufacturers like Daktronics, Samsung or Panasonic. We have found that these often document maximum power draw (instead of average power draw), which can lead to an over-estimation of energy consumption.
+- Extrapolation based on physical dimensions and one of the above data point for screens from the same media owner.
+- Extrapolation based on physical dimensions and venue type, off the back of data for 500k+ screens kindly provided to us by early partners (including DOOH programmatic platform Hivestack and DOOH media owners JCDecaux ANZ, Go Media and Lumo).
+
+When no screen attribute or energy data is available to us for a given screen, we estimate the power draw of that screen to be "the 80th percentile" amongst screens that media owner and/or venue category and/or country (based on statistical relevance). This approach aims to incentivize more media owners to share power draw data with us and the wider advertising industry.
+
+## Calculating corporate emissions
+
+See [Corporate Emissions](./corporate_model.mdx)
+
+## Calculating Ad Selection Emissions
+
+On the contrary to other digital channels, in DOOH no standard like ads.txt exist to allow DOOH media owners' to disclose the vendors used in their monetization waterfall, making [mapping the ad tech graph](./publisher_model#mapping-the-ad-tech-graph) more difficult.
+We are currently developping alternative ways for DOOH media owners to share this information with us. Until then, ad selection emissions will be considered 0.
+
+## Calculating Creative Data Transfer Emissions
+
+See [Emissions from Data Transfer](./data_tranfer.mdx)
+
+## Calculating emissions from Screens' recycling and disposal
+
+To be discussed.
+
+## Other considerations
+
+### Impression multiplier
+
+One key difference between the digital out-of-home channel and others is its one-to-many nature, meaning that most likely one ad play can be viewed by multiple individuals around the screen.
+For this reason, our modelling is done "per play" and translated to "per impression" through the use of a screen specific average impression multiplier provided by partners (media owners and platforms).
+
+When no impression multiplier data is provided to us for a given screen, we once again estimate that value to be the 80th percentile amongst screens that media owner and/or venue category and/or country (based on statistical relevance).
+
+### Purchasing of renewable energy to power screen
+
+To be discussed.
