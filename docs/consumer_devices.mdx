@@ -62,7 +62,7 @@ As an example, per [GSM Arena](#gsmarena), the Apple iPhone 13 takes 16 hours an
 
 ## Television
 
-From [Urban et al](#urban-bryan-and-roth-2019):
+From [Urban et al](#NRDC-2019):
 
 | Device           | Installed base (M) | Power Draw (w)       | Usage (h/day)           |
 | ---------------- | ------------------ | -------------------- | ----------------------- |
@@ -83,6 +83,21 @@ Based on 3.9 hours/day of usage, the embodied emissions from a TV and set top bo
 
 A detailed study of many TV models can be found at [ecocostsavings.com](https://ecocostsavings.com/tv-wattage/), indicating that the average power draw of a TV in the US is 59W active, 0.5W standby. This data is not tied to a scientific study but does indicate that overall power usage may have declined since the Urban study above.
 
+## Smart Speaker
+
+From a [NRDC report by Horowitz, Hardy, and Tian](#NRDC-2019):
+
+| Device           | Installed base (M) | Power draw (W) | Usage (h/day) |
+| ---------------- | ------------------ | -------------- | ------------- |
+| Google Home Mini | 4                  | 1.7            | 3.5           |
+| Google Home Mini | 4                  | 1.7            | 3.5           |
+| Google Home Mini | 4                  | 1.7            | 3.5           |
+| Google Home Mini | 4                  | 1.7            | 3.5           |
+
+The weighted power draw of a typical smart speaker is 2.5 watts.
+
+Assuming a use life of 3 years for a smart speaker (similar to a tablet) and 84 kgCO2e of impact from ([Amazon Echo Dot LCA](#Amazon-2023)) and 3.5 hours/day of usage, the embodied emissions from a smart speaker are 0.0061 gCO2e/s.
+
 ## Summary
 
 | Device            | Power Draw (W) | PEPS (gCO2e/s) |
@@ -91,6 +106,7 @@ A detailed study of many TV models can be found at [ecocostsavings.com](https://
 | Tablet            | 3              | 0.0029         |
 | Smartphone        | 0.77           | 0.0058         |
 | TV System         | 87.4           | 0.0096         |
+| Smart Speaker     | 2.5            | 0.0061         |
 
 ## Notes and Caveats
 
@@ -133,3 +149,11 @@ Malmodin J, Lundén D. [The Energy and Carbon Footprint of the Global ICT and E&
 [Description of Negaoctet](https://codde.fr/en/our-software/negaoctet/database)
 
 [Negaoctet ADEME database 1.4](https://base-impacts.ademe.fr/documents/Negaoctet1.4.zip)
+
+### NRDC, 2019
+
+Horowitz, Hardy, and Tien. [The Energy Impacts of Smart Speakers and Video Streaming Devices](https://www.nrdc.org/sites/default/files/gadget_report_r_19-07-b_13_locked.pdf), August 2019
+
+### Amazon, 2023
+
+[Amazon Echo Show 5 3rd Gen Product Sustainability Fact Sheet](https://sustainability.aboutamazon.com/devices_fact_sheet_echo_show_5.pdf)
