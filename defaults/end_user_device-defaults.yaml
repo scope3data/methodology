@@ -13,7 +13,7 @@ defaults:
     draw_watts: 87.400000000
     production_emissions_gco2e_per_duration_s: 0.009600000
   smart_speaker:
-    draw_watts: 2.5000000000
+    draw_watts: 2.500000000
     production_emissions_gco2e_per_duration_s: 0.006100000
 sources:
   personal_computer:
