@@ -6,27 +6,27 @@ The lifecycle of a creative starts with its production. Depending on the channel
 
 The use phase of a creative has three areas of impact:
 
-- The [consumer device](./consumer_devices.md) uses energy to display the creative
-- Energy is used to [transfer](./data_transfer.md) the creative from a server to the device
-- Various [vendors](./ad_tech_model.md) participate in the delivery and reporting of the creative.
+- The [consumer device](./consumer_devices) uses energy to display the creative
+- Energy is used to [transfer](./data_transfer) the creative from a server to the device
+- Various [vendors](./ad_tech_model) participate in the delivery and reporting of the creative.
 
 ### Consumer Device Emissions
 
 The energy used by the consumer during the display of the creative is determined by multiplying the duration of the creative by the energy use of the consumer device.
 
-For instance, a 30 second video ad played on a television will use 0.73 Wh of energy and an allocation of 0.63 gCO2e from the production of the television (see [consumer device methodology](./consumer_devices.md) for details on these numbers).
+For instance, a 30 second video ad played on a television will use 0.73 Wh of energy and an allocation of 0.63 gCO2e from the production of the television (see [consumer device methodology](./consumer_devices) for details on these numbers).
 
 For a banner or native ad that does not have an inherent duration and does not generally use the full screen, we assume a 1 second duration based on the MRC viewability standard.
 
 ### Data Transfer Emissions
 
-For video creatives, we use a slightly modified version of the the Carbon Trust "Power Model" to calculate emissions as described in the [data transfer methodology](./data_transfer.md). This uses the duration, network type, and device type to calculate the marginal impact of the creative on network infrastructure.
+For video creatives, we use a slightly modified version of the the Carbon Trust "Power Model" to calculate emissions as described in the [data transfer methodology](./data_transfer). This uses the duration, network type, and device type to calculate the marginal impact of the creative on network infrastructure.
 
-For banner and text ads, we use the conventional model based on the payload of a creative (the number of bytes transferred to display the ad). We calculate the energy used per GB from the [data transfer methodology](./data_transfer.md) based on the network type.
+For banner and text ads, we use the conventional model based on the payload of a creative (the number of bytes transferred to display the ad). We calculate the energy used per GB from the [data transfer methodology](./data_transfer) based on the network type.
 
 ### Vendor Emissions
 
-For each vendor that participates in delivering and tracking the creative, we need to calculate the emissions per creative delivery request. This is part of the [ad tech vendor methodology](./ad_tech_model.md).
+For each vendor that participates in delivering and tracking the creative, we need to calculate the emissions per creative delivery request. This is part of the [ad tech vendor methodology](./ad_tech_model).
 
 ## Input parameters
 
