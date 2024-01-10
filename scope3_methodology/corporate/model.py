@@ -54,7 +54,10 @@ class CorporateEmissions(CustomBaseModel):
 
     def validate(self) -> None:
         """Validate the required CorporateEmissions fields for computation"""
-        if not self.number_of_employees and not self.corporate_emissions_mt_co2e_per_month:
+        if self.corporate_emissions_mt_co2e_per_month:
+            return
+
+        if not self.number_of_employees:
             raise Exception(
                 """
                 Unable to compute corporate emissions. Must provide either:
