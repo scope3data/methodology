@@ -3,6 +3,9 @@ defaults:
   personal_computer:
     draw_watts: 53.200000000
     production_emissions_gco2e_per_duration_s: 0.004640000
+  smart_speaker:
+    draw_watts: 2.500000000
+    production_emissions_gco2e_per_duration_s: 0.006100000
   smartphone:
     draw_watts: 0.770000000
     production_emissions_gco2e_per_duration_s: 0.005830000
@@ -15,21 +18,26 @@ defaults:
 sources:
   personal_computer:
     draw_watts:
-    - template default
+      - template default
     production_emissions_gco2e_per_duration_s:
-    - template default
+      - template default
+  smart_speaker:
+    draw_watts:
+      - template default
+    production_emissions_gco2e_per_duration_s:
+      - template default
   smartphone:
     draw_watts:
-    - template default
+      - template default
     production_emissions_gco2e_per_duration_s:
-    - template default
+      - template default
   tablet:
     draw_watts:
-    - template default
+      - template default
     production_emissions_gco2e_per_duration_s:
-    - template default
+      - template default
   tv_system:
     draw_watts:
-    - template default
+      - template default
     production_emissions_gco2e_per_duration_s:
-    - template default
+      - template default
