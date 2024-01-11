@@ -7,22 +7,22 @@ license = ""
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.10"
-uvicorn = "^0.18.3"
-fastapi = "^0.85.0"
-PyYAML = "^6.0"
-pydantic = "^1.10.2"
+python = ">=3.10"
+uvicorn = ">=0.18.3"
+fastapi = ">=0.95.2"
+PyYAML = ">=6.0"
+pydantic = ">=1.10.2"
 
 [tool.poetry.dev-dependencies]
-pre-commit = "^2.20.0"
-flake8 = "^5.0.4"
-mypy = "^0.971"
-black = { version = "^22.6.0", allow-prereleases = true }
-scriv = { extras = ["toml"], version = "^0.16.0" }
-types-PyYAML = "^6.0.11"
-pytest = "^7.1.2"
-coverage = "^6.4.4"
-pylint = "^2.15.0"
+pre-commit = ">=2.20.0"
+flake8 = ">=5.0.4"
+mypy = ">=0.971"
+black = { version = ">=22.6.0", allow-prereleases = true }
+scriv = { extras = ["toml"], version = ">=0.16.0" }
+types-PyYAML = ">=6.0.11"
+pytest = ">=7.1.2"
+coverage = ">=6.4.4"
+pylint = ">=2.15.0"
 
 [tool.black]
 line-length = 100
