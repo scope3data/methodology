@@ -54,10 +54,8 @@ class CorporateEmissions(CustomBaseModel):
 
     def validate(self) -> None:
         """Validate the required CorporateEmissions fields for computation"""
-        if self.corporate_emissions_mt_co2e_per_month:
-            return
 
-        if not self.number_of_employees:
+        if not self.number_of_employees and not self.corporate_emissions_mt_co2e_per_month:
             raise Exception(
                 """
                 Unable to compute corporate emissions. Must provide either:
@@ -74,8 +72,8 @@ class CorporateEmissions(CustomBaseModel):
         self, defaults: "CorporateEmissions", depth: int
     ) -> Decimal | None:
         """Computes the corporate emisisons per month in metric tons CO2e"""
-        self.validate()
         self.set_defaults(defaults)
+        self.validate()
         corporate_emissions = self.corporate_emissions_mt_co2e_per_month
         if corporate_emissions is None and self.number_of_employees:
             corporate_emissions = self.number_of_employees * (
@@ -92,8 +90,8 @@ class CorporateEmissions(CustomBaseModel):
         self, defaults: "CorporateEmissions", depth: int
     ) -> ModeledCorporateEmissions | None:
         """Computes the corporate emisisons per month in grams CO2e"""
-        self.validate()
         self.set_defaults(defaults)
+        self.validate()
         corporate_emissions_mt = self.comp_emissions_mt_co2e_per_month(defaults, depth)
         if corporate_emissions_mt:
             total_emissions = corporate_emissions_mt * G_PER_MT
