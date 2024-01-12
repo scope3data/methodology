@@ -66,13 +66,13 @@ class CorporateInput(BaseModel):
 
     org_type: OrganizationType
     number_of_employees: Optional[int]
-    office_emissions_mt_co2e_per_employee_per_month: Optional[Decimal]
-    datacenter_emissions_mt_co2e_per_employee_per_month: Optional[Decimal]
-    travel_emissions_mt_co2e_per_employee_per_month: Optional[Decimal]
-    commuting_emissions_mt_co2e_per_employee_per_month: Optional[Decimal]
-    overhead_emissions_mt_co2e_per_employee_per_month: Optional[Decimal]
-    corporate_emissions_mt_co2e_per_month: Optional[Decimal]
-    revenue_allocation_to_digital_ads_pct: Optional[Decimal]
+    office_emissions_mt_co2e_per_employee_per_month: Optional[Decimal] = None
+    datacenter_emissions_mt_co2e_per_employee_per_month: Optional[Decimal] = None
+    travel_emissions_mt_co2e_per_employee_per_month: Optional[Decimal] = None
+    commuting_emissions_mt_co2e_per_employee_per_month: Optional[Decimal] = None
+    overhead_emissions_mt_co2e_per_employee_per_month: Optional[Decimal] = None
+    corporate_emissions_mt_co2e_per_month: Optional[Decimal] = None
+    revenue_allocation_to_digital_ads_pct: Optional[Decimal] = None
 
 
 class ATPInput(BaseModel):
@@ -81,24 +81,24 @@ class ATPInput(BaseModel):
     name: str = ""
     identifier: str = ""
     atp_template: ATPTemplate
-    corporate_emissions_g_co2e: Optional[Decimal]
-    allocation_of_company_servers_pct: Optional[Decimal]
-    allocation_of_corporate_emissions_pct: Optional[Decimal]
-    corporate_emissions_g_co2e_per_bid_request: Optional[Decimal]
-    bid_requests_processed_from_publishers_pct: Optional[Decimal]
-    bid_requests_processed_from_ad_tech_platforms_pct: Optional[Decimal]
-    bid_request_size_in_bytes: Optional[Decimal]
-    server_to_server_emissions_g_co2e_per_gb: Optional[Decimal]
-    server_emissions_mt_co2e_per_month: Optional[Decimal]
-    servers_processing_bid_requests_pct: Optional[Decimal]
-    cookie_syncs_processed_per_bid_request: Optional[Decimal]
-    datacenter_water_intensity_h2o_m_3_per_mwh: Optional[Decimal]
-    server_emissions_g_co2e_per_kwh: Optional[Decimal]
-    servers_processing_cookie_syncs_pct: Optional[Decimal]
-    cookie_sync_distribution_ratio: Optional[Decimal]
-    bid_requests_processed_billion_per_month: Optional[Decimal]
-    cookie_syncs_processed_billion_per_month: Optional[Decimal]
-    data_transfer_emissions_mt_co2e_per_month: Optional[Decimal]
+    corporate_emissions_g_co2e: Optional[Decimal] = None
+    allocation_of_company_servers_pct: Optional[Decimal] = None
+    allocation_of_corporate_emissions_pct: Optional[Decimal] = None
+    corporate_emissions_g_co2e_per_bid_request: Optional[Decimal] = None
+    bid_requests_processed_from_publishers_pct: Optional[Decimal] = None
+    bid_requests_processed_from_ad_tech_platforms_pct: Optional[Decimal] = None
+    bid_request_size_in_bytes: Optional[Decimal] = None
+    server_to_server_emissions_g_co2e_per_gb: Optional[Decimal] = None
+    server_emissions_mt_co2e_per_month: Optional[Decimal] = None
+    servers_processing_bid_requests_pct: Optional[Decimal] = None
+    cookie_syncs_processed_per_bid_request: Optional[Decimal] = None
+    datacenter_water_intensity_h2o_m_3_per_mwh: Optional[Decimal] = None
+    server_emissions_g_co2e_per_kwh: Optional[Decimal] = None
+    servers_processing_cookie_syncs_pct: Optional[Decimal] = None
+    cookie_sync_distribution_ratio: Optional[Decimal] = None
+    bid_requests_processed_billion_per_month: Optional[Decimal] = None
+    cookie_syncs_processed_billion_per_month: Optional[Decimal] = None
+    data_transfer_emissions_mt_co2e_per_month: Optional[Decimal] = None
 
 
 class ATPSecondaryEmissionsInput(BaseModel):
