@@ -7,6 +7,11 @@ template:
   power_model_constant_watt: 9.55
   power_model_variable_watt_per_mbps: 0.03
   transmission_rate_quality_per_channel_per_device:
+    ctv-bvod:
+      smartphone: medium
+      personal_computer: high
+      tv_system: ultra
+      tablet: high
     streaming-video:
       smartphone: medium
       personal_computer: high

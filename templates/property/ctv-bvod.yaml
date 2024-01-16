@@ -1,0 +1,13 @@
+---
+template:
+  name: generic
+  channel: ctv-bvod
+  generic: false
+  type: property
+  comment:
+    - see https://www.hollywoodreporter.com/business/digital/netflix-disney-data-privacy-ads-1235234652/
+    - 11.54 ads/hour is the average for streaming
+  quality_impressions_per_duration_s: 0.0032
+  computer_active_electricity_use_watts: 120
+  computer_idle_electricity_use_watts: 40
+  grid_intensity_g_co2e_per_kwh: 539.0

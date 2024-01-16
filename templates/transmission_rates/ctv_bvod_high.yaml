@@ -1,0 +1,8 @@
+---
+template:
+  channel: ctv-bvod
+  name: high
+  generic: true
+  type: transmission_rate
+  resolution: 1080p
+  transmission_rate_mbps: 6.67

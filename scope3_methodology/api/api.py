@@ -53,7 +53,11 @@ property_defaults: dict[PropertyChannel, Property] = {}
 end_user_device_defaults: dict[EndUserDevices, EndUserDevice] = {}
 networking_connection_defaults: dict[NetworkingConnectionType, NetworkingConnection] = {}
 transmission_rate_defaults: dict[PropertyChannel, dict[StreamingResolution, TransmissionRate]] = {}
-power_model_channels = [PropertyChannel.STREAMING_VIDEO, PropertyChannel.DIGITAL_AUDIO]
+power_model_channels = [
+    PropertyChannel.STREAMING_VIDEO,
+    PropertyChannel.DIGITAL_AUDIO,
+    PropertyChannel.CTV_BVOD,
+]
 
 
 def load_default_files(

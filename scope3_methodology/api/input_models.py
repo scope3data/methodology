@@ -42,6 +42,7 @@ class PropertyChannel(Enum):
     STREAMING_VIDEO = "streaming-video"
     SOCIAL = "social"
     DIGITAL_AUDIO = "digital-audio"
+    CTV_BVOD = "ctv-bvod"
 
 
 class EndUserDevices(Enum):

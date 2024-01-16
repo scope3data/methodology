@@ -5,6 +5,11 @@ defaults:
     power_model_constant_watt: 9.550000000
     power_model_variable_watt_per_mbps: 0.030000000
     transmission_rate_quality_per_channel_per_device:
+      ctv-bvod:
+        personal_computer: high
+        smartphone: medium
+        tablet: high
+        tv_system: ultra
       digital-audio:
         personal_computer: high
         smartphone: medium
@@ -20,6 +25,11 @@ defaults:
     power_model_constant_watt: 1.200000000
     power_model_variable_watt_per_mbps: 1.530000000
     transmission_rate_quality_per_channel_per_device:
+      ctv-bvod:
+        personal_computer: high
+        smartphone: medium
+        tablet: high
+        tv_system: ultra
       digital-audio:
         personal_computer: high
         smartphone: medium
@@ -48,6 +58,11 @@ defaults:
       tablet: 0.030000000
       tv_system: 0.030000000
     transmission_rate_quality_per_channel_per_device:
+      ctv-bvod:
+        personal_computer: high
+        smartphone: medium
+        tablet: high
+        tv_system: ultra
       digital-audio:
         personal_computer: high
         smartphone: medium

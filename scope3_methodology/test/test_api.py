@@ -49,6 +49,27 @@ TEST_TRANSMISSION_RATE_MEDIUM = TransmissionRate.load_default_yaml(
     PropertyChannel.STREAMING_VIDEO.value,
 )
 
+TEST_TRANSMISSION_RATE_CB_HIGH = TransmissionRate.load_default_yaml(
+    StreamingResolution.HIGH.value,
+    TEST_TRANSMISSION_RATE_DEFAULTS_FILE,
+    PropertyChannel.CTV_BVOD.value,
+)
+TEST_TRANSMISSION_RATE_CB_LOW = TransmissionRate.load_default_yaml(
+    StreamingResolution.LOW.value,
+    TEST_TRANSMISSION_RATE_DEFAULTS_FILE,
+    PropertyChannel.CTV_BVOD.value,
+)
+TEST_TRANSMISSION_RATE_CB_ULTRA = TransmissionRate.load_default_yaml(
+    StreamingResolution.ULTRA.value,
+    TEST_TRANSMISSION_RATE_DEFAULTS_FILE,
+    PropertyChannel.CTV_BVOD.value,
+)
+TEST_TRANSMISSION_RATE_CB_MEDIUM = TransmissionRate.load_default_yaml(
+    StreamingResolution.MEDIUM.value,
+    TEST_TRANSMISSION_RATE_DEFAULTS_FILE,
+    PropertyChannel.CTV_BVOD.value,
+)
+
 TEST_TRANSMISSION_RATE_DA_HIGH = TransmissionRate.load_default_yaml(
     StreamingResolution.HIGH.value,
     TEST_TRANSMISSION_RATE_DEFAULTS_FILE,
@@ -116,7 +137,7 @@ class TestAPI(unittest.TestCase):
             Decimal("6100.6"),
         )
 
-        self.assertEqual(len(property_defaults), 7)
+        self.assertEqual(len(property_defaults), 8)
         self.assertTrue(property_defaults[PropertyChannel.DISPLAY])
         self.assertEqual(
             property_defaults[PropertyChannel.DISPLAY].quality_impressions_per_duration_s,
@@ -140,6 +161,11 @@ class TestAPI(unittest.TestCase):
         self.assertTrue(property_defaults[PropertyChannel.STREAMING_VIDEO])
         self.assertEqual(
             property_defaults[PropertyChannel.STREAMING_VIDEO].quality_impressions_per_duration_s,
+            Decimal("0.0032"),
+        )
+        self.assertTrue(property_defaults[PropertyChannel.CTV_BVOD])
+        self.assertEqual(
+            property_defaults[PropertyChannel.CTV_BVOD].quality_impressions_per_duration_s,
             Decimal("0.0032"),
         )
         self.assertTrue(property_defaults[PropertyChannel.SOCIAL])
@@ -215,7 +241,7 @@ class TestAPI(unittest.TestCase):
         )
 
         response = get_all_networking_connection_device_defaults()
-        self.assertEqual(len(response), 36)
+        self.assertEqual(len(response), 48)
 
         for device_network_connection in response:
             if (
@@ -239,7 +265,7 @@ class TestAPI(unittest.TestCase):
         )
 
         response = get_all_networking_connection_device_defaults()
-        self.assertEqual(len(response), 36)
+        self.assertEqual(len(response), 48)
 
         for device_network_connection in response:
             if (
@@ -263,6 +289,37 @@ class TestAPI(unittest.TestCase):
                     self.assertEqual(
                         device_network_connection.power_model_transmission_rate,
                         TEST_TRANSMISSION_RATE_DA_HIGH,
+                    )
+            if (
+                device_network_connection.connection_type == NetworkingConnectionType.FIXED
+                and device_network_connection.channel == PropertyChannel.CTV_BVOD.value
+            ):
+                if device_network_connection.device == EndUserDevices.TV_SYSTEM.value:
+                    self.assertEqual(
+                        device_network_connection.power_model_energy_usage_kwh_per_second,
+                        Decimal("0.000002782444444444444444444444444"),
+                    )
+                    self.assertEqual(
+                        device_network_connection.power_model_transmission_rate,
+                        TEST_TRANSMISSION_RATE_CB_ULTRA,
+                    )
+                elif device_network_connection.device == EndUserDevices.SMARTPHONE.value:
+                    self.assertEqual(
+                        device_network_connection.power_model_energy_usage_kwh_per_second,
+                        Decimal("0.000002671277777777777777777777778"),
+                    )
+                    self.assertEqual(
+                        device_network_connection.power_model_transmission_rate,
+                        TEST_TRANSMISSION_RATE_CB_MEDIUM,
+                    )
+                else:
+                    self.assertEqual(
+                        device_network_connection.power_model_energy_usage_kwh_per_second,
+                        Decimal("0.000002708361111111111111111111111"),
+                    )
+                    self.assertEqual(
+                        device_network_connection.power_model_transmission_rate,
+                        TEST_TRANSMISSION_RATE_CB_HIGH,
                     )
             if (
                 device_network_connection.connection_type == NetworkingConnectionType.FIXED
@@ -308,7 +365,7 @@ class TestAPI(unittest.TestCase):
         )
 
         response = get_all_networking_connection_device_defaults()
-        self.assertEqual(len(response), 36)
+        self.assertEqual(len(response), 48)
 
         for device_network_connection in response:
             if (
@@ -338,7 +395,7 @@ class TestAPI(unittest.TestCase):
         )
 
         response = get_all_networking_connection_device_defaults()
-        self.assertEqual(len(response), 36)
+        self.assertEqual(len(response), 48)
 
         for device_network_connection in response:
             if (
@@ -362,6 +419,37 @@ class TestAPI(unittest.TestCase):
                     self.assertEqual(
                         device_network_connection.power_model_transmission_rate,
                         TEST_TRANSMISSION_RATE_DA_HIGH,
+                    )
+            if (
+                device_network_connection.connection_type == NetworkingConnectionType.UNKNOWN
+                and device_network_connection.channel == PropertyChannel.CTV_BVOD.value
+            ):
+                if device_network_connection.device == EndUserDevices.TV_SYSTEM.value:
+                    self.assertEqual(
+                        device_network_connection.power_model_energy_usage_kwh_per_second,
+                        Decimal("0.000002782444444444444444444444444"),
+                    )
+                    self.assertEqual(
+                        device_network_connection.power_model_transmission_rate,
+                        TEST_TRANSMISSION_RATE_CB_ULTRA,
+                    )
+                elif device_network_connection.device == EndUserDevices.SMARTPHONE.value:
+                    self.assertEqual(
+                        device_network_connection.power_model_energy_usage_kwh_per_second,
+                        Decimal("0.000001276833333333333333333333333"),
+                    )
+                    self.assertEqual(
+                        device_network_connection.power_model_transmission_rate,
+                        TEST_TRANSMISSION_RATE_CB_MEDIUM,
+                    )
+                else:
+                    self.assertEqual(
+                        device_network_connection.power_model_energy_usage_kwh_per_second,
+                        Decimal("0.000002708361111111111111111111111"),
+                    )
+                    self.assertEqual(
+                        device_network_connection.power_model_transmission_rate,
+                        TEST_TRANSMISSION_RATE_CB_HIGH,
                     )
             if (
                 device_network_connection.connection_type == NetworkingConnectionType.UNKNOWN
@@ -407,7 +495,7 @@ class TestAPI(unittest.TestCase):
         )
 
         response = get_all_networking_connection_device_defaults()
-        self.assertEqual(len(response), 36)
+        self.assertEqual(len(response), 48)
 
         for device_network_connection in response:
             if (
@@ -431,7 +519,7 @@ class TestAPI(unittest.TestCase):
         )
 
         response = get_all_networking_connection_device_defaults()
-        self.assertEqual(len(response), 36)
+        self.assertEqual(len(response), 48)
 
         for device_network_connection in response:
             if (
@@ -486,6 +574,38 @@ class TestAPI(unittest.TestCase):
                     self.assertEqual(
                         device_network_connection.power_model_transmission_rate,
                         TEST_TRANSMISSION_RATE_HIGH,
+                    )
+
+            if (
+                device_network_connection.connection_type == NetworkingConnectionType.MOBILE
+                and device_network_connection.channel == PropertyChannel.CTV_BVOD.value
+            ):
+                if device_network_connection.device == EndUserDevices.TV_SYSTEM.value:
+                    self.assertEqual(
+                        device_network_connection.power_model_energy_usage_kwh_per_second,
+                        Decimal("0.000006946333333333333333333333333"),
+                    )
+                    self.assertEqual(
+                        device_network_connection.power_model_transmission_rate,
+                        TEST_TRANSMISSION_RATE_CB_ULTRA,
+                    )
+                elif device_network_connection.device == EndUserDevices.SMARTPHONE.value:
+                    self.assertEqual(
+                        device_network_connection.power_model_energy_usage_kwh_per_second,
+                        Decimal("0.000001276833333333333333333333333"),
+                    )
+                    self.assertEqual(
+                        device_network_connection.power_model_transmission_rate,
+                        TEST_TRANSMISSION_RATE_CB_MEDIUM,
+                    )
+                else:
+                    self.assertEqual(
+                        device_network_connection.power_model_energy_usage_kwh_per_second,
+                        Decimal("0.000003168083333333333333333333333"),
+                    )
+                    self.assertEqual(
+                        device_network_connection.power_model_transmission_rate,
+                        TEST_TRANSMISSION_RATE_CB_HIGH,
                     )
 
     # TODO add in testing for API endpoints issue: #53
