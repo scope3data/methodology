@@ -18,26 +18,26 @@ defaults:
 sources:
   personal_computer:
     draw_watts:
-      - template default
+    - template default
     production_emissions_gco2e_per_duration_s:
-      - template default
+    - template default
   smart_speaker:
     draw_watts:
-      - template default
+    - template default
     production_emissions_gco2e_per_duration_s:
-      - template default
+    - template default
   smartphone:
     draw_watts:
-      - template default
+    - template default
     production_emissions_gco2e_per_duration_s:
-      - template default
+    - template default
   tablet:
     draw_watts:
-      - template default
+    - template default
     production_emissions_gco2e_per_duration_s:
-      - template default
+    - template default
   tv_system:
     draw_watts:
-      - template default
+    - template default
     production_emissions_gco2e_per_duration_s:
-      - template default
+    - template default

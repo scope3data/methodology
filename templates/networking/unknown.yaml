@@ -20,6 +20,11 @@ template:
     tv_system: 0.03
     tablet: 0.03
   transmission_rate_quality_per_channel_per_device:
+    ctv-bvod:
+      smartphone: medium
+      personal_computer: high
+      tv_system: ultra
+      tablet: high
     streaming-video:
       smartphone: medium
       personal_computer: high

@@ -115,6 +115,12 @@ class TestNetworkingConnection(unittest.TestCase):
                 power_model_constant_watt=Decimal("1.2"),
                 power_model_variable_watt_per_mbps=Decimal("1.53"),
                 transmission_rate_quality_per_channel_per_device={
+                    PropertyChannel.CTV_BVOD.value: {
+                        EndUserDevices.PERSONAL_COMPUTER.value: StreamingResolution.HIGH.value,
+                        EndUserDevices.SMARTPHONE.value: StreamingResolution.MEDIUM.value,
+                        EndUserDevices.TABLET.value: StreamingResolution.HIGH.value,
+                        EndUserDevices.TV_SYSTEM.value: StreamingResolution.ULTRA.value,
+                    },
                     PropertyChannel.STREAMING_VIDEO.value: {
                         EndUserDevices.PERSONAL_COMPUTER.value: StreamingResolution.HIGH.value,
                         EndUserDevices.SMARTPHONE.value: StreamingResolution.MEDIUM.value,
@@ -160,7 +166,6 @@ class TestNetworkingConnection(unittest.TestCase):
         fixed_networking_connection = NetworkingConnection.load_default_yaml(
             NetworkingConnectionType.FIXED.value, TEST_DEFAULTS_FILE
         )
-        print(fixed_networking_connection)
         self.assertEqual(
             fixed_networking_connection,
             NetworkingConnection(
@@ -169,6 +174,12 @@ class TestNetworkingConnection(unittest.TestCase):
                 power_model_constant_watt=Decimal("9.550000000"),
                 power_model_variable_watt_per_mbps=Decimal("0.03"),
                 transmission_rate_quality_per_channel_per_device={
+                    PropertyChannel.CTV_BVOD.value: {
+                        EndUserDevices.PERSONAL_COMPUTER.value: StreamingResolution.HIGH.value,
+                        EndUserDevices.SMARTPHONE.value: StreamingResolution.MEDIUM.value,
+                        EndUserDevices.TABLET.value: StreamingResolution.HIGH.value,
+                        EndUserDevices.TV_SYSTEM.value: StreamingResolution.ULTRA.value,
+                    },
                     PropertyChannel.STREAMING_VIDEO.value: {
                         EndUserDevices.PERSONAL_COMPUTER.value: StreamingResolution.HIGH.value,
                         EndUserDevices.SMARTPHONE.value: StreamingResolution.MEDIUM.value,
@@ -237,6 +248,12 @@ class TestNetworkingConnection(unittest.TestCase):
                     "tv_system": Decimal("0.030000000"),
                 },
                 transmission_rate_quality_per_channel_per_device={
+                    PropertyChannel.CTV_BVOD.value: {
+                        EndUserDevices.PERSONAL_COMPUTER.value: StreamingResolution.HIGH.value,
+                        EndUserDevices.SMARTPHONE.value: StreamingResolution.MEDIUM.value,
+                        EndUserDevices.TABLET.value: StreamingResolution.HIGH.value,
+                        EndUserDevices.TV_SYSTEM.value: StreamingResolution.ULTRA.value,
+                    },
                     PropertyChannel.STREAMING_VIDEO.value: {
                         EndUserDevices.PERSONAL_COMPUTER.value: StreamingResolution.HIGH.value,
                         EndUserDevices.SMARTPHONE.value: StreamingResolution.MEDIUM.value,
