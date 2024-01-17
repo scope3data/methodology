@@ -71,7 +71,9 @@ class TestNetworkingConnection(unittest.TestCase):
             NetworkingConnectionType.UNKNOWN.value, TEST_DEFAULTS_FILE
         )
         for device in EndUserDevices:
-            if device == EndUserDevices.SMARTPHONE:
+            if device == EndUserDevices.SMART_SPEAKER:
+                continue
+            elif device == EndUserDevices.SMARTPHONE:
                 self.assertEqual(
                     mobile_networking_connection.model_device_conventional_model(
                         device.value,

@@ -179,7 +179,12 @@ class TestAPI(unittest.TestCase):
             Decimal("0.0032"),
         )
 
-        self.assertEqual(len(end_user_device_defaults), 4)
+        self.assertEqual(len(end_user_device_defaults), 5)
+        self.assertTrue(end_user_device_defaults[EndUserDevices.SMART_SPEAKER])
+        self.assertEqual(
+            end_user_device_defaults[EndUserDevices.SMART_SPEAKER].draw_watts,
+            Decimal("2.5"),
+        )
         self.assertTrue(end_user_device_defaults[EndUserDevices.SMARTPHONE])
         self.assertEqual(
             end_user_device_defaults[EndUserDevices.SMARTPHONE].draw_watts, Decimal("0.77")
@@ -241,7 +246,7 @@ class TestAPI(unittest.TestCase):
         )
 
         response = get_all_networking_connection_device_defaults()
-        self.assertEqual(len(response), 48)
+        self.assertEqual(len(response), 51)
 
         for device_network_connection in response:
             if (
@@ -265,7 +270,7 @@ class TestAPI(unittest.TestCase):
         )
 
         response = get_all_networking_connection_device_defaults()
-        self.assertEqual(len(response), 48)
+        self.assertEqual(len(response), 51)
 
         for device_network_connection in response:
             if (
@@ -365,7 +370,7 @@ class TestAPI(unittest.TestCase):
         )
 
         response = get_all_networking_connection_device_defaults()
-        self.assertEqual(len(response), 48)
+        self.assertEqual(len(response), 51)
 
         for device_network_connection in response:
             if (
@@ -376,6 +381,11 @@ class TestAPI(unittest.TestCase):
                     self.assertEqual(
                         device_network_connection.conventional_model_power_usage_kwh_per_gb,
                         Decimal("0.14"),
+                    )
+                elif device_network_connection.device == EndUserDevices.SMART_SPEAKER.value:
+                    self.assertEqual(
+                        device_network_connection.conventional_model_power_usage_kwh_per_gb,
+                        Decimal("0.1"),
                     )
                 else:
                     self.assertEqual(
@@ -395,7 +405,7 @@ class TestAPI(unittest.TestCase):
         )
 
         response = get_all_networking_connection_device_defaults()
-        self.assertEqual(len(response), 48)
+        self.assertEqual(len(response), 51)
 
         for device_network_connection in response:
             if (
@@ -495,7 +505,7 @@ class TestAPI(unittest.TestCase):
         )
 
         response = get_all_networking_connection_device_defaults()
-        self.assertEqual(len(response), 48)
+        self.assertEqual(len(response), 51)
 
         for device_network_connection in response:
             if (
@@ -519,7 +529,7 @@ class TestAPI(unittest.TestCase):
         )
 
         response = get_all_networking_connection_device_defaults()
-        self.assertEqual(len(response), 48)
+        self.assertEqual(len(response), 51)
 
         for device_network_connection in response:
             if (

@@ -380,13 +380,14 @@ def get_all_networking_connection_device_defaults():
                     defaults.transmission_rate_quality_per_channel_per_device[channel.value]
                 )
                 for device in EndUserDevices:
-                    transmission_rate = channel_rate_defaults[
-                        StreamingResolution(channel_resolution_defaults[device.value])
-                    ]
-                    modeled_device_networking = defaults.model_device_power_model(
-                        device.value, connection_type, transmission_rate, channel.value
-                    )
-                    response.append(modeled_device_networking)
+                    if device.value in channel_resolution_defaults:
+                        transmission_rate = channel_rate_defaults[
+                            StreamingResolution(channel_resolution_defaults[device.value])
+                        ]
+                        modeled_device_networking = defaults.model_device_power_model(
+                            device.value, connection_type, transmission_rate, channel.value
+                        )
+                        response.append(modeled_device_networking)
     return response
 
 
