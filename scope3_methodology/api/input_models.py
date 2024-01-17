@@ -52,6 +52,7 @@ class EndUserDevices(Enum):
     SMARTPHONE = "smartphone"
     TABLET = "tablet"
     TV_SYSTEM = "tv_system"
+    SMART_SPEAKER = "smart_speaker"
 
 
 class OrganizationType(Enum):

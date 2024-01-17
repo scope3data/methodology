@@ -86,6 +86,26 @@ class TestEndUserDeviceModel(unittest.TestCase):
             ),
         )
 
+    def test_model_end_user_device_smart_speaker(self):
+        """Test model end user devices"""
+        smart_speaker = "smart_speaker"
+        device = EndUserDevice.load_default_yaml(smart_speaker, TEST_DEFAULTS_FILE)
+        modeled_d = device.model_end_user_device(
+            smart_speaker, TEST_CHANNEL, TEST_TEMPLATE, TEST_QUALITY_IMPRESSIONS_PER_SEC
+        )
+        self.assertEqual(
+            modeled_d,
+            ModeledEndUserDevice(
+                smart_speaker,
+                TEST_CHANNEL,
+                TEST_TEMPLATE,
+                Decimal("0.000006944444444444444444444444444"),
+                Decimal("0.06100000"),
+                Decimal("6.944444444444444444444444444E-7"),
+                device.production_emissions_gco2e_per_duration_s,
+            ),
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
