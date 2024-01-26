@@ -120,7 +120,7 @@ class AdTechPlatform(CustomBaseModel):
 
     def get_cookie_syncs_processed_per_month(self) -> Decimal | None:
         """Returns cookies syncs processed per month"""
-        if self.cookie_syncs_processed_billion_per_month:
+        if self.cookie_syncs_processed_billion_per_month is not None:
             return self.cookie_syncs_processed_billion_per_month * BILLION
         return None
 
@@ -147,7 +147,7 @@ class AdTechPlatform(CustomBaseModel):
 
     def get_data_transfer_emissions_g_co2e_per_month(self) -> Decimal | None:
         """Returns data transfere emissions per month in grams"""
-        if self.data_transfer_emissions_mt_co2e_per_month:
+        if self.data_transfer_emissions_mt_co2e_per_month is not None:
             return self.data_transfer_emissions_mt_co2e_per_month * G_PER_MT
         return None
 
@@ -178,11 +178,9 @@ class AdTechPlatform(CustomBaseModel):
         data_transfer_emissions_g_co2e_per_month = (
             self.get_data_transfer_emissions_g_co2e_per_month()
         )
-        if data_transfer_emissions_g_co2e_per_month:
-            return (
-                data_transfer_emissions_g_co2e_per_month
-                / self.get_bid_requests_processed_per_month()
-            )
+        requests_processed_per_month = self.get_bid_requests_processed_per_month()
+        if data_transfer_emissions_g_co2e_per_month and requests_processed_per_month:
+            return data_transfer_emissions_g_co2e_per_month / requests_processed_per_month
 
         data_transfer_emissions_g_co2e_per_bid_request = self.comp_bid_request_size_gb() * not_none(
             self.server_to_server_emissions_g_co2e_per_gb
@@ -205,11 +203,14 @@ class AdTechPlatform(CustomBaseModel):
             f"{server_emissions_g:.6f}",
             depth - 1,
         )
-        server_emissions_g_co2e_per_bid_request = (
-            self.get_allocation_of_company_servers_rate()
-            * server_emissions_g
-            * self.get_servers_processing_bid_requests_rate()
-        ) / self.get_bid_requests_processed_per_month()
+        requests_processed_per_month = self.get_bid_requests_processed_per_month()
+        server_emissions_g_co2e_per_bid_request = 0
+        if requests_processed_per_month:
+            server_emissions_g_co2e_per_bid_request = (
+                self.get_allocation_of_company_servers_rate()
+                * server_emissions_g
+                * self.get_servers_processing_bid_requests_rate()
+            ) / requests_processed_per_month
 
         log_result(
             "server emissions g co2e per bid request",
@@ -268,7 +269,7 @@ class AdTechPlatform(CustomBaseModel):
     def comp_cookie_syncs_processed_per_month(self, depth: int) -> Decimal:
         """Compute the total number of cookies syncs processed per month"""
         cookie_syncs_processed_per_month = self.get_cookie_syncs_processed_per_month()
-        if cookie_syncs_processed_per_month:
+        if cookie_syncs_processed_per_month is not None:
             return cookie_syncs_processed_per_month
 
         cookie_syncs_processed = self.get_bid_requests_processed_per_month() * not_none(
@@ -292,11 +293,15 @@ class AdTechPlatform(CustomBaseModel):
         depth: int,
     ) -> Decimal:
         """Compute the primary emissions per cookie sync in grams CO2e"""
-        primary_emissions_per_cookie_sync = (
-            self.get_allocation_of_company_servers_rate()
-            * self.get_server_emissions_g_co2e_per_month()
-            * self.get_servers_processing_cookie_syncs_rate()
-        ) / self.comp_cookie_syncs_processed_per_month(depth)
+        syncs_processed_per_month = self.comp_cookie_syncs_processed_per_month(depth)
+
+        primary_emissions_per_cookie_sync = 0
+        if syncs_processed_per_month:
+            primary_emissions_per_cookie_sync = (
+                self.get_allocation_of_company_servers_rate()
+                * self.get_server_emissions_g_co2e_per_month()
+                * self.get_servers_processing_cookie_syncs_rate()
+            ) / syncs_processed_per_month
 
         log_result("primary emissions g per cookie sync", primary_emissions_per_cookie_sync, depth)
         return primary_emissions_per_cookie_sync
