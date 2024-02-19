@@ -1,87 +1,60 @@
-# Creative
+# Measuring the carbon footprint of creatives and ad formats
+
+## Terminology: Placements, Ad Formats, Creatives, and Assets
+
+A _placement_ is an empty spot on a particular media property where an ad could be inserted. An "ad hole" if you will! Examples - a rectangle on a web page; the interstitial between levels of a game, the airtime before a podcast starts, a wall at an airport. In an _embedded_ placement (web page, social news feed) the ad sits inside content that the user controls. In an _ad-primary_ placement the creative IS the content and controls duration.
+
+A _media asset_ is an image, video, audio, or text that the advertiser wants to deliver to the consumer. A _creative template_ or _ad format_ is code, metadata, or other _non-media assets_ that, in combination with one or more media assets, faciliate the delivery of the advertisement to the consumer.
+
+A _creative_ is one or more media assets combined with an ad format. For instance, a CTV creative would typically be a 15-second or 30-second video (the media asset) wrapped in VAST/VPAID (the ad format) and deployed in a commercial break (the placement).
 
 ## Methodology
 
-The lifecycle of a creative starts with its production. Depending on the channel and format, creative production can be very lightweight (typing a couple of lines of text into a search tool) or have a significant carbon footprint (an on-location shoot with a full crew). Currently, this project does not include modeling creative production, but we are considering this for future development.
+The lifecycle of a creative starts with its production. Depending on the channel and format, creative production can be very lightweight (typing a couple of lines of text into a search tool) or have a significant carbon footprint (an on-location shoot with a full crew). Currently, this project does not include modeling creative production or transcoding of creative assets, but we are considering these for future development.
 
 The use phase of a creative has three areas of impact:
 
-- The [consumer device](./consumer_devices) uses energy to display the creative
+- The [consumer device](./consumer_devices) uses energy to deliver/render the creative
 - Energy is used to [transfer](./data_transfer) the creative from a server to the device
 - Various [vendors](./ad_tech_model) participate in the delivery and reporting of the creative.
 
 ### Consumer Device Emissions
 
-The energy used by the consumer during the display of the creative is determined by multiplying the duration of the creative by the energy use of the consumer device.
+To determine consumer device emissions we need to know whether the ad controls the user experience or is embedded into the user experience.
 
-For instance, a 30 second video ad played on a television will use 0.73 Wh of energy and an allocation of 0.63 gCO2e from the production of the television (see [consumer device methodology](./consumer_devices) for details on these numbers).
+- For an embedded placement - for instance, a banner ad on a web site, or a sponsored post in a social news feed - the energy use should be proportionate to the percentage of the consumer device used by the creative and the average time that the placement is in view.
+- For a ad-primary placement (standard TV/radio commercial, etc) the energy used by the consumer device during the display of the creative is determined by multiplying the duration of the creative by the energy use of the consumer device.
 
-For a banner or native ad that does not have an inherent duration and does not generally use the full screen, we assume a 1 second duration based on the MRC viewability standard.
+The time the ad is on the device multiplied by the percentage of the device that is used to deliver the creative is `device coverage-seconds`. The embodied emissions for the delivery of the creative are `(device coverage-seconds) x (embodied emissions per second)` and the usage emissions are `(device coverage-seconds) x (energy per second)`. See [consumer device methodology](./consumer_devices) for details on the per-device calculations.
+
+For instance, a 30 second video ad played on a television will use 0.73 Wh of energy and an allocation of 0.63 gCO2e from the production of the television. A split-screen ad using half the screen would use half the energy and production emissions.
+
+Format notes:
+
+- We consider out-of-home media to have no consumer device emissions because a consumer device is not required to view the creative
+- For dynamic display environments like a website where a banner may use only a fraction of the screen and be viewable for a variable duration, the ideal measurement would use `placement size / screen size x time in view`.
 
 ### Data Transfer Emissions
 
-For video creatives, we use a slightly modified version of the the Carbon Trust "Power Model" to calculate emissions as described in the [data transfer methodology](./data_transfer). This uses the duration, network type, and device type to calculate the marginal impact of the creative on network infrastructure.
+Media size assumptions:
 
-For banner and text ads, we use the conventional model based on the payload of a creative (the number of bytes transferred to display the ad). We calculate the energy used per GB from the [data transfer methodology](./data_transfer) based on the network type.
+- For simplicity we assume an 8:1 compression ratio for images, meaning that a 500x400 image will compress to 200KB
+- For video, we assume 250KB/second for 480P, 500KB/second for 720P, and 1000KB/second for 1080P
+- For audio, we assume 128KB/second for high-quality audio, 77KB/second for medium-quality, and 20KB/second for low-quality
+
+For CTV, where the creative is typically inserted into the video stream, we use a slightly modified version of the the Carbon Trust "Power Model" to calculate emissions as described in the [data transfer methodology](./data_transfer). This uses the duration, network type, and device type to calculate the marginal impact of the creative on network infrastructure.
+
+For all other channels, we use the conventional model based on the payload of a creative (the number of bytes transferred to display the ad). We calculate the energy used per GB from the [data transfer methodology](./data_transfer) based on the network type.
+
+An ad format consists of:
+
+- Static assets: anything that is not an video, including images, players, metadata, HTML, and Javascript.
+- Video assets: any video asset used to display the creative
+
+Video assets are characterized by duration (the total length of the video) and bitrate (480P, 720P, or 1080P). Some video players will stream video content, buffering a few seconds ahead of the user's position. We model streaming players using `min(placement average view time + buffer, duration) x bitrate`. For instance, a 15s creative delivered through a streaming player that buffers 2s into a placement with 6s of average view time would be the equivalent of an 8s non-streaming creative.
+
+The total data transfer from a creative can be calculated as `static assets + video assets`.
 
 ### Vendor Emissions
 
 For each vendor that participates in delivering and tracking the creative, we need to calculate the emissions per creative delivery request. This is part of the [ad tech vendor methodology](./ad_tech_model).
-
-## Input parameters
-
-| Parameter    | Values                      | Required | Comments         |
-| ------------ | --------------------------- | -------- | ---------------- |
-| Format       | video, banner, text         | yes      | Type of creative |
-| Payload Size | bytes                       | yes      | Banner only      |
-| Duration     | seconds (float)             | yes      | Video only       |
-| Impressions  | integer                     | yes      |                  |
-| Network Type | fixed, mobile               | yes      |                  |
-| Device Type  | mobile, pc, tablet, tv, ooh | yes      |                  |
-
-### Output parameters
-
-| Parameter                 | Values |
-| ------------------------- | ------ |
-| Device Energy             | kWh    |
-| Device Embodied Emissions | gCO2e  |
-| Data Transfer Energy      | kWh    |
-
-## Use Case: Banner Ad
-
-| Parameter    | Values | Comments                          |
-| ------------ | ------ | --------------------------------- |
-| Format       | banner |                                   |
-| Payload Size | 24882  | The size of the creative in bytes |
-| Impressions  | 831211 |                                   |
-| Network Type | mobile |                                   |
-| Device Type  | mobile |                                   |
-
-This will output:
-| Parameter | Value | Comments |
-| -- | -- | -- |
-| Device Energy | 0.18 kWh | 1 x 831211 x 0.77 / 3600 / 1000 |
-| Device Embodied Emissions | 4322.3 gCO2e | 1 x 831211 x 0.0052|
-| Data Transfer Energy | 2.70 kWh | 0.14 kWh/GB x 24882 / 1024 / 1024 / 1024 GB x 831211 |
-
-At 390 g/kWh, this creative execution would generate 5.4 kg of CO2e.
-
-## Use Case: Video ad on CTV
-
-| Parameter    | Value  | Comments |
-| ------------ | ------ | -------- |
-| Format       | video  |          |
-| Duration     | 30     |          |
-| Impressions  | 831211 |          |
-| Network Type | fixed  |          |
-| Device Type  | tv     |          |
-
-This will output:
-
-| Parameter                 | Value          | Comments                                    |
-| ------------------------- | -------------- | ------------------------------------------- |
-| Device Energy             | 605.4 kWh      | 30 x 831211 x 87.4 / 3600 / 1000            |
-| Device Embodied Emissions | 523662.9 gCO2e | 30 x 831211 x 0.021                         |
-| Data Transfer Energy      | 69.3 kWh       | 10W x 30s x 831211 / 3600 s/h / 1000 Wh/hWh |
-
-At 390 g/kWh, this creative execution would generate 787 kg of CO2e.
