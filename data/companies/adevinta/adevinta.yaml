@@ -1,0 +1,41 @@
+---
+type: corporate
+name: Adevinta
+template: publisher
+public_identifier: Adevinta
+facts:
+  - number_of_employees: 5476
+    source_id: 1
+    reference: page 16
+  - travel_emissions_mt_co2e_per_employee_per_month: 0.027
+    calculation: true
+  - commuting_emissions_mt_co2e_per_employee_per_month: 0.089
+    calculation: true
+  - office_emissions_mt_co2e_per_employee_per_month: 0.016
+    calculation: true
+  - overhead_emissions_mt_co2e_per_employee_per_month: 0.387
+    calculation: true
+  - datacenter_emissions_mt_co2e_per_employee_per_month: 0.074
+    calculation: true
+raw_data:
+  - office emissions mt: 1076
+    source_id: 1
+    reference: page 7
+    comment: 
+  - travel emissions mt: 1753
+    source_id: 1
+    reference: page 7
+  - commuting emissions mt: 5870
+    source_id: 1
+    reference: page 7
+  - overhead emissions mt: 25405
+    source_id: 1
+    reference: page 7
+    commment: purchased good and service + capital goods + waste generated
+  - datacenter emissions mt: 4841
+    source_id: 1
+    reference: page 7
+reference_files:
+  - year: 2022
+    id: 1
+    url: https://www.adevinta.com/app/uploads/2023/04/Adevinta-Sustainability-Report-2022.pdf
