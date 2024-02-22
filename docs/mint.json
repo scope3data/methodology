@@ -41,8 +41,8 @@
         "consumer_devices",
         "creative",
         "ad_tech_model",
-        "cookie_sync_model",
-        "digital_out_of_home"
+        "digital_out_of_home",
+        "calculations"
       ]
     }
   ],

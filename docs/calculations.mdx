@@ -1,0 +1,136 @@
+# Detailed walkthrough of calculations
+
+
+## Entity Definitions
+
+### Channels
+
+| Channel            | Description                                    |
+| ------------------ | ---------------------------------------------- |
+| Web                | Website that is not primarily social or CTV    |
+| App                | Mobile app that is not primarily social or CTV |
+| Social             | A social platform (Snapchat, Facebook, etc)    |
+| CTV/BVOD           | A TV-like streaming platform                   |
+| Audio              | Audio content (podcasts, streaming music)      |
+| DOOH               | Digital out of home - billboards, transit, etc |
+
+### Device Types
+
+| Channel         | Description                                    |
+| --------------- | ---------------------------------------------- |
+| `phone`         | A phone |
+| `tablet`        | A tablet |
+| `pc`            | A pc with a monitor or a laptop |
+| `tv`            | A TV |
+| `smart-speaker` | A smart speaker - Amazon Echo or equivalent    |
+
+### [Ad Format](./creative#terminology-placements-ad-formats-creatives-and-assets)
+
+| Field	                              | Description	                                                                                 |
+| ----------------------------------- | -------------------------------------------------------------------------------------------- |
+| `rendered_width_pixels`             | Width of the creative when rendered. Leave blank for responsive (will assume screen width)	 |
+| `rendered_height_pixels`	          | Height of the creative when rendered. Leave blank for responsive (will assume screen height) |
+| `image_sizes` 	                    | Array of image dimensions (eg `["300x250", "70x70"]`)                                        |
+| `video_duration_seconds`	          | Video duration (if applicable)                                                               |
+| `video_player_size_bytes`	          | Size of the javascript/html for a video player if present                                    |
+| `video_player_buffering_seconds`	  | Video player buffering - if player preloads content, leave blank                             |
+| `video_player_lazy_loads`	          | Does the player wait for the ad to be in view before streaming?                              |
+| `other_assets_bytes`	              | Metadata, text, html, etc                                                                    |
+
+### Basic Ad Formats
+
+| Type               | Channels                    | Description                        | Required Fields                 |
+| ------------------ | --------------------------- | ---------------------------------- | ------------------------------- |
+| `image`            | web, app, social, ctv, dooh | An image (may be an animated gif)  | `image_width_pixels`, `image_height_pixels` |
+| `video`            | social, ctv, dooh           | A video inserted into the content  | `video_duration_seconds`        |
+| `audio`            | audio                       | An audio inserted into the content | `audio_duration_seconds`        |
+ 
+
+### Delivery Row
+
+| Field                                | Description |
+| ------------------------------------ | ---------------------------------- |
+| `impressions`                        | The number of impressions counted |
+| `views`                              | The number of views counted  |
+| `device_type`                        | See [device types](#device-types) |
+| `creative_ad_format`                 | Either a basic or vendor-provided ad format |
+| `creative_image_data_transfer_bytes` | Data transfer for the video itself , ideally measured by the CDN |
+| `creative_image_width_pixels`        | Width of creative (basic image only) |
+| `creative_image_height_pixels`       | Height of creative (basic image only) |
+| `creative_audio_data_transfer_bytes` | Data transfer for the video itself , ideally measured by the CDN |
+| `creative_audio_duration_seconds`    | Audio duration in seconds |
+| `creative_video_data_transfer_bytes` | Data transfer for the video itself , ideally measured by the CDN |
+| `creative_video_vast_bytes`          | Size of VAST/VPAID wrapper for the video in bytes |
+| `creative_video_bitrate_kbps`        | Video bitrate *as delivered* in kilobits per second |
+| `creative_video_size_bytes`          | Video size *as delivered* in bytes |
+| `creative_video_duration_seconds`    | Video duration in seconds |
+| `creative_video_view_time`           | Average time, in seconds, that a video is viewed |
+| `creative_video_view_rate`           | Average percentage of a video that is viewed |
+
+## Creative Data Transfer
+
+`creative_data_transfer = video_bytes + audio_bytes + ad_format.video_player_size_bytes + image_bytes + ad_format.other_asset_bytes`
+
+### Data transfer provided in delivery row
+
+`image_bytes = creative_image_data_transfer_bytes`
+
+`video_bytes = creative_video_data_transfer_bytes + creative_video_vast_bytes`
+
+`audio_bytes = creative_audio_data_transfer_bytes`
+
+### Images
+
+Basic `image` ad format:
+
+`image_bytes = creative_image_width_pixels x creative_image_height_pixels x 3 / default_image_compression_ratio`
+
+Ad format with `image_sizes` array:
+
+`image_bytes = SUM(image_sizes[n].width x image_sizes[n].height) x 3 / default_image_compression_ratio`
+
+### Audio
+
+Basic `audio` ad format:
+
+`audio_bytes = creative_audio_duration_seconds x default_audio_bitrate[device_type]`
+
+### Standard video (non-streaming)
+
+Basic `video` ad format:
+
+`video_bytes = creative_video_duration_seconds x default_video_bitrate[device_type] + default_video_vast_bytes`
+
+Ad format with `video_duration_seconds`:
+
+`video_bytes = ad_format.video_duration_seconds x default_video_bitrate[device_type] + default_video_vast_bytes`
+
+### Streaming video player
+
+`video_bytes` = `bitrate x 8 x seconds_streamed x loads`
+
+Bitrate (choose first to match)
+
+`bitrate = creative_video_bitrate_kbps`
+
+`bitrate = creative_video_size_bytes / 8 / creative_video_duration / 1024`
+
+`bitrate = default_video_bitrate[device_type]`
+
+Seconds streamed (choose first to match)
+
+`seconds_streamed = creative_video_view_time`
+
+`seconds_streamed = creative_video_view_rate x creative_duration_seconds`
+
+`seconds_streamed = creative_video_view_rate x ad_format.video_duration_seconds`
+
+`seconds_streamed = default_video_view_rate x ad_format.video_duration_seconds`
+
+Lazy-loading player (`ad_format.video_player_lazy_loads == true`)
+
+`loads = views`
+
+Non-lazy-loading player (`ad_format.video_player_lazy_loads == false`)
+
+`loads = impressions`
