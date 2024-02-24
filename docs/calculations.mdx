@@ -16,7 +16,7 @@
 
 ### Device Types
 
-| Channel         | Description                                    |
+| Device type     | Description                                    |
 | --------------- | ---------------------------------------------- |
 | `phone`         | A phone |
 | `tablet`        | A tablet |
@@ -24,27 +24,70 @@
 | `tv`            | A TV |
 | `smart-speaker` | A smart speaker - Amazon Echo or equivalent    |
 
+### Network Types
+
+| Network type    | Description                                    |
+| --------------- | ---------------------------------------------- |
+| `mobile`        | A mobile network (3G/4G/5G) |
+| `fixed`         | A fixed network (broadband) |
+
+### Video Player
+
+| Field	                              | Description	                                                                                 |
+| ----------------------------------- | -------------------------------------------------------------------------------------------- |
+| `size_bytes`	                      | Size of the javascript/html for a video player if present                                    |
+| `buffering_seconds`	                | Video player buffering - if player preloads content, leave blank                             |
+| `lazy_loads`	                      | Does the player wait for the ad to be in view before streaming?                              |
+
 ### [Ad Format](./creative#terminology-placements-ad-formats-creatives-and-assets)
 
 | Field	                              | Description	                                                                                 |
 | ----------------------------------- | -------------------------------------------------------------------------------------------- |
 | `rendered_width_pixels`             | Width of the creative when rendered. Leave blank for responsive (will assume screen width)	 |
 | `rendered_height_pixels`	          | Height of the creative when rendered. Leave blank for responsive (will assume screen height) |
+| `is_primary_experience`	            | Is the ad the primary experience for the user (takeover/interstitial)                        |
 | `image_sizes` 	                    | Array of image dimensions (eg `["300x250", "70x70"]`)                                        |
+| `audio_duration_seconds`	          | Audio duration (if applicable)                                                               |
 | `video_duration_seconds`	          | Video duration (if applicable)                                                               |
-| `video_player_size_bytes`	          | Size of the javascript/html for a video player if present                                    |
-| `video_player_buffering_seconds`	  | Video player buffering - if player preloads content, leave blank                             |
-| `video_player_lazy_loads`	          | Does the player wait for the ad to be in view before streaming?                              |
+| `video_player`	                    | Video player used to render video (if applicable)                                            |
 | `other_assets_bytes`	              | Metadata, text, html, etc                                                                    |
 
-### Basic Ad Formats
+#### Sample Ad Formats:
 
-| Type               | Channels                    | Description                        | Required Fields                 |
-| ------------------ | --------------------------- | ---------------------------------- | ------------------------------- |
-| `image`            | web, app, social, ctv, dooh | An image (may be an animated gif)  | `image_width_pixels`, `image_height_pixels` |
-| `video`            | social, ctv, dooh           | A video inserted into the content  | `video_duration_seconds`        |
-| `audio`            | audio                       | An audio inserted into the content | `audio_duration_seconds`        |
- 
+300x250 banner
+
+```
+image_sizes = ['300x250']
+rendered_width_pixels = 300,
+rendered_height_pixels = 250
+is_primary_experience = false
+```
+
+30 second audio
+
+```
+audio_duration_seconds = 30
+```
+
+15 second outstream video
+
+```
+video_duration_seconds = 15;
+video_player = 'default',
+rendered_width_pixels = 500,
+rendered_height_pixels = 400
+is_primary_experience = false
+```
+
+Product carousel
+
+```
+  image_sizes = ['400x400','400x400','400x400'],
+  other_assets_bytes = 7321,
+  rendered_height_pixels = 600,
+  rendered_width_pixels = 450
+  is_primary_experience = false
+```
 
 ### Delivery Row
 
@@ -52,7 +95,12 @@
 | ------------------------------------ | ---------------------------------- |
 | `impressions`                        | The number of impressions counted |
 | `views`                              | The number of views counted  |
+| `utc_datetime`                       | Date and time, in UTC, when impressions were delivered |
+| `country`                            | The country where the impression was delivered |
+| `region`                             | The region of the country where the impression was delivered |
+| `channel`                            | See [channels](#channels) |
 | `device_type`                        | See [device types](#device-types) |
+| `network_type`                       | See [network types](#network-types) |
 | `creative_ad_format`                 | Either a basic or vendor-provided ad format |
 | `creative_image_data_transfer_bytes` | Data transfer for the video itself , ideally measured by the CDN |
 | `creative_image_width_pixels`        | Width of creative (basic image only) |
@@ -66,71 +114,214 @@
 | `creative_video_duration_seconds`    | Video duration in seconds |
 | `creative_video_view_time`           | Average time, in seconds, that a video is viewed |
 | `creative_video_view_rate`           | Average percentage of a video that is viewed |
+| `creative_time_in_view_seconds`      | Time that the creative was visible on the device |
 
-## Creative Data Transfer
+## Defaults
 
-`creative_data_transfer = video_bytes + audio_bytes + ad_format.video_player_size_bytes + image_bytes + ad_format.other_asset_bytes`
+### Conventional model data transfer by network type
 
-### Data transfer provided in delivery row
+From [SRIxAD database 2.1](https://github.com/SRISyndicatRegiesInternet/SRIxAD-DigitalCampaignsCarbonFramework/releases/download/v2.1.0/Referentiel.SRI.x.AD.-.V2.1_partage.zip), original source ADEME_220830_v1.4
 
-`image_bytes = creative_image_data_transfer_bytes`
+```
+default_usage_kwh_per_kb['fixed'] = 6.87E-08
+default_usage_kwh_per_kb['mobile'] = 2.36E-07
 
-`video_bytes = creative_video_data_transfer_bytes + creative_video_vast_bytes`
+default_network_embodied_emissions_gco2e_per_kb['fixed'] = 4.43E-09
+default_network_embodied_emissions_gco2e_per_kb['mobile'] = 7.97E-09
+```
 
-`audio_bytes = creative_audio_data_transfer_bytes`
+### Power model data transfer by network type
 
-### Images
+From [Carbon impact of video streaming (Carbon Trust)](https://ctprodstorageaccountp.blob.core.windows.net/prod-drupal-files/documents/resource/public/Carbon-impact-of-video-streaming.pdf), Table 5; and calculated [here](./data_transfer#fixed-network)
 
-Basic `image` ad format:
+```
+default_baseload_watts['fixed'] = 9.55
+default_baseload_watts['mobile'] = 1.2
+default_dynamic_watts_per_kbps['fixed'] = 30
+default_dynamic_watts_per_kbps['mobile'] = 1530
+```
 
-`image_bytes = creative_image_width_pixels x creative_image_height_pixels x 3 / default_image_compression_ratio`
+### Video player characteristics
 
-Ad format with `image_sizes` array:
+Based on actual data transfer of https://vjs.zencdn.net/8.10.0/video.min.js on February 23, 2024
 
-`image_bytes = SUM(image_sizes[n].width x image_sizes[n].height) x 3 / default_image_compression_ratio`
+```
+default_video_player_size_bytes = 192205
+```
 
-### Audio
+### Media size
 
-Basic `audio` ad format:
+Based on [YouTube recommendations](https://support.google.com/youtube/answer/1722171), [Wikipedia](https://en.wikipedia.org/wiki/JPEG)
 
-`audio_bytes = creative_audio_duration_seconds x default_audio_bitrate[device_type]`
+```
+default_image_compression_ratio = 10
+default_video_bitrate_non_primary = 2500
+default_video_bitrate['phone'] = 2500
+default_video_bitrate['tablet'] = 5000
+default_video_bitrate['pc'] = 8000
+default_video_bitrate['tv'] = 8000
+```
 
-### Standard video (non-streaming)
+### Device size
 
-Basic `video` ad format:
+From common devices (Quad HD 27” monitor, iPhone 13, Nexus 5X, iPad Air 1/2, iPad 2/3, Nexus 9, 1080P TV)
 
-`video_bytes = creative_video_duration_seconds x default_video_bitrate[device_type] + default_video_vast_bytes`
+```
+default_device_width['phone'] = 1080
+default_device_height['phone'] = 1920
+default_device_width['tablet'] = 1536
+default_device_height['tablet'] = 2048
+default_device_width['pc'] = 2560
+default_device_height['pc'] = 1440
+default_device_width['tv'] = 1920
+default_device_height['tv'] = 1080
+```
 
-Ad format with `video_duration_seconds`:
+### Device energy use and embodied emissions
 
-`video_bytes = ad_format.video_duration_seconds x default_video_bitrate[device_type] + default_video_vast_bytes`
+See [Consumer Devices](./consumer_devices)
 
-### Streaming video player
+```
+default_device_watts['phone'] = 0.77
+default_device_watts['pc'] = 53.2
+default_device_watts['tablet'] = 3
+default_device_watts['tv'] = 87.4
+default_device_watts['smart-speaker'] = 2.5
+default_device_embodied_emissions_per_second['phone'] = 0.0058
+default_device_embodied_emissions_per_second['pc'] = 0.007
+default_device_embodied_emissions_per_second['tablet'] = 0.0029
+default_device_embodied_emissions_per_second['tv'] = 0.0096
+default_device_embodied_emissions_per_second['smart-speaker'] = 0.0061
+```
 
-`video_bytes` = `bitrate x 8 x seconds_streamed x loads`
+### Time in view for non-video ads
 
-Bitrate (choose first to match)
+Observations from various channels
 
-`bitrate = creative_video_bitrate_kbps`
+```
+default_time_in_view_seconds = 6
+```
 
-`bitrate = creative_video_size_bytes / 8 / creative_video_duration / 1024`
+## Lookups from external sources
 
-`bitrate = default_video_bitrate[device_type]`
+### Carbon intensity by country, region, and UTC Date/Time
 
-Seconds streamed (choose first to match)
+Providers should clearly and publicly document:
+- Which data provider is used for carbon intensity data (for instance, WattTime or ElectricityMaps)
+- What carbon intensity metric is used (marginal vs average)
 
-`seconds_streamed = creative_video_view_time`
+`lookup_carbon_intensity_gco2e_per_kwh(country, region, utc_datetime)` should look up the carbon intensity in gCO2e based on 100-year global warming potential (GWP100) from a database at no less than hourly granularity.
 
-`seconds_streamed = creative_video_view_rate x creative_duration_seconds`
+## Calculating Emissions
 
-`seconds_streamed = creative_video_view_rate x ad_format.video_duration_seconds`
+### Creative Delivery - Data Transfer
 
-`seconds_streamed = default_video_view_rate x ad_format.video_duration_seconds`
+For all channels other than CTV/BVOD, use the conventional model:
 
-Lazy-loading player (`ad_format.video_player_lazy_loads == true`)
+```
+creative_data_transfer_bytes =
+      video_bytes +
+      audio_bytes +
+      image_bytes +
+      ad_format.video_player.size_bytes +
+      ad_format.other_asset_bytes
 
-`loads = views`
+creative_data_transfer_usage_emissions =
+      creative_data_transfer_bytes / 1024 x
+      default_usage_kwh_per_kb[network_type] x
+      lookup_carbon_intensity_gco2e_per_kwh(country, region, utc_datetime)
 
-Non-lazy-loading player (`ad_format.video_player_lazy_loads == false`)
+creative_data_transfer_embodied_emissions =
+      creative_data_transfer_bytes / 1024 x
+      default_network_embodied_emissions_gco2e_per_kb[network_type]
+```
 
-`loads = impressions`
+If data transfer is provided in the delivery row, use it:
+
+```
+image_bytes = creative_image_data_transfer_bytes
+video_bytes = creative_video_data_transfer_bytes + creative_video_vast_bytes
+audio_bytes = creative_audio_data_transfer_bytes
+```
+
+Otherwise, calculate data transfer:
+
+```
+image_bytes = SUM(image_sizes[n].width x image_sizes[n].height) x 3 / default_image_compression_ratio
+
+audio_duration = creative_audio_duration_seconds ?? ad_format.audio_duration_seconds
+audio_bytes = audio_duration_seconds x default_audio_bitrate[device_type]
+
+default_bitrate =
+      ad_format.is_primary_experience ?
+      default_video_bitrate[device_type] :
+      default_video_bitrate_non_primary
+bitrate =
+      creative_video_bitrate_kbps ??
+      creative_video_size_bytes / 8 / creative_video_duration / 1024 ??
+      default_bitrate
+video_duration = creative_video_duration_seconds ?? ad_format.video_duration_seconds
+seconds_watched = creative_video_view_time ??
+                  creative_video_view_rate x video_duration ??
+                  video_duration
+buffer = ad_format.video_player.buffering_seconds ?? infinity
+seconds_streamed = MAX(seconds_watched + buffer, video_duration)
+loads = ad_format.video_player.lazy_loads ? views : impressions
+
+video_bytes = bitrate x 8 x seconds_streamed x loads + default_video_vast_bytes
+```
+
+For CTV/BVOD, use the power model:
+
+```
+creative_data_transfer_usage_emissions =
+    creative_video_duration_seconds x
+    power x
+    lookup_carbon_intensity_gco2e_per_kwh(country, region, utc_datetime)
+
+power =
+    default_baseload_watts[network_type] +
+    default_dynamic_watts[network_type] x 
+    default_video_bitrate[device_type]
+
+creative_data_transfer_embodied_emissions =
+      creative_video_duration_seconds x
+      default_video_bitrate[device_type] / 128 x
+      default_network_embodied_emissions_gco2e_per_kb[network_type]
+```
+
+### Creative Delivery - Consumer Device
+
+```
+audio_device_coverage =
+      device_type == 'smart-speaker' ? 1 : 0
+audio_device_coverage_seconds =
+      audio_device_coverage x
+      audio_duration
+
+device_pixels = default_device_width[device_type] x default_device_height[device_type]
+rendered_width = ad_format.rendered_width_pixels ?? default_device_width[device_type]
+rendered_height = ad_format.rendered_height_pixels ?? default_device_height[device_type]
+visual_device_coverage =
+      ad_format.is_primary_experience ?
+      device_pixels :
+      rendered_width x rendered_height / device_pixels
+time_in_view =
+      video_duration ??
+      creative_time_in_view_seconds ??
+      default_time_in_view_seconds
+
+device_coverage_seconds =
+      audio_duration ?
+      audio_device_coverage_seconds :
+      visual_device_coverage x time_in_view
+
+creative_consumer_device_usage_emissions =
+      device_coverage_seconds / 3600 x
+      default_device_watts[device_type] / 1000 x
+      lookup_carbon_intensity_gco2e_per_kwh(country, region, utc_datetime)
+      
+creative_consumer_device_embodied_emissions =
+      device_coverage_seconds / 3600 x
+      default_device_embodied_emissions_per_second[device_type]
+```

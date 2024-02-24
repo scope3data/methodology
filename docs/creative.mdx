@@ -8,42 +8,6 @@ A _media asset_ is an image, video, audio, or text that the advertiser wants to 
 
 A _creative_ is one or more media assets combined with an ad format. For instance, a CTV creative would typically be a 15-second or 30-second video (the media asset) wrapped in VAST/VPAID (the ad format) and deployed in a commercial break (the placement).
 
-## Defaults
-
-These defaults can be overridden with more accurate data, for instance as gathered at run-time by an ad server or other ad tech platform. Having defaults also makes "apples-to-apples" comparison between ad formats possible.
-
-### Media size:
-
-- For images, we assume an 10:1 compression ratio, meaning that a 500x400 image (586KB uncompressed) would be 59KB
-- For video, we assume 312KB/second for 480P, 625KB/second for 720P, and 1250KB/second for 1080P (per [YouTube recommendations](https://support.google.com/youtube/answer/1722171)). The default bitrate will be determined by device type and placement size.
-- For audio, we assume 128KB/second for high-quality audio, 77KB/second for medium-quality, and 20KB/second for low-quality
-
-### Device size:
-
-- PC: 2560 x 1440 (Quad HD 27")
-- Phone: 1080 x 1920 (iPhone 13, Nexus 5X)
-- Tablet: 1536 x 2048 (Air 1/2, iPad 2/3, Nexus 9)
-- TV: 1920 x 1080 (1080p)
-
-### Bitrate:
-
-| Device Type    | Placement max dimension | Bitrate |
-| -------------- | ----------------------- | ------- |
-| PC, TV, Tablet | Ad primary              | 1080P   |
-| Phone          | Ad primary              | 480P    |
-| Any            | 0 - 480 pixels          | 480P    |
-| Any            | 480 - 1024 pixels       | 720P    |
-| Any            | 1024+ pixels            | 1080P   |
-
-### Ad placement:
-
-| Channel          | Ad is primary content | Average time in view |
-| ---------------- | --------------------- | -------------------- |
-| DOOH             | yes                   | 10 seconds           |
-| CTV, audio       | yes                   | 30 seconds           |
-| Others           | no                    | 10 seconds           |
-
-
 ## Methodology
 
 The lifecycle of a creative starts with its production. Depending on the channel and format, creative production can be very lightweight (typing a couple of lines of text into a search tool) or have a significant carbon footprint (an on-location shoot with a full crew). Currently, this project does not include modeling creative production or transcoding of creative assets, but we are considering these for future development.
