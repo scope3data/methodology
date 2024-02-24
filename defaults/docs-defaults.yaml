@@ -1,0 +1,45 @@
+# AUTO_GENERATED from docs/snippets
+defaults:
+  default_baseload_watts:
+    fixed: 9.550000000
+    mobile: 1.200000000
+  default_device_embodied_emissions_per_second:
+    pc: 0.007000000
+    phone: 0.005800000
+    smart-speaker: 0.006100000
+    tablet: 0.002900000
+    tv: 0.009600000
+  default_device_height:
+    pc: 1440
+    phone: 1920
+    tablet: 2048
+    tv: 1080
+  default_device_watts:
+    pc: 53.200000000
+    phone: 0.770000000
+    smart-speaker: 2.500000000
+    tablet: 3
+    tv: 87.400000000
+  default_device_width:
+    pc: 2560
+    phone: 1080
+    tablet: 1536
+    tv: 1920
+  default_dynamic_watts_per_kbps:
+    fixed: 30
+    mobile: 1530
+  default_image_compression_ratio: 10
+  default_network_embodied_emissions_gco2e_per_kb:
+    fixed: 0.000000004
+    mobile: 0.000000008
+  default_time_in_view_seconds: 6
+  default_usage_kwh_per_kb:
+    fixed: 0.000000069
+    mobile: 0.000000236
+  default_video_bitrate:
+    pc: 8000
+    phone: 2500
+    tablet: 5000
+    tv: 8000
+  default_video_bitrate_non_primary: 2500
+  default_video_player_size_bytes: 192205

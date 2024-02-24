@@ -1,3 +1,11 @@
+import ConventionalModelDefaults from '/snippets/defaults_conventional_model.mdx'
+import PowerModelDefaults from '/snippets/defaults_power_model.mdx'
+import VideoPlayerDefaults from '/snippets/defaults_video_player.mdx'
+import ConsumerDeviceDefaults from '/snippets/defaults_consumer_device.mdx'
+import DeviceSizeDefaults from '/snippets/defaults_device_size.mdx'
+import MediaSizeDefaults from '/snippets/defaults_media_size.mdx'
+import TimeInViewDefaults from '/snippets/defaults_time_in_view.mdx'
+
 # Detailed walkthrough of calculations
 
 
@@ -122,85 +130,43 @@ Product carousel
 
 From [SRIxAD database 2.1](https://github.com/SRISyndicatRegiesInternet/SRIxAD-DigitalCampaignsCarbonFramework/releases/download/v2.1.0/Referentiel.SRI.x.AD.-.V2.1_partage.zip), original source ADEME_220830_v1.4
 
-```
-default_usage_kwh_per_kb['fixed'] = 6.87E-08
-default_usage_kwh_per_kb['mobile'] = 2.36E-07
-
-default_network_embodied_emissions_gco2e_per_kb['fixed'] = 4.43E-09
-default_network_embodied_emissions_gco2e_per_kb['mobile'] = 7.97E-09
-```
+<ConventionalModelDefaults/>
 
 ### Power model data transfer by network type
 
 From [Carbon impact of video streaming (Carbon Trust)](https://ctprodstorageaccountp.blob.core.windows.net/prod-drupal-files/documents/resource/public/Carbon-impact-of-video-streaming.pdf), Table 5; and calculated [here](./data_transfer#fixed-network)
 
-```
-default_baseload_watts['fixed'] = 9.55
-default_baseload_watts['mobile'] = 1.2
-default_dynamic_watts_per_kbps['fixed'] = 30
-default_dynamic_watts_per_kbps['mobile'] = 1530
-```
+<PowerModelDefaults/>
 
 ### Video player characteristics
 
 Based on actual data transfer of https://vjs.zencdn.net/8.10.0/video.min.js on February 23, 2024
 
-```
-default_video_player_size_bytes = 192205
-```
+<VideoPlayerDefaults/>
 
 ### Media size
 
 Based on [YouTube recommendations](https://support.google.com/youtube/answer/1722171), [Wikipedia](https://en.wikipedia.org/wiki/JPEG)
 
-```
-default_image_compression_ratio = 10
-default_video_bitrate_non_primary = 2500
-default_video_bitrate['phone'] = 2500
-default_video_bitrate['tablet'] = 5000
-default_video_bitrate['pc'] = 8000
-default_video_bitrate['tv'] = 8000
-```
+<MediaSizeDefaults/>
 
 ### Device size
 
 From common devices (Quad HD 27” monitor, iPhone 13, Nexus 5X, iPad Air 1/2, iPad 2/3, Nexus 9, 1080P TV)
 
-```
-default_device_width['phone'] = 1080
-default_device_height['phone'] = 1920
-default_device_width['tablet'] = 1536
-default_device_height['tablet'] = 2048
-default_device_width['pc'] = 2560
-default_device_height['pc'] = 1440
-default_device_width['tv'] = 1920
-default_device_height['tv'] = 1080
-```
+<DeviceSizeDefaults/>
 
 ### Device energy use and embodied emissions
 
 See [Consumer Devices](./consumer_devices)
 
-```
-default_device_watts['phone'] = 0.77
-default_device_watts['pc'] = 53.2
-default_device_watts['tablet'] = 3
-default_device_watts['tv'] = 87.4
-default_device_watts['smart-speaker'] = 2.5
-default_device_embodied_emissions_per_second['phone'] = 0.0058
-default_device_embodied_emissions_per_second['pc'] = 0.007
-default_device_embodied_emissions_per_second['tablet'] = 0.0029
-default_device_embodied_emissions_per_second['tv'] = 0.0096
-default_device_embodied_emissions_per_second['smart-speaker'] = 0.0061
-```
+<ConsumerDeviceDefaults/>
 
 ### Time in view for non-video ads
 
 Observations from various channels
 
-```
-default_time_in_view_seconds = 6
-```
+<TimeInViewDefaults/>
 
 ## Lookups from external sources
 

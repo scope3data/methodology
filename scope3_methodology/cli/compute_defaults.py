@@ -205,6 +205,25 @@ def main():
     model_keys["networking"] = NetworkingConnection.default_fields()
     model_keys["transmission_rate"] = TransmissionRate.default_fields()
 
+    # pull in facts from documentation
+
+    snippet_files = glob("docs/snippets/defaults_*.mdx")
+    snippet_lines = ""
+    for file in snippet_files:
+      with open(file, "r", encoding="UTF-8") as stream:
+        for line in stream:
+          if '```' not in line: snippet_lines += line
+    docs_defaults = yaml_load(snippet_lines)
+    output = "# AUTO_GENERATED from docs/snippets\n"
+    output += yaml_dump({"defaults": docs_defaults})
+    if args.dry_run:
+        print(output)
+    else:
+        file_path = f"{args.defaults_directory}/docs-defaults.yaml"
+        with open(file_path, "w", encoding="UTF-8") as write_stream:
+            write_stream.write(output)
+            write_stream.close()
+
     # get a list of all facts from our sources
     facts = get_all_facts()
 
