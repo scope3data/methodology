@@ -8,7 +8,6 @@ import TimeInViewDefaults from '/snippets/defaults_time_in_view.mdx'
 
 # Detailed walkthrough of calculations
 
-
 ## Entity Definitions
 
 ### Channels
@@ -97,6 +96,32 @@ Product carousel
   is_primary_experience = false
 ```
 
+### Property
+
+| Field                                           | Description |
+| ----------------------------------------------- | ------------------------------------------------------------ |
+| `average_seconds_per_session_ex_ads`            | The average length of a session on this property excluding ads (eg 44 min of a 60 min TV show) |
+| `average_imps_per_session`                      | The average number of impressions per session |
+| `average_data_kb_per_session_ex_ads`            | The average number of KB transferred during a session excluding ads |
+| `ad_funded_percentage`                          | The percentage of content funded by advertising (eg 50%) |
+| `allocated_adjusted_corporate_emissions_kgco2e` | This property's share of corporate emissions |
+| `total_sessions`                                | Number of sessions in the same time period as corporate emissions |
+
+### Ad Platform
+
+| Field                                           | Description |
+| ----------------------------------------------- | ------------------------------------------------------------ |
+| `allocated_adjusted_corporate_emissions_kgco2e` | This ad platform's share of corporate emissions |
+| `total_decisioning_requests`                    | Total decisioning requests handled |
+| `downstream_ad_platforms`                       | Array of ad platforms that are sent requests |
+| `distribution_rate_by_platform`                 | Traffic shaping data for each downstream ad platform |
+
+### Placement
+
+| Field                                    | Description |
+| ---------------------------------------- | ------------------------------------------------------------ |
+| `ad_platforms`                           | The ad platforms called by this placement |
+
 ### Delivery Row
 
 | Field                                | Description |
@@ -109,13 +134,14 @@ Product carousel
 | `channel`                            | See [channels](#channels) |
 | `device_type`                        | See [device types](#device-types) |
 | `network_type`                       | See [network types](#network-types) |
+| `property`                           | See [property](#property) |
 | `creative_ad_format`                 | Either a basic or vendor-provided ad format |
 | `creative_image_data_transfer_bytes` | Data transfer for the video itself , ideally measured by the CDN |
 | `creative_image_width_pixels`        | Width of creative (basic image only) |
 | `creative_image_height_pixels`       | Height of creative (basic image only) |
-| `creative_audio_data_transfer_bytes` | Data transfer for the video itself , ideally measured by the CDN |
+| `creative_audio_data_transfer_bytes` | Data transfer for the core audio asset, ideally measured by the CDN |
 | `creative_audio_duration_seconds`    | Audio duration in seconds |
-| `creative_video_data_transfer_bytes` | Data transfer for the video itself , ideally measured by the CDN |
+| `creative_video_data_transfer_bytes` | Data transfer for the core video asset, ideally measured by the CDN |
 | `creative_video_vast_bytes`          | Size of VAST/VPAID wrapper for the video in bytes |
 | `creative_video_bitrate_kbps`        | Video bitrate *as delivered* in kilobits per second |
 | `creative_video_size_bytes`          | Video size *as delivered* in bytes |
@@ -182,6 +208,12 @@ Providers should clearly and publicly document:
 
 ### Creative Delivery - Data Transfer
 
+```
+creative_data_transfer_emissions_gco2pm =
+      creative_data_transfer_usage_emissions_gco2pm +
+      creative_data_transfer_embodied_emissions_gco2pm
+```
+
 For all channels other than CTV/BVOD, use the conventional model:
 
 ```
@@ -192,12 +224,12 @@ creative_data_transfer_bytes =
       ad_format.video_player.size_bytes +
       ad_format.other_asset_bytes
 
-creative_data_transfer_usage_emissions =
+creative_data_transfer_usage_emissions_gco2pm =
       creative_data_transfer_bytes / 1024 x
       default_usage_kwh_per_kb[network_type] x
       lookup_carbon_intensity_gco2e_per_kwh(country, region, utc_datetime)
 
-creative_data_transfer_embodied_emissions =
+creative_data_transfer_embodied_emissions_gco2pm =
       creative_data_transfer_bytes / 1024 x
       default_network_embodied_emissions_gco2e_per_kb[network_type]
 ```
@@ -240,7 +272,7 @@ video_bytes = bitrate x 8 x seconds_streamed x loads + default_video_vast_bytes
 For CTV/BVOD, use the power model:
 
 ```
-creative_data_transfer_usage_emissions =
+creative_data_transfer_usage_emissions_gco2pm =
     creative_video_duration_seconds x
     power x
     lookup_carbon_intensity_gco2e_per_kwh(country, region, utc_datetime)
@@ -250,7 +282,7 @@ power =
     default_dynamic_watts[network_type] x 
     default_video_bitrate[device_type]
 
-creative_data_transfer_embodied_emissions =
+creative_data_transfer_embodied_emissions_gco2pm =
       creative_video_duration_seconds x
       default_video_bitrate[device_type] / 128 x
       default_network_embodied_emissions_gco2e_per_kb[network_type]
@@ -282,12 +314,92 @@ device_coverage_seconds =
       audio_device_coverage_seconds :
       visual_device_coverage x time_in_view
 
-creative_consumer_device_usage_emissions =
+creative_consumer_device_usage_emissions_gco2pm =
       device_coverage_seconds / 3600 x
       default_device_watts[device_type] / 1000 x
       lookup_carbon_intensity_gco2e_per_kwh(country, region, utc_datetime)
       
-creative_consumer_device_embodied_emissions =
+creative_consumer_device_embodied_emissions_gco2pm =
       device_coverage_seconds / 3600 x
       default_device_embodied_emissions_per_second[device_type]
+```
+
+### Media Delivery - Data Transfer
+
+```
+session_seconds_per_imp =
+      property.average_seconds_per_session_ex_ads x
+      property.ad_funded_percentage /
+      property.average_imps_per_session
+
+media_data_transfer_emissions_gco2pm =
+      media_data_transfer_usage_emissions_gco2pm +
+      media_data_transfer_embodied_emissions_gco2pm
+
+```
+
+For all channels other than CTV/BVOD, use the conventional model:
+
+```
+media_data_transfer_usage_emissions_gco2pm =
+      property.average_data_kb_per_session_ex_ads x
+      default_usage_kwh_per_kb[network_type] x
+      lookup_carbon_intensity_gco2e_per_kwh(country, region, utc_datetime)
+
+media_data_transfer_embodied_emissions_gco2pm =
+      property.average_data_kb_per_session_ex_ads x
+      default_network_embodied_emissions_gco2e_per_kb[network_type]
+```
+
+For CTV/BVOD, use the power model:
+
+```
+media_data_transfer_usage_emissions_gco2pm =
+    session_seconds_per_imp x
+    power x
+    lookup_carbon_intensity_gco2e_per_kwh(country, region, utc_datetime)
+
+media_data_transfer_embodied_emissions_gco2pm =
+    session_seconds_per_imp x
+    default_video_bitrate[device_type] / 128 x
+    default_network_embodied_emissions_gco2e_per_kb[network_type]
+```
+
+### Media Delivery - Consumer Device
+
+```
+media_consumer_device_usage_emissions_gco2pm =
+      session_seconds_per_imp / 3600 x
+      default_device_watts[device_type] / 1000 x
+      lookup_carbon_intensity_gco2e_per_kwh(country, region, utc_datetime)
+      
+media_consumer_device_embodied_emissions_gco2pm =
+      session_seconds_per_imp / 3600 x
+      default_device_embodied_emissions_per_second[device_type]
+```
+
+### Media Delivery - Corporate
+
+```
+media_corporate_emissions_gco2pm =
+      property.allocated_adjusted_corporate_emissions_kg * 1000 /
+      property.total_sessions /
+      property.average_imps_per_session
+```
+
+### Ad Selection
+
+```
+get_platform_emissions(ad_platform):
+  direct_emissions = 
+      ad_platform.allocated_adjusted_corporate_emissions_kg * 1000 /
+      ad_platform.total_decisioning_requests
+  indirect_emissions = 0
+  for platform in ad_platform.downstream_platforms:
+      indirect_emissions += get_platform_emissions(platform) x
+            ad_platform.distribution_rate_by_platform[platform] ?? 1
+
+ad_selection_emissions_gco2pm = 0
+  for platform in placement.ad_platforms:
+      ad_selection_emissions += get_platform_emissions(platform)
 ```
