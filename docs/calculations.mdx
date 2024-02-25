@@ -5,6 +5,7 @@ import ConsumerDeviceDefaults from '/snippets/defaults_consumer_device.mdx'
 import DeviceSizeDefaults from '/snippets/defaults_device_size.mdx'
 import MediaSizeDefaults from '/snippets/defaults_media_size.mdx'
 import TimeInViewDefaults from '/snippets/defaults_time_in_view.mdx'
+import AdPlatformDefaults from '/snippets/defaults_ad_platform.mdx'
 
 # Detailed walkthrough of calculations
 
@@ -14,12 +15,12 @@ import TimeInViewDefaults from '/snippets/defaults_time_in_view.mdx'
 
 | Channel            | Description                                    |
 | ------------------ | ---------------------------------------------- |
-| Web                | Website that is not primarily social or CTV    |
-| App                | Mobile app that is not primarily social or CTV |
-| Social             | A social platform (Snapchat, Facebook, etc)    |
-| CTV/BVOD           | A TV-like streaming platform                   |
-| Audio              | Audio content (podcasts, streaming music)      |
-| DOOH               | Digital out of home - billboards, transit, etc |
+| `web`              | Website that is not primarily social or CTV    |
+| `app`              | Mobile app that is not primarily social or CTV |
+| `social`           | A social platform (Snapchat, Facebook, etc)    |
+| `ctv-bvod`         | A TV-like streaming platform                   |
+| `audio`            | Audio content (podcasts, streaming music)      |
+| `dooh`             | Digital out of home - billboards, transit, etc |
 
 ### Device Types
 
@@ -112,7 +113,7 @@ Product carousel
 | Field                                           | Description |
 | ----------------------------------------------- | ------------------------------------------------------------ |
 | `allocated_adjusted_corporate_emissions_kgco2e` | This ad platform's share of corporate emissions |
-| `total_decisioning_requests`                    | Total decisioning requests handled |
+| `total_decisioning_requests`                    | Total ad opportunities decisioned (ie, imps bid upon) |
 | `downstream_ad_platforms`                       | Array of ad platforms that are sent requests |
 | `distribution_rate_by_platform`                 | Traffic shaping data for each downstream ad platform |
 
@@ -193,6 +194,12 @@ See [Consumer Devices](./consumer_devices)
 Observations from various channels
 
 <TimeInViewDefaults/>
+
+### Ad platform request sizes by channel
+
+Observations from various channels
+
+<AdPlatformDefaults/>
 
 ## Lookups from external sources
 
@@ -399,7 +406,17 @@ get_platform_emissions(ad_platform):
       indirect_emissions += get_platform_emissions(platform) x
             ad_platform.distribution_rate_by_platform[platform] ?? 1
 
-ad_selection_emissions_gco2pm = 0
-  for platform in placement.ad_platforms:
-      ad_selection_emissions += get_platform_emissions(platform)
+ad_selection_platform_emissions_gco2pm = 0
+data_transfer_bytes = 0
+for platform in placement.ad_platforms:
+  ad_selection_platform_emissions_gco2pm += get_platform_emissions(platform)
+  data_transfer_bytes += default_consumer_device_request_size_bytes[channel]
+
+ad_selection_data_transfer_emissions_gco2pm =
+    data_transfer_bytes / 1024 x
+    lookup_carbon_intensity_gco2e_per_kwh(country, region, utc_datetime)
+
+ad_selection_emissions_gco2pm =
+    ad_selection_platform_emissions_gco2pm +
+    ad_selection_data_transfer_emissions_gco2pm
 ```
