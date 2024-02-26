@@ -1,0 +1,35 @@
+# Calculating property metrics
+
+The property represents the media upon which advertising is delivered. This could be a website, an app, a screen, a stream, or any other surface where advertising is delivered.
+
+## Session Metrics
+
+The first step in modeling a property is to understand a user session and how content and ads interact. The key data points to gather are 1) the average length of a session, 2) the data transferred to the consumer device to deliver content (exclusive of ads), and 3) the number of ads that are displayed during the session.
+
+### Boundaries and non-advertising business models
+
+For a property that is funded by a mix of advertising and other business models - for instance, a financial news publisher that charges a subscription fee and serves ads - the advertiser is not responsible for the emissions related to non-advertising revenue. The emissions from media delivery should be adjusted to reflect only the percentage funded by advertising.
+
+### Mobile apps
+
+Mobile apps have two sources of data transfer: the download and updates of the app itself and the content consumed during each user session. For an accurate calculation of data transfer per session, multiply the total number of app updates per year per user by the average size of each download of the app and divide by the number of sessions per user per year. For instance, an app that is updated monthly and has an average download size of 4 MB would incur 48 MB per user per year of additional data transfer.
+
+### Web sites
+
+To calculate the average data transfer of a user session:
+
+1. Create a table of page views for the top URLs on the site, and using an ad blocker, calculate the data transfer to load these URLs
+
+| URL           | Page Views | Data Transfer (KB) |
+| ------------- | ---------- | ------------------ |
+| /index        | 1000       | 778.2              |
+| /sports       | 300        | 489.1              |
+| /news/today   | 500        | 1832.9             |
+
+2. Calculate the weighted average data transfer per page view
+
+`data_per_pv = SUMPRODUCT(page views, data transfer)/SUM(page views)`
+
+3. Calculate the average data transfer per session
+
+`data_transfer_per_session = data_per_pv x pvs_per_session`
