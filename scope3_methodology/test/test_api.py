@@ -4,6 +4,7 @@ from decimal import Decimal
 
 from scope3_methodology.api.api import (
     adtech_platform_defaults,
+    docs_defaults,
     end_user_device_defaults,
     get_all_networking_connection_device_defaults,
     load_default_files,
@@ -27,6 +28,7 @@ TEST_ORGANIZATION_DEFAULTS_FILE = "defaults/organization-defaults.yaml"
 TEST_ATP_DEFAULTS_FILE = "defaults/atp-defaults.yaml"
 TEST_NETWORKING_DEFAULTS_FILE = "defaults/networking-defaults.yaml"
 TEST_TRANSMISSION_RATE_DEFAULTS_FILE = "defaults/transmission_rate-defaults.yaml"
+TEST_DOCS_DEFAULTS_FILE = "defaults/docs-defaults.yaml"
 
 TEST_TRANSMISSION_RATE_HIGH = TransmissionRate.load_default_yaml(
     StreamingResolution.HIGH.value,
@@ -94,6 +96,7 @@ class TestAPI(unittest.TestCase):
             TEST_DEVICE_DEFAULTS_FILE,
             TEST_NETWORKING_DEFAULTS_FILE,
             TEST_TRANSMISSION_RATE_DEFAULTS_FILE,
+            TEST_DOCS_DEFAULTS_FILE,
         )
 
         # verify the correct count and a field that should be different across
@@ -234,6 +237,9 @@ class TestAPI(unittest.TestCase):
             Decimal("0.024"),
         )
 
+        docs_defs = docs_defaults
+        self.assertEqual(len(docs_defs), 14)
+
     def test_get_all_con_networking_connection_device_fixed_defaults(self):
         """Test get_all_networking_connection_device_defaults returns expected output"""
         load_default_files(
@@ -243,6 +249,7 @@ class TestAPI(unittest.TestCase):
             TEST_DEVICE_DEFAULTS_FILE,
             TEST_NETWORKING_DEFAULTS_FILE,
             TEST_TRANSMISSION_RATE_DEFAULTS_FILE,
+            TEST_DOCS_DEFAULTS_FILE,
         )
 
         response = get_all_networking_connection_device_defaults()
@@ -267,6 +274,7 @@ class TestAPI(unittest.TestCase):
             TEST_DEVICE_DEFAULTS_FILE,
             TEST_NETWORKING_DEFAULTS_FILE,
             TEST_TRANSMISSION_RATE_DEFAULTS_FILE,
+            TEST_DOCS_DEFAULTS_FILE,
         )
 
         response = get_all_networking_connection_device_defaults()
@@ -367,6 +375,7 @@ class TestAPI(unittest.TestCase):
             TEST_DEVICE_DEFAULTS_FILE,
             TEST_NETWORKING_DEFAULTS_FILE,
             TEST_TRANSMISSION_RATE_DEFAULTS_FILE,
+            TEST_DOCS_DEFAULTS_FILE,
         )
 
         response = get_all_networking_connection_device_defaults()
@@ -402,6 +411,7 @@ class TestAPI(unittest.TestCase):
             TEST_DEVICE_DEFAULTS_FILE,
             TEST_NETWORKING_DEFAULTS_FILE,
             TEST_TRANSMISSION_RATE_DEFAULTS_FILE,
+            TEST_DOCS_DEFAULTS_FILE,
         )
 
         response = get_all_networking_connection_device_defaults()
@@ -502,6 +512,7 @@ class TestAPI(unittest.TestCase):
             TEST_DEVICE_DEFAULTS_FILE,
             TEST_NETWORKING_DEFAULTS_FILE,
             TEST_TRANSMISSION_RATE_DEFAULTS_FILE,
+            TEST_DOCS_DEFAULTS_FILE,
         )
 
         response = get_all_networking_connection_device_defaults()
@@ -526,6 +537,7 @@ class TestAPI(unittest.TestCase):
             TEST_DEVICE_DEFAULTS_FILE,
             TEST_NETWORKING_DEFAULTS_FILE,
             TEST_TRANSMISSION_RATE_DEFAULTS_FILE,
+            TEST_DOCS_DEFAULTS_FILE,
         )
 
         response = get_all_networking_connection_device_defaults()
