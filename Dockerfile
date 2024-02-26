@@ -18,5 +18,6 @@ ENV PROPERTY_DEFAULTS_FILE /app/defaults/property-defaults.yaml
 ENV END_USER_DEVICE_DEFAULTS_FILE /app/defaults/end_user_device-defaults.yaml
 ENV NETWORKING_DEFAULTS_FILE /app/defaults/networking-defaults.yaml
 ENV TRANSMISSION_RATE_FILE /app/defaults/transmission_rate-defaults.yaml
+ENV DOCS_DEFAULTS_FILE /app/defaults/docs-defaults.yaml
 
 CMD ["python", "scope3_methodology/api/api.py"]

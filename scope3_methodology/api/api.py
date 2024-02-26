@@ -3,6 +3,7 @@
 """ Expose a simple API for calculating emissions and pulling in computed defaults """
 import os
 from decimal import Decimal
+from typing import Any
 
 import uvicorn
 from fastapi import FastAPI, HTTPException
@@ -53,6 +54,7 @@ property_defaults: dict[PropertyChannel, Property] = {}
 end_user_device_defaults: dict[EndUserDevices, EndUserDevice] = {}
 networking_connection_defaults: dict[NetworkingConnectionType, NetworkingConnection] = {}
 transmission_rate_defaults: dict[PropertyChannel, dict[StreamingResolution, TransmissionRate]] = {}
+docs_defaults: dict[str, Any] = {}
 power_model_channels = [
     PropertyChannel.STREAMING_VIDEO,
     PropertyChannel.DIGITAL_AUDIO,
@@ -67,6 +69,7 @@ def load_default_files(
     end_user_device_file_path: str,
     networking_file_path: str,
     transmission_rates_file_path,
+    docs_defaults_file_path: str,
 ):
     """Load all default files into memory"""
     for atp_template in ATPTemplate:
@@ -103,6 +106,12 @@ def load_default_files(
             )
         transmission_rate_defaults[channel] = resolution_defaults
 
+    with open(docs_defaults_file_path, "r", encoding="UTF-8") as defaults_stream:
+        defaults_document = yaml_load(defaults_stream)
+        dd = defaults_document["defaults"]
+        for k in dd:
+            docs_defaults[k] = dd[k]
+
 
 @app.on_event("startup")
 async def startup_event():
@@ -120,6 +129,7 @@ async def startup_event():
     end_user_device_file_path = os.environ.get("END_USER_DEVICE_DEFAULTS_FILE")
     networking_file_path = os.environ.get("NETWORKING_DEFAULTS_FILE")
     transmission_rates_file_path = os.environ.get("TRANSMISSION_RATE_FILE")
+    docs_defaults_file_path = os.environ.get("DOCS_DEFAULTS_FILE")
 
     if atp_defaults_file_path is None:
         raise UnboundLocalError("Must provide environment variable: ATP_DEFAULTS_FILE")
@@ -133,6 +143,8 @@ async def startup_event():
         raise UnboundLocalError("Must provide environment variable: NETWORKING_DEFAULTS_FILE")
     if transmission_rates_file_path is None:
         raise UnboundLocalError("Must provide environment variable: TRANSMISSION_RATE_FILE")
+    if docs_defaults_file_path is None:
+        raise UnboundLocalError("Must provide environment variable: DOCS_DEFAULTS_FILE")
 
     load_default_files(
         atp_defaults_file_path,
@@ -141,6 +153,7 @@ async def startup_event():
         end_user_device_file_path,
         networking_file_path,
         transmission_rates_file_path,
+        docs_defaults_file_path,
     )
 
 
@@ -389,6 +402,15 @@ def get_all_networking_connection_device_defaults():
                         )
                         response.append(modeled_device_networking)
     return response
+
+
+@app.get("/defaults/docs")
+def get_all_docs_defaults():
+    """
+    Returns all docs defaults
+    """
+
+    return docs_defaults
 
 
 if __name__ == "__main__":
