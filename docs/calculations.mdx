@@ -142,8 +142,7 @@ Product carousel
 | `creative_ad_format`                 | Either a basic or vendor-provided ad format |
 | `creative_ad_platforms`              | Ad serving, verification, and measurement ad platforms wrapping or embedded in the creative |
 | `creative_image_data_transfer_bytes` | Data transfer for the video itself , ideally measured by the CDN |
-| `creative_image_width_pixels`        | Width of creative (basic image only) |
-| `creative_image_height_pixels`       | Height of creative (basic image only) |
+| `creative_image_sizes`               | Array of image sizes included in the creative |
 | `creative_audio_data_transfer_bytes` | Data transfer for the core audio asset, ideally measured by the CDN |
 | `creative_audio_duration_seconds`    | Audio duration in seconds |
 | `creative_video_data_transfer_bytes` | Data transfer for the core video asset, ideally measured by the CDN |
@@ -256,6 +255,7 @@ audio_bytes = creative_audio_data_transfer_bytes
 Otherwise, calculate data transfer:
 
 ```
+image_sizes = creative_image_sizes ? ad_format.image_sizes
 image_bytes = SUM(image_sizes[n].width x image_sizes[n].height) x 3 / default_image_compression_ratio
 
 audio_duration = creative_audio_duration_seconds ?? ad_format.audio_duration_seconds
