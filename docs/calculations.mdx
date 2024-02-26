@@ -112,10 +112,12 @@ Product carousel
 
 | Field                                           | Description |
 | ----------------------------------------------- | ------------------------------------------------------------ |
-| `allocated_adjusted_corporate_emissions_kgco2e` | This ad platform's share of corporate emissions |
-| `total_decisioning_requests`                    | Total ad opportunities decisioned (ie, imps bid upon) |
-| `downstream_ad_platforms`                       | Array of ad platforms that are sent requests |
-| `distribution_rate_by_platform`                 | Traffic shaping data for each downstream ad platform |
+| `emissions_per_creative_request_gco2pm` 				| Adjusted, allocated emissions per creative request |
+| `emissions_per_bid_request_gco2pm` 				      | Adjusted, allocated emissions per bid request |
+| `emissions_per_rtdp_request_gco2pm` 				    | Adjusted, allocated emissions per rtdp request |
+| `bidders`                            		        | Array of ad platforms that are sent bid requests |
+| `real_time_data_providers`                      | Array of ad platforms that are sent real-time data requests (not propagated) |
+| `distribution_rate_by_bidder_by_country`        | Traffic shaping data for each bidder by country (eg `'xandr.com', 'US', 0.58`)
 
 ### Placement
 
@@ -138,6 +140,7 @@ Product carousel
 | `network_type`                       | See [network types](#network-types) |
 | `property`                           | See [property](#property) |
 | `creative_ad_format`                 | Either a basic or vendor-provided ad format |
+| `creative_ad_platforms`              | Ad serving, verification, and measurement ad platforms wrapping or embedded in the creative |
 | `creative_image_data_transfer_bytes` | Data transfer for the video itself , ideally measured by the CDN |
 | `creative_image_width_pixels`        | Width of creative (basic image only) |
 | `creative_image_height_pixels`       | Height of creative (basic image only) |
@@ -148,7 +151,7 @@ Product carousel
 | `creative_video_bitrate_kbps`        | Video bitrate *as delivered* in kilobits per second |
 | `creative_video_size_bytes`          | Video size *as delivered* in bytes |
 | `creative_video_duration_seconds`    | Video duration in seconds |
-| `creative_video_view_time`           | Average time, in seconds, that a video is viewed |
+| `creative_video_view_time_seconds`   | Average time, in seconds, that a video is viewed |
 | `creative_video_view_rate`           | Average percentage of a video that is viewed |
 | `creative_time_in_view_seconds`      | Time that the creative was visible on the device |
 
@@ -299,6 +302,14 @@ creative_data_transfer_embodied_emissions_gco2pm =
       default_network_embodied_emissions_gco2e_per_kb[network_type]
 ```
 
+### Creative Delivery - Platform
+
+```
+creative_platform_emissions_gco2pm = 0
+for platform in [creative.ad_platforms, ad_format.ad_platforms]:
+  creative_platform_emissions_gco2pm += platform.emissions_per_creative_request_gco2pm
+```
+
 ### Creative Delivery - Consumer Device
 
 ```
@@ -398,29 +409,31 @@ media_corporate_emissions_gco2pm =
       property.average_imps_per_session
 ```
 
-### Ad Selection
+### Ad Selection - Platform
 
 ```
 get_platform_emissions(ad_platform):
-  direct_emissions = 
-      ad_platform.allocated_adjusted_corporate_emissions_kg * 1000 /
-      ad_platform.total_decisioning_requests
-  indirect_emissions = 0
-  for platform in ad_platform.downstream_platforms:
-      indirect_emissions += get_platform_emissions(platform) x
-            ad_platform.distribution_rate_by_platform[platform] ?? 1
+  direct_emissions = emissions_per_bid_request_gco2pm
+  rtdp_emissions = 0
+  for rtdp in ad_platform.real_time_data_providers:
+		rtdp_emissions += emissions_per_rtdp_request_gco2pm
+  bidder_emissions = 0
+  for bidder in ad_platform.bidders:
+      bidder_emissions += get_platform_emissions(bidder) x
+            ad_platform.distribution_rate_by_bidder_by_country[country, bidder] ?? 1
+  return direct_emissions + rtdp_emissions + bidder_emissions
 
 ad_selection_platform_emissions_gco2pm = 0
 data_transfer_bytes = 0
 for platform in placement.ad_platforms:
   ad_selection_platform_emissions_gco2pm += get_platform_emissions(platform)
   data_transfer_bytes += default_consumer_device_request_size_bytes[channel]
+```
 
+### Ad Selection - Data Transfer
+
+```
 ad_selection_data_transfer_emissions_gco2pm =
     data_transfer_bytes / 1024 x
     lookup_carbon_intensity_gco2e_per_kwh(country, region, utc_datetime)
-
-ad_selection_emissions_gco2pm =
-    ad_selection_platform_emissions_gco2pm +
-    ad_selection_data_transfer_emissions_gco2pm
 ```
