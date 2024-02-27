@@ -52,14 +52,20 @@ defaults:
   default_emissions_per_rtdp_request_gco2pm: 0.010000000
   default_image_compression_ratio: 10
   default_network_embodied_emissions_gco2e_per_kb:
+    scope3:
+      fixed: 0.000000000
+      mobile: 0.000000000
     sri:
-      fixed: 0.000000004
-      mobile: 0.000000008
+      fixed: 0.004430000
+      mobile: 0.007970000
   default_time_in_view_seconds: 6
-  default_usage_kwh_per_kb:
+  default_usage_kwh_per_gb:
+    scope3:
+      fixed: 0.030000000
+      mobile: 0.140000000
     sri:
-      fixed: 0.000000069
-      mobile: 0.000000236
+      fixed: 0.068700000
+      mobile: 0.236000000
   default_video_bitrate:
     pc: 8000
     phone: 2500
