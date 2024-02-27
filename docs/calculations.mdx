@@ -113,9 +113,9 @@ Product carousel
 
 | Field                                           | Description |
 | ----------------------------------------------- | ------------------------------------------------------------ |
-| `emissions_per_creative_request_gco2pm` 				| Adjusted, allocated emissions per creative request |
-| `emissions_per_bid_request_gco2pm` 				      | Adjusted, allocated emissions per bid request |
-| `emissions_per_rtdp_request_gco2pm` 				    | Adjusted, allocated emissions per rtdp request |
+| `emissions_per_creative_request_per_geo_gco2pm` | Adjusted, allocated emissions per creative request by continent (NAMER, LATAM, EMEA, JAPAC) |
+| `emissions_per_bid_request_per_geo_gco2pm` 			| Adjusted, allocated emissions per bid request by continent (NAMER, LATAM, EMEA, JAPAC) |
+| `emissions_per_rtdp_request_per_geo_gco2pm` 		| Adjusted, allocated emissions per rtdp request by continent (NAMER, LATAM, EMEA, JAPAC) |
 | `bidders`                            		        | Array of ad platforms that are sent bid requests |
 | `real_time_data_providers`                      | Array of ad platforms that are sent real-time data requests (not propagated) |
 | `distribution_rate_by_bidder_by_country`        | Traffic shaping data for each bidder by country (eg `'xandr.com', 'US', 0.58`)
@@ -237,7 +237,7 @@ creative_data_transfer_bytes =
 
 creative_data_transfer_usage_emissions_gco2pm =
       creative_data_transfer_bytes / 1024 x
-      default_usage_kwh_per_kb[network_type] x
+      default_usage_kwh_per_gb[network_type] / 1000000 x
       lookup_carbon_intensity_gco2e_per_kwh(country, region, utc_datetime)
 
 creative_data_transfer_embodied_emissions_gco2pm =
@@ -308,7 +308,7 @@ creative_data_transfer_embodied_emissions_gco2pm =
 ```
 creative_platform_emissions_gco2pm = 0
 for platform in [creative.ad_platforms, ad_format.ad_platforms]:
-  creative_platform_emissions_gco2pm += platform.emissions_per_creative_request_gco2pm
+  creative_platform_emissions_gco2pm += platform.emissions_per_creative_request_per_geo_gco2pm
 ```
 
 ### Creative Delivery - Consumer Device
@@ -366,7 +366,7 @@ For all channels other than CTV/BVOD, use the conventional model:
 ```
 media_data_transfer_usage_emissions_gco2pm =
       property.average_data_kb_per_session_ex_ads x
-      default_usage_kwh_per_kb[network_type] x
+      default_usage_kwh_per_gb[network_type] / 1000000 x
       lookup_carbon_intensity_gco2e_per_kwh(country, region, utc_datetime)
 
 media_data_transfer_embodied_emissions_gco2pm =
@@ -414,10 +414,10 @@ media_corporate_emissions_gco2pm =
 
 ```
 get_platform_emissions(ad_platform):
-  direct_emissions = emissions_per_bid_request_gco2pm
+  direct_emissions = emissions_per_bid_request_per_geo_gco2pm
   rtdp_emissions = 0
   for rtdp in ad_platform.real_time_data_providers:
-		rtdp_emissions += emissions_per_rtdp_request_gco2pm
+		rtdp_emissions += emissions_per_rtdp_request_per_geo_gco2pm
   bidder_emissions = 0
   for bidder in ad_platform.bidders:
       bidder_emissions += get_platform_emissions(bidder) x
