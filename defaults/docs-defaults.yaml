@@ -1,5 +1,11 @@
 # AUTO_GENERATED from docs/snippets
 defaults:
+  default_audio_bitrate:
+    pc: 160
+    phone: 160
+    smart-speaker: 160
+    tablet: 160
+    tv: 160
   default_baseload_watts:
     fixed: 9.550000000
     mobile: 1.200000000
@@ -72,4 +78,10 @@ defaults:
     tablet: 5000
     tv: 8000
   default_video_bitrate_non_primary: 2500
+  default_video_player_download_trigger:
+    app: impression
+    ctv-bvod: impression
+    dooh: play
+    social: impression
+    web: impression
   default_video_player_size_bytes: 192205
