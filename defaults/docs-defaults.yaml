@@ -32,7 +32,7 @@ defaults:
       pc: 53.200000000
       phone: 0.770000000
       smart-speaker: 2.500000000
-      tablet: 3
+      tablet: 3.000000000
       tv: 87.400000000
     sri:
       pc: 29.400000000
@@ -47,6 +47,9 @@ defaults:
   default_dynamic_watts_per_kbps:
     fixed: 30
     mobile: 1530
+  default_emissions_per_bid_request_gco2pm: 0.114420000
+  default_emissions_per_creative_request_gco2pm: 0.010000000
+  default_emissions_per_rtdp_request_gco2pm: 0.010000000
   default_image_compression_ratio: 10
   default_network_embodied_emissions_gco2e_per_kb:
     sri:
