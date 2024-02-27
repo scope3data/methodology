@@ -53,7 +53,6 @@ import AdPlatformDefaults from '/snippets/defaults_ad_platform.mdx'
 | ----------------------------------- | -------------------------------------------------------------------------------------------- |
 | `rendered_width_pixels`             | Width of the creative when rendered. Leave blank for responsive (will assume screen width)	 |
 | `rendered_height_pixels`	          | Height of the creative when rendered. Leave blank for responsive (will assume screen height) |
-| `is_primary_experience`	            | Is the ad the primary experience for the user (takeover/interstitial)                        |
 | `image_sizes` 	                    | Array of image dimensions (eg `["300x250", "70x70"]`)                                        |
 | `audio_duration_seconds`	          | Audio duration (if applicable)                                                               |
 | `video_duration_seconds`	          | Video duration (if applicable)                                                               |
@@ -69,7 +68,6 @@ import AdPlatformDefaults from '/snippets/defaults_ad_platform.mdx'
 image_sizes = ['300x250']
 rendered_width_pixels = 300,
 rendered_height_pixels = 250
-is_primary_experience = false
 ```
 
 30 second audio
@@ -85,7 +83,6 @@ video_duration_seconds = 15;
 video_player = 'default',
 rendered_width_pixels = 500,
 rendered_height_pixels = 400
-is_primary_experience = false
 ```
 
 Product carousel
@@ -95,7 +92,6 @@ Product carousel
   other_assets_bytes = 7321,
   rendered_height_pixels = 600,
   rendered_width_pixels = 450
-  is_primary_experience = false
 ```
 
 ### Property
@@ -262,8 +258,9 @@ image_bytes = SUM(image_sizes[n].width x image_sizes[n].height) x 3 / default_im
 audio_duration = creative_audio_duration_seconds ?? ad_format.audio_duration_seconds
 audio_bytes = audio_duration_seconds x default_audio_bitrate[device_type]
 
+is_primary_experience = !ad_format.rendered_width_pixels && !ad_format.rendered_height_pixels
 default_bitrate =
-      ad_format.is_primary_experience ?
+      is_primary_experience ?
       default_video_bitrate[device_type] :
       default_video_bitrate_non_primary
 bitrate =
@@ -324,7 +321,7 @@ device_pixels = default_device_width[device_type] x default_device_height[device
 rendered_width = ad_format.rendered_width_pixels ?? default_device_width[device_type]
 rendered_height = ad_format.rendered_height_pixels ?? default_device_height[device_type]
 visual_device_coverage =
-      ad_format.is_primary_experience ?
+      is_primary_experience ?
       device_pixels :
       rendered_width x rendered_height / device_pixels
 time_in_view =
