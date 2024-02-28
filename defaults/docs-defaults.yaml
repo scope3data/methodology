@@ -1,5 +1,11 @@
 # AUTO_GENERATED from docs/snippets
 defaults:
+  default_audio_bitrate:
+    pc: 160
+    phone: 160
+    smart-speaker: 160
+    tablet: 160
+    tv: 160
   default_baseload_watts:
     fixed: 9.550000000
     mobile: 1.200000000
@@ -32,7 +38,7 @@ defaults:
       pc: 53.200000000
       phone: 0.770000000
       smart-speaker: 2.500000000
-      tablet: 3
+      tablet: 3.000000000
       tv: 87.400000000
     sri:
       pc: 29.400000000
@@ -47,20 +53,35 @@ defaults:
   default_dynamic_watts_per_kbps:
     fixed: 30
     mobile: 1530
+  default_emissions_per_bid_request_gco2pm: 0.114420000
+  default_emissions_per_creative_request_gco2pm: 0.010000000
+  default_emissions_per_rtdp_request_gco2pm: 0.010000000
   default_image_compression_ratio: 10
   default_network_embodied_emissions_gco2e_per_kb:
+    scope3:
+      fixed: 0.000000000
+      mobile: 0.000000000
     sri:
-      fixed: 0.000000004
-      mobile: 0.000000008
+      fixed: 0.004430000
+      mobile: 0.007970000
   default_time_in_view_seconds: 6
-  default_usage_kwh_per_kb:
+  default_usage_kwh_per_gb:
+    scope3:
+      fixed: 0.030000000
+      mobile: 0.140000000
     sri:
-      fixed: 0.000000069
-      mobile: 0.000000236
+      fixed: 0.068700000
+      mobile: 0.236000000
   default_video_bitrate:
     pc: 8000
     phone: 2500
     tablet: 5000
     tv: 8000
   default_video_bitrate_non_primary: 2500
+  default_video_player_download_trigger:
+    app: impression
+    ctv-bvod: impression
+    dooh: play
+    social: impression
+    web: impression
   default_video_player_size_bytes: 192205

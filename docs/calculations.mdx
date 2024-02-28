@@ -53,12 +53,12 @@ import AdPlatformDefaults from '/snippets/defaults_ad_platform.mdx'
 | ----------------------------------- | -------------------------------------------------------------------------------------------- |
 | `rendered_width_pixels`             | Width of the creative when rendered. Leave blank for responsive (will assume screen width)	 |
 | `rendered_height_pixels`	          | Height of the creative when rendered. Leave blank for responsive (will assume screen height) |
-| `is_primary_experience`	            | Is the ad the primary experience for the user (takeover/interstitial)                        |
 | `image_sizes` 	                    | Array of image dimensions (eg `["300x250", "70x70"]`)                                        |
 | `audio_duration_seconds`	          | Audio duration (if applicable)                                                               |
 | `video_duration_seconds`	          | Video duration (if applicable)                                                               |
 | `video_player`	                    | Video player used to render video (if applicable)                                            |
 | `other_assets_bytes`	              | Metadata, text, html, etc                                                                    |
+| `ad_platforms`                      | Ad serving, verification, and measurement ad platforms wrapping or embedded in the ad format |
 
 #### Sample Ad Formats:
 
@@ -68,7 +68,6 @@ import AdPlatformDefaults from '/snippets/defaults_ad_platform.mdx'
 image_sizes = ['300x250']
 rendered_width_pixels = 300,
 rendered_height_pixels = 250
-is_primary_experience = false
 ```
 
 30 second audio
@@ -84,7 +83,6 @@ video_duration_seconds = 15;
 video_player = 'default',
 rendered_width_pixels = 500,
 rendered_height_pixels = 400
-is_primary_experience = false
 ```
 
 Product carousel
@@ -94,7 +92,6 @@ Product carousel
   other_assets_bytes = 7321,
   rendered_height_pixels = 600,
   rendered_width_pixels = 450
-  is_primary_experience = false
 ```
 
 ### Property
@@ -112,10 +109,12 @@ Product carousel
 
 | Field                                           | Description |
 | ----------------------------------------------- | ------------------------------------------------------------ |
-| `allocated_adjusted_corporate_emissions_kgco2e` | This ad platform's share of corporate emissions |
-| `total_decisioning_requests`                    | Total ad opportunities decisioned (ie, imps bid upon) |
-| `downstream_ad_platforms`                       | Array of ad platforms that are sent requests |
-| `distribution_rate_by_platform`                 | Traffic shaping data for each downstream ad platform |
+| `emissions_per_creative_request_per_geo_gco2pm` | Adjusted, allocated emissions per creative request by continent (NAMER, LATAM, EMEA, JAPAC) |
+| `emissions_per_bid_request_per_geo_gco2pm` 			| Adjusted, allocated emissions per bid request by continent (NAMER, LATAM, EMEA, JAPAC) |
+| `emissions_per_rtdp_request_per_geo_gco2pm` 		| Adjusted, allocated emissions per rtdp request by continent (NAMER, LATAM, EMEA, JAPAC) |
+| `bidders`                            		        | Array of ad platforms that are sent bid requests |
+| `real_time_data_providers`                      | Array of ad platforms that are sent real-time data requests (not propagated) |
+| `distribution_rate_by_bidder_by_country`        | Traffic shaping data for each bidder by country (eg `'xandr.com', 'US', 0.58`)
 
 ### Placement
 
@@ -127,9 +126,9 @@ Product carousel
 
 | Field                                | Description |
 | ------------------------------------ | ---------------------------------- |
-| `impressions`                        | The number of impressions counted |
+| `impressions`                        | The number of impressions counted (required for all channels other than DOOH) |
 | `views`                              | The number of views counted  |
-| `plays`                              | The number of plays |
+| `plays`                              | The number of plays (required for DOOH) |
 | `utc_datetime`                       | Date and time, in UTC, when impressions were delivered |
 | `country`                            | The country where the impression was delivered |
 | `region`                             | The region of the country where the impression was delivered |
@@ -138,9 +137,9 @@ Product carousel
 | `network_type`                       | See [network types](#network-types) |
 | `property`                           | See [property](#property) |
 | `creative_ad_format`                 | Either a basic or vendor-provided ad format |
+| `creative_ad_platforms`              | Ad serving, verification, and measurement ad platforms wrapping or embedded in the creative |
 | `creative_image_data_transfer_bytes` | Data transfer for the video itself , ideally measured by the CDN |
-| `creative_image_width_pixels`        | Width of creative (basic image only) |
-| `creative_image_height_pixels`       | Height of creative (basic image only) |
+| `creative_image_sizes`               | Array of image sizes included in the creative |
 | `creative_audio_data_transfer_bytes` | Data transfer for the core audio asset, ideally measured by the CDN |
 | `creative_audio_duration_seconds`    | Audio duration in seconds |
 | `creative_video_data_transfer_bytes` | Data transfer for the core video asset, ideally measured by the CDN |
@@ -148,7 +147,7 @@ Product carousel
 | `creative_video_bitrate_kbps`        | Video bitrate *as delivered* in kilobits per second |
 | `creative_video_size_bytes`          | Video size *as delivered* in bytes |
 | `creative_video_duration_seconds`    | Video duration in seconds |
-| `creative_video_view_time`           | Average time, in seconds, that a video is viewed |
+| `creative_video_view_time_seconds`   | Average time, in seconds, that a video is viewed |
 | `creative_video_view_rate`           | Average percentage of a video that is viewed |
 | `creative_time_in_view_seconds`      | Time that the creative was visible on the device |
 
@@ -234,7 +233,7 @@ creative_data_transfer_bytes =
 
 creative_data_transfer_usage_emissions_gco2pm =
       creative_data_transfer_bytes / 1024 x
-      default_usage_kwh_per_kb[network_type] x
+      default_usage_kwh_per_gb[network_type] / 1000000 x
       lookup_carbon_intensity_gco2e_per_kwh(country, region, utc_datetime)
 
 creative_data_transfer_embodied_emissions_gco2pm =
@@ -253,13 +252,15 @@ audio_bytes = creative_audio_data_transfer_bytes
 Otherwise, calculate data transfer:
 
 ```
+image_sizes = creative_image_sizes ? ad_format.image_sizes
 image_bytes = SUM(image_sizes[n].width x image_sizes[n].height) x 3 / default_image_compression_ratio
 
 audio_duration = creative_audio_duration_seconds ?? ad_format.audio_duration_seconds
 audio_bytes = audio_duration_seconds x default_audio_bitrate[device_type]
 
+is_primary_experience = !ad_format.rendered_width_pixels && !ad_format.rendered_height_pixels
 default_bitrate =
-      ad_format.is_primary_experience ?
+      is_primary_experience ?
       default_video_bitrate[device_type] :
       default_video_bitrate_non_primary
 bitrate =
@@ -299,6 +300,14 @@ creative_data_transfer_embodied_emissions_gco2pm =
       default_network_embodied_emissions_gco2e_per_kb[network_type]
 ```
 
+### Creative Delivery - Platform
+
+```
+creative_platform_emissions_gco2pm = 0
+for platform in [creative.ad_platforms, ad_format.ad_platforms]:
+  creative_platform_emissions_gco2pm += platform.emissions_per_creative_request_per_geo_gco2pm
+```
+
 ### Creative Delivery - Consumer Device
 
 ```
@@ -312,7 +321,7 @@ device_pixels = default_device_width[device_type] x default_device_height[device
 rendered_width = ad_format.rendered_width_pixels ?? default_device_width[device_type]
 rendered_height = ad_format.rendered_height_pixels ?? default_device_height[device_type]
 visual_device_coverage =
-      ad_format.is_primary_experience ?
+      is_primary_experience ?
       device_pixels :
       rendered_width x rendered_height / device_pixels
 time_in_view =
@@ -354,7 +363,7 @@ For all channels other than CTV/BVOD, use the conventional model:
 ```
 media_data_transfer_usage_emissions_gco2pm =
       property.average_data_kb_per_session_ex_ads x
-      default_usage_kwh_per_kb[network_type] x
+      default_usage_kwh_per_gb[network_type] / 1000000 x
       lookup_carbon_intensity_gco2e_per_kwh(country, region, utc_datetime)
 
 media_data_transfer_embodied_emissions_gco2pm =
@@ -398,29 +407,31 @@ media_corporate_emissions_gco2pm =
       property.average_imps_per_session
 ```
 
-### Ad Selection
+### Ad Selection - Platform
 
 ```
 get_platform_emissions(ad_platform):
-  direct_emissions = 
-      ad_platform.allocated_adjusted_corporate_emissions_kg * 1000 /
-      ad_platform.total_decisioning_requests
-  indirect_emissions = 0
-  for platform in ad_platform.downstream_platforms:
-      indirect_emissions += get_platform_emissions(platform) x
-            ad_platform.distribution_rate_by_platform[platform] ?? 1
+  direct_emissions = emissions_per_bid_request_per_geo_gco2pm
+  rtdp_emissions = 0
+  for rtdp in ad_platform.real_time_data_providers:
+		rtdp_emissions += emissions_per_rtdp_request_per_geo_gco2pm
+  bidder_emissions = 0
+  for bidder in ad_platform.bidders:
+      bidder_emissions += get_platform_emissions(bidder) x
+            ad_platform.distribution_rate_by_bidder_by_country[country, bidder] ?? 1
+  return direct_emissions + rtdp_emissions + bidder_emissions
 
 ad_selection_platform_emissions_gco2pm = 0
 data_transfer_bytes = 0
 for platform in placement.ad_platforms:
   ad_selection_platform_emissions_gco2pm += get_platform_emissions(platform)
   data_transfer_bytes += default_consumer_device_request_size_bytes[channel]
+```
 
+### Ad Selection - Data Transfer
+
+```
 ad_selection_data_transfer_emissions_gco2pm =
     data_transfer_bytes / 1024 x
     lookup_carbon_intensity_gco2e_per_kwh(country, region, utc_datetime)
-
-ad_selection_emissions_gco2pm =
-    ad_selection_platform_emissions_gco2pm +
-    ad_selection_data_transfer_emissions_gco2pm
 ```
