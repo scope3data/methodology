@@ -272,7 +272,7 @@ seconds_watched = creative_video_view_time ??
                   creative_video_view_rate x video_duration ??
                   video_duration
 buffer = ad_format.video_player.buffering_seconds ?? infinity
-seconds_streamed = MAX(seconds_watched + buffer, video_duration)
+seconds_streamed = MIN(seconds_watched + buffer, video_duration)
 loads = switch(ad_format.video_player.download_trigger):
             'view': views 
             'play': plays
