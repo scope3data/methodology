@@ -98,15 +98,15 @@ Product carousel
 
 ### Property
 
-| Field                                           | Description |
-| ----------------------------------------------- | ------------------------------------------------------------ |
-| `channels`                                      | The channel(s) of this property |
-| `average_seconds_per_session_ex_ads`            | The average length of a session on this property excluding ads (eg 44 min of a 60 min TV show) |
-| `average_imps_per_session`                      | The average number of impressions per session |
-| `average_data_kb_per_session_ex_ads`            | The average number of KB transferred during a session excluding ads |
-| `ad_funded_percentage`                          | The percentage of content funded by advertising (eg 50%) |
-| `allocated_adjusted_corporate_emissions_kgco2e` | This property's share of corporate emissions |
-| `total_sessions`                                | Number of sessions in the same time period as corporate emissions |
+| Field                                           | Required | Description |
+| ----------------------------------------------- | -------- | ------------------------------------------------------------ |
+| `channels`                                      | Yes      |The channel(s) of this property |
+| `average_seconds_per_session_ex_ads`            | Yes      |The average length of a session on this property excluding ads (eg 44 min of a 60 min TV show) |
+| `average_imps_per_session`                      | Yes      |The average number of impressions per session |
+| `average_data_kb_per_session_ex_ads`            | Yes      |The average number of KB transferred during a session excluding ads |
+| `ad_funded_percentage`                          | Yes      |The percentage of content funded by advertising (eg 50%) |
+| `allocated_adjusted_corporate_emissions_kgco2e` | Yes      |This property's share of corporate emissions |
+| `total_sessions`                                | Yes      |Number of sessions in the same time period as corporate emissions |
 
 ### Ad Platform
 
@@ -225,9 +225,7 @@ Providers should clearly and publicly document:
 
 `lookup_carbon_intensity_gco2e_per_kwh(country, region, utc_datetime)` should look up the carbon intensity in gCO2e based on 100-year global warming potential (GWP100) from a database at no less than hourly granularity.
 
-## Calculating Emissions
-
-Account for non-required fields:
+## Fallbacks
 
 ```
   pct_mobile =
@@ -289,6 +287,8 @@ Account for non-required fields:
   channel = lookup_channel()
   device_type = device_type ? default_device_by_channel[channel]
 ```
+
+## Calculating Emissions
 
 ### Creative Delivery - Data Transfer
 
