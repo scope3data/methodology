@@ -100,6 +100,7 @@ Product carousel
 
 | Field                                           | Description |
 | ----------------------------------------------- | ------------------------------------------------------------ |
+| `channels`                                      | The channel(s) of this property |
 | `average_seconds_per_session_ex_ads`            | The average length of a session on this property excluding ads (eg 44 min of a 60 min TV show) |
 | `average_imps_per_session`                      | The average number of impressions per session |
 | `average_data_kb_per_session_ex_ads`            | The average number of KB transferred during a session excluding ads |
@@ -270,16 +271,22 @@ Account for non-required fields:
       default_dynamic_watts_per_kbps[network_type] :
       average_dynamic_watts_per_kbps
 
-  is_audio_creative =
-      creative_audio_data_transfer_bytes ||
-      creative_audio_duration_seconds ||
-      ad_format.audio_duration_seconds
-  default_channel =
-      is_audio_creative ?
-      audio :
-      default_channel_by_device[device_type]
-  channel = channel ? default_channel
+  lookup_channel:
+    if property.channels.length == 1:
+      return property.channels[0]
+    if channel && channel in property.channels:
+      return channel
+    is_audio_creative =
+        creative_audio_data_transfer_bytes ||
+        creative_audio_duration_seconds ||
+        ad_format.audio_duration_seconds
+    if is_audio_creative && 'audio' in property.channels:
+      return 'audio'
+    if device_type && default_channel_by_device[device_type] in property.channels:
+      return default_channel_by_device[device_type]
+    return property.channels[0]
 
+  channel = lookup_channel()
   device_type = device_type ? default_device_by_channel[channel]
 ```
 
