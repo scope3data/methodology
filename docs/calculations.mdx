@@ -256,19 +256,19 @@ Account for non-required fields:
       default_baseload_watts['mobile'] x pct_mobile +
       default_baseload_watts['fixed'] x (1 - pct_mobile)
 
-  average_dynamic_watts =
-      default_dynamic_watts['mobile'] x pct_mobile +
-      default_dynamic_watts['fixed'] x (1 - pct_mobile)
+  average_dynamic_watts_per_kbps =
+      default_dynamic_watts_per_kbps['mobile'] x pct_mobile +
+      default_dynamic_watts_per_kbps['fixed'] x (1 - pct_mobile)
 
   baseload_watts =
       network_type ?
       default_baseload_watts[network_type] :
       average_baseload_watts
 
-  dynamic_watts =
+  dynamic_watts_per_kbps =
       network_type ?
-      default_dynamic_watts[network_type] :
-      average_dynamic_watts
+      default_dynamic_watts_per_kbps[network_type] :
+      average_dynamic_watts_per_kbps
 
   channel = channel ? default_channel_by_device[device_type]
   device_type = device_type ? default_device_by_channel[channel]
@@ -346,13 +346,13 @@ For CTV/BVOD, use the power model:
 
 ```
 creative_data_transfer_usage_emissions_gco2pm =
-    creative_video_duration_seconds x
-    power x
+    creative_video_duration_seconds / 3600 x
+    power_watts / 1000 x
     lookup_carbon_intensity_gco2e_per_kwh(country, region, utc_datetime)
 
-power =
-    baseload_watts +
-    dynamic_watts x default_video_bitrate[device_type]
+power_watts =
+    baseload_watts_per +
+    dynamic_watts_per_kbps x default_video_bitrate[device_type]
 
 creative_data_transfer_embodied_emissions_gco2pm =
       creative_video_duration_seconds x
