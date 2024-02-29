@@ -1,4 +1,5 @@
 """ Tests for API startup and endpoints """
+
 import unittest
 from decimal import Decimal
 
@@ -238,7 +239,7 @@ class TestAPI(unittest.TestCase):
         )
 
         docs_defs = docs_defaults
-        self.assertEqual(len(docs_defs), 23)
+        self.assertEqual(len(docs_defs), 24)
 
     def test_get_all_con_networking_connection_device_fixed_defaults(self):
         """Test get_all_networking_connection_device_defaults returns expected output"""
