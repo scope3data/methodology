@@ -215,6 +215,13 @@ defaults:
       YEM: 11.392000000
       ZAF: 30.945000000
       ZWE: 33.026000000
+  default_platform_ad_format_by_channel:
+    app: Interstitial
+    audio: 30s Audio
+    ctv-bvod: 15s Video
+    dooh: Landscape - 1920x1080 Image
+    social: Leaderboard - 970x250 Banner
+    web: Leaderboard - 970x250 Banner
   default_time_in_view_seconds: 6
   default_usage_kwh_per_gb:
     scope3:
