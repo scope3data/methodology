@@ -6,6 +6,8 @@ import DeviceSizeDefaults from '/snippets/defaults_device_size.mdx'
 import MediaSizeDefaults from '/snippets/defaults_media_size.mdx'
 import TimeInViewDefaults from '/snippets/defaults_time_in_view.mdx'
 import AdPlatformDefaults from '/snippets/defaults_ad_platform.mdx'
+import NetworkTrafficDefaults from '/snippets/defaults_network_traffic.mdx'
+import ChannelMappingDefaults from '/snippets/defaults_channel_mapping.mdx'
 
 # Detailed walkthrough of calculations
 
@@ -96,14 +98,15 @@ Product carousel
 
 ### Property
 
-| Field                                           | Description |
-| ----------------------------------------------- | ------------------------------------------------------------ |
-| `average_seconds_per_session_ex_ads`            | The average length of a session on this property excluding ads (eg 44 min of a 60 min TV show) |
-| `average_imps_per_session`                      | The average number of impressions per session |
-| `average_data_kb_per_session_ex_ads`            | The average number of KB transferred during a session excluding ads |
-| `ad_funded_percentage`                          | The percentage of content funded by advertising (eg 50%) |
-| `allocated_adjusted_corporate_emissions_kgco2e` | This property's share of corporate emissions |
-| `total_sessions`                                | Number of sessions in the same time period as corporate emissions |
+| Field                                           | Required | Description |
+| ----------------------------------------------- | -------- | ------------------------------------------------------------ |
+| `channels`                                      | Yes      |The channel(s) of this property |
+| `average_seconds_per_session_ex_ads`            | Yes      |The average length of a session on this property excluding ads (eg 44 min of a 60 min TV show) |
+| `average_imps_per_session`                      | Yes      |The average number of impressions per session |
+| `average_data_kb_per_session_ex_ads`            | Yes      |The average number of KB transferred during a session excluding ads |
+| `ad_funded_percentage`                          | Yes      |The percentage of content funded by advertising (eg 50%) |
+| `allocated_adjusted_corporate_emissions_kgco2e` | Yes      |This property's share of corporate emissions |
+| `total_sessions`                                | Yes      |Number of sessions in the same time period as corporate emissions |
 
 ### Ad Platform
 
@@ -165,6 +168,12 @@ From [Carbon impact of video streaming (Carbon Trust)](https://ctprodstorageacco
 
 <PowerModelDefaults/>
 
+### Mobile to fixed ratios by country
+
+From [ITU Data Hub](https://datahub.itu.int/) (2022 data)
+
+<NetworkTrafficDefaults/>
+
 ### Video player characteristics
 
 Based on actual data transfer of https://vjs.zencdn.net/8.10.0/video.min.js on February 23, 2024
@@ -201,6 +210,11 @@ Observations from various channels
 
 <AdPlatformDefaults/>
 
+### Channel and device type mappings
+
+<ChannelMappingDefaults/>
+
+
 ## Lookups from external sources
 
 ### Carbon intensity by country, region, and UTC Date/Time
@@ -210,6 +224,69 @@ Providers should clearly and publicly document:
 - What carbon intensity metric is used (marginal vs average)
 
 `lookup_carbon_intensity_gco2e_per_kwh(country, region, utc_datetime)` should look up the carbon intensity in gCO2e based on 100-year global warming potential (GWP100) from a database at no less than hourly granularity.
+
+## Fallbacks
+
+```
+  pct_mobile =
+      country ?
+      default_percent_mobile_by_country[country] / 100 :
+      default_percent_mobile / 100
+
+  average_embodied_emissions_gco2e_per_kb =
+      default_network_embodied_emissions_gco2e_per_kb['mobile'] x pct_mobile +
+      default_network_embodied_emissions_gco2e_per_kb['fixed'] x (1 - pct_mobile)
+
+  embodied_emissions_gco2e_per_kb =
+      network_type ?
+      default_network_embodied_emissions_gco2e_per_kb[network_type] :
+      average_embodied_emissions_gco2e_per_kb
+
+  average_usage_kwh_per_gb =
+      default_usage_kwh_per_gb['mobile'] x pct_mobile +
+      default_usage_kwh_per_gb['fixed'] x (1 - pct_mobile)
+
+  usage_kwh_per_gb =
+      network_type ?
+      default_usage_kwh_per_gb['network_type'] :
+      average_usage_kwh_per_gb
+
+  average_baseload_watts =
+      default_baseload_watts['mobile'] x pct_mobile +
+      default_baseload_watts['fixed'] x (1 - pct_mobile)
+
+  average_dynamic_watts_per_kbps =
+      default_dynamic_watts_per_kbps['mobile'] x pct_mobile +
+      default_dynamic_watts_per_kbps['fixed'] x (1 - pct_mobile)
+
+  baseload_watts =
+      network_type ?
+      default_baseload_watts[network_type] :
+      average_baseload_watts
+
+  dynamic_watts_per_kbps =
+      network_type ?
+      default_dynamic_watts_per_kbps[network_type] :
+      average_dynamic_watts_per_kbps
+
+  lookup_channel:
+    if property.channels.length == 1:
+      return property.channels[0]
+    if channel && channel in property.channels:
+      return channel
+    is_audio_creative =
+        creative_audio_data_transfer_bytes ||
+        creative_audio_duration_seconds ||
+        ad_format.audio_duration_seconds
+    if is_audio_creative && 'audio' in property.channels:
+      return 'audio'
+    if device_type && default_channel_by_device[device_type] in property.channels:
+      return default_channel_by_device[device_type]
+    return property.channels[0]
+
+  channel = lookup_channel()
+  device_type = device_type ? default_device_by_channel[channel]
+```
 
 ## Calculating Emissions
 
@@ -233,12 +310,12 @@ creative_data_transfer_bytes =
 
 creative_data_transfer_usage_emissions_gco2pm =
       creative_data_transfer_bytes / 1024 x
-      default_usage_kwh_per_gb[network_type] / 1000000 x
+      usage_kwh_per_gb / 1000000 x
       lookup_carbon_intensity_gco2e_per_kwh(country, region, utc_datetime)
 
 creative_data_transfer_embodied_emissions_gco2pm =
       creative_data_transfer_bytes / 1024 x
-      default_network_embodied_emissions_gco2e_per_kb[network_type]
+      embodied_emissions_gco2e_per_kb
 ```
 
 If data transfer is provided in the delivery row, use it:
@@ -285,19 +362,18 @@ For CTV/BVOD, use the power model:
 
 ```
 creative_data_transfer_usage_emissions_gco2pm =
-    creative_video_duration_seconds x
-    power x
+    creative_video_duration_seconds / 3600 x
+    power_watts / 1000 x
     lookup_carbon_intensity_gco2e_per_kwh(country, region, utc_datetime)
 
-power =
-    default_baseload_watts[network_type] +
-    default_dynamic_watts[network_type] x 
-    default_video_bitrate[device_type]
+power_watts =
+    baseload_watts_per +
+    dynamic_watts_per_kbps x default_video_bitrate[device_type]
 
 creative_data_transfer_embodied_emissions_gco2pm =
       creative_video_duration_seconds x
       default_video_bitrate[device_type] / 128 x
-      default_network_embodied_emissions_gco2e_per_kb[network_type]
+      embodied_emissions_gco2e_per_kb
 ```
 
 ### Creative Delivery - Platform
@@ -363,12 +439,12 @@ For all channels other than CTV/BVOD, use the conventional model:
 ```
 media_data_transfer_usage_emissions_gco2pm =
       property.average_data_kb_per_session_ex_ads x
-      default_usage_kwh_per_gb[network_type] / 1000000 x
+      usage_kwh_per_gb / 1000000 x
       lookup_carbon_intensity_gco2e_per_kwh(country, region, utc_datetime)
 
 media_data_transfer_embodied_emissions_gco2pm =
       property.average_data_kb_per_session_ex_ads x
-      default_network_embodied_emissions_gco2e_per_kb[network_type]
+      embodied_emissions_gco2e_per_kb
 ```
 
 For CTV/BVOD, use the power model:
@@ -382,7 +458,7 @@ media_data_transfer_usage_emissions_gco2pm =
 media_data_transfer_embodied_emissions_gco2pm =
     session_seconds_per_imp x
     default_video_bitrate[device_type] / 128 x
-    default_network_embodied_emissions_gco2e_per_kb[network_type]
+    embodied_emissions_gco2e_per_kb
 ```
 
 ### Media Delivery - Consumer Device

@@ -76,3 +76,6 @@ Mobile Network Energy (Amn) = 1.2W + 1.53W/Mbps
 ## Data transfer embodied emissions
 
 The [SRI methodology](https://www.sri-france.org/wp-content/uploads/2023/06/SRI_Calculating-the-carbon-footprint_V2.pdf) includes embodied emissions data from ADEME/Negaoctet, which seem reasonable.
+
+## Handling unknown networks
+The SRI methodology suggests a ratio of 90% fixed to 10% mobile. However, this ratio is not representative globally. The ITU publishes [research](https://datahub.itu.int) on fixed and mobile traffic by country. This indicates that for 2022 the weighted average of global traffic was 23.6% mobile. However, this research notably omits the US which is likely similar to other advanced economies in the 5% range, so we have added this to the dataset as an estimate (along with the 10% France number for SRI consistency).
