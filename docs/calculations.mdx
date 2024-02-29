@@ -270,7 +270,16 @@ Account for non-required fields:
       default_dynamic_watts_per_kbps[network_type] :
       average_dynamic_watts_per_kbps
 
-  channel = channel ? default_channel_by_device[device_type]
+  is_audio_creative =
+      creative_audio_data_transfer_bytes ||
+      creative_audio_duration_seconds ||
+      ad_format.audio_duration_seconds
+  default_channel =
+      is_audio_creative ?
+      audio :
+      default_channel_by_device[device_type]
+  channel = channel ? default_channel
+
   device_type = device_type ? default_device_by_channel[channel]
 ```
 
