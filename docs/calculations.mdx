@@ -1,13 +1,13 @@
-import ConventionalModelDefaults from '/snippets/defaults_conventional_model.mdx'
-import PowerModelDefaults from '/snippets/defaults_power_model.mdx'
-import VideoPlayerDefaults from '/snippets/defaults_video_player.mdx'
-import ConsumerDeviceDefaults from '/snippets/defaults_consumer_device.mdx'
-import DeviceSizeDefaults from '/snippets/defaults_device_size.mdx'
-import MediaSizeDefaults from '/snippets/defaults_media_size.mdx'
-import TimeInViewDefaults from '/snippets/defaults_time_in_view.mdx'
-import AdPlatformDefaults from '/snippets/defaults_ad_platform.mdx'
-import NetworkTrafficDefaults from '/snippets/defaults_network_traffic.mdx'
-import ChannelMappingDefaults from '/snippets/defaults_channel_mapping.mdx'
+import ConventionalModelDefaults from "/snippets/defaults_conventional_model.mdx";
+import PowerModelDefaults from "/snippets/defaults_power_model.mdx";
+import VideoPlayerDefaults from "/snippets/defaults_video_player.mdx";
+import ConsumerDeviceDefaults from "/snippets/defaults_consumer_device.mdx";
+import DeviceSizeDefaults from "/snippets/defaults_device_size.mdx";
+import MediaSizeDefaults from "/snippets/defaults_media_size.mdx";
+import TimeInViewDefaults from "/snippets/defaults_time_in_view.mdx";
+import AdPlatformDefaults from "/snippets/defaults_ad_platform.mdx";
+import NetworkTrafficDefaults from "/snippets/defaults_network_traffic.mdx";
+import ChannelMappingDefaults from "/snippets/defaults_channel_mapping.mdx";
 
 # Detailed walkthrough of calculations
 
@@ -15,52 +15,52 @@ import ChannelMappingDefaults from '/snippets/defaults_channel_mapping.mdx'
 
 ### Channels
 
-| Channel            | Description                                    |
-| ------------------ | ---------------------------------------------- |
-| `web`              | Website that is not primarily social or CTV    |
-| `app`              | Mobile app that is not primarily social or CTV |
-| `social`           | A social platform (Snapchat, Facebook, etc)    |
-| `ctv-bvod`         | A TV-like streaming platform                   |
-| `audio`            | Audio content (podcasts, streaming music)      |
-| `dooh`             | Digital out of home - billboards, transit, etc |
+| Channel    | Description                                    |
+| ---------- | ---------------------------------------------- |
+| `web`      | Website that is not primarily social or CTV    |
+| `app`      | Mobile app that is not primarily social or CTV |
+| `social`   | A social platform (Snapchat, Facebook, etc)    |
+| `ctv-bvod` | A TV-like streaming platform                   |
+| `audio`    | Audio content (podcasts, streaming music)      |
+| `dooh`     | Digital out of home - billboards, transit, etc |
 
 ### Device Types
 
-| Device type     | Description                                    |
-| --------------- | ---------------------------------------------- |
-| `phone`         | A phone |
-| `tablet`        | A tablet |
-| `pc`            | A pc with a monitor or a laptop |
-| `tv`            | A TV |
-| `smart-speaker` | A smart speaker - Amazon Echo or equivalent    |
+| Device type     | Description                                 |
+| --------------- | ------------------------------------------- |
+| `phone`         | A phone                                     |
+| `tablet`        | A tablet                                    |
+| `pc`            | A pc with a monitor or a laptop             |
+| `tv`            | A TV                                        |
+| `smart-speaker` | A smart speaker - Amazon Echo or equivalent |
 
 ### Network Types
 
-| Network type    | Description                                    |
-| --------------- | ---------------------------------------------- |
-| `mobile`        | A mobile network (3G/4G/5G) |
-| `fixed`         | A fixed network (broadband) |
+| Network type | Description                 |
+| ------------ | --------------------------- |
+| `mobile`     | A mobile network (3G/4G/5G) |
+| `fixed`      | A fixed network (broadband) |
 
 ### Video Player
 
-| Field	                              | Description	                                                                                 |
-| ----------------------------------- | -------------------------------------------------------------------------------------------- |
-| `size_bytes`	                      | Size of the javascript/html for a video player if present                                    |
-| `buffering_seconds`	                | Video player buffering - if player preloads content, leave blank                             |
-| `download_trigger`	                | What starts the content download - impression, view (ie lazy load), play                     |
+| Field               | Description                                                              |
+| ------------------- | ------------------------------------------------------------------------ |
+| `size_bytes`        | Size of the javascript/html for a video player if present                |
+| `buffering_seconds` | Video player buffering - if player preloads content, leave blank         |
+| `download_trigger`  | What starts the content download - impression, view (ie lazy load), play |
 
 ### [Ad Format](./creative#terminology-placements-ad-formats-creatives-and-assets)
 
-| Field	                              | Description	                                                                                 |
-| ----------------------------------- | -------------------------------------------------------------------------------------------- |
-| `rendered_width_pixels`             | Width of the creative when rendered. Leave blank for responsive (will assume screen width)	 |
-| `rendered_height_pixels`	          | Height of the creative when rendered. Leave blank for responsive (will assume screen height) |
-| `image_sizes` 	                    | Array of image dimensions (eg `["300x250", "70x70"]`)                                        |
-| `audio_duration_seconds`	          | Audio duration (if applicable)                                                               |
-| `video_duration_seconds`	          | Video duration (if applicable)                                                               |
-| `video_player`	                    | Video player used to render video (if applicable)                                            |
-| `other_assets_bytes`	              | Metadata, text, html, etc                                                                    |
-| `ad_platforms`                      | Ad serving, verification, and measurement ad platforms wrapping or embedded in the ad format |
+| Field                    | Description                                                                                  |
+| ------------------------ | -------------------------------------------------------------------------------------------- |
+| `rendered_width_pixels`  | Width of the creative when rendered. Leave blank for responsive (will assume screen width)   |
+| `rendered_height_pixels` | Height of the creative when rendered. Leave blank for responsive (will assume screen height) |
+| `image_sizes`            | Array of image dimensions (eg `["300x250", "70x70"]`)                                        |
+| `audio_duration_seconds` | Audio duration (if applicable)                                                               |
+| `video_duration_seconds` | Video duration (if applicable)                                                               |
+| `video_player`           | Video player used to render video (if applicable)                                            |
+| `other_assets_bytes`     | Metadata, text, html, etc                                                                    |
+| `ad_platforms`           | Ad serving, verification, and measurement ad platforms wrapping or embedded in the ad format |
 
 #### Sample Ad Formats:
 
@@ -98,61 +98,61 @@ Product carousel
 
 ### Property
 
-| Field                                           | Required | Description |
-| ----------------------------------------------- | -------- | ------------------------------------------------------------ |
-| `channels`                                      | Yes      |The channel(s) of this property |
-| `average_seconds_per_session_ex_ads`            | Yes      |The average length of a session on this property excluding ads (eg 44 min of a 60 min TV show) |
-| `average_imps_per_session`                      | Yes      |The average number of impressions per session |
-| `average_data_kb_per_session_ex_ads`            | Yes      |The average number of KB transferred during a session excluding ads |
-| `ad_funded_percentage`                          | Yes      |The percentage of content funded by advertising (eg 50%) |
-| `allocated_adjusted_corporate_emissions_kgco2e` | Yes      |This property's share of corporate emissions |
-| `total_sessions`                                | Yes      |Number of sessions in the same time period as corporate emissions |
+| Field                                           | Required | Description                                                                                    |
+| ----------------------------------------------- | -------- | ---------------------------------------------------------------------------------------------- |
+| `channels`                                      | Yes      | The channel(s) of this property                                                                |
+| `average_seconds_per_session_ex_ads`            | Yes      | The average length of a session on this property excluding ads (eg 44 min of a 60 min TV show) |
+| `average_imps_per_session`                      | Yes      | The average number of impressions per session                                                  |
+| `average_data_kb_per_session_ex_ads`            | Yes      | The average number of KB transferred during a session excluding ads                            |
+| `ad_funded_percentage`                          | Yes      | The percentage of content funded by advertising (eg 50%)                                       |
+| `allocated_adjusted_corporate_emissions_kgco2e` | Yes      | This property's share of corporate emissions                                                   |
+| `total_sessions`                                | Yes      | Number of sessions in the same time period as corporate emissions                              |
 
 ### Ad Platform
 
-| Field                                           | Description |
-| ----------------------------------------------- | ------------------------------------------------------------ |
+| Field                                           | Description                                                                                 |
+| ----------------------------------------------- | ------------------------------------------------------------------------------------------- |
 | `emissions_per_creative_request_per_geo_gco2pm` | Adjusted, allocated emissions per creative request by continent (NAMER, LATAM, EMEA, JAPAC) |
-| `emissions_per_bid_request_per_geo_gco2pm` 			| Adjusted, allocated emissions per bid request by continent (NAMER, LATAM, EMEA, JAPAC) |
-| `emissions_per_rtdp_request_per_geo_gco2pm` 		| Adjusted, allocated emissions per rtdp request by continent (NAMER, LATAM, EMEA, JAPAC) |
-| `bidders`                            		        | Array of ad platforms that are sent bid requests |
-| `real_time_data_providers`                      | Array of ad platforms that are sent real-time data requests (not propagated) |
-| `distribution_rate_by_bidder_by_country`        | Traffic shaping data for each bidder by country (eg `'xandr.com', 'US', 0.58`)
+| `emissions_per_bid_request_per_geo_gco2pm`      | Adjusted, allocated emissions per bid request by continent (NAMER, LATAM, EMEA, JAPAC)      |
+| `emissions_per_rtdp_request_per_geo_gco2pm`     | Adjusted, allocated emissions per rtdp request by continent (NAMER, LATAM, EMEA, JAPAC)     |
+| `bidders`                                       | Array of ad platforms that are sent bid requests                                            |
+| `real_time_data_providers`                      | Array of ad platforms that are sent real-time data requests (not propagated)                |
+| `distribution_rate_by_bidder_by_country`        | Traffic shaping data for each bidder by country (eg `'xandr.com', 'US', 0.58`)              |
 
 ### Placement
 
-| Field                                    | Description |
-| ---------------------------------------- | ------------------------------------------------------------ |
-| `ad_platforms`                           | The ad platforms called by this placement |
+| Field          | Description                               |
+| -------------- | ----------------------------------------- |
+| `ad_platforms` | The ad platforms called by this placement |
 
 ### Delivery Row
 
-| Field                                | Description |
-| ------------------------------------ | ---------------------------------- |
-| `impressions`                        | The number of impressions counted (required for all channels other than DOOH) |
-| `views`                              | The number of views counted  |
-| `plays`                              | The number of plays (required for DOOH) |
-| `utc_datetime`                       | Date and time, in UTC, when impressions were delivered |
-| `country`                            | The country where the impression was delivered |
-| `region`                             | The region of the country where the impression was delivered |
-| `channel`                            | See [channels](#channels) |
-| `device_type`                        | See [device types](#device-types) |
-| `network_type`                       | See [network types](#network-types) |
-| `property`                           | See [property](#property) |
-| `creative_ad_format`                 | Either a basic or vendor-provided ad format |
+| Field                                | Description                                                                                 |
+| ------------------------------------ | ------------------------------------------------------------------------------------------- |
+| `impressions`                        | The number of impressions counted (required for all channels other than DOOH)               |
+| `views`                              | The number of views counted                                                                 |
+| `plays`                              | The number of plays (required for DOOH)                                                     |
+| `utc_datetime`                       | Date and time, in UTC, when impressions were delivered                                      |
+| `country`                            | The country where the impression was delivered                                              |
+| `region`                             | The region of the country where the impression was delivered                                |
+| `channel`                            | See [channels](#channels)                                                                   |
+| `device_type`                        | See [device types](#device-types)                                                           |
+| `network_type`                       | See [network types](#network-types)                                                         |
+| `property`                           | See [property](#property)                                                                   |
+| `creative_ad_format`                 | Either a basic or vendor-provided ad format                                                 |
 | `creative_ad_platforms`              | Ad serving, verification, and measurement ad platforms wrapping or embedded in the creative |
-| `creative_image_data_transfer_bytes` | Data transfer for the video itself , ideally measured by the CDN |
-| `creative_image_sizes`               | Array of image sizes included in the creative |
-| `creative_audio_data_transfer_bytes` | Data transfer for the core audio asset, ideally measured by the CDN |
-| `creative_audio_duration_seconds`    | Audio duration in seconds |
-| `creative_video_data_transfer_bytes` | Data transfer for the core video asset, ideally measured by the CDN |
-| `creative_video_vast_bytes`          | Size of VAST/VPAID wrapper for the video in bytes |
-| `creative_video_bitrate_kbps`        | Video bitrate *as delivered* in kilobits per second |
-| `creative_video_size_bytes`          | Video size *as delivered* in bytes |
-| `creative_video_duration_seconds`    | Video duration in seconds |
-| `creative_video_view_time_seconds`   | Average time, in seconds, that a video is viewed |
-| `creative_video_view_rate`           | Average percentage of a video that is viewed |
-| `creative_time_in_view_seconds`      | Time that the creative was visible on the device |
+| `creative_image_data_transfer_bytes` | Data transfer for the video itself , ideally measured by the CDN                            |
+| `creative_image_sizes`               | Array of image sizes included in the creative                                               |
+| `creative_audio_data_transfer_bytes` | Data transfer for the core audio asset, ideally measured by the CDN                         |
+| `creative_audio_duration_seconds`    | Audio duration in seconds                                                                   |
+| `creative_video_data_transfer_bytes` | Data transfer for the core video asset, ideally measured by the CDN                         |
+| `creative_video_vast_bytes`          | Size of VAST/VPAID wrapper for the video in bytes                                           |
+| `creative_video_bitrate_kbps`        | Video bitrate _as delivered_ in kilobits per second                                         |
+| `creative_video_size_bytes`          | Video size _as delivered_ in bytes                                                          |
+| `creative_video_duration_seconds`    | Video duration in seconds                                                                   |
+| `creative_video_view_time_seconds`   | Average time, in seconds, that a video is viewed                                            |
+| `creative_video_view_rate`           | Average percentage of a video that is viewed                                                |
+| `creative_time_in_view_seconds`      | Time that the creative was visible on the device                                            |
 
 ## Defaults
 
@@ -160,66 +160,66 @@ Product carousel
 
 From [SRIxAD database 2.1](https://github.com/SRISyndicatRegiesInternet/SRIxAD-DigitalCampaignsCarbonFramework/releases/download/v2.1.0/Referentiel.SRI.x.AD.-.V2.1_partage.zip), original source ADEME_220830_v1.4
 
-<ConventionalModelDefaults/>
+<ConventionalModelDefaults />
 
 ### Power model data transfer by network type
 
 From [Carbon impact of video streaming (Carbon Trust)](https://ctprodstorageaccountp.blob.core.windows.net/prod-drupal-files/documents/resource/public/Carbon-impact-of-video-streaming.pdf), Table 5; and calculated [here](./data_transfer#fixed-network)
 
-<PowerModelDefaults/>
+<PowerModelDefaults />
 
 ### Mobile to fixed ratios by country
 
 From [ITU Data Hub](https://datahub.itu.int/) (2022 data)
 
-<NetworkTrafficDefaults/>
+<NetworkTrafficDefaults />
 
 ### Video player characteristics
 
 Based on actual data transfer of https://vjs.zencdn.net/8.10.0/video.min.js on February 23, 2024
 
-<VideoPlayerDefaults/>
+<VideoPlayerDefaults />
 
 ### Media size
 
 Based on [YouTube recommendations](https://support.google.com/youtube/answer/1722171), [Wikipedia](https://en.wikipedia.org/wiki/JPEG)
 
-<MediaSizeDefaults/>
+<MediaSizeDefaults />
 
 ### Device size
 
 From common devices (Quad HD 27” monitor, iPhone 13, Nexus 5X, iPad Air 1/2, iPad 2/3, Nexus 9, 1080P TV)
 
-<DeviceSizeDefaults/>
+<DeviceSizeDefaults />
 
 ### Device energy use and embodied emissions
 
 See [Consumer Devices](./consumer_devices)
 
-<ConsumerDeviceDefaults/>
+<ConsumerDeviceDefaults />
 
 ### Time in view for non-video ads
 
 Observations from various channels
 
-<TimeInViewDefaults/>
+<TimeInViewDefaults />
 
 ### Ad platform request sizes by channel
 
 Observations from various channels
 
-<AdPlatformDefaults/>
+<AdPlatformDefaults />
 
 ### Channel and device type mappings
 
-<ChannelMappingDefaults/>
-
+<ChannelMappingDefaults />
 
 ## Lookups from external sources
 
 ### Carbon intensity by country, region, and UTC Date/Time
 
 Providers should clearly and publicly document:
+
 - Which data provider is used for carbon intensity data (for instance, WattTime or ElectricityMaps)
 - What carbon intensity metric is used (marginal vs average)
 
@@ -351,7 +351,7 @@ seconds_watched = creative_video_view_time ??
 buffer = ad_format.video_player.buffering_seconds ?? infinity
 seconds_streamed = MIN(seconds_watched + buffer, video_duration)
 loads = switch(ad_format.video_player.download_trigger):
-            'view': views 
+            'view': views
             'play': plays
             'impression': impressions
 
@@ -361,14 +361,14 @@ video_bytes = bitrate x 8 x seconds_streamed x loads + default_video_vast_bytes
 For CTV/BVOD, use the power model:
 
 ```
+power_watts =
+    baseload_watts +
+    dynamic_watts_per_kbps x default_video_bitrate[device_type]
+
 creative_data_transfer_usage_emissions_gco2pm =
     creative_video_duration_seconds / 3600 x
     power_watts / 1000 x
     lookup_carbon_intensity_gco2e_per_kwh(country, region, utc_datetime)
-
-power_watts =
-    baseload_watts_per +
-    dynamic_watts_per_kbps x default_video_bitrate[device_type]
 
 creative_data_transfer_embodied_emissions_gco2pm =
       creative_video_duration_seconds x
@@ -414,7 +414,7 @@ creative_consumer_device_usage_emissions_gco2pm =
       device_coverage_seconds / 3600 x
       default_device_watts[device_type] / 1000 x
       lookup_carbon_intensity_gco2e_per_kwh(country, region, utc_datetime)
-      
+
 creative_consumer_device_embodied_emissions_gco2pm =
       device_coverage_seconds / 3600 x
       default_device_embodied_emissions_per_second[device_type]
@@ -468,7 +468,7 @@ media_consumer_device_usage_emissions_gco2pm =
       session_seconds_per_imp / 3600 x
       default_device_watts[device_type] / 1000 x
       lookup_carbon_intensity_gco2e_per_kwh(country, region, utc_datetime)
-      
+
 media_consumer_device_embodied_emissions_gco2pm =
       session_seconds_per_imp / 3600 x
       default_device_embodied_emissions_per_second[device_type]
