@@ -8,6 +8,7 @@ import TimeInViewDefaults from "/snippets/defaults_time_in_view.mdx";
 import AdPlatformDefaults from "/snippets/defaults_ad_platform.mdx";
 import NetworkTrafficDefaults from "/snippets/defaults_network_traffic.mdx";
 import ChannelMappingDefaults from "/snippets/defaults_channel_mapping.mdx";
+import GenericAdPlatformDefaults from "/snippets/defaults_generic_ad_platforms.mdx";
 
 # Detailed walkthrough of calculations
 
@@ -61,21 +62,24 @@ import ChannelMappingDefaults from "/snippets/defaults_channel_mapping.mdx";
 | `video_player`           | Video player used to render video (if applicable)                                            |
 | `other_assets_bytes`     | Metadata, text, html, etc                                                                    |
 | `ad_platforms`           | Ad serving, verification, and measurement ad platforms wrapping or embedded in the ad format |
+| `is_3p_served`           | Does this ad format expect/support the creative to be served by a third party ad server      |
 
 #### Sample Ad Formats:
 
-300x250 banner
+300x250 programmatic banner
 
 ```
 image_sizes = ['300x250']
 rendered_width_pixels = 300,
 rendered_height_pixels = 250
+is_3p_served = true
 ```
 
-30 second audio
+30 second audio inserted into a podcast
 
 ```
 audio_duration_seconds = 30
+is_3p_served = false
 ```
 
 15 second outstream video
@@ -85,15 +89,17 @@ video_duration_seconds = 15;
 video_player = 'default',
 rendered_width_pixels = 500,
 rendered_height_pixels = 400
+is_3p_served = true
 ```
 
-Product carousel
+Native product carousel
 
 ```
   image_sizes = ['400x400','400x400','400x400'],
   other_assets_bytes = 7321,
   rendered_height_pixels = 600,
   rendered_width_pixels = 450
+  is_3p_served = false
 ```
 
 ### Property
@@ -379,8 +385,14 @@ creative_data_transfer_embodied_emissions_gco2pm =
 ### Creative Delivery - Platform
 
 ```
+default_creative_platforms =
+    ad_format.is_3p_served ?
+    [generic_creative_ad_server, generic_verification_platform] :
+    []
+creative_platforms = creative_ad_platforms ?? default_creative_platforms
+
 creative_platform_emissions_gco2pm = 0
-for platform in [creative.ad_platforms, ad_format.ad_platforms]:
+for platform in [creative_platforms, ad_format.ad_platforms]:
   creative_platform_emissions_gco2pm += platform.emissions_per_creative_request_per_geo_gco2pm
 ```
 
