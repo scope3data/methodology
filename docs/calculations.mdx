@@ -261,19 +261,19 @@ Providers should clearly and publicly document:
       default_baseload_watts['mobile'] x pct_mobile +
       default_baseload_watts['fixed'] x (1 - pct_mobile)
 
-  average_dynamic_watts_per_kbps =
-      default_dynamic_watts_per_kbps['mobile'] x pct_mobile +
-      default_dynamic_watts_per_kbps['fixed'] x (1 - pct_mobile)
+  average_dynamic_watts_per_mbps =
+      default_dynamic_watts_per_mbps['mobile'] x pct_mobile +
+      default_dynamic_watts_per_mbps['fixed'] x (1 - pct_mobile)
 
   baseload_watts =
       network_type ?
       default_baseload_watts[network_type] :
       average_baseload_watts
 
-  dynamic_watts_per_kbps =
+  dynamic_watts_per_mbps =
       network_type ?
-      default_dynamic_watts_per_kbps[network_type] :
-      average_dynamic_watts_per_kbps
+      default_dynamic_watts_per_mbps[network_type] :
+      average_dynamic_watts_per_mbps
 
   lookup_channel:
     if property.channels.length == 1:
@@ -339,13 +339,13 @@ image_sizes = creative_image_sizes ? ad_format.image_sizes
 image_bytes = SUM(image_sizes[n].width x image_sizes[n].height) x 3 / default_image_compression_ratio
 
 audio_duration = creative_audio_duration_seconds ?? ad_format.audio_duration_seconds
-audio_bytes = audio_duration_seconds x default_audio_bitrate[device_type]
+audio_bytes = audio_duration_seconds x default_audio_bitrate_kbps[device_type]
 
 is_primary_experience = !ad_format.rendered_width_pixels && !ad_format.rendered_height_pixels
 default_bitrate =
       is_primary_experience ?
-      default_video_bitrate[device_type] :
-      default_video_bitrate_non_primary
+      default_video_bitrate_kbps[device_type] :
+      default_non_primary_video_bitrate_kbps
 bitrate =
       creative_video_bitrate_kbps ??
       creative_video_size_bytes / 8 / creative_video_duration / 1024 ??
@@ -369,7 +369,7 @@ For CTV/BVOD, use the power model:
 ```
 power_watts =
     baseload_watts +
-    dynamic_watts_per_kbps x default_video_bitrate[device_type]
+    dynamic_watts_per_mbps x default_video_bitrate_kbps[device_type] / 1000
 
 creative_data_transfer_usage_emissions_gco2pm =
     creative_video_duration_seconds / 3600 x
@@ -378,7 +378,7 @@ creative_data_transfer_usage_emissions_gco2pm =
 
 creative_data_transfer_embodied_emissions_gco2pm =
       creative_video_duration_seconds x
-      default_video_bitrate[device_type] / 128 x
+      default_video_bitrate_kbps[device_type] / 128 x
       embodied_emissions_gco2e_per_kb
 ```
 
@@ -469,7 +469,7 @@ media_data_transfer_usage_emissions_gco2pm =
 
 media_data_transfer_embodied_emissions_gco2pm =
     session_seconds_per_imp x
-    default_video_bitrate[device_type] / 128 x
+    default_video_bitrate_kbps[device_type] / 128 x
     embodied_emissions_gco2e_per_kb
 ```
 

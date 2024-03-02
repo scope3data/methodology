@@ -1,6 +1,6 @@
 # AUTO_GENERATED from docs/snippets
 defaults:
-  default_audio_bitrate:
+  default_audio_bitrate_kbps:
     pc: 160
     phone: 160
     smart-speaker: 160
@@ -79,9 +79,9 @@ defaults:
     phone: 1080
     tablet: 1536
     tv: 1920
-  default_dynamic_watts_per_kbps:
-    fixed: 30
-    mobile: 1530
+  default_dynamic_watts_per_mbps:
+    fixed: 0.030000000
+    mobile: 1.530000000
   default_emissions_per_bid_request_gco2pm: 0.114420000
   default_emissions_per_creative_request_gco2pm: 0.010000000
   default_emissions_per_rtdp_request_gco2pm: 0.010000000
@@ -93,6 +93,7 @@ defaults:
     sri:
       fixed: 0.004430000
       mobile: 0.007970000
+  default_non_primary_video_bitrate_kbps: 2500
   default_percent_mobile:
     scope3: 23.600000000
     sri: 10.000000000
@@ -230,12 +231,11 @@ defaults:
     sri:
       fixed: 0.068700000
       mobile: 0.236000000
-  default_video_bitrate:
+  default_video_bitrate_kbps:
     pc: 8000
     phone: 2500
     tablet: 5000
     tv: 8000
-  default_video_bitrate_non_primary: 2500
   default_video_player_download_trigger:
     app: impression
     ctv-bvod: impression
@@ -249,7 +249,7 @@ defaults:
       JAPAC: 0.000300000
       LATAM: 0.000100000
       NAMER: 0.000100000
-  generic_verification_platform:
+  generic_measurement_platform:
     emissions_per_creative_request_per_geo_gco2pm:
       EMEA: 0.000100000
       JAPAC: 0.000300000
