@@ -61,21 +61,24 @@ import ChannelMappingDefaults from "/snippets/defaults_channel_mapping.mdx";
 | `video_player`           | Video player used to render video (if applicable)                                            |
 | `other_assets_bytes`     | Metadata, text, html, etc                                                                    |
 | `ad_platforms`           | Ad serving, verification, and measurement ad platforms wrapping or embedded in the ad format |
+| `is_3p_served`           | Does this ad format expect/support the creative to be served by a third party ad server      |
 
 #### Sample Ad Formats:
 
-300x250 banner
+300x250 programmatic banner
 
 ```
 image_sizes = ['300x250']
 rendered_width_pixels = 300,
 rendered_height_pixels = 250
+is_3p_served = true
 ```
 
-30 second audio
+30 second audio inserted into a podcast
 
 ```
 audio_duration_seconds = 30
+is_3p_served = false
 ```
 
 15 second outstream video
@@ -85,15 +88,17 @@ video_duration_seconds = 15;
 video_player = 'default',
 rendered_width_pixels = 500,
 rendered_height_pixels = 400
+is_3p_served = true
 ```
 
-Product carousel
+Native product carousel
 
 ```
   image_sizes = ['400x400','400x400','400x400'],
   other_assets_bytes = 7321,
   rendered_height_pixels = 600,
   rendered_width_pixels = 450
+  is_3p_served = false
 ```
 
 ### Property
@@ -204,7 +209,7 @@ Observations from various channels
 
 <TimeInViewDefaults />
 
-### Ad platform request sizes by channel
+### Ad platform defaults
 
 Observations from various channels
 
@@ -255,19 +260,19 @@ Providers should clearly and publicly document:
       default_baseload_watts['mobile'] x pct_mobile +
       default_baseload_watts['fixed'] x (1 - pct_mobile)
 
-  average_dynamic_watts_per_kbps =
-      default_dynamic_watts_per_kbps['mobile'] x pct_mobile +
-      default_dynamic_watts_per_kbps['fixed'] x (1 - pct_mobile)
+  average_dynamic_watts_per_mbps =
+      default_dynamic_watts_per_mbps['mobile'] x pct_mobile +
+      default_dynamic_watts_per_mbps['fixed'] x (1 - pct_mobile)
 
   baseload_watts =
       network_type ?
       default_baseload_watts[network_type] :
       average_baseload_watts
 
-  dynamic_watts_per_kbps =
+  dynamic_watts_per_mbps =
       network_type ?
-      default_dynamic_watts_per_kbps[network_type] :
-      average_dynamic_watts_per_kbps
+      default_dynamic_watts_per_mbps[network_type] :
+      average_dynamic_watts_per_mbps
 
   lookup_channel:
     if property.channels.length == 1:
@@ -333,13 +338,13 @@ image_sizes = creative_image_sizes ? ad_format.image_sizes
 image_bytes = SUM(image_sizes[n].width x image_sizes[n].height) x 3 / default_image_compression_ratio
 
 audio_duration = creative_audio_duration_seconds ?? ad_format.audio_duration_seconds
-audio_bytes = audio_duration_seconds x default_audio_bitrate[device_type]
+audio_bytes = audio_duration_seconds x default_audio_bitrate_kbps[device_type]
 
 is_primary_experience = !ad_format.rendered_width_pixels && !ad_format.rendered_height_pixels
 default_bitrate =
       is_primary_experience ?
-      default_video_bitrate[device_type] :
-      default_video_bitrate_non_primary
+      default_video_bitrate_kbps[device_type] :
+      default_non_primary_video_bitrate_kbps
 bitrate =
       creative_video_bitrate_kbps ??
       creative_video_size_bytes / 8 / creative_video_duration / 1024 ??
@@ -363,7 +368,7 @@ For CTV/BVOD, use the power model:
 ```
 power_watts =
     baseload_watts +
-    dynamic_watts_per_kbps x default_video_bitrate[device_type]
+    dynamic_watts_per_mbps x default_video_bitrate_kbps[device_type] / 1000
 
 creative_data_transfer_usage_emissions_gco2pm =
     creative_video_duration_seconds / 3600 x
@@ -372,15 +377,21 @@ creative_data_transfer_usage_emissions_gco2pm =
 
 creative_data_transfer_embodied_emissions_gco2pm =
       creative_video_duration_seconds x
-      default_video_bitrate[device_type] / 128 x
+      default_video_bitrate_kbps[device_type] / 128 x
       embodied_emissions_gco2e_per_kb
 ```
 
 ### Creative Delivery - Platform
 
 ```
+default_creative_platforms =
+    ad_format.is_3p_served ?
+    [generic_creative_ad_server, generic_measurement_platform] :
+    []
+creative_platforms = creative_ad_platforms ?? default_creative_platforms
+
 creative_platform_emissions_gco2pm = 0
-for platform in [creative.ad_platforms, ad_format.ad_platforms]:
+for platform in [creative_platforms, ad_format.ad_platforms]:
   creative_platform_emissions_gco2pm += platform.emissions_per_creative_request_per_geo_gco2pm
 ```
 
@@ -457,7 +468,7 @@ media_data_transfer_usage_emissions_gco2pm =
 
 media_data_transfer_embodied_emissions_gco2pm =
     session_seconds_per_imp x
-    default_video_bitrate[device_type] / 128 x
+    default_video_bitrate_kbps[device_type] / 128 x
     embodied_emissions_gco2e_per_kb
 ```
 
