@@ -83,7 +83,7 @@ defaults:
     fixed: 0.030000000
     mobile: 1.530000000
   default_emissions_per_bid_request_gco2pm: 0.114420000
-  default_emissions_per_creative_request_gco2pm: 0.010000000
+  default_emissions_per_creative_request_gco2pm: 0.000300000
   default_emissions_per_rtdp_request_gco2pm: 0.010000000
   default_image_compression_ratio: 10
   default_network_embodied_emissions_gco2e_per_kb:
