@@ -132,32 +132,32 @@ Native product carousel
 
 ### Delivery Row
 
-| Field                                | Description                                                                                 |
-| ------------------------------------ | ------------------------------------------------------------------------------------------- |
-| `impressions`                        | The number of impressions counted (required for all channels other than DOOH)               |
-| `views`                              | The number of views counted                                                                 |
-| `plays`                              | The number of plays (required for DOOH)                                                     |
-| `utc_datetime`                       | Date and time, in UTC, when impressions were delivered                                      |
-| `country`                            | The country where the impression was delivered                                              |
-| `region`                             | The region of the country where the impression was delivered                                |
-| `channel`                            | See [channels](#channels)                                                                   |
-| `device_type`                        | See [device types](#device-types)                                                           |
-| `network_type`                       | See [network types](#network-types)                                                         |
-| `property`                           | See [property](#property)                                                                   |
-| `creative_ad_format`                 | Either a basic or vendor-provided ad format                                                 |
-| `creative_ad_platforms`              | Ad serving, verification, and measurement ad platforms wrapping or embedded in the creative |
-| `creative_image_data_transfer_bytes` | Data transfer for the video itself , ideally measured by the CDN                            |
-| `creative_image_sizes`               | Array of image sizes included in the creative                                               |
-| `creative_audio_data_transfer_bytes` | Data transfer for the core audio asset, ideally measured by the CDN                         |
-| `creative_audio_duration_seconds`    | Audio duration in seconds                                                                   |
-| `creative_video_data_transfer_bytes` | Data transfer for the core video asset, ideally measured by the CDN                         |
-| `creative_video_vast_bytes`          | Size of VAST/VPAID wrapper for the video in bytes                                           |
-| `creative_video_bitrate_kbps`        | Video bitrate _as delivered_ in kilobits per second                                         |
-| `creative_video_size_bytes`          | Video size _as delivered_ in bytes                                                          |
-| `creative_video_duration_seconds`    | Video duration in seconds                                                                   |
-| `creative_video_view_time_seconds`   | Average time, in seconds, that a video is viewed                                            |
-| `creative_video_view_rate`           | Average percentage of a video that is viewed                                                |
-| `creative_time_in_view_seconds`      | Time that the creative was visible on the device                                            |
+| Field                                      | Description                                                                                                 |
+| ------------------------------------------ | ----------------------------------------------------------------------------------------------------------- |
+| `impressions`                              | The number of impressions counted (required for all channels other than DOOH)                               |
+| `views`                                    | The number of views counted                                                                                 |
+| `plays`                                    | The number of plays (required for DOOH)                                                                     |
+| `utc_datetime`                             | Date and time, in UTC, when impressions were delivered                                                      |
+| `country`                                  | The country where the impression was delivered                                                              |
+| `region`                                   | The region of the country where the impression was delivered                                                |
+| `channel`                                  | See [channels](#channels)                                                                                   |
+| `device_type`                              | See [device types](#device-types)                                                                           |
+| `network_type`                             | See [network types](#network-types)                                                                         |
+| `property`                                 | See [property](#property)                                                                                   |
+| `creative_ad_format`                       | Either a basic or vendor-provided ad format                                                                 |
+| `creative_ad_platforms`                    | Ad serving, verification, and measurement ad platforms wrapping or embedded in the creative                 |
+| `creative_total_image_data_transfer_bytes` | Total bytes for the data transfer for the image itself for all impressions, ideally measured by the CDN     |
+| `creative_image_sizes`                     | Array of image sizes included in the creative                                                               |
+| `creative_total_audio_data_transfer_bytes` | Total bytes for the data transfer for the core audio asset for all impressions, ideally measured by the CDN |
+| `creative_audio_duration_seconds`          | Average audio duration in seconds for a single impression                                                   |
+| `creative_total_video_data_transfer_bytes` | Total bytes for the data transfer for the core video asset for all loads, ideally measured by the CDN       |
+| `creative_video_vast_bytes`                | Average size of VAST/VPAID wrapper for the video in bytes for a single load                                 |
+| `creative_video_bitrate_kbps`              | Video bitrate _as delivered_ in kilobits per second                                                         |
+| `creative_video_size_bytes`                | Average video size _as delivered_ in bytes for a single load                                                |
+| `creative_video_duration_seconds`          | Video duration in seconds                                                                                   |
+| `creative_video_view_time_seconds`         | Average time, in seconds, that a video is viewed                                                            |
+| `creative_video_view_rate`                 | Average percentage of a video that is viewed                                                                |
+| `creative_time_in_view_seconds`            | Time that the creative was visible on the device                                                            |
 
 ## Defaults
 
@@ -326,9 +326,9 @@ creative_data_transfer_embodied_emissions_gco2 =
 If data transfer is provided in the delivery row, use it:
 
 ```
-image_bytes = creative_image_data_transfer_bytes
-video_bytes = creative_video_data_transfer_bytes + creative_video_vast_bytes
-audio_bytes = creative_audio_data_transfer_bytes
+image_bytes = creative_total_image_data_transfer_bytes
+video_bytes = creative_total_video_data_transfer_bytes + (creative_video_vast_bytes * loads)
+audio_bytes = creativetotal__audio_data_transfer_bytes
 ```
 
 Otherwise, calculate data transfer:
@@ -341,11 +341,11 @@ audio_duration = creative_audio_duration_seconds ?? ad_format.audio_duration_sec
 audio_bytes = audio_duration_seconds x default_audio_bitrate_kbps[device_type] / 8 * 1024 * impressions
 
 is_primary_experience = !ad_format.rendered_width_pixels && !ad_format.rendered_height_pixels
-default_bitrate =
+default_bitrate_kbps =
       is_primary_experience ?
       default_video_bitrate_kbps[device_type] :
       default_non_primary_video_bitrate_kbps
-bitrate =
+video_bitrate_kbps =
       creative_video_bitrate_kbps ??
       creative_video_size_bytes * 8 / 1024 / creative_video_duration  ??
       default_bitrate_kbps
@@ -361,15 +361,17 @@ loads = switch(ad_format.video_player.download_trigger):
             'impression': impressions
 
 
-video_bytes = bitrate_kbps / 8 * 1024 x seconds_streamed x loads + default_video_vast_bytes
+video_bytes = (video_bitrate_kbps / 8 * 1024 x seconds_streamed + creative_video_vast_bytes) x loads
 ```
 
 For CTV/BVOD, use the power model:
 
 ```
+video_bitrate_kbps = creative_video_bitrate_kbps ?? default_video_bitrate_kbps[device_type]
+
 power_watts =
     baseload_watts +
-    dynamic_watts_per_mbps x default_video_bitrate_kbps[device_type] / 1000
+    dynamic_watts_per_mbps x video_bitrate_kbps / 1000
 
 creative_data_transfer_usage_emissions_gco2pm =
     creative_video_duration_seconds / 3600 x
@@ -378,7 +380,7 @@ creative_data_transfer_usage_emissions_gco2pm =
 
 creative_data_transfer_embodied_emissions_gco2pm =
       creative_video_duration_seconds x
-      default_video_bitrate_kbps[device_type] / 128 x
+      video_bitrate_kbps / 128 x
       embodied_emissions_gco2e_per_kb
 ```
 
@@ -411,7 +413,7 @@ rendered_height = ad_format.rendered_height_pixels ?? default_device_height[devi
 visual_device_coverage =
       is_primary_experience ?
       1 :
-      rendered_width x rendered_height / device_pixels
+      MIN(1, rendered_width x rendered_height / device_pixels)
 time_in_view =
       video_duration ??
       creative_time_in_view_seconds ??
