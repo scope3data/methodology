@@ -41,6 +41,17 @@ import ChannelMappingDefaults from "/snippets/defaults_channel_mapping.mdx";
 | `mobile`     | A mobile network (3G/4G/5G) |
 | `fixed`      | A fixed network (broadband) |
 
+### Model Quality
+
+| Model Quality           | Description                                                                                      |
+| ----------------------- | ------------------------------------------------------------------------------------------------ |
+| `default`               | Uses data not specific to this entity                                                            |
+| `spend-corporate`       | Uses spend-based data at the corporate level                                                     |
+| `spend-biz-unit`        | Uses spend-based data at the business unit level                                                 |
+| `activity-3p-observed`  | Activity data observed from a third-party source (for instance, data.ai)                         |
+| `activity-1p-estimated` | Activity data provided by the entity based on estimates (for instance, average screen power use) |
+| `activity-1p-measured`  | Activity data provided by the entity based on measured data (for instance, power meter or GA)    |
+
 ### Video Player
 
 | Field               | Description                                                              |
@@ -112,6 +123,7 @@ Native product carousel
 | `ad_funded_percentage`                          | Yes      | The percentage of content funded by advertising (eg 50%)                                       |
 | `allocated_adjusted_corporate_emissions_kgco2e` | Yes      | This property's share of corporate emissions                                                   |
 | `total_sessions`                                | Yes      | Number of sessions in the same time period as corporate emissions                              |
+| `model_quality`                                 | Yes      | Source of the property model                                                                   |
 
 ### Ad Platform
 
@@ -123,12 +135,16 @@ Native product carousel
 | `bidders`                                       | Array of ad platforms that are sent bid requests                                            |
 | `real_time_data_providers`                      | Array of ad platforms that are sent real-time data requests (not propagated)                |
 | `distribution_rate_by_bidder_by_country`        | Traffic shaping data for each bidder by country (eg `'xandr.com', 'US', 0.58`)              |
+| `average_bid_request_size`                      | Average size of a client-side bid request                                                   |
+| `sends_client_side_requests`                    | Does this platform send client-side bid requests (eg prebid client)                         |
+| `model_quality`                                 | Source of the ad platform model                                                             |
 
 ### Placement
 
-| Field          | Description                               |
-| -------------- | ----------------------------------------- |
-| `ad_platforms` | The ad platforms called by this placement |
+| Field           | Description                               |
+| --------------- | ----------------------------------------- |
+| `ad_platforms`  | The ad platforms called by this placement |
+| `model_quality` | Source of the ad stack model              |
 
 ### Delivery Row
 
@@ -328,7 +344,7 @@ If data transfer is provided in the delivery row, use it:
 ```
 image_bytes = creative_total_image_data_transfer_bytes
 video_bytes = creative_total_video_data_transfer_bytes + (creative_video_vast_bytes * loads)
-audio_bytes = creativetotal__audio_data_transfer_bytes
+audio_bytes = creative_total_audio_data_transfer_bytes
 ```
 
 Otherwise, calculate data transfer:
@@ -510,10 +526,23 @@ media_corporate_emissions_gco2pm =
       property.average_imps_per_session
 ```
 
+### Media Delivery - Model Quality
+
+```
+media_delivery_model_quality = switch property.model_quality:
+    /activity-1p/:           0.5
+    /activity-3p-estimated/: 0.75
+    /activity-3p-measured/:  1
+    default:                 0
+```
+
 ### Ad Selection - Platform
 
 ```
+unique_ad_platform_set = {}
+
 get_platform_emissions(ad_platform):
+  unique_ad_platform_set.add(ad_platform)
   direct_emissions = emissions_per_bid_request_per_geo_gco2pm
   rtdp_emissions = 0
   for rtdp in ad_platform.real_time_data_providers:
@@ -526,9 +555,20 @@ get_platform_emissions(ad_platform):
 
 ad_selection_platform_emissions_gco2pm = 0
 data_transfer_bytes = 0
-      for platform in placement.ad_platforms:
-            ad_selection_platform_emissions_gco2pm += get_platform_emissions(platform)
-            data_transfer_bytes += default_consumer_device_request_size_bytes[channel]
+for platform in placement.ad_platforms:
+  ad_selection_platform_emissions_gco2pm += get_platform_emissions(platform)
+  platform_bytes =
+      platform.average_request_size ??
+      default_consumer_device_request_size_bytes[channel]
+  data_transfer_bytes += default_consumer_device_request_size_bytes[channel]
+  if platform.sends_client_side_requests:
+    for bidder in platform.bidders:
+      bidder_bytes =
+          bidder.average_request_size ??
+          default_consumer_device_request_size_bytes[channel]
+      data_transfer_bytes +=
+          bidder_bytes x
+          platform.distribution_rate_by_bidder_by_country[country, bidder] ?? 1
 ```
 
 ### Ad Selection - Data Transfer
@@ -538,4 +578,17 @@ ad_selection_data_transfer_emissions_gco2pm =
       data_transfer_bytes / 1024 x
       usage_kwh_per_gb / 1000000 x
       lookup_carbon_intensity_gco2e_per_kwh(country, region, utc_datetime)
+```
+
+### Ad Selection - Model Quality
+
+```
+modeled_platforms = 0
+foreach platform in unique_ad_platform_set:
+    modeled_platforms += platform.model_quality like /activity/ ? 1 : 0
+
+ad_selection_model_quality =
+    placement.model_quality like /activity/ ?
+    modeled_platforms / unique_ad_platform_set.length :
+    0
 ```
