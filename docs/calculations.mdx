@@ -275,22 +275,22 @@ Providers should clearly and publicly document:
       average_dynamic_watts_per_mbps
 
   lookup_channel:
-    if property.channels.length == 1:
+      if property.channels.length == 1:
+            return property.channels[0]
+      if channel && channel in property.channels:
+            return channel
+      is_audio_creative =
+            creative_audio_data_transfer_bytes ||
+            creative_audio_duration_seconds ||
+            ad_format.audio_duration_seconds
+      if is_audio_creative && 'audio' in property.channels:
+            return 'audio'
+      if device_type && default_channel_by_device[device_type] in property.channels:
+            return default_channel_by_device[device_type]
       return property.channels[0]
-    if channel && channel in property.channels:
-      return channel
-    is_audio_creative =
-        creative_audio_data_transfer_bytes ||
-        creative_audio_duration_seconds ||
-        ad_format.audio_duration_seconds
-    if is_audio_creative && 'audio' in property.channels:
-      return 'audio'
-    if device_type && default_channel_by_device[device_type] in property.channels:
-      return default_channel_by_device[device_type]
-    return property.channels[0]
 
-  channel = lookup_channel()
-  device_type = device_type ? default_device_by_channel[channel]
+      channel = lookup_channel()
+      device_type = device_type ? default_device_by_channel[channel]
 ```
 
 ## Calculating Emissions
@@ -370,13 +370,13 @@ For CTV/BVOD, use the power model:
 video_bitrate_kbps = creative_video_bitrate_kbps ?? default_video_bitrate_kbps[device_type]
 
 power_watts =
-    baseload_watts +
-    dynamic_watts_per_mbps x video_bitrate_kbps / 1000
+      baseload_watts +
+      dynamic_watts_per_mbps x video_bitrate_kbps / 1000
 
 creative_data_transfer_usage_emissions_gco2pm =
-    creative_video_duration_seconds / 3600 x
-    power_watts / 1000 x
-    lookup_carbon_intensity_gco2e_per_kwh(country, region, utc_datetime)
+      creative_video_duration_seconds / 3600 x
+      power_watts / 1000 x
+      lookup_carbon_intensity_gco2e_per_kwh(country, region, utc_datetime)
 
 creative_data_transfer_embodied_emissions_gco2pm =
       creative_video_duration_seconds x
@@ -388,14 +388,14 @@ creative_data_transfer_embodied_emissions_gco2pm =
 
 ```
 default_creative_platforms =
-    ad_format.is_3p_served ?
-    [generic_creative_ad_server, generic_measurement_platform] :
-    []
+      ad_format.is_3p_served ?
+      [generic_creative_ad_server, generic_measurement_platform] :
+      []
 creative_platforms = creative_ad_platforms ?? default_creative_platforms
 
 creative_platform_emissions_gco2pm = 0
 for platform in [creative_platforms, ad_format.ad_platforms]:
-  creative_platform_emissions_gco2pm += platform.emissions_per_creative_request_per_geo_gco2pm
+      creative_platform_emissions_gco2pm += platform.emissions_per_creative_request_per_geo_gco2pm
 ```
 
 ### Creative Delivery - Consumer Device
@@ -437,42 +437,55 @@ creative_consumer_device_embodied_emissions_gco2pm =
 ### Media Delivery - Data Transfer
 
 ```
+media_data_transfer_emissions_gco2pm =
+      media_data_transfer_usage_emissions_gco2pm +
+      media_data_transfer_embodied_emissions_gco2pm
+```
+
+Determing the session seconds for a single impressions
+
+```
 session_seconds_per_imp =
       property.average_seconds_per_session_ex_ads x
       property.ad_funded_percentage /
       property.average_imps_per_session
-
-media_data_transfer_emissions_gco2pm =
-      media_data_transfer_usage_emissions_gco2pm +
-      media_data_transfer_embodied_emissions_gco2pm
-
 ```
 
 For all channels other than CTV/BVOD, use the conventional model:
 
 ```
+media_data_transfer_kb_per_imp =
+      property.average_data_kb_per_session_seconds_ex_ads x
+      session_seconds_per_imp
+
 media_data_transfer_usage_emissions_gco2pm =
-      property.average_data_kb_per_session_ex_ads x
+      media_data_transfer_kb_per_imp x
       usage_kwh_per_gb / 1000000 x
       lookup_carbon_intensity_gco2e_per_kwh(country, region, utc_datetime)
 
 media_data_transfer_embodied_emissions_gco2pm =
-      property.average_data_kb_per_session_ex_ads x
+      media_data_transfer_kb_per_imp x
       embodied_emissions_gco2e_per_kb
 ```
 
 For CTV/BVOD, use the power model:
 
 ```
+video_bitrate_kbps = default_video_bitrate_kbps[device_type]
+
+power_watts =
+      baseload_watts +
+      dynamic_watts_per_mbps x video_bitrate_kbps / 1000
+
 media_data_transfer_usage_emissions_gco2pm =
-    session_seconds_per_imp x
-    power x
-    lookup_carbon_intensity_gco2e_per_kwh(country, region, utc_datetime)
+      session_seconds_per_imp / 3600 x
+      power_watts / 1000 x
+      lookup_carbon_intensity_gco2e_per_kwh(country, region, utc_datetime)
 
 media_data_transfer_embodied_emissions_gco2pm =
-    session_seconds_per_imp x
-    default_video_bitrate_kbps[device_type] / 128 x
-    embodied_emissions_gco2e_per_kb
+      session_seconds_per_imp x
+      video_bitrate_kbps / 128 x
+      embodied_emissions_gco2e_per_kb
 ```
 
 ### Media Delivery - Consumer Device
@@ -513,15 +526,16 @@ get_platform_emissions(ad_platform):
 
 ad_selection_platform_emissions_gco2pm = 0
 data_transfer_bytes = 0
-for platform in placement.ad_platforms:
-  ad_selection_platform_emissions_gco2pm += get_platform_emissions(platform)
-  data_transfer_bytes += default_consumer_device_request_size_bytes[channel]
+      for platform in placement.ad_platforms:
+            ad_selection_platform_emissions_gco2pm += get_platform_emissions(platform)
+            data_transfer_bytes += default_consumer_device_request_size_bytes[channel]
 ```
 
 ### Ad Selection - Data Transfer
 
 ```
 ad_selection_data_transfer_emissions_gco2pm =
-    data_transfer_bytes / 1024 x
-    lookup_carbon_intensity_gco2e_per_kwh(country, region, utc_datetime)
+      data_transfer_bytes / 1024 x
+      usage_kwh_per_gb / 1000000 x
+      lookup_carbon_intensity_gco2e_per_kwh(country, region, utc_datetime)
 ```
