@@ -222,7 +222,7 @@ defaults:
     ctv-bvod: 15s Video
     dooh: Landscape - 1920x1080 Image
     social: Sponsored Post - 1080x1920 Image
-    web: Leaderboard - 970x250 Banner
+    web: Leaderboard - 728x90 Banner
   default_time_in_view_seconds: 6
   default_usage_kwh_per_gb:
     scope3:
