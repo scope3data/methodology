@@ -344,7 +344,7 @@ If data transfer is provided in the delivery row, use it:
 ```
 image_bytes = creative_total_image_data_transfer_bytes
 video_bytes = creative_total_video_data_transfer_bytes + (creative_video_vast_bytes * loads)
-audio_bytes = creative_total_audio_data_transfer_bytes
+audio_bytes = creativetotal__audio_data_transfer_bytes
 ```
 
 Otherwise, calculate data transfer:
@@ -555,6 +555,7 @@ get_platform_emissions(ad_platform):
 
 ad_selection_platform_emissions_gco2pm = 0
 data_transfer_bytes = 0
+
 for platform in placement.ad_platforms:
   ad_selection_platform_emissions_gco2pm += get_platform_emissions(platform)
   platform_bytes =
@@ -584,11 +585,11 @@ ad_selection_data_transfer_emissions_gco2pm =
 
 ```
 modeled_platforms = 0
-foreach platform in unique_ad_platform_set:
-    modeled_platforms += platform.model_quality like /activity/ ? 1 : 0
+for platform in unique_ad_platform_set:
+    modeled_platforms += '/activity/ ' in platform.model_quality ? 1 : 0
 
 ad_selection_model_quality =
-    placement.model_quality like /activity/ ?
+    '/activity/ ' in platform.model_quality ?
     modeled_platforms / unique_ad_platform_set.length :
     0
 ```
