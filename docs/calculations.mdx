@@ -106,9 +106,9 @@ Native product carousel
 | Field                                           | Required | Description                                                                                    |
 | ----------------------------------------------- | -------- | ---------------------------------------------------------------------------------------------- |
 | `channels`                                      | Yes      | The channel(s) of this property                                                                |
-| `average_seconds_per_session_ex_ads`            | Yes      | The average length of a session on this property excluding ads (eg 44 min of a 60 min TV show) |
+| `average_seconds_per_session_excluding_ads`     | Yes      | The average length of a session on this property excluding ads (eg 44 min of a 60 min TV show) |
 | `average_imps_per_session`                      | Yes      | The average number of impressions per session                                                  |
-| `average_data_kb_per_session_ex_ads`            | Yes      | The average number of KB transferred during a session excluding ads                            |
+| `average_data_kb_per_session_excluding_ads`     | Yes      | The average number of KB transferred during a session excluding ads                            |
 | `ad_funded_percentage`                          | Yes      | The percentage of content funded by advertising (eg 50%)                                       |
 | `allocated_adjusted_corporate_emissions_kgco2e` | Yes      | This property's share of corporate emissions                                                   |
 | `total_sessions`                                | Yes      | Number of sessions in the same time period as corporate emissions                              |
@@ -123,6 +123,8 @@ Native product carousel
 | `bidders`                                       | Array of ad platforms that are sent bid requests                                            |
 | `real_time_data_providers`                      | Array of ad platforms that are sent real-time data requests (not propagated)                |
 | `distribution_rate_by_bidder_by_country`        | Traffic shaping data for each bidder by country (eg `'xandr.com', 'US', 0.58`)              |
+| `average_bid_request_size`                      | Average size of a client-side bid request                                                   |
+| `sends_client_side_requests`                    | Does this platform send client-side bid requests (eg prebid client)                         |
 
 ### Placement
 
@@ -337,7 +339,7 @@ If data transfer is provided in the delivery row, use it:
 ```
 image_bytes = creative_total_image_data_transfer_bytes
 video_bytes = creative_total_video_data_transfer_bytes + (creative_video_vast_bytes * loads)
-audio_bytes = creativetotal__audio_data_transfer_bytes
+audio_bytes = creative_total_audio_data_transfer_bytes
 ```
 
 Otherwise, calculate data transfer:
@@ -455,7 +457,7 @@ Determing the session seconds for a single impressions
 
 ```
 session_seconds_per_imp =
-      property.average_seconds_per_session_ex_ads x
+      property.average_seconds_per_session_excluding_ads x
       property.ad_funded_percentage /
       property.average_imps_per_session
 ```
@@ -464,7 +466,7 @@ For all channels other than CTV/BVOD, use the conventional model:
 
 ```
 media_data_transfer_kb_per_imp =
-      property.average_data_kb_per_session_seconds_ex_ads x
+      property.average_data_kb_per_session_seconds_excluding_ads x
       session_seconds_per_imp
 
 media_data_transfer_usage_emissions_gco2pm =
@@ -523,21 +525,33 @@ media_corporate_emissions_gco2pm =
 
 ```
 get_platform_emissions(ad_platform):
-  direct_emissions = emissions_per_bid_request_per_geo_gco2pm
-  rtdp_emissions = 0
-  for rtdp in ad_platform.real_time_data_providers:
-		rtdp_emissions += emissions_per_rtdp_request_per_geo_gco2pm
-  bidder_emissions = 0
-  for bidder in ad_platform.bidders:
-      bidder_emissions += get_platform_emissions(bidder) x
-            ad_platform.distribution_rate_by_bidder_by_country[country, bidder] ?? 1
-  return direct_emissions + rtdp_emissions + bidder_emissions
+      direct_emissions = emissions_per_bid_request_per_geo_gco2pm
+      rtdp_emissions = 0
+      for rtdp in ad_platform.real_time_data_providers:
+            rtdp_emissions += emissions_per_rtdp_request_per_geo_gco2pm
+      bidder_emissions = 0
+      for bidder in ad_platform.bidders:
+            bidder_emissions += get_platform_emissions(bidder) x
+                  ad_platform.distribution_rate_by_bidder_by_country[country, bidder] ?? 1
+      return direct_emissions + rtdp_emissions + bidder_emissions
 
 ad_selection_platform_emissions_gco2pm = 0
 data_transfer_bytes = 0
-      for platform in placement.ad_platforms:
-            ad_selection_platform_emissions_gco2pm += get_platform_emissions(platform)
-            data_transfer_bytes += default_consumer_device_request_size_bytes[channel]
+
+for platform in placement.ad_platforms:
+  ad_selection_platform_emissions_gco2pm += get_platform_emissions(platform)
+  platform_bytes =
+      platform.average_bid_request_size ??
+      default_consumer_device_request_size_bytes[channel]
+  data_transfer_bytes += default_consumer_device_request_size_bytes[channel]
+  if platform.sends_client_side_requests:
+    for bidder in platform.bidders:
+      bidder_bytes =
+          bidder.average_bid_request_size ??
+          default_consumer_device_request_size_bytes[channel]
+      data_transfer_bytes +=
+          bidder_bytes x
+          platform.distribution_rate_by_bidder_by_country[country, bidder] ?? 1
 ```
 
 ### Ad Selection - Data Transfer
