@@ -11,27 +11,27 @@ defaults:
     mobile: 1.200000000
   default_channel_by_device:
     pc:
-      - ctv-bvod
-      - social
-      - audio
-      - web
+    - ctv-bvod
+    - social
+    - audio
+    - web
     phone:
-      - social
-      - ctv-bvod
-      - audio
-      - app
-      - web
+    - social
+    - ctv-bvod
+    - audio
+    - app
+    - web
     smart-speaker:
-      - audio
+    - audio
     tablet:
-      - social
-      - ctv-bvod
-      - audio
-      - app
-      - web
+    - social
+    - ctv-bvod
+    - audio
+    - app
+    - web
     tv:
-      - ctv-bvod
-      - app
+    - ctv-bvod
+    - app
   default_consumer_device_request_size_bytes:
     app: 1000
     audio: 1000
@@ -91,8 +91,8 @@ defaults:
       fixed: 0.000000000
       mobile: 0.000000000
     sri:
-      fixed: 0.004430000
-      mobile: 0.007970000
+      fixed: 0.000004430
+      mobile: 0.000007970
   default_non_primary_video_bitrate_kbps: 2500
   default_percent_mobile:
     scope3: 23.600000000
