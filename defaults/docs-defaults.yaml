@@ -82,6 +82,7 @@ defaults:
   default_dynamic_watts_per_mbps:
     fixed: 0.030000000
     mobile: 1.530000000
+  default_emissions_generic_ad_server: 0.000016000
   default_emissions_per_bid_request_gco2pm: 0.114420000
   default_emissions_per_creative_request_gco2pm: 0.000300000
   default_emissions_per_rtdp_request_gco2pm: 0.010000000
