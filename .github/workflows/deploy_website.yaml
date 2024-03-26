@@ -5,7 +5,7 @@ on:
     branches: [main]
 
 jobs:
-  release:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -46,4 +46,8 @@ jobs:
           docker push us-central1-docker.pkg.dev/${{ secrets.GCR_PROJECT_ID }}/scope3/public-methodology:latest
 
       - name: Deploy site
-        run: gcloud run deploy --image us-central1-docker.pkg.dev/${{ secrets.GCR_PROJECT_ID }}/scope3/public-methodology:${{ github.sha }} --platform managed
+        run: |-
+          gcloud run deploy public-methodology \
+          --image us-central1-docker.pkg.dev/${{ secrets.GCR_PROJECT_ID }}/scope3/public-methodology:${{ github.sha }} \
+          --platform managed \
+          --region us-central1
