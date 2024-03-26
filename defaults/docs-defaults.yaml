@@ -23,27 +23,27 @@ defaults:
     mobile: 1.200000000
   default_channel_by_device:
     pc:
-    - ctv-bvod
-    - social
-    - audio
-    - web
+      - ctv-bvod
+      - social
+      - audio
+      - web
     phone:
-    - social
-    - ctv-bvod
-    - audio
-    - app
-    - web
+      - social
+      - ctv-bvod
+      - audio
+      - app
+      - web
     smart-speaker:
-    - audio
+      - audio
     tablet:
-    - social
-    - ctv-bvod
-    - audio
-    - app
-    - web
+      - social
+      - ctv-bvod
+      - audio
+      - app
+      - web
     tv:
-    - ctv-bvod
-    - app
+      - ctv-bvod
+      - app
   default_consumer_device_request_size_bytes:
     app: 1000
     audio: 1000
@@ -235,7 +235,7 @@ defaults:
     ctv-bvod: 15s Video
     dooh: Landscape - 1920x1080 Image
     social: Sponsored Post - 1080x1920 Image
-    web: Leaderboard - 728x90 Banner
+    web: Leaderboard - 970x250 Banner
   default_property_ad_funded_percentage_by_channel:
     app: 1
     audio: 1
