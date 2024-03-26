@@ -6,18 +6,6 @@ defaults:
     smart-speaker: 160
     tablet: 160
     tv: 160
-  default_average_data_kb_per_session_seconds_excluding_ads_by_channel:
-    app: 5525
-    audio: 240
-    ctv-bvod: 20640
-    social: 9745
-    web: 388
-  default_average_seconds_per_session_excluding_ads_by_channel:
-    app: 137.800000000
-    audio: 1500
-    ctv-bvod: 2580
-    social: 238
-    web: 353
   default_baseload_watts:
     fixed: 9.550000000
     mobile: 1.200000000
@@ -235,27 +223,7 @@ defaults:
     ctv-bvod: 15s Video
     dooh: Landscape - 1920x1080 Image
     social: Sponsored Post - 1080x1920 Image
-    web: Leaderboard - 970x250 Banner
-  default_property_ad_funded_percentage_by_channel:
-    app: 1
-    audio: 1
-    ctv-bvod: 1
-    dooh: 1
-    social: 1
-    web: 1
-  default_property_average_imps_per_session_by_channel:
-    app: 18.800000000
-    audio: 4.800000000
-    ctv-bvod: 8.256000000
-    social: 19.500000000
-    web: 35.300000000
-  default_property_g_per_imp:
-    app: 0.049000000
-    audio: 0.049000000
-    ctv-bvod: 0.049000000
-    dooh: 0.049000000
-    social: 0.049000000
-    web: 0.049000000
+    web: Leaderboard - 728x90 Banner
   default_time_in_view_seconds: 6
   default_usage_kwh_per_gb:
     scope3:
