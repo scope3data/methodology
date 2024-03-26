@@ -239,7 +239,7 @@ defaults:
     ctv-bvod: 15s Video
     dooh: Landscape - 1920x1080 Image
     social: Sponsored Post - 1080x1920 Image
-    web: Leaderboard - 728x90 Banner
+    web: Leaderboard - 970x250 Banner
   default_property_ad_funded_percentage_by_channel:
     app: 1
     audio: 1
