@@ -1,0 +1,49 @@
+name: Deploy website
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - id: "auth"
+        name: "Authenticate to Google Cloud"
+        uses: "google-github-actions/auth@v2"
+        with:
+          credentials_json: "${{ secrets.METH_GITHUB_SERVICE_ACCOUNT_KEY }}"
+
+      - name: Set up gcloud Cloud SDK environment
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Configure docker to user the gcloud command-line tool as a credential helper
+        run: |
+          gcloud auth configure-docker us-central1-docker.pkg.dev
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build images
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: Dockerfile
+          cache-from: type=registry,ref=us-central1-docker.pkg.dev/${{ secrets.GCR_PROJECT_ID }}/scope3/public-methodology
+          cache-to: type=registry,mode=max,ref=us-central1-docker.pkg.dev/${{ secrets.GCR_PROJECT_ID }}/scope3/public-methodology
+          load: true
+          tags: |
+            us-central1-docker.pkg.dev/${{ secrets.GCR_PROJECT_ID }}/scope3/public-methodology:${{ github.sha }}
+            us-central1-docker.pkg.dev/${{ secrets.GCR_PROJECT_ID }}/scope3/public-methodology:latest
+
+      - name: Push images
+        run: |-
+          docker push us-central1-docker.pkg.dev/${{ secrets.GCR_PROJECT_ID }}/scope3/public-methodology:${{ github.sha }}
+          docker push us-central1-docker.pkg.dev/${{ secrets.GCR_PROJECT_ID }}/scope3/public-methodology:latest
+
+      - name: Deploy site
+        run: gcloud run deploy --image us-central1-docker.pkg.dev/${{ secrets.GCR_PROJECT_ID }}/scope3/public-methodology:${{ github.sha }} --platform managed
