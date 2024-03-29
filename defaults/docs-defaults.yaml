@@ -249,7 +249,7 @@ defaults:
     ctv-bvod: 8.256000000
     social: 19.500000000
     web: 35.300000000
-  default_property_g_per_imp:
+  default_property_g_per_imp_by_channel:
     app: 0.049000000
     audio: 0.049000000
     ctv-bvod: 0.049000000
