@@ -232,6 +232,16 @@ Providers should clearly and publicly document:
 
 ## Fallbacks
 
+We use all data we have available on every single request but in many situations we may lack some information, for this
+we have a series of fallbacks to be able to provide reasonable estimates in most situations.
+
+To determine network when it's not submitted we default to fixed for pc, tv and smart speakers.
+When we don't know the device or the device is a phone or tablet we calculate costs associated to network type
+as a weighted average of the fixed and mobile usage in the country (if available) or worldwide.
+
+We can also generally determine the channel from the property or when that is ambiguous but we have device information
+we fall back to a default channel by device.
+
 ```
   pct_mobile =
       country ?
