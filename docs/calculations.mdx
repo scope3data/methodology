@@ -41,17 +41,6 @@ import ChannelMappingDefaults from "/snippets/defaults_channel_mapping.mdx";
 | `mobile`     | A mobile network (3G/4G/5G) |
 | `fixed`      | A fixed network (broadband) |
 
-### Model Quality
-
-| Model Quality           | Description                                                                                      |
-| ----------------------- | ------------------------------------------------------------------------------------------------ |
-| `default`               | Uses data not specific to this entity                                                            |
-| `spend-corporate`       | Uses spend-based data at the corporate level                                                     |
-| `spend-biz-unit`        | Uses spend-based data at the business unit level                                                 |
-| `activity-3p-observed`  | Activity data observed from a third-party source (for instance, data.ai)                         |
-| `activity-1p-estimated` | Activity data provided by the entity based on estimates (for instance, average screen power use) |
-| `activity-1p-measured`  | Activity data provided by the entity based on measured data (for instance, power meter or GA)    |
-
 ### Video Player
 
 | Field               | Description                                                              |
@@ -123,7 +112,8 @@ Native product carousel
 | `ad_funded_percentage`                          | Yes      | The percentage of content funded by advertising (eg 50%)                                       |
 | `allocated_adjusted_corporate_emissions_kgco2e` | Yes      | This property's share of corporate emissions                                                   |
 | `total_sessions`                                | Yes      | Number of sessions in the same time period as corporate emissions                              |
-| `model_quality`                                 | Yes      | Source of the property model                                                                   |
+| `organization_model_quality`                    | Yes      | Parent organization model quality (1-5) |
+| `model_quality`                                 | Yes      | Model quality (1-5) |
 
 ### Ad Platform
 
@@ -135,16 +125,13 @@ Native product carousel
 | `bidders`                                       | Array of ad platforms that are sent bid requests                                            |
 | `real_time_data_providers`                      | Array of ad platforms that are sent real-time data requests (not propagated)                |
 | `distribution_rate_by_bidder_by_country`        | Traffic shaping data for each bidder by country (eg `'xandr.com', 'US', 0.58`)              |
-| `average_bid_request_size`                      | Average size of a client-side bid request                                                   |
-| `sends_client_side_requests`                    | Does this platform send client-side bid requests (eg prebid client)                         |
-| `model_quality`                                 | Source of the ad platform model                                                             |
+| `model_quality`                                 | Model quality (1-5) |
 
 ### Placement
 
 | Field           | Description                               |
 | --------------- | ----------------------------------------- |
 | `ad_platforms`  | The ad platforms called by this placement |
-| `model_quality` | Source of the ad stack model              |
 
 ### Delivery Row
 
@@ -245,6 +232,8 @@ Providers should clearly and publicly document:
 - What carbon intensity metric is used (marginal vs average)
 
 `lookup_carbon_intensity_gco2e_per_kwh(country, region, utc_datetime)` should look up the carbon intensity in gCO2e based on 100-year global warming potential (GWP100) from a database at no less than hourly granularity.
+
+`lookup_carbon_intensity_quality(country, region)` should return the quality of the underlying grid mix data on a scale of 1-5 per [Model Quality](./model_quality)
 
 ## Fallbacks
 
@@ -536,23 +525,10 @@ media_corporate_emissions_gco2pm =
       property.average_imps_per_session
 ```
 
-### Media Delivery - Model Quality
-
-```
-media_delivery_model_quality = switch property.model_quality:
-    /activity-1p/:           0.5
-    /activity-3p-estimated/: 0.75
-    /activity-3p-measured/:  1
-    default:                 0
-```
-
 ### Ad Selection - Platform
 
 ```
-unique_ad_platform_set = {}
-
 get_platform_emissions(ad_platform):
-  unique_ad_platform_set.add(ad_platform)
   direct_emissions = emissions_per_bid_request_per_geo_gco2pm
   rtdp_emissions = 0
   for rtdp in ad_platform.real_time_data_providers:
@@ -565,21 +541,9 @@ get_platform_emissions(ad_platform):
 
 ad_selection_platform_emissions_gco2pm = 0
 data_transfer_bytes = 0
-
-for platform in placement.ad_platforms:
-  ad_selection_platform_emissions_gco2pm += get_platform_emissions(platform)
-  platform_bytes =
-      platform.average_bid_request_size ??
-      default_consumer_device_request_size_bytes[channel]
-  data_transfer_bytes += default_consumer_device_request_size_bytes[channel]
-  if platform.sends_client_side_requests:
-    for bidder in platform.bidders:
-      bidder_bytes =
-          bidder.average_bid_request_size ??
-          default_consumer_device_request_size_bytes[channel]
-      data_transfer_bytes +=
-          bidder_bytes x
-          platform.distribution_rate_by_bidder_by_country[country, bidder] ?? 1
+      for platform in placement.ad_platforms:
+            ad_selection_platform_emissions_gco2pm += get_platform_emissions(platform)
+            data_transfer_bytes += default_consumer_device_request_size_bytes[channel]
 ```
 
 ### Ad Selection - Data Transfer
@@ -591,15 +555,23 @@ ad_selection_data_transfer_emissions_gco2pm =
       lookup_carbon_intensity_gco2e_per_kwh(country, region, utc_datetime)
 ```
 
-### Ad Selection - Model Quality
+### Model Quality
 
 ```
-modeled_platforms = 0
-for platform in unique_ad_platform_set:
-    modeled_platforms += '/activity/ ' in platform.model_quality ? 1 : 0
+grid_mix_model_quality = lookup_carbon_intensity_quality(country, region)
+organization_model_quality = property.organization_model_quality
+property_model_quality = property.model_quality
 
-ad_selection_model_quality =
-    '/activity/ ' in platform.model_quality ?
-    modeled_platforms / unique_ad_platform_set.length :
-    0
+total_platforms = 0
+modeled_platforms = 0
+for platform in placement.ad_platforms:
+  total_platforms++
+  if platform.model_quality > 1
+    modeled_platforms++
+  # Model one level of downstream platforms
+  for bidder in ad_platform.bidders:
+    total_platforms++
+    if bidder.model_quality > 1
+      modeled_platforms++
+ad_platform_modeled_ratio = modeled_platforms / total_platforms
 ```

@@ -1,26 +1,62 @@
-# Model Quality (WIP)
-
 To effectively understand how accurate an emissions "measurement" is, given the many layers of assumptions and allocations involved in the calculation, is critical both for assessing provider quality and as a gating factor to incorporate data into corporate and regulatory reporting.
 
-We propose a multi-layer framework for quantifying accuracy with the objective of assessing whether the data is accurate enough for reporting purposes and for effective decarbonization.
+## Model Quality Components
 
-1. Grid intensity. How granular and up to date is the data used?
-2. Exposure data. Is there sufficient detail about the exposure to determine the delivered creative, the consumer device and network, the property and placement, the ad tech stack and supply chain, and the time of delivery?
-3. Creative. Are there details about all assets used by the creative and all vendors that are involved in delivery and tracking?
-4. Property data. Are there details about the ad stack and ad formats used by the publisher? Property metrics like session weight? The physical characteristics of the screen (in case of OOH)?
-5. Intermediaries. Which intermediaries were involved in selecting or bidding on the impression? Is there data on how they distribute traffic to bidders and real-time data providers?
-6. Market data. Are they based on recent data (and/or extrapolated to reflect trends)? Are they adjusted for market differences? Are they based on published research or replicable surveys?
+Each modeled request should include:
+- Grid mix model quality (1-5)
+- Organization model quality (1-5) 
+- Property model quality (1-5)
+- Ad platform modeled % (0-100) - % of property's ad platforms and their direct bidders with model quality greater than 1
 
-## Grid intensity
+## Grid mix
 
 Grid intensity can fluctuate significantly on an hourly basis due to the variable nature of both renewable energy sources (sun, wind) and electricity demand. To achieve effective decarbonization, having hourly data is critical. However, this isn't broadly available in many countries.
 
 | Timescale | Geographical fit | Model Quality |
 | --------- | ---------------- | ------------- |
-| Annual    | Country          |               |
-| Daily     | Country          |               |
-| Daily     | Region or Grid   |               |
-| Hourly    | Country          |               |
-| Hourly    | Region or Grid   |               |
+| Annual    | Country          | 1             |
+| Daily     | Country          | 2             |
+| Daily     | Region or Grid   | 3             |
+| Hourly    | Country          | 4             |
+| Hourly    | Region or Grid   | 5             |
 
+## Organization
 
+An organization should provide a sustainability report that details its full carbon footprint, including scopes 1, 2, and all scope 3 categories. This report should clearly detail methodology for each category.
+
+Any adjustments to the calculations for RECs, PPAs, offsets, or carbon credits should detail exactly what was purchased, from whom, and on what timeframe. Location-based scope 2 data should always be provided.
+
+A sustainability report should be published within 6 months of the end of the previous calendar year to be considered for sustainability purposes.
+
+| Scope 1 and 2       | Scope 3         | Line of business | Model Quality |
+| ------------------- | --------------- | ---------------- | ------------- |
+| No recent report    | N/a             | N/a              | 1             |
+| Incomplete coverage | N/a             | N/a              | 1             |
+| Market-based        | None or partial | N/a              | 2             |
+| Location-based      | None or partial | N/a              | 3             |
+| Location-based      | Complete        | Not broken out   | 4             |
+| Location-based      | Complete        | Broken out       | 5             |
+
+## Ad Platform
+
+An ad platform should provide 1) requests received, 2) requests sent (traffic shaping), and 3) emissions data from datacenters or cloud providers
+
+| Server emissions | Request data | Frequency | Model Quality |
+| ---------------- | ------------ | --------- | ------------- |
+| Not provided     | Not provided | N/a       | 1             |
+| Global           | Global       | Annual    | 2             |
+| Regional         | Regional     | Monthly   | 3             |
+| Global           | Global       | Monthly   | 4             |
+| Regional         | Regional     | Monthly   | 5             |
+
+## Property
+
+For media properties, key metrics include session time, session weight, and ad load. For OOH screens, the key metric is power draw. A measured metric is acquired on a per-property basis - for instance, using Google Analytics on a website or a power meter on a screen. An estimated or average metric uses a third-party source or historical averages to project key metrics, for instance, using screen size and type to model power usage.
+
+| Property Metrics              | Geography | Model Quality   |
+| ----------------------------- | ----------- | ------------- |
+| Not available                 | N/a         | 1             |
+| Spend-based                   | N/a         | 2             |
+| Average or estimated activity | Global      | 3             |
+| Observed or measured activity | Global      | 4             |
+| Observed or measured activity | Regional    | 5             |
