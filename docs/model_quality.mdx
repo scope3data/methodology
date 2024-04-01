@@ -1,0 +1,131 @@
+Given the many layers of assumptions and allocations involved in modeling the emissions of the complex advertising supply chain, it is critical to understand the accuracy of an emissions "measurement" both for assessing provider quality and as a gating factor to incorporate data into corporate and regulatory reporting.
+
+## Model Quality Components
+
+Each modeled request should include:
+- Grid mix model quality (1-5)
+- Organization model quality (1-5) 
+- Property model quality (1-5)
+- Ad stack model quality (1-5)
+- Average ad platform / vendor quality (1-5)
+- Input granularity score (1-5)
+
+## Grid mix
+
+Grid intensity can fluctuate significantly on an hourly basis due to the variable nature of both renewable energy sources (sun, wind) and electricity demand. To achieve effective decarbonization, having hourly data is critical. However, this isn't broadly available in many countries.
+
+| Data source and timescale  | Model Quality  |
+| -------------------------- | -------------- |
+| Worldwide                  | 1              |
+| Country, monthly or annual | 2              |
+| Country, daily             | 3              |
+| Country + region, daily    | 4              |
+| Country + region, hourly   | 5              |
+
+## Organization
+
+Criteria for accurate sustainability data at the organization level:
+
+* An organization should provide a sustainability report that details its full carbon footprint, including scopes 1, 2, and all scope 3 categories. This report should clearly detail methodology for each category.
+
+* Any adjustments to the calculations for RECs, PPAs, offsets, or carbon credits should detail exactly what was purchased, from whom, and on what timeframe. Location-based scope 2 data should always be provided.
+
+* A sustainability report should be published within 6 months of the end of the previous calendar year to be considered for sustainability purposes.
+
+| Report element                  | Model Quality |
+| ------------------------------- | ------------- |
+| Scope 1 and 2, market-based     | +1 |
+| Location-based scope 2          | +1 |
+| All scope 3 categories provided | +1 |
+| Lines of business broken out    | +1 |
+
+## Vendor / Ad Platform Quality
+
+An ad platform should provide 1) requests received, 2) requests sent (traffic shaping), and 3) emissions data from datacenters or cloud providers. The vendor / ad platform score starts at 1 and increments based on the presence of various modeled components.
+
+| Vendor data element               | Model Quality |
+| --------------------------------- | ------------- |
+| Server emissions and request data | +1 |
+| Traffic shaping data              | +1 |
+| All data provided monthly         | +1 |
+| All data provided regionally      | +1 |
+
+Example: A company provides annual server emissions, requests received, and traffic shaping data. This would be model quality 3.
+
+The average vendor model quality is the average score of all direct vendors that the property works with.
+
+## Property Activity
+
+For media properties, key metrics include session time, session weight, and ad load. For OOH screens, the key metric is power draw. A measured metric is acquired on a per-property basis - for instance, using Google Analytics on a website or a power meter on a screen. An estimated or average metric uses a third-party source or historical averages to project key metrics, for instance, using screen size and type to model power usage.
+
+| Property Metrics              | Geography | Model Quality   |
+| ----------------------------- | ----------- | ------------- |
+| Not available                 | N/a         | 1             |
+| Spend-based                   | N/a         | 2             |
+| Average or estimated activity | Global      | 3             |
+| Observed or measured activity | Global      | 4             |
+| Observed or measured activity | Regional    | 5             |
+
+## Ad Stack
+
+The accuracy of the ad stack used by the publisher for the placement depends on accurate representation of all direct and indirect vendors. The ad stack score starts at 1 and increments based on modeled components.
+
+| Ad Stack Component                          | Model Quality |
+| ------------------------------------------- | ------------- |
+| Ad stack mapped via observed data           | +1            |
+| Ads.txt validated                           | +1            |
+| Vendors mapped to region, device, and format| +1            |
+| Placements mapped to GPID and vendors       | +1            |
+
+## Input granularity
+
+Provided inputs must match the underlying model in order to provide accurate output. For instance, if the user provides "ANZ" as a country, that might not match "AU" or "NZ", causing a mapping issue that could cause a fallback to using worldwide grid mix and a significant loss of accuracy.
+
+Granularity % is the percentage of recommended input fields that are provided and match valid values.
+
+### Recommended input fields
+
+| Field                  | Comments                                                |
+| ---------------------- | ------------------------------------------------------- |
+| Property               |                                                         |
+| Placement              |                                                         |
+| Seller                 |                                                         |
+| Country                |                                                         |
+| Region                 | For countries with multiple grid regions, eg US, CA, AU |
+| Device Type            |                                                         |
+| Network                |                                                         |
+| Date                   |                                                         |
+| Time                   | At least hourly granularity                             |
+| Ad format              |                                                         |
+| Creative asset weights |                                                         |
+
+### Input granularity to model quality map
+
+| Granularity % | Model Quality |
+| ------------- | ------------- |
+| < 30%         | 1             |
+| 30% - 50%     | 2             |
+| 50% - 70%     | 3             |
+| 70% - 90%     | 4             |
+| 90% - 100%    | 5             |
+
+### Input granularity example
+
+| Field           | Provided Input | Match   |
+| --------------- | -------------- | ------- |
+| Property        | nytimes.com    | yes     |
+| Placement       | (omitted)      | no      |
+| Seller          | Google AdX     | no      |
+| Country         | US             | yes     |
+| Region          | (omitted)      | no      |
+| Device Type     | Phone          | yes     |
+| Network         | (omitted)      | yes     |
+| Region          | (omitted)      | no      |
+| Date            | 2024-04-01     | yes     |
+| Time            | (omitted)      | no      |
+| Ad format       | 320x50 banner  | yes     |
+| Creative weight | (omitted)      | no      |
+
+Input granularity percentage: 6/12 = 50% 
+
+Input granularity score: 2
