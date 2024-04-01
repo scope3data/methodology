@@ -569,13 +569,13 @@ data_transfer_bytes = 0
 for platform in placement.ad_platforms:
   ad_selection_platform_emissions_gco2pm += get_platform_emissions(platform)
   platform_bytes =
-      platform.average_request_size ??
+      platform.average_bid_request_size ??
       default_consumer_device_request_size_bytes[channel]
   data_transfer_bytes += default_consumer_device_request_size_bytes[channel]
   if platform.sends_client_side_requests:
     for bidder in platform.bidders:
       bidder_bytes =
-          bidder.average_request_size ??
+          bidder.average_bid_request_size ??
           default_consumer_device_request_size_bytes[channel]
       data_transfer_bytes +=
           bidder_bytes x
