@@ -99,10 +99,6 @@ defaults:
   default_emissions_per_creative_request_gco2pm: 0.000300000
   default_emissions_per_rtdp_request_gco2pm: 0.010000000
   default_image_compression_ratio: 10
-  default_network_by_device:
-    pc: fixed
-    smart-speaker: fixed
-    tv: fixed
   default_network_embodied_emissions_gco2e_per_kb:
     scope3:
       fixed: 0.000000000
