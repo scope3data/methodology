@@ -281,7 +281,7 @@ defaults:
     ctv-bvod: impression
     dooh: play
     social: impression
-    streaming-video: impressions
+    streaming-video: impression
     web: impression
   default_video_player_size_bytes: 192205
   generic_creative_ad_server:
