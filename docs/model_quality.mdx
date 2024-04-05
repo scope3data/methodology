@@ -6,8 +6,8 @@ Each modeled request should include:
 - Grid mix model quality (1-5)
 - Organization model quality (1-5) 
 - Property model quality (1-5)
-- Ad platform modeled % (0-100) - % of property's ad platforms and their direct bidders with model quality greater than 1
-- Input granularity match rate (0-100) - % of fields that are provided and match a modeled entity
+- Ad stack / ad platform quality (1-5)
+- Input granularity score (1-5)
 
 ## Grid mix
 
@@ -46,7 +46,7 @@ An ad platform should provide 1) requests received, 2) requests sent (traffic sh
 | ---------------- | ------------ | --------- | ------------- |
 | Not provided     | Not provided | N/a       | 1             |
 | Global           | Global       | Annual    | 2             |
-| Regional         | Regional     | Monthly   | 3             |
+| Regional         | Regional     | Annual    | 3             |
 | Global           | Global       | Monthly   | 4             |
 | Regional         | Regional     | Monthly   | 5             |
 
@@ -62,13 +62,33 @@ For media properties, key metrics include session time, session weight, and ad l
 | Observed or measured activity | Global      | 4             |
 | Observed or measured activity | Regional    | 5             |
 
-## Match rate and input granularity
+## Ad Stack
+
+The accuracy of the ad stack used by the publisher for the placement depends on accurate representation of all direct and indirect vendors. The ad stack score starts at 1 and increments based on modeled components.
+
+| Ad Stack Component                        | Model Quality |
+| ----------------------------------------- | ------------- |
+| All direct vendors identified             | +1            |
+| All indirect vendors identified           | +1            |
+| 90% of direct vendors have quality > 1    | +1            |
+| 90% of direct vendors have quality > 3    | +1            |
+
+## Input granularity
 
 Provided inputs must match the underlying model in order to provide accurate output. For instance, if the user provides "ANZ" as a country, that might not match "AU" or "NZ", causing a mapping issue that could cause a fallback to using worldwide grid mix and a significant loss of accuracy.
 
-Match rate is the % of input fields that map to a granular model entity.
+Granularity % is the percentage of input fields provided.
+
+| Granularity % | Model Quality |
+| ------------- | ------------- |
+| < 30%         | 1             |
+| 30% - 50%     | 2             |
+| 50% - 70%     | 3             |
+| 70% - 90%     | 4             |
+| 90% - 100%    | 5             |
 
 Example:
+
 | Field           | Provided Input | Match   |
 | --------------- | -------------- | ------- |
 | Channel         | web            | yes     |
@@ -80,4 +100,5 @@ Example:
 | Ad format       | 320x50 banner  | yes     |
 | Creative weight | (omitted)      | no      |
 
-Match rate: 4/8 = 50%
+Input granularity percentage: 4/8 = 50% 
+Input granularity score: 2
