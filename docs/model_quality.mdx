@@ -7,6 +7,7 @@ Each modeled request should include:
 - Organization model quality (1-5) 
 - Property model quality (1-5)
 - Ad platform modeled % (0-100) - % of property's ad platforms and their direct bidders with model quality greater than 1
+- Input granularity match rate (0-100) - % of fields that are provided and match a modeled entity
 
 ## Grid mix
 
@@ -60,3 +61,23 @@ For media properties, key metrics include session time, session weight, and ad l
 | Average or estimated activity | Global      | 3             |
 | Observed or measured activity | Global      | 4             |
 | Observed or measured activity | Regional    | 5             |
+
+## Match rate and input granularity
+
+Provided inputs must match the underlying model in order to provide accurate output. For instance, if the user provides "ANZ" as a country, that might not match "AU" or "NZ", causing a mapping issue that could cause a fallback to using worldwide grid mix and a significant loss of accuracy.
+
+Match rate is the % of input fields that map to a granular model entity.
+
+Example:
+| Field           | Provided Input | Match   |
+| --------------- | -------------- | ------- |
+| Channel         | web            | yes     |
+| Property        | nytimes.com    | yes     |
+| Placement       | (omitted)      | no      |
+| Seller          | Google AdX     | no      |
+| Date            | 2024-04-01     | yes     |
+| Time            | (omitted)      | no      |
+| Ad format       | 320x50 banner  | yes     |
+| Creative weight | (omitted)      | no      |
+
+Match rate: 4/8 = 50%
