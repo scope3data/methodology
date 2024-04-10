@@ -338,7 +338,7 @@ If data transfer is provided in the delivery row, use it:
 
 ```
 image_bytes = creative_total_image_data_transfer_bytes
-video_bytes = creative_total_video_data_transfer_bytes + (creative_video_vast_bytes * loads)
+video_bytes = creative_total_video_data_transfer_bytes + (creative_video_vast_bytes x loads)
 audio_bytes = creative_total_audio_data_transfer_bytes
 ```
 
@@ -346,10 +346,10 @@ Otherwise, calculate data transfer:
 
 ```
 image_sizes = creative_image_sizes ? ad_format.image_sizes
-image_bytes = SUM(image_sizes[n].width x image_sizes[n].height) x 3 / default_image_compression_ratio * impressions
+image_bytes = SUM(image_sizes[n].width x image_sizes[n].height) x 3 / default_image_compression_ratio x impressions
 
 audio_duration = creative_audio_duration_seconds ?? ad_format.audio_duration_seconds
-audio_bytes = audio_duration_seconds x default_audio_bitrate_kbps[device_type] / 8 * 1000 * impressions
+audio_bytes = audio_duration_seconds x default_audio_bitrate_kbps[device_type] / 8 x 1000 x impressions
 
 is_primary_experience = !ad_format.rendered_width_pixels && !ad_format.rendered_height_pixels
 default_bitrate_kbps =
@@ -358,7 +358,7 @@ default_bitrate_kbps =
       default_non_primary_video_bitrate_kbps
 video_bitrate_kbps =
       creative_video_bitrate_kbps ??
-      creative_video_size_bytes * 8 / 1000 / creative_video_duration  ??
+      creative_video_size_bytes x 8 / 1000 / creative_video_duration  ??
       default_bitrate_kbps
 video_duration = creative_video_duration_seconds ?? ad_format.video_duration_seconds
 seconds_watched = creative_video_view_time_seconds ??
@@ -372,7 +372,7 @@ loads = switch(ad_format.video_player.download_trigger):
             'impression': impressions
 
 
-video_bytes = (video_bitrate_kbps / 8 * 1000 x seconds_streamed + creative_video_vast_bytes) x loads
+video_bytes = (video_bitrate_kbps / 8 x 1000 x seconds_streamed + creative_video_vast_bytes) x loads
 ```
 
 For CTV/BVOD, use the power model:
@@ -466,7 +466,9 @@ For all channels other than CTV/BVOD, use the conventional model:
 
 ```
 media_data_transfer_kb_per_imp =
-      property.average_data_kb_per_session_excluding_ads *  property.ad_funded_percentage  / property.average_imps_per_session
+      property.average_data_kb_per_session_excluding_ads x
+      property.ad_funded_percentage  /
+      property.average_imps_per_session
 
 media_data_transfer_usage_emissions_gco2pm =
       media_data_transfer_kb_per_imp x
@@ -515,7 +517,7 @@ media_consumer_device_embodied_emissions_gco2pm =
 
 ```
 media_corporate_emissions_gco2pm =
-      property.allocated_adjusted_corporate_emissions_kg * 1000 /
+      property.allocated_adjusted_corporate_emissions_kg x 1000 /
       property.total_sessions /
       property.average_imps_per_session
 ```
@@ -556,8 +558,16 @@ for platform in placement.ad_platforms:
 ### Ad Selection - Data Transfer
 
 ```
-ad_selection_data_transfer_emissions_gco2pm =
+ad_selection_data_transfer_usage_emissions_gco2pm =
       data_transfer_bytes / 1000 x
       usage_kwh_per_gb / 1000000 x
       lookup_carbon_intensity_gco2e_per_kwh(country, region, utc_datetime)
+
+ad_selection_data_transfer_embodied_emissions_gco2pm =
+      data_transfer_bytes / 1000 x
+      embodied_emissions_gco2e_per_kb
+
+ad_selection_data_transfer_emissions_gco2pm =
+      ad_selection_data_transfer_usage_emissions_gco2pm +
+      ad_selection_data_transfer_embodied_emissions_gco2pm
 ```
