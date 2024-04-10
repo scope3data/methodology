@@ -104,6 +104,7 @@ defaults:
     fixed: 0.030000000
     mobile: 1.530000000
   default_emissions_generic_ad_server: 0.000016000
+  default_emissions_generic_ad_server_gco2_per_imp: 0.000016000
   default_emissions_per_bid_request_gco2_per_imp: 0.114420000
   default_emissions_per_bid_request_gco2pm: 0.114420000
   default_emissions_per_creative_request_gco2_per_imp: 0.000300000
