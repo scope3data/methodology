@@ -31,27 +31,27 @@ defaults:
     mobile: 1.200000000
   default_channel_by_device:
     pc:
-    - ctv-bvod
-    - social
-    - audio
-    - web
+      - ctv-bvod
+      - social
+      - audio
+      - web
     phone:
-    - social
-    - ctv-bvod
-    - audio
-    - app
-    - web
+      - social
+      - ctv-bvod
+      - audio
+      - app
+      - web
     smart-speaker:
-    - audio
+      - audio
     tablet:
-    - social
-    - ctv-bvod
-    - audio
-    - app
-    - web
+      - social
+      - ctv-bvod
+      - audio
+      - app
+      - web
     tv:
-    - ctv-bvod
-    - app
+      - ctv-bvod
+      - app
   default_consumer_device_request_size_bytes:
     app: 1000
     audio: 1000
@@ -299,8 +299,18 @@ defaults:
       JAPAC: 0.000300000
       LATAM: 0.000100000
       NAMER: 0.000100000
+    emissions_per_creative_request_per_geo_gco2pm:
+      EMEA: 0.000100000
+      JAPAC: 0.000300000
+      LATAM: 0.000100000
+      NAMER: 0.000100000
   generic_measurement_platform:
     emissions_per_creative_request_per_geo_gco2_per_imp:
+      EMEA: 0.000100000
+      JAPAC: 0.000300000
+      LATAM: 0.000100000
+      NAMER: 0.000100000
+    emissions_per_creative_request_per_geo_gco2pm:
       EMEA: 0.000100000
       JAPAC: 0.000300000
       LATAM: 0.000100000
