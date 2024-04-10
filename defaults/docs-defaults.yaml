@@ -6,12 +6,18 @@ defaults:
     smart-speaker: 160
     tablet: 160
     tv: 160
-  default_average_data_kb_per_session_seconds_excluding_ads_by_channel:
+  default_average_data_kb_per_session_excluding_ads_by_channel:
     app: 5525
     audio: 240
     ctv-bvod: 20640
     social: 9745
     streaming-video: 20640
+    web: 1.100000000
+  default_average_data_kb_per_session_seconds_excluding_ads_by_channel:
+    app: 40.096494920
+    audio: 160
+    ctv-bvod: 8000
+    social: 40.946037820
     web: 388
   default_average_seconds_per_session_excluding_ads_by_channel:
     app: 137.800000000
@@ -25,27 +31,27 @@ defaults:
     mobile: 1.200000000
   default_channel_by_device:
     pc:
-      - ctv-bvod
-      - social
-      - audio
-      - web
+    - ctv-bvod
+    - social
+    - audio
+    - web
     phone:
-      - social
-      - ctv-bvod
-      - audio
-      - app
-      - web
+    - social
+    - ctv-bvod
+    - audio
+    - app
+    - web
     smart-speaker:
-      - audio
+    - audio
     tablet:
-      - social
-      - ctv-bvod
-      - audio
-      - app
-      - web
+    - social
+    - ctv-bvod
+    - audio
+    - app
+    - web
     tv:
-      - ctv-bvod
-      - app
+    - ctv-bvod
+    - app
   default_consumer_device_request_size_bytes:
     app: 1000
     audio: 1000
@@ -98,8 +104,11 @@ defaults:
     fixed: 0.030000000
     mobile: 1.530000000
   default_emissions_generic_ad_server: 0.000016000
+  default_emissions_per_bid_request_gco2_per_imp: 0.114420000
   default_emissions_per_bid_request_gco2pm: 0.114420000
+  default_emissions_per_creative_request_gco2_per_imp: 0.000300000
   default_emissions_per_creative_request_gco2pm: 0.000300000
+  default_emissions_per_rtdp_request_gco2_per_imp: 0.010000000
   default_emissions_per_rtdp_request_gco2pm: 0.010000000
   default_image_compression_ratio: 10
   default_network_embodied_emissions_gco2e_per_kb:
@@ -285,13 +294,13 @@ defaults:
     web: impression
   default_video_player_size_bytes: 192205
   generic_creative_ad_server:
-    emissions_per_creative_request_per_geo_gco2pm:
+    emissions_per_creative_request_per_geo_gco2_per_imp:
       EMEA: 0.000100000
       JAPAC: 0.000300000
       LATAM: 0.000100000
       NAMER: 0.000100000
   generic_measurement_platform:
-    emissions_per_creative_request_per_geo_gco2pm:
+    emissions_per_creative_request_per_geo_gco2_per_imp:
       EMEA: 0.000100000
       JAPAC: 0.000300000
       LATAM: 0.000100000

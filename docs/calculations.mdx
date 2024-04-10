@@ -115,16 +115,16 @@ Native product carousel
 
 ### Ad Platform
 
-| Field                                           | Description                                                                                 |
-| ----------------------------------------------- | ------------------------------------------------------------------------------------------- |
-| `emissions_per_creative_request_per_geo_gco2pm` | Adjusted, allocated emissions per creative request by continent (NAMER, LATAM, EMEA, JAPAC) |
-| `emissions_per_bid_request_per_geo_gco2pm`      | Adjusted, allocated emissions per bid request by continent (NAMER, LATAM, EMEA, JAPAC)      |
-| `emissions_per_rtdp_request_per_geo_gco2pm`     | Adjusted, allocated emissions per rtdp request by continent (NAMER, LATAM, EMEA, JAPAC)     |
-| `bidders`                                       | Array of ad platforms that are sent bid requests                                            |
-| `real_time_data_providers`                      | Array of ad platforms that are sent real-time data requests (not propagated)                |
-| `distribution_rate_by_bidder_by_country`        | Traffic shaping data for each bidder by country (eg `'xandr.com', 'US', 0.58`)              |
-| `average_bid_request_size`                      | Average size of a client-side bid request                                                   |
-| `sends_client_side_requests`                    | Does this platform send client-side bid requests (eg prebid client)                         |
+| Field                                                 | Description                                                                                 |
+| ----------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| `emissions_per_creative_request_per_geo_gco2_per_imp` | Adjusted, allocated emissions per creative request by continent (NAMER, LATAM, EMEA, JAPAC) |
+| `emissions_per_bid_request_per_geo_gco2_per_imp`      | Adjusted, allocated emissions per bid request by continent (NAMER, LATAM, EMEA, JAPAC)      |
+| `emissions_per_rtdp_request_per_geo_gco2_per_imp`     | Adjusted, allocated emissions per rtdp request by continent (NAMER, LATAM, EMEA, JAPAC)     |
+| `bidders`                                             | Array of ad platforms that are sent bid requests                                            |
+| `real_time_data_providers`                            | Array of ad platforms that are sent real-time data requests (not propagated)                |
+| `distribution_rate_by_bidder_by_country`              | Traffic shaping data for each bidder by country (eg `'xandr.com', 'US', 0.58`)              |
+| `average_bid_request_size`                            | Average size of a client-side bid request                                                   |
+| `sends_client_side_requests`                          | Does this platform send client-side bid requests (eg prebid client)                         |
 
 ### Placement
 
@@ -309,9 +309,9 @@ we fall back to a default channel by device.
 ### Creative Delivery - Data Transfer
 
 ```
-creative_data_transfer_emissions_gco2pm =
-      creative_data_transfer_usage_emissions_gco2pm +
-      creative_data_transfer_embodied_emissions_gco2pm
+creative_data_transfer_emissions_gco2_per_imp =
+      creative_data_transfer_usage_emissions_gco2_per_imp +
+      creative_data_transfer_embodied_emissions_gco2_per_imp
 ```
 
 For all channels other than CTV/BVOD, use the conventional model:
@@ -384,12 +384,12 @@ power_watts =
       baseload_watts +
       dynamic_watts_per_mbps x video_bitrate_kbps / 1000
 
-creative_data_transfer_usage_emissions_gco2pm =
+creative_data_transfer_usage_emissions_gco2_per_imp =
       creative_video_duration_seconds / 3600 x
       power_watts / 1000 x
       lookup_carbon_intensity_gco2e_per_kwh(country, region, utc_datetime)
 
-creative_data_transfer_embodied_emissions_gco2pm =
+creative_data_transfer_embodied_emissions_gco2_per_imp =
       creative_video_duration_seconds x
       video_bitrate_kbps / 128 x
       embodied_emissions_gco2e_per_kb
@@ -404,9 +404,9 @@ default_creative_platforms =
       []
 creative_platforms = creative_ad_platforms ?? default_creative_platforms
 
-creative_platform_emissions_gco2pm = 0
+creative_platform_emissions_gco2_per_imp = 0
 for platform in [creative_platforms, ad_format.ad_platforms]:
-      creative_platform_emissions_gco2pm += platform.emissions_per_creative_request_per_geo_gco2pm
+      creative_platform_emissions_gco2_per_imp += platform.emissions_per_creative_request_per_geo_gco2_per_imp
 ```
 
 ### Creative Delivery - Consumer Device
@@ -435,12 +435,12 @@ device_coverage_seconds =
       audio_device_coverage_seconds :
       visual_device_coverage x time_in_view
 
-creative_consumer_device_usage_emissions_gco2pm =
+creative_consumer_device_usage_emissions_gco2_per_imp =
       device_coverage_seconds / 3600 x
       default_device_watts[device_type] / 1000 x
       lookup_carbon_intensity_gco2e_per_kwh(country, region, utc_datetime)
 
-creative_consumer_device_embodied_emissions_gco2pm =
+creative_consumer_device_embodied_emissions_gco2_per_imp =
       device_coverage_seconds x
       default_device_embodied_emissions_per_second[device_type]
 ```
@@ -448,9 +448,9 @@ creative_consumer_device_embodied_emissions_gco2pm =
 ### Media Delivery - Data Transfer
 
 ```
-media_data_transfer_emissions_gco2pm =
-      media_data_transfer_usage_emissions_gco2pm +
-      media_data_transfer_embodied_emissions_gco2pm
+media_data_transfer_emissions_gco2_per_imp =
+      media_data_transfer_usage_emissions_gco2_per_imp +
+      media_data_transfer_embodied_emissions_gco2_per_imp
 ```
 
 Determing the session seconds for a single impressions
@@ -470,12 +470,12 @@ media_data_transfer_kb_per_imp =
       property.ad_funded_percentage  /
       property.average_imps_per_session
 
-media_data_transfer_usage_emissions_gco2pm =
+media_data_transfer_usage_emissions_gco2_per_imp =
       media_data_transfer_kb_per_imp x
       usage_kwh_per_gb / 1000000 x
       lookup_carbon_intensity_gco2e_per_kwh(country, region, utc_datetime)
 
-media_data_transfer_embodied_emissions_gco2pm =
+media_data_transfer_embodied_emissions_gco2_per_imp =
       media_data_transfer_kb_per_imp x
       embodied_emissions_gco2e_per_kb
 ```
@@ -489,12 +489,12 @@ power_watts =
       baseload_watts +
       dynamic_watts_per_mbps x video_bitrate_kbps / 1000
 
-media_data_transfer_usage_emissions_gco2pm =
+media_data_transfer_usage_emissions_gco2_per_imp =
       session_seconds_per_imp / 3600 x
       power_watts / 1000 x
       lookup_carbon_intensity_gco2e_per_kwh(country, region, utc_datetime)
 
-media_data_transfer_embodied_emissions_gco2pm =
+media_data_transfer_embodied_emissions_gco2_per_imp =
       session_seconds_per_imp x
       video_bitrate_kbps / 128 x
       embodied_emissions_gco2e_per_kb
@@ -503,12 +503,12 @@ media_data_transfer_embodied_emissions_gco2pm =
 ### Media Delivery - Consumer Device
 
 ```
-media_consumer_device_usage_emissions_gco2pm =
+media_consumer_device_usage_emissions_gco2_per_imp =
       session_seconds_per_imp / 3600 x
       default_device_watts[device_type] / 1000 x
       lookup_carbon_intensity_gco2e_per_kwh(country, region, utc_datetime)
 
-media_consumer_device_embodied_emissions_gco2pm =
+media_consumer_device_embodied_emissions_gco2_per_imp =
       session_seconds_per_imp x
       default_device_embodied_emissions_per_second[device_type]
 ```
@@ -516,7 +516,7 @@ media_consumer_device_embodied_emissions_gco2pm =
 ### Media Delivery - Corporate
 
 ```
-media_corporate_emissions_gco2pm =
+media_corporate_emissions_gco2_per_imp =
       property.allocated_adjusted_corporate_emissions_kg x 1000 /
       property.total_sessions /
       property.average_imps_per_session
@@ -526,21 +526,21 @@ media_corporate_emissions_gco2pm =
 
 ```
 get_platform_emissions(ad_platform):
-      direct_emissions = emissions_per_bid_request_per_geo_gco2pm
+      direct_emissions = emissions_per_bid_request_per_geo_gco2_per_imp
       rtdp_emissions = 0
       for rtdp in ad_platform.real_time_data_providers:
-            rtdp_emissions += emissions_per_rtdp_request_per_geo_gco2pm
+            rtdp_emissions += emissions_per_rtdp_request_per_geo_gco2_per_imp
       bidder_emissions = 0
       for bidder in ad_platform.bidders:
             bidder_emissions += get_platform_emissions(bidder) x
                   ad_platform.distribution_rate_by_bidder_by_country[country, bidder] ?? 1
       return direct_emissions + rtdp_emissions + bidder_emissions
 
-ad_selection_platform_emissions_gco2pm = 0
+ad_selection_platform_emissions_gco2_per_imp = 0
 data_transfer_bytes = 0
 
 for platform in placement.ad_platforms:
-  ad_selection_platform_emissions_gco2pm += get_platform_emissions(platform)
+  ad_selection_platform_emissions_gco2_per_imp += get_platform_emissions(platform)
   platform_bytes =
       platform.average_bid_request_size ??
       default_consumer_device_request_size_bytes[channel]
@@ -558,16 +558,16 @@ for platform in placement.ad_platforms:
 ### Ad Selection - Data Transfer
 
 ```
-ad_selection_data_transfer_usage_emissions_gco2pm =
+ad_selection_data_transfer_usage_emissions_gco2_per_imp =
       data_transfer_bytes / 1000 x
       usage_kwh_per_gb / 1000000 x
       lookup_carbon_intensity_gco2e_per_kwh(country, region, utc_datetime)
 
-ad_selection_data_transfer_embodied_emissions_gco2pm =
+ad_selection_data_transfer_embodied_emissions_gco2_per_imp =
       data_transfer_bytes / 1000 x
       embodied_emissions_gco2e_per_kb
 
-ad_selection_data_transfer_emissions_gco2pm =
-      ad_selection_data_transfer_usage_emissions_gco2pm +
-      ad_selection_data_transfer_embodied_emissions_gco2pm
+ad_selection_data_transfer_emissions_gco2_per_imp =
+      ad_selection_data_transfer_usage_emissions_gco2_per_imp +
+      ad_selection_data_transfer_embodied_emissions_gco2_per_imp
 ```
