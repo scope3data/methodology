@@ -14,11 +14,12 @@ defaults:
     streaming-video: 20640
     web: 388
   default_average_data_kb_per_session_seconds_excluding_ads_by_channel:
-    app: 40.096494920
-    audio: 160
-    ctv-bvod: 8000
-    social: 40.946037820
-    web: 1.100000000
+    app: 5525
+    audio: 240
+    ctv-bvod: 20640
+    social: 9745
+    streaming-video: 20640
+    web: 388
   default_average_seconds_per_session_excluding_ads_by_channel:
     app: 137.800000000
     audio: 1500
