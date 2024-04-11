@@ -252,13 +252,13 @@ defaults:
     streaming-video: 15s Video
     web: Leaderboard - 728x90 Banner
   default_property_ad_funded_percentage_by_channel:
-    app: 1
-    audio: 1
-    ctv-bvod: 1
-    dooh: 1
-    social: 1
-    streaming-video: 1
-    web: 1
+    app: 100
+    audio: 100
+    ctv-bvod: 100
+    dooh: 100
+    social: 100
+    streaming-video: 100
+    web: 100
   default_property_average_imps_per_session_by_channel:
     app: 18.800000000
     audio: 4.800000000

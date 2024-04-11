@@ -109,7 +109,7 @@ Native product carousel
 | `average_seconds_per_session_excluding_ads`     | Yes      | The average length of a session on this property excluding ads (eg 44 min of a 60 min TV show) |
 | `average_imps_per_session`                      | Yes      | The average number of impressions per session                                                  |
 | `average_data_kb_per_session_excluding_ads`     | Yes      | The average number of KB transferred during a session excluding ads                            |
-| `ad_funded_percentage`                          | Yes      | The percentage of content funded by advertising (eg 50%)                                       |
+| `ad_funded_percentage`                          | Yes      | 0-100 The percentage of content funded by advertising (eg 50)                                  |
 | `allocated_adjusted_corporate_emissions_kgco2e` | Yes      | This property's share of corporate emissions                                                   |
 | `total_sessions`                                | Yes      | Number of sessions in the same time period as corporate emissions                              |
 
@@ -458,7 +458,7 @@ Determing the session seconds for a single impressions
 ```
 session_seconds_per_imp =
       property.average_seconds_per_session_excluding_ads x
-      property.ad_funded_percentage /
+      property.ad_funded_percentage/100 /
       property.average_imps_per_session
 ```
 
@@ -467,7 +467,7 @@ For all channels other than CTV/BVOD, use the conventional model:
 ```
 media_data_transfer_kb_per_imp =
       property.average_data_kb_per_session_excluding_ads x
-      property.ad_funded_percentage  /
+      property.ad_funded_percentage/100  /
       property.average_imps_per_session
 
 media_data_transfer_usage_emissions_gco2_per_imp =
