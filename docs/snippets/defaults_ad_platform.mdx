@@ -11,6 +11,10 @@ default_emissions_per_creative_request_gco2pm: 0.0003
 default_emissions_per_bid_request_gco2pm:      0.11442
 default_emissions_per_rtdp_request_gco2pm:     0.01
 default_emissions_generic_ad_server: 0.000016
+default_emissions_per_creative_request_gco2_per_imp: 0.0003
+default_emissions_per_bid_request_gco2_per_imp:      0.11442
+default_emissions_per_rtdp_request_gco2_per_imp:     0.01
+default_emissions_generic_ad_server_gco2_per_imp: 0.000016
 
 generic_creative_ad_server:
   emissions_per_creative_request_per_geo_gco2pm:
@@ -18,8 +22,18 @@ generic_creative_ad_server:
     EMEA: 0.0001
     JAPAC: 0.0003
     LATAM: 0.0001
+  emissions_per_creative_request_per_geo_gco2_per_imp:
+    NAMER: 0.0001
+    EMEA: 0.0001
+    JAPAC: 0.0003
+    LATAM: 0.0001
 generic_measurement_platform:
   emissions_per_creative_request_per_geo_gco2pm:
+    NAMER: 0.0001
+    EMEA: 0.0001
+    JAPAC: 0.0003
+    LATAM: 0.0001
+  emissions_per_creative_request_per_geo_gco2_per_imp:
     NAMER: 0.0001
     EMEA: 0.0001
     JAPAC: 0.0003
