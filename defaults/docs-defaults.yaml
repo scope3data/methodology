@@ -6,27 +6,17 @@ defaults:
     smart-speaker: 160
     tablet: 160
     tv: 160
-  default_average_data_kb_per_session_excluding_ads_by_channel:
-    app: 5525
-    audio: 240
-    ctv-bvod: 20640
-    social: 9745
-    streaming-video: 20640
-    web: 388
   default_average_data_kb_per_session_seconds_excluding_ads_by_channel:
-    app: 5525
-    audio: 240
-    ctv-bvod: 20640
-    social: 9745
-    streaming-video: 20640
-    web: 388
+    app: 29.500000000
+    social: 255.600000000
+    web: 1.011000000
   default_average_seconds_per_session_excluding_ads_by_channel:
-    app: 137.800000000
+    app: 140
     audio: 1500
     ctv-bvod: 2580
-    social: 238
+    social: 240
     streaming-video: 2580
-    web: 353
+    web: 320
   default_baseload_watts:
     fixed: 9.550000000
     mobile: 1.200000000
@@ -260,12 +250,12 @@ defaults:
     streaming-video: 100
     web: 100
   default_property_average_imps_per_session_by_channel:
-    app: 18.800000000
+    app: 14
     audio: 4.800000000
     ctv-bvod: 8.256000000
-    social: 19.500000000
+    social: 24
     streaming-video: 8.256000000
-    web: 35.300000000
+    web: 32
   default_property_g_per_imp_by_channel:
     app: 0.049000000
     audio: 0.049000000
