@@ -6,53 +6,43 @@ defaults:
     smart-speaker: 160
     tablet: 160
     tv: 160
-  default_average_data_kb_per_session_excluding_ads_by_channel:
-    app: 5525
-    audio: 240
-    ctv-bvod: 20640
-    social: 9745
-    streaming-video: 20640
-    web: 388
   default_average_data_kb_per_session_seconds_excluding_ads_by_channel:
-    app: 5525
-    audio: 240
-    ctv-bvod: 20640
-    social: 9745
-    streaming-video: 20640
-    web: 388
+    app: 29.500000000
+    social: 255.600000000
+    web: 1.011000000
   default_average_seconds_per_session_excluding_ads_by_channel:
-    app: 137.800000000
+    app: 140
     audio: 1500
     ctv-bvod: 2580
-    social: 238
+    social: 240
     streaming-video: 2580
-    web: 353
+    web: 320
   default_baseload_watts:
     fixed: 9.550000000
     mobile: 1.200000000
   default_channel_by_device:
     pc:
-      - ctv-bvod
-      - social
-      - audio
-      - web
+    - ctv-bvod
+    - social
+    - audio
+    - web
     phone:
-      - social
-      - ctv-bvod
-      - audio
-      - app
-      - web
+    - social
+    - ctv-bvod
+    - audio
+    - app
+    - web
     smart-speaker:
-      - audio
+    - audio
     tablet:
-      - social
-      - ctv-bvod
-      - audio
-      - app
-      - web
+    - social
+    - ctv-bvod
+    - audio
+    - app
+    - web
     tv:
-      - ctv-bvod
-      - app
+    - ctv-bvod
+    - app
   default_consumer_device_request_size_bytes:
     app: 1000
     audio: 1000
@@ -104,14 +94,10 @@ defaults:
   default_dynamic_watts_per_mbps:
     fixed: 0.030000000
     mobile: 1.530000000
-  default_emissions_generic_ad_server: 0.000016000
   default_emissions_generic_ad_server_gco2_per_imp: 0.000016000
   default_emissions_per_bid_request_gco2_per_imp: 0.114420000
-  default_emissions_per_bid_request_gco2pm: 0.114420000
   default_emissions_per_creative_request_gco2_per_imp: 0.000300000
-  default_emissions_per_creative_request_gco2pm: 0.000300000
   default_emissions_per_rtdp_request_gco2_per_imp: 0.010000000
-  default_emissions_per_rtdp_request_gco2pm: 0.010000000
   default_image_compression_ratio: 10
   default_network_embodied_emissions_gco2e_per_kb:
     scope3:
@@ -260,12 +246,12 @@ defaults:
     streaming-video: 100
     web: 100
   default_property_average_imps_per_session_by_channel:
-    app: 18.800000000
+    app: 14
     audio: 4.800000000
     ctv-bvod: 8.256000000
-    social: 19.500000000
+    social: 24
     streaming-video: 8.256000000
-    web: 35.300000000
+    web: 32
   default_property_g_per_imp_by_channel:
     app: 0.049000000
     audio: 0.049000000
@@ -301,18 +287,8 @@ defaults:
       JAPAC: 0.000300000
       LATAM: 0.000100000
       NAMER: 0.000100000
-    emissions_per_creative_request_per_geo_gco2pm:
-      EMEA: 0.000100000
-      JAPAC: 0.000300000
-      LATAM: 0.000100000
-      NAMER: 0.000100000
   generic_measurement_platform:
     emissions_per_creative_request_per_geo_gco2_per_imp:
-      EMEA: 0.000100000
-      JAPAC: 0.000300000
-      LATAM: 0.000100000
-      NAMER: 0.000100000
-    emissions_per_creative_request_per_geo_gco2pm:
       EMEA: 0.000100000
       JAPAC: 0.000300000
       LATAM: 0.000100000
