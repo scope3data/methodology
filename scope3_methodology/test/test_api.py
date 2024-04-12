@@ -239,7 +239,7 @@ class TestAPI(unittest.TestCase):
         )
 
         docs_defs = docs_defaults
-        self.assertEqual(len(docs_defs), 37)
+        self.assertEqual(len(docs_defs), 32)
 
     def test_get_all_con_networking_connection_device_fixed_defaults(self):
         """Test get_all_networking_connection_device_defaults returns expected output"""
