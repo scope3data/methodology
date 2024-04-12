@@ -22,27 +22,27 @@ defaults:
     mobile: 1.200000000
   default_channel_by_device:
     pc:
-      - ctv-bvod
-      - social
-      - audio
-      - web
+    - ctv-bvod
+    - social
+    - audio
+    - web
     phone:
-      - social
-      - ctv-bvod
-      - audio
-      - app
-      - web
+    - social
+    - ctv-bvod
+    - audio
+    - app
+    - web
     smart-speaker:
-      - audio
+    - audio
     tablet:
-      - social
-      - ctv-bvod
-      - audio
-      - app
-      - web
+    - social
+    - ctv-bvod
+    - audio
+    - app
+    - web
     tv:
-      - ctv-bvod
-      - app
+    - ctv-bvod
+    - app
   default_consumer_device_request_size_bytes:
     app: 1000
     audio: 1000
@@ -94,14 +94,10 @@ defaults:
   default_dynamic_watts_per_mbps:
     fixed: 0.030000000
     mobile: 1.530000000
-  default_emissions_generic_ad_server: 0.000016000
   default_emissions_generic_ad_server_gco2_per_imp: 0.000016000
   default_emissions_per_bid_request_gco2_per_imp: 0.114420000
-  default_emissions_per_bid_request_gco2pm: 0.114420000
   default_emissions_per_creative_request_gco2_per_imp: 0.000300000
-  default_emissions_per_creative_request_gco2pm: 0.000300000
   default_emissions_per_rtdp_request_gco2_per_imp: 0.010000000
-  default_emissions_per_rtdp_request_gco2pm: 0.010000000
   default_image_compression_ratio: 10
   default_network_embodied_emissions_gco2e_per_kb:
     scope3:
@@ -291,18 +287,8 @@ defaults:
       JAPAC: 0.000300000
       LATAM: 0.000100000
       NAMER: 0.000100000
-    emissions_per_creative_request_per_geo_gco2pm:
-      EMEA: 0.000100000
-      JAPAC: 0.000300000
-      LATAM: 0.000100000
-      NAMER: 0.000100000
   generic_measurement_platform:
     emissions_per_creative_request_per_geo_gco2_per_imp:
-      EMEA: 0.000100000
-      JAPAC: 0.000300000
-      LATAM: 0.000100000
-      NAMER: 0.000100000
-    emissions_per_creative_request_per_geo_gco2pm:
       EMEA: 0.000100000
       JAPAC: 0.000300000
       LATAM: 0.000100000
