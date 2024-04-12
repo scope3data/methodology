@@ -13,21 +13,23 @@ Each modeled request should include:
 
 Grid intensity can fluctuate significantly on an hourly basis due to the variable nature of both renewable energy sources (sun, wind) and electricity demand. To achieve effective decarbonization, having hourly data is critical. However, this isn't broadly available in many countries.
 
-| Timescale | Geographical fit | Model Quality |
-| --------- | ---------------- | ------------- |
-| Annual    | Country          | 1             |
-| Daily     | Country          | 2             |
-| Daily     | Region or Grid   | 3             |
-| Hourly    | Country          | 4             |
-| Hourly    | Region or Grid   | 5             |
+| Data source and timescale  | Model Quality  |
+| -------------------------- | -------------- |
+| Worldwide                  | 1              |
+| Country, monthly or annual | 2              |
+| Country, daily             | 3              |
+| Country + region, daily    | 4              |
+| Country + region, hourly   | 5              |
 
 ## Organization
 
-An organization should provide a sustainability report that details its full carbon footprint, including scopes 1, 2, and all scope 3 categories. This report should clearly detail methodology for each category.
+Criteria for accurate sustainability data at the organization level:
 
-Any adjustments to the calculations for RECs, PPAs, offsets, or carbon credits should detail exactly what was purchased, from whom, and on what timeframe. Location-based scope 2 data should always be provided.
+* An organization should provide a sustainability report that details its full carbon footprint, including scopes 1, 2, and all scope 3 categories. This report should clearly detail methodology for each category.
 
-A sustainability report should be published within 6 months of the end of the previous calendar year to be considered for sustainability purposes.
+* Any adjustments to the calculations for RECs, PPAs, offsets, or carbon credits should detail exactly what was purchased, from whom, and on what timeframe. Location-based scope 2 data should always be provided.
+
+* A sustainability report should be published within 6 months of the end of the previous calendar year to be considered for sustainability purposes.
 
 | Scope 1 and 2       | Scope 3         | Line of business | Model Quality |
 | ------------------- | --------------- | ---------------- | ------------- |
@@ -77,7 +79,25 @@ The accuracy of the ad stack used by the publisher for the placement depends on 
 
 Provided inputs must match the underlying model in order to provide accurate output. For instance, if the user provides "ANZ" as a country, that might not match "AU" or "NZ", causing a mapping issue that could cause a fallback to using worldwide grid mix and a significant loss of accuracy.
 
-Granularity % is the percentage of input fields provided.
+Granularity % is the percentage of recommended input fields that are provided and match valid values.
+
+### Recommended input fields
+
+| Field                  | Comments                                                |
+| ---------------------- | ------------------------------------------------------- |
+| Property               |                                                         |
+| Placement              |                                                         |
+| Seller                 |                                                         |
+| Country                |                                                         |
+| Region                 | For countries with multiple grid regions, eg US, CA, AU |
+| Device Type            |                                                         |
+| Network                |                                                         |
+| Date                   |                                                         |
+| Time                   | At least hourly granularity                             |
+| Ad format              |                                                         |
+| Creative asset weights |                                                         |
+
+### Input granularity to model quality map
 
 | Granularity % | Model Quality |
 | ------------- | ------------- |
@@ -87,18 +107,23 @@ Granularity % is the percentage of input fields provided.
 | 70% - 90%     | 4             |
 | 90% - 100%    | 5             |
 
-Example:
+### Input granularity example
 
 | Field           | Provided Input | Match   |
 | --------------- | -------------- | ------- |
-| Channel         | web            | yes     |
 | Property        | nytimes.com    | yes     |
 | Placement       | (omitted)      | no      |
 | Seller          | Google AdX     | no      |
+| Country         | US             | yes     |
+| Region          | (omitted)      | no      |
+| Device Type     | Phone          | yes     |
+| Network         | (omitted)      | yes     |
+| Region          | (omitted)      | no      |
 | Date            | 2024-04-01     | yes     |
 | Time            | (omitted)      | no      |
 | Ad format       | 320x50 banner  | yes     |
 | Creative weight | (omitted)      | no      |
 
-Input granularity percentage: 4/8 = 50% 
+Input granularity percentage: 6/12 = 50% 
+
 Input granularity score: 2
