@@ -32,26 +32,25 @@ Criteria for accurate sustainability data at the organization level:
 
 * A sustainability report should be published within 6 months of the end of the previous calendar year to be considered for sustainability purposes.
 
-| Scope 1 and 2       | Scope 3         | Line of business | Model Quality |
-| ------------------- | --------------- | ---------------- | ------------- |
-| No recent report    | N/a             | N/a              | 1             |
-| Incomplete coverage | N/a             | N/a              | 1             |
-| Market-based        | None or partial | N/a              | 2             |
-| Location-based      | None or partial | N/a              | 3             |
-| Location-based      | Complete        | Not broken out   | 4             |
-| Location-based      | Complete        | Broken out       | 5             |
+| Report element                  | Model Quality |
+| ------------------------------- | ------------- |
+| Scope 1 and 2, market-based     | +1 |
+| Location-based scope 2          | +1 |
+| All scope 3 categories provided | +1 |
+| Lines of business broken out    | +1 |
 
 ## Vendor / Ad Platform Quality
 
 An ad platform should provide 1) requests received, 2) requests sent (traffic shaping), and 3) emissions data from datacenters or cloud providers
 
-| Server emissions | Request data | Frequency | Model Quality |
-| ---------------- | ------------ | --------- | ------------- |
-| Not provided     | Not provided | N/a       | 1             |
-| Global           | Global       | Annual    | 2             |
-| Regional         | Regional     | Annual    | 3             |
-| Global           | Global       | Monthly   | 4             |
-| Regional         | Regional     | Monthly   | 5             |
+| Vendor data element               | Model Quality |
+| --------------------------------- | ------------- |
+| Server emissions and request data | +1 |
+| Traffic shaping data              | +1 |
+| All data provided monthly         | +1 |
+| All data provided regionally      | +1 |
+
+Example: A company provides annual server emissions, requests received, and traffic shaping data. This would be model quality 3.
 
 The average vendor model quality is the average score of all direct vendors that the property works with.
 
