@@ -6,7 +6,8 @@ Each modeled request should include:
 - Grid mix model quality (1-5)
 - Organization model quality (1-5) 
 - Property model quality (1-5)
-- Ad stack / ad platform quality (1-5)
+- Ad stack model quality (1-5)
+- Average ad platform / vendor quality (1-5)
 - Input granularity score (1-5)
 
 ## Grid mix
@@ -40,7 +41,7 @@ Criteria for accurate sustainability data at the organization level:
 | Location-based      | Complete        | Not broken out   | 4             |
 | Location-based      | Complete        | Broken out       | 5             |
 
-## Ad Platform
+## Vendor / Ad Platform Quality
 
 An ad platform should provide 1) requests received, 2) requests sent (traffic shaping), and 3) emissions data from datacenters or cloud providers
 
@@ -52,7 +53,9 @@ An ad platform should provide 1) requests received, 2) requests sent (traffic sh
 | Global           | Global       | Monthly   | 4             |
 | Regional         | Regional     | Monthly   | 5             |
 
-## Property
+The average vendor model quality is the average score of all direct vendors that the property works with.
+
+## Property Activity
 
 For media properties, key metrics include session time, session weight, and ad load. For OOH screens, the key metric is power draw. A measured metric is acquired on a per-property basis - for instance, using Google Analytics on a website or a power meter on a screen. An estimated or average metric uses a third-party source or historical averages to project key metrics, for instance, using screen size and type to model power usage.
 
@@ -68,12 +71,12 @@ For media properties, key metrics include session time, session weight, and ad l
 
 The accuracy of the ad stack used by the publisher for the placement depends on accurate representation of all direct and indirect vendors. The ad stack score starts at 1 and increments based on modeled components.
 
-| Ad Stack Component                        | Model Quality |
-| ----------------------------------------- | ------------- |
-| All direct vendors identified             | +1            |
-| All indirect vendors identified           | +1            |
-| 90% of direct vendors have quality > 1    | +1            |
-| 90% of direct vendors have quality > 3    | +1            |
+| Ad Stack Component                          | Model Quality |
+| ------------------------------------------- | ------------- |
+| Ad stack mapped via observed data           | +1            |
+| Ads.txt validated                           | +1            |
+| Vendors mapped to region, device, and format| +1            |
+| Placements mapped to GPID and vendors       | +1            |
 
 ## Input granularity
 
