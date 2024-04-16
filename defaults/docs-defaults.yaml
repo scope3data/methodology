@@ -47,9 +47,9 @@ defaults:
     app: 1000
     audio: 1000
     ctv-bvod: 0
-    streaming-video: 0
     dooh: 0
     social: 1000
+    streaming-video: 0
     web: 1500
   default_device_by_channel:
     app: phone
