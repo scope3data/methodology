@@ -7,55 +7,56 @@ defaults:
     tablet: 160
     tv: 160
   default_average_data_kb_per_session_seconds_excluding_ads_by_channel:
-    app: 5525
-    audio: 240
-    ctv-bvod: 20640
-    social: 9745
-    web: 388
+    app: 29.500000000
+    social: 255.600000000
+    web: 1.011000000
   default_average_seconds_per_session_excluding_ads_by_channel:
-    app: 137.800000000
+    app: 140
     audio: 1500
     ctv-bvod: 2580
-    social: 238
-    web: 353
+    social: 240
+    streaming-video: 2580
+    web: 320
   default_baseload_watts:
     fixed: 9.550000000
     mobile: 1.200000000
   default_channel_by_device:
     pc:
-      - ctv-bvod
-      - social
-      - audio
-      - web
+    - ctv-bvod
+    - social
+    - audio
+    - web
     phone:
-      - social
-      - ctv-bvod
-      - audio
-      - app
-      - web
+    - social
+    - ctv-bvod
+    - audio
+    - app
+    - web
     smart-speaker:
-      - audio
+    - audio
     tablet:
-      - social
-      - ctv-bvod
-      - audio
-      - app
-      - web
+    - social
+    - ctv-bvod
+    - audio
+    - app
+    - web
     tv:
-      - ctv-bvod
-      - app
+    - ctv-bvod
+    - app
   default_consumer_device_request_size_bytes:
     app: 1000
     audio: 1000
     ctv-bvod: 0
     dooh: 0
     social: 1000
+    streaming-video: 0
     web: 1500
   default_device_by_channel:
     app: phone
     audio: phone
     ctv-bvod: tv
     social: phone
+    streaming-video: tv
     web: pc
   default_device_embodied_emissions_per_second:
     scope3:
@@ -94,19 +95,15 @@ defaults:
   default_dynamic_watts_per_mbps:
     fixed: 0.030000000
     mobile: 1.530000000
-  default_emissions_generic_ad_server: 0.000016000
-  default_emissions_per_bid_request_gco2pm: 0.114420000
-  default_emissions_per_creative_request_gco2pm: 0.000300000
-  default_emissions_per_rtdp_request_gco2pm: 0.010000000
+  default_emissions_generic_ad_server_gco2_per_imp: 0.000016000
+  default_emissions_per_bid_request_gco2_per_imp: 0.114420000
+  default_emissions_per_creative_request_gco2_per_imp: 0.000300000
+  default_emissions_per_rtdp_request_gco2_per_imp: 0.010000000
   default_image_compression_ratio: 10
-  default_network_by_device:
-    pc: fixed
-    smart-speaker: fixed
-    tv: fixed
   default_network_embodied_emissions_gco2e_per_kb:
     scope3:
-      fixed: 0.000000000
-      mobile: 0.000000000
+      fixed: 0.000004430
+      mobile: 0.000007970
     sri:
       fixed: 0.000004430
       mobile: 0.000007970
@@ -239,26 +236,30 @@ defaults:
     ctv-bvod: 15s Video
     dooh: Landscape - 1920x1080 Image
     social: Sponsored Post - 1080x1920 Image
+    streaming-video: 15s Video
     web: Leaderboard - 728x90 Banner
   default_property_ad_funded_percentage_by_channel:
-    app: 1
-    audio: 1
-    ctv-bvod: 1
-    dooh: 1
-    social: 1
-    web: 1
+    app: 100
+    audio: 100
+    ctv-bvod: 100
+    dooh: 100
+    social: 100
+    streaming-video: 100
+    web: 100
   default_property_average_imps_per_session_by_channel:
-    app: 18.800000000
+    app: 14
     audio: 4.800000000
     ctv-bvod: 8.256000000
-    social: 19.500000000
-    web: 35.300000000
+    social: 24
+    streaming-video: 8.256000000
+    web: 32
   default_property_g_per_imp_by_channel:
     app: 0.049000000
     audio: 0.049000000
     ctv-bvod: 0.049000000
     dooh: 0.049000000
     social: 0.049000000
+    streaming-video: 0.049000000
     web: 0.049000000
   default_time_in_view_seconds: 6
   default_usage_kwh_per_gb:
@@ -278,16 +279,17 @@ defaults:
     ctv-bvod: impression
     dooh: play
     social: impression
+    streaming-video: impression
     web: impression
   default_video_player_size_bytes: 192205
   generic_creative_ad_server:
-    emissions_per_creative_request_per_geo_gco2pm:
+    emissions_per_creative_request_per_geo_gco2_per_imp:
       EMEA: 0.000100000
       JAPAC: 0.000300000
       LATAM: 0.000100000
       NAMER: 0.000100000
   generic_measurement_platform:
-    emissions_per_creative_request_per_geo_gco2pm:
+    emissions_per_creative_request_per_geo_gco2_per_imp:
       EMEA: 0.000100000
       JAPAC: 0.000300000
       LATAM: 0.000100000
