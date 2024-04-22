@@ -238,6 +238,14 @@ defaults:
     social: Sponsored Post - 1080x1920 Image
     streaming-video: 15s Video
     web: Leaderboard - 728x90 Banner
+  default_platform_ad_format_identifier_by_channel:
+    app: interstitial-app-phone
+    audio: 30s-audio-digital-audio-phone
+    ctv-bvod: 15s-video-ctv-bvod-tv
+    dooh: landscape-dooh
+    social: 1080-1920-sponsored-post-social-phone
+    streaming-video: 15s-video-streaming-video-tv
+    web: leaderboard-web-pc
   default_property_ad_funded_percentage_by_channel:
     app: 100
     audio: 100
