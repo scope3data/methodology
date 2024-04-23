@@ -79,3 +79,9 @@ The [SRI methodology](https://www.sri-france.org/wp-content/uploads/2023/06/SRI_
 
 ## Handling unknown networks
 The SRI methodology suggests a ratio of 90% fixed to 10% mobile. However, this ratio is not representative globally. The ITU publishes [research](https://datahub.itu.int) on fixed and mobile traffic by country. This indicates that for 2022 the weighted average of global traffic was 23.6% mobile. However, this research notably omits the US which is likely similar to other advanced economies in the 5% range, so we have added this to the dataset as an estimate (along with the 10% France number for SRI consistency).
+
+## Server-to-server data transfer
+
+From [Cloud Carbon Footprint](https://www.cloudcarbonfootprint.org/docs/methodology#chosen-coefficient)
+
+"It is safe to assume hyper-scale cloud providers have a very energy efficient network between their data centers with their own optical fiber networks and submarine cable [source]. Data exchanges between data-centers are also done with a very high bitrate (~100 GbE -> 100 Gbps), thus being the most efficient use-case. Given these assumptions, we have decided to use the smallest coefficient available to date: 0.001 kWh/Gb. Again, we welcome feedback or contributions to improve this coefficient."

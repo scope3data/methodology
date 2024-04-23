@@ -541,40 +541,71 @@ get_platform_emissions(ad_platform):
                   ad_platform.distribution_rate_by_bidder_by_country[country, bidder] ?? 1
       return direct_emissions + rtdp_emissions + bidder_emissions
 
-ad_selection_platform_emissions_gco2_per_imp = 0
-data_transfer_bytes = 0
-
-for platform in placement.ad_platforms:
-  ad_selection_platform_emissions_gco2_per_imp += get_platform_emissions(platform)
-  platform_bytes =
-      platform.average_bid_request_size ??
-      default_consumer_device_request_size_bytes[channel]
-  data_transfer_bytes += default_consumer_device_request_size_bytes[channel]
-  if platform.sends_client_side_requests:
+get_platform_client_side_data_transfer(platform, is_client_side):
+    if !is_client_side
+        return 0
+    bytes_sent = 0   
     for bidder in platform.bidders:
       bidder_bytes =
           bidder.average_bid_request_size ??
           default_consumer_device_request_size_bytes[channel]
-      data_transfer_bytes +=
+      bytes_sent +=
           bidder_bytes x
           platform.distribution_rate_by_bidder_by_country[country, bidder] ?? 1
+    return bytes_sent
+
+get_platform_server_side_data_transfer(platform, is_client_side):
+    bytes_sent = 0   
+    for bidder in platform.bidders:
+        bytes_sent += get_platform_server_side_data_transfer(bidder, false)
+        if is_client_side:
+          continue
+        bidder_bytes =
+            bidder.average_bid_request_size ??
+            default_server_side_request_size_bytes
+        bytes_sent +=
+            bidder_bytes x
+            platform.distribution_rate_by_bidder_by_country[country, bidder] ?? 1
+    return bytes_sent
+
+ad_selection_platform_emissions_gco2_per_imp = 0
+client_side_data_transfer_bytes = 0
+server_side_data_transfer_bytes = 0
+
+for platform in placement.ad_platforms:
+  ad_selection_platform_emissions_gco2_per_imp += get_platform_emissions(platform)
+  client_side_data_transfer_bytes +=
+      platform.average_bid_request_size ??
+      default_consumer_device_request_size_bytes[channel]
+  client_side_data_transfer_bytes += default_consumer_device_request_size_bytes[channel]
+  client_side_data_transfer_bytes +=
+      get_platform_client_side_data_transfer(platform, platform.sends_client_side_requests)
+  server_side_data_transfer_bytes += 
+      get_platform_server_side_data_transfer(platform, platform.sends_client_side_requests)
+  
 ```
 
 ### Ad Selection - Data Transfer
 
 ```
-ad_selection_data_transfer_usage_emissions_gco2_per_imp =
-      data_transfer_bytes / 1000 x
+ad_selection_client_side_data_transfer_usage_emissions_gco2_per_imp =
+      client_side_data_transfer_bytes / 1000 x
       usage_kwh_per_gb / 1000000 x
       lookup_carbon_intensity_gco2e_per_kwh(country, region, utc_datetime)
 
-ad_selection_data_transfer_embodied_emissions_gco2_per_imp =
-      data_transfer_bytes / 1000 x
+ad_selection_client_side_data_transfer_embodied_emissions_gco2_per_imp =
+      client_side_data_transfer_bytes / 1000 x
       embodied_emissions_gco2e_per_kb
 
+ad_selection_server_side_data_transfer_emissions_gco2_per_imp =
+      server_side_data_transfer_bytes / 1000 x
+      default_server_to_server_kwh_per_gb / 1000000 x
+      lookup_carbon_intensity_gco2e_by_continent(country, region, utc_datetime)
+
 ad_selection_data_transfer_emissions_gco2_per_imp =
-      ad_selection_data_transfer_usage_emissions_gco2_per_imp +
-      ad_selection_data_transfer_embodied_emissions_gco2_per_imp
+      ad_selection_server_side_data_transfer_emissions_gco2_per_imp +
+      ad_selection_client_side_data_transfer_usage_emissions_gco2_per_imp +
+      ad_selection_client_side_data_transfer_embodied_emissions_gco2_per_imp
 ```
 
 ### Model Quality
