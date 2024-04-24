@@ -589,21 +589,26 @@ for platform in placement.ad_platforms:
 
 ```
 ad_selection_client_side_data_transfer_usage_emissions_gco2_per_imp =
-      client_side_data_transfer_bytes / 1000 x
-      usage_kwh_per_gb / 1000000 x
+      client_side_data_transfer_bytes / 1024 x
+      usage_kwh_per_gb / 1024 / 1024 x
       lookup_carbon_intensity_gco2e_per_kwh(country, region, utc_datetime)
 
 ad_selection_client_side_data_transfer_embodied_emissions_gco2_per_imp =
-      client_side_data_transfer_bytes / 1000 x
+      client_side_data_transfer_bytes / 1024 x
       embodied_emissions_gco2e_per_kb
 
-ad_selection_server_side_data_transfer_emissions_gco2_per_imp =
-      server_side_data_transfer_bytes / 1000 x
-      default_server_to_server_kwh_per_gb / 1000000 x
+ad_selection_server_side_data_transfer_usage_emissions_gco2_per_imp =
+      server_side_data_transfer_bytes / 1024 x
+      default_server_to_server_kwh_per_gb / 1024 / 1024 x
       lookup_carbon_intensity_gco2e_by_continent(country, region, utc_datetime)
 
+ad_selection_server_side_data_transfer_embodied_emissions_gco2_per_imp =
+      server_side_data_transfer_bytes / 1024 x
+      default_server_to_server_embodied_emissions_gco2e_per_kb
+
 ad_selection_data_transfer_emissions_gco2_per_imp =
-      ad_selection_server_side_data_transfer_emissions_gco2_per_imp +
+      ad_selection_server_side_data_transfer_usage_emissions_gco2_per_imp +
+      ad_selection_server_side_data_transfer_embodied_emissions_gco2_per_imp +
       ad_selection_client_side_data_transfer_usage_emissions_gco2_per_imp +
       ad_selection_client_side_data_transfer_embodied_emissions_gco2_per_imp
 ```

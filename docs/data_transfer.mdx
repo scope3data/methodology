@@ -81,7 +81,6 @@ The [SRI methodology](https://www.sri-france.org/wp-content/uploads/2023/06/SRI_
 The SRI methodology suggests a ratio of 90% fixed to 10% mobile. However, this ratio is not representative globally. The ITU publishes [research](https://datahub.itu.int) on fixed and mobile traffic by country. This indicates that for 2022 the weighted average of global traffic was 23.6% mobile. However, this research notably omits the US which is likely similar to other advanced economies in the 5% range, so we have added this to the dataset as an estimate (along with the 10% France number for SRI consistency).
 
 ## Server-to-server data transfer
+[Marion Ficher, Françoise Berthoud, Anne-Laure Ligozat, Patrick Sigonneau, Maxime Wisslé, et al.. Assessing the carbon footprint of the data transmission on a backbone network. 24th Conference on Innovation in Clouds, Internet and Networks, Mar 2021, Paris, France. hal-03196527](https://hal.science/hal-03196527)
 
-From [Cloud Carbon Footprint](https://www.cloudcarbonfootprint.org/docs/methodology#chosen-coefficient)
-
-"It is safe to assume hyper-scale cloud providers have a very energy efficient network between their data centers with their own optical fiber networks and submarine cable [source]. Data exchanges between data-centers are also done with a very high bitrate (~100 GbE -> 100 Gbps), thus being the most efficient use-case. Given these assumptions, we have decided to use the smallest coefficient available to date: 0.001 kWh/Gb. Again, we welcome feedback or contributions to improve this coefficient."
+Per Table III, a local request (which is the likely case for RTB where the round trip time needs to be ~10ms or less), and assuming a peak day as the majority of requests will be at peak, use phase emissions are 0.433 gCO2e/GB and embodied emissions are .0143 gCO2e/GB. To reverse the use phase to kWh we remove the emissions factor used (0.108 kgCO2e/kWh) and get 0.00401 kWh/GB.
