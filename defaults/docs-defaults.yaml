@@ -43,7 +43,7 @@ defaults:
     tv:
     - ctv-bvod
     - app
-  default_consumer_device_request_size_bytes:
+  default_client_side_device_request_size_bytes:
     app: 1000
     audio: 1000
     ctv-bvod: 0
@@ -269,6 +269,9 @@ defaults:
     social: 0.049000000
     streaming-video: 0.049000000
     web: 0.049000000
+  default_server_side_request_size_bytes: 1500
+  default_server_to_server_embodied_emissions_gco2e_per_kb: 0.000000136
+  default_server_to_server_kwh_per_gb: 0.004010000
   default_time_in_view_seconds: 6
   default_usage_kwh_per_gb:
     scope3:
