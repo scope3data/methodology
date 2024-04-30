@@ -3,11 +3,13 @@ Given the many layers of assumptions and allocations involved in modeling the em
 ## Model Quality Components
 
 Each modeled request should include:
+
 - Grid mix model quality (1-5)
-- Organization model quality (1-5) 
+- Organization model quality (1-5)
 - Property model quality (1-5)
 - Ad stack model quality (1-5)
-- Average ad platform / vendor quality (1-5)
+- Average ad platform quality (1-5)
+- Ad format model quality (1-5)
 - Input granularity score (1-5)
 
 ## Grid mix
@@ -26,11 +28,11 @@ Grid intensity can fluctuate significantly on an hourly basis due to the variabl
 
 Criteria for accurate sustainability data at the organization level:
 
-* An organization should provide a sustainability report that details its full carbon footprint, including scopes 1, 2, and all scope 3 categories. This report should clearly detail methodology for each category.
+- An organization should provide a sustainability report that details its full carbon footprint, including scopes 1, 2, and all scope 3 categories. This report should clearly detail methodology for each category.
 
-* Any adjustments to the calculations for RECs, PPAs, offsets, or carbon credits should detail exactly what was purchased, from whom, and on what timeframe. Location-based scope 2 data should always be provided.
+- Any adjustments to the calculations for RECs, PPAs, offsets, or carbon credits should detail exactly what was purchased, from whom, and on what timeframe. Location-based scope 2 data should always be provided.
 
-* A sustainability report should be published within 6 months of the end of the previous calendar year to be considered for sustainability purposes.
+- A sustainability report should be published within 6 months of the end of the previous calendar year to be considered for sustainability purposes.
 
 | Report element                  | Model Quality |
 | ------------------------------- | ------------- |
@@ -39,12 +41,12 @@ Criteria for accurate sustainability data at the organization level:
 | All scope 3 categories provided | +1 |
 | Lines of business broken out    | +1 |
 
-## Vendor / Ad Platform Quality
+## Ad Platform
 
-An ad platform should provide 1) requests received, 2) requests sent (traffic shaping), and 3) emissions data from datacenters or cloud providers. The vendor / ad platform score starts at 1 and increments based on the presence of various modeled components.
+An ad platform should provide 1) requests received, 2) requests sent (traffic shaping), and 3) emissions data from datacenters or cloud providers. The ad platform score starts at 1 and increments based on the presence of various modeled components.
 
-| Vendor data element               | Model Quality |
-| --------------------------------- | ------------- |
+| Ad platform data element               | Model Quality |
+| -------------------------------------- | ------------- |
 | Server emissions and request data | +1 |
 | Traffic shaping data              | +1 |
 | All data provided monthly         | +1 |
@@ -52,9 +54,9 @@ An ad platform should provide 1) requests received, 2) requests sent (traffic sh
 
 Example: A company provides annual server emissions, requests received, and traffic shaping data. This would be model quality 3.
 
-The average vendor model quality is the average score of all direct vendors that the property works with.
+The average ad platform model quality is the average score of all direct ad platforms that the property works with.
 
-## Property Activity
+## Property
 
 For media properties, key metrics include session time, session weight, and ad load. For OOH screens, the key metric is power draw. A measured metric is acquired on a per-property basis - for instance, using Google Analytics on a website or a power meter on a screen. An estimated or average metric uses a third-party source or historical averages to project key metrics, for instance, using screen size and type to model power usage.
 
@@ -68,14 +70,25 @@ For media properties, key metrics include session time, session weight, and ad l
 
 ## Ad Stack
 
-The accuracy of the ad stack used by the publisher for the placement depends on accurate representation of all direct and indirect vendors. The ad stack score starts at 1 and increments based on modeled components.
+The accuracy of the ad stack used by the publisher for the placement depends on accurate representation of all direct and indirect ad platforms. The ad stack score starts at 1 and increments based on modeled components.
 
 | Ad Stack Component                          | Model Quality |
 | ------------------------------------------- | ------------- |
 | Ad stack mapped via observed data           | +1            |
 | Ads.txt validated                           | +1            |
-| Vendors mapped to region, device, and format| +1            |
-| Placements mapped to GPID and vendors       | +1            |
+| Ad platforms mapped to region, device, and format| +1            |
+| Placements mapped to GPID and ad platform       | +1            |
+
+## Ad Format
+
+The ad format model should include all of elements included upon the initial render of the ad format. Advertiser-provided assets should be identified so that they can be replaced with actual data during the measurement process. All ad platforms that are part of the rendering process should be included, especially ad servers, real-time measurement providers, and video players.
+
+| Ad Format data element                                         | Model Quality |
+| -------------------------------------------------------------- | ------------- |
+| Technical specs provided                                       | +1            |
+| Media assets identified                                        | +1            |
+| All static assets measured and included                        | +1            |
+| Video player is identified and has model quality of at least 3 | +1            |
 
 ## Input granularity
 
@@ -126,6 +139,6 @@ Granularity % is the percentage of recommended input fields that are provided an
 | Ad format       | 320x50 banner  | yes     |
 | Creative weight | (omitted)      | no      |
 
-Input granularity percentage: 6/12 = 50% 
+Input granularity percentage: 6/12 = 50%
 
 Input granularity score: 2
