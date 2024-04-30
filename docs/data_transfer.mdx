@@ -84,3 +84,5 @@ The SRI methodology suggests a ratio of 90% fixed to 10% mobile. However, this r
 [Marion Ficher, Françoise Berthoud, Anne-Laure Ligozat, Patrick Sigonneau, Maxime Wisslé, et al.. Assessing the carbon footprint of the data transmission on a backbone network. 24th Conference on Innovation in Clouds, Internet and Networks, Mar 2021, Paris, France. hal-03196527](https://hal.science/hal-03196527)
 
 Per Table III, a local request (which is the likely case for RTB where the round trip time needs to be ~10ms or less), and assuming a peak day as the majority of requests will be at peak, use phase emissions are 0.433 gCO2e/GB and embodied emissions are .0143 gCO2e/GB. To reverse the use phase to kWh we remove the emissions factor used (0.108 kgCO2e/kWh) and get 0.00401 kWh/GB.
+
+According to the research, "All the devices of the network are built to handle a larger quantity of data, generally 50 times more. It is essential to maximize the traffic on them." This implies a utilization of around 2%. Large cloud and datacenter providers will operate at much higher utilization levels (~40%), so we need to adjust these numbers by a factor of approximately 20.
