@@ -55,6 +55,7 @@ defaults:
     app: phone
     audio: phone
     ctv-bvod: tv
+    dooh: tv
     social: phone
     streaming-video: tv
     web: pc
