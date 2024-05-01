@@ -42,6 +42,8 @@ defaults:
     - web
     tv:
     - ctv-bvod
+    - social
+    - audio
     - app
   default_consumer_device_request_size_bytes:
     app: 1000
