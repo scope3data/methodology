@@ -8,7 +8,7 @@ defaults:
     tv: 160
   default_average_data_kb_per_session_seconds_excluding_ads_by_channel:
     app: 29.500000000
-    social: 255.600000000
+    social: 38
     web: 1.011000000
   default_average_seconds_per_session_excluding_ads_by_channel:
     app: 140
@@ -266,7 +266,7 @@ defaults:
     audio: 0.049000000
     ctv-bvod: 0.049000000
     dooh: 0.049000000
-    social: 0.049000000
+    social: 0.150000000
     streaming-video: 0.049000000
     web: 0.049000000
   default_time_in_view_seconds: 6
