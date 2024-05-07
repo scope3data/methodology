@@ -61,7 +61,6 @@ import ChannelMappingDefaults from "/snippets/defaults_channel_mapping.mdx";
 | `video_player`           | Video player used to render video (if applicable)                                            |
 | `other_assets_bytes`     | Metadata, text, html, etc                                                                    |
 | `ad_platforms`           | Ad serving, verification, and measurement ad platforms wrapping or embedded in the ad format |
-| `is_3p_served`           | Does this ad format expect/support the creative to be served by a third party ad server      |
 
 #### Sample Ad Formats:
 
@@ -71,14 +70,12 @@ import ChannelMappingDefaults from "/snippets/defaults_channel_mapping.mdx";
 image_sizes = ['300x250']
 rendered_width_pixels = 300,
 rendered_height_pixels = 250
-is_3p_served = true
 ```
 
 30 second audio inserted into a podcast
 
 ```
 audio_duration_seconds = 30
-is_3p_served = false
 ```
 
 15 second outstream video
@@ -88,7 +85,6 @@ video_duration_seconds = 15;
 video_player = 'default',
 rendered_width_pixels = 500,
 rendered_height_pixels = 400
-is_3p_served = true
 ```
 
 Native product carousel
@@ -98,7 +94,6 @@ Native product carousel
   other_assets_bytes = 7321,
   rendered_height_pixels = 600,
   rendered_width_pixels = 450
-  is_3p_served = false
 ```
 
 ### Property
@@ -112,8 +107,8 @@ Native product carousel
 | `ad_funded_percentage`                          | Yes      | 0-100 The percentage of content funded by advertising (eg 50)                                  |
 | `allocated_adjusted_corporate_emissions_kgco2e` | Yes      | This property's share of corporate emissions                                                   |
 | `total_sessions`                                | Yes      | Number of sessions in the same time period as corporate emissions                              |
-| `organization_model_quality`                    | Yes      | Parent organization model quality (1-5) |
-| `model_quality`                                 | Yes      | Model quality (1-5) |
+| `organization_model_quality`                    | Yes      | Parent organization model quality (1-5)                                                        |
+| `model_quality`                                 | Yes      | Model quality (1-5)                                                                            |
 
 ### Ad Platform
 
@@ -131,9 +126,9 @@ Native product carousel
 
 ### Placement
 
-| Field           | Description                               |
-| --------------- | ----------------------------------------- |
-| `ad_platforms`  | The ad platforms called by this placement |
+| Field          | Description                               |
+| -------------- | ----------------------------------------- |
+| `ad_platforms` | The ad platforms called by this placement |
 
 ### Delivery Row
 
@@ -163,6 +158,7 @@ Native product carousel
 | `creative_video_view_time_seconds`         | Average time, in seconds, that a video is viewed                                                            |
 | `creative_video_view_rate`                 | Average percentage of a video that is viewed                                                                |
 | `creative_time_in_view_seconds`            | Time that the creative was visible on the device                                                            |
+| `creative_is_3p_served`                    | Is the ad format served by a third party ad server                                                          |
 
 ## Defaults
 
@@ -404,7 +400,7 @@ creative_data_transfer_embodied_emissions_gco2_per_imp =
 
 ```
 default_creative_platforms =
-      ad_format.is_3p_served ?
+      creative_is_3p_served ?
       [generic_creative_ad_server, generic_measurement_platform] :
       []
 creative_platforms = creative_ad_platforms ?? default_creative_platforms
