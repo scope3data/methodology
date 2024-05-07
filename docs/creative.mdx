@@ -22,8 +22,9 @@ The use phase of a creative has three areas of impact:
 
 To determine consumer device emissions we need to know whether the ad controls the user experience or is embedded into the user experience.
 
-- For an embedded placement - for instance, a banner ad on a web site, or a sponsored post in a social news feed - the energy use should be proportionate to the percentage of the consumer device used by the creative and the average time that the placement is in view.
-- For a ad-primary placement (standard TV/radio commercial, etc) the energy used by the consumer device during the display of the creative is determined by multiplying the duration of the creative by the energy use of the consumer device.
+- For a full screen or primary placement ad(standard TV/radio commercial, etc) the energy used by the consumer device during the display of the creative is determined by multiplying the duration of the creative by the energy use of the consumer device.
+
+- For an ad that is not full screen that is embedded in content- for instance, a banner ad on a web site, an autoplaying out-stream video, or a sponsored post in a social news feed - the energy use should be proportionate to the percentage of the consumer device used by the creative and the average time that the placement is in view. We assume a default of 6 seconds as the average time an embedded ad is in view.
 
 The time the ad is on the device multiplied by the percentage of the screen/device used by the creative is `device coverage-seconds`. The embodied emissions for the delivery of the creative are `(device coverage-seconds) x (embodied emissions per second)` and the usage emissions are `(device coverage-seconds) x (energy per second)`. See [consumer device methodology](./consumer_devices) for details on the per-device calculations.
 
@@ -40,15 +41,20 @@ For CTV, where the creative is typically inserted into the video stream, we use 
 
 For all other channels, we use the conventional model based on the payload of a creative (the number of bytes transferred to display the ad). We calculate the energy used per GB from the [data transfer methodology](./data_transfer) based on the network type.
 
-An ad format consists of:
+A modeled ad format consists of:
 
-- Static assets: anything that is not an video, including images, players, metadata, HTML, and Javascript.
+- Image assets: When modeling ad formats this includes all images that are downloaded on initial render and would include hero images, cover images, video first frames (for videos that do not autoplay) and logos. When a format is multi-image e.g. a carousel or story ad, if the format require user interaction to scroll then only the images visible on initial render are included. If the format autoplays then we ask for an average of the number of images used in the format.
+
 - Video assets: any video asset used to display the creative. Video assets are characterized by duration (the total length of the video) and bitrate (480P, 720P, or 1080P).
 
+- Additional Static assets: HTML, fonts, Javascript and CSS, SDK compiled code, and AR overlays. Does not include any advertiser-provided tags, trackers, or images/videos that were previously added.
+
 Some video players will stream video content, buffering a few seconds ahead of the user's position. We model streaming players using `min(placement average view time + buffer, duration) x min(default bitrate`. For instance, a 15s creative delivered through a streaming player that buffers 2s into a placement with 6s of average view time would be the equivalent of an 8s non-streaming creative.
+
+When the out-stream video player is unknown, Scope3 will apply a non-buffering default player, and the full duration of the video format will be recognized for data transfer.
 
 The total data transfer from a creative can be calculated as `static assets + video assets`.
 
 ### Vendor Emissions
 
-For each vendor that participates in delivering and tracking the creative, we need to calculate the emissions per creative delivery request. This is part of the [ad tech vendor methodology](./ad_tech_model).
+Measurement and verification vendors are considered to be part of the creative delivery of a format and not the ad format itself, so have been omitted from the modeling of custom ad formats.
