@@ -60,16 +60,27 @@ The average ad platform model quality is the average score of all direct ad plat
 
 ### Web, App, Social, CTV and Digital Audio properties
 
-For web, app, social, CTV and digital audio media properties, key metrics include session time, session weight, and ad load.
-An observed or measured metric is acquired on a per-property basis - for instance, using SimilarWeb or the publisher's own Google Analytics. An estimated or average metric is derived from publicly available information such as financial reports.
+For web, app, social, CTV and digital audio media properties, the three key metrics include session time, session weight, and ad load.
+These metrics can be extrapolated from other publicly shared metrics (such as Monthly Active Users, Revenue, etc.), or estimated by 3rd party tools that employ panels (such as SimilarWeb). They can also be observed through crawling and scraping, or measured directly by the publisher through tools like Google Analytics.
 
-| Property Metrics      | Geography | Model Quality |
-| --------------------- | --------- | ------------- |
-| Not available         | N/a       | 1             |
-| Average or estimated  | N/a       | 2             |
-| Observed by 3rd party | Global    | 3             |
-| 1st party measured    | Global    | 4             |
-| 1st party measured    | Regional  | 5             |
+| Property Metrics                | Example Data Source             | Model Quality |
+| ------------------------------- | ------------------------------- | ------------- |
+| Not available                   | N/a                             | 1             |
+| Extrapolated from other metrics | Yearly Financial Report         | 2             |
+| 3rd party estimated             | Panels                          | 3             |
+| Observed                        | Controlled Crawling or Scraping | 4             |
+| 1st party measured              | Publisher Analytics             | 5             |
+
+Each key metric’ model quality is evaluated separately, then the property’ model quality score is the lower closest integer (floor) of the sum of each key metric’ model quality score divided by 3.
+
+Example:
+| Metric | Example Data Source | Model Quality |
+| ----------------- | ----------------------| ------------- |
+| Session time | SimilarWeb | 3 |
+| Session weight | SimilarWeb | 3 |
+| Ad load | Publisher’ Google Ad Manager account | 5 |
+
+Property model quality score: (3+3+5) / 3 = 3.67 ⇒ 3
 
 ### DOOH screens
 
