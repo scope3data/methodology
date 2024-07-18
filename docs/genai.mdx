@@ -1,0 +1,43 @@
+# Generative AI
+
+# CO2 Intensity
+
+From [Jesse Dodge, Taylor Prewitt, Remi Tachet Des Combes, Erika Odmark, Roy Schwartz, Emma Strubell, Alexandra Sasha Luccioni, Noah A. Smith, Nicole DeCario, and Will Buchanan. 2022. Measuring the Carbon Intensity of AI in Cloud Instances. In 2022 ACM Conference on Fairness, Accountability, and Transparency (FAccT ’22), June 21–24, 2022, Seoul, Republic of Korea. ACM, New York, NY, USA, 18 pages.](https://dl.acm.org/doi/pdf/10.1145/3531146.3533234)
+
+As developed by the Green Software Foundation, the Software Carbon Intensity(SCI) is a rate, carbon emissions per one functional unit, or R. The equation used to calculate the SCI value of a software system is therefore:
+
+SCI = ((E * I) + M) per R
+
+where
+
+E = Energy consumed by a software system. Specifically, we focus on energy consumption of Graphical Processing Units, or GPUs. The units used are kilowatt-hours (kWh).
+
+I = Location-based marginal carbon emissions for the grid that powers the datacenter. WattTime provides measure- ments of grams of carbon dioxide equivalent per kilowatt- hour of electricity (gCO2eq/kWh)
+
+M = Embodied carbon (also referred to as “embedded car- bon”) is the amount of carbon emitted during the creation, usage, and disposal of a hardware device. When software runs on a device, a fraction of the total embodied emissions of the device is allocated to the software.
+
+R = Functional unit. In this instance, we are defining the functional unit as one machine learning training job, but it is extensible to other scenarios.
+
+Specifically, the SCI uses a "consequential" carbon accounting approach, which aims to quantify the marginal change in emissions caused by decisions or interventions.
+
+Thus in ML applications based on deep learning, the majority of the electricity consumption is due to the GPU... 74% of the total energy consumption.
+
+Data centers have a number of electricity uses that are important, but will not be covered by our tool. Accord- ing to the U.S. Department of Energy: “The electricity consumed in these data centers is mainly by the equipment (50%) and HVAC (25%–40%)” [47]. Such other sources of emissions can be accounted for using methods such as Power Usage Effectiveness (PUE), which can be used to describe the proportion of electricity consumption by the computing equipment vs. other sources.
+
+## Modeling Azure ND A100 v4-series GPU
+
+From [Andrew A. Chien, Liuzixuan Lin, Hai Nguyen, Varsha Rao, Tristan Sharma, and Rajini Wijayawardana. 2023. Reducing the Carbon Impact of Generative AI Inference (today and in 2035). In 2nd Workshop on Sustainable Computer Systems (HotCarbon ’23), July 9, 2023, Boston, MA, USA. ACM, New York, NY, USA, 7 pages.](https://dl.acm.org/doi/pdf/10.1145/3604930.3605705):
+
+𝑇𝐷𝑃 = 0.428 kW per GPU (1/8 of 3.43 kW for the instance) x 1.1 PUE
+
+𝑂𝐼 = 0.35 is TFLOPS per inference assuming GPT-3 model (around 175 billion weights) processed with BF16 operations. 
+
+𝐼𝑊 = 5 is the number of inferences per output word (assumed window/sampling of 5 for each output word)
+
+𝑊𝐶 is the output word count (measured average of 185 output words/request)
+
+𝐶 = 156 TFLOPS is the GPU capacity assuming 50% efficiency
+
+𝐸h𝑤 is per-GPU emission calculated as 1/8 of estimated per-instance emissions:
+𝐸h𝑤 = 1/8 (𝑃𝐹 +𝐸𝐺𝑃𝑈 +𝐸𝐶𝑃𝑈 +𝐸𝐷𝑅𝐴𝑀 +𝐸𝑆𝑆𝐷 +𝐸𝐻𝐷𝐷)
+where 𝑃𝐹 is IC packaging Carbon footprint while 𝐸𝐺𝑃𝑈 , 𝐸𝐶𝑃𝑈 , 𝐸𝐷𝑅𝐴𝑀, 𝐸𝑆𝑆𝐷, and 𝐸𝐻𝐷𝐷 are GPU, CPU, memory, and storage emissions, respectively. We estimate these emissions based on previous reports [26] and instance hardware specifications [1, 3, 11], yielding 𝐸h𝑤 = 318 kgCO2 per GPU
