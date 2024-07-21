@@ -46,6 +46,13 @@
         "data_quality",
         "calculations"
       ]
+    },
+    {
+      "group": "Generative AI",
+      "pages": [
+        "overview",
+        "training"
+      ]
     }
   ],
   "footerSocials": {
