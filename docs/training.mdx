@@ -1,0 +1,136 @@
+---
+title: "Training"
+description: "Methodology for calculating the normalized, amortized emissions from training AI models"
+---
+
+## Overview
+
+We need to model the environmental impact of the computation for the trained model. The training costs of genAI models are often disclosed in some form. These costs must be normalized and then amortized across the expected use-life of the model.
+
+The key components of the training cost of the model include:
+- The operational energy used to train the final model
+- The operational energy used to train intermediate and preliminary models
+- The embodied emissions from the cluster used to train all models, including hardware reserved but not actively deployed
+- (Allocated emissions from generation of the training and test data)
+- (Allocated operational and embodied emissions of development and testing infrastructure)
+
+## Disclosure of training costs
+
+To fully assess the environmental impact of a large language model (LLM), model developers should disclose the technical infrastructure used for training and how this infrastructure was engaged during the training process.
+
+Infrastructure data:
+- GPU manufacturer, model, and specs
+- Server manufacturer, model, and specs - if hosted in a cloud, what instance type
+- Number of GPUs in the cluster
+- Number of servers in the cluster
+- Training cluster location(s) - if hosted in a cloud, which region(s)
+
+Operational data:
+- Total reserved/owned wall clock time for intermediate and final model training
+- GPU hours for intermediate model training
+- GPU hours for final model training
+
+### Example disclosure
+
+As an example of a relatively complete disclosure, see [Sasha Luccioni, Sylvain Viguier, and Anne-Laure Ligozat. 2022. Estimating the carbon footprint of Bloom, a 176B parameter language model.](https://arxiv.org/pdf/2211.02001): "We estimate that BLOOM’s final training emitted approximately 24.7 tonnes of CO2eq if we consider only the dynamic power consumption, and 50.5 tonnes if we account for all processes ranging from equipment manufacturing to energy-based operational consumption."
+
+Infrastructure data
+
+| Component | Disclosed data |
+| --------- | -------------- |
+| GPU | Nvidia A100 80GB |
+| Server | HPE Apollo 6500 Gen10 Plus |
+| Number of GPUs | 384 |
+| Number of servers | 48 |
+| Training location | France |
+
+Training data
+
+| Component | Disclosed data |
+| --------- | -------------- |
+| Total reserved time | 118 days |
+| Reservation start time | January 2022 (?) |
+| GPU hours for final model | 1,082,990 |
+| GPU hours for intermediate models | ? |
+
+## Normalization of disclosed data
+
+When disclosed data is not present or not complete, we need to use predictive or heuristic data to fill in the gaps.
+
+| Missing data point | Mechanism to replace |
+| - | - |
+| GPU model | Use the most common GPU for the training year (for instance, 2022 is Nvidia A100) |
+| Server model | Use the most common server or instance type for the training year |
+| GPUs used | Use the average cluster size for similar models |
+| Servers used | Divide GPUs used by average GPUs per server |
+| Location | Assume US average if not disclosed | 
+| Total reserved time | Use the average ratio of reserved time to GPU hours |
+| Reservation start time | Use the published model date minus the total reserved time |
+| GPU hours for final model | Predict using parameters, architecture, and training year |
+| GPU hours for intermediate models | Predict based on ratio of final to intermediate for other disclosed models |
+
+### Example normalization
+
+TODO
+
+## Calculation of carbon emissions
+
+To calculate CO2 emissions, we use the [Software Carbon Intensity formula](https://localhost:3000/overview#co2-intensity). We need a few data points:
+
+- The embodied emissions of the server used for training
+- The embodied emissions of the GPU used for training
+- The total power draw of the GPU used for training
+- The total power draw of the server used for training aside from the GPUs
+- The carbon intensity of the grid in the training location(s) during the training time period
+- The projected use life of the servers (including their GPUs) used for training
+- The projected utilization of the servers used for training, noting that utilization means "time reserved" not "time active"
+
+The training emissions will be:
+
+```
+GPU embodied emissions = (number of GPUs) x (GPU embodied emissions) x (training time) / (use life x utilization)
+Server embodied emissions = (number of servers) x (server embodied emissions) x (training time) / (use life x utilization)
+Usage energy per GPU = (GPU power draw) + (server power draw) / (GPUs per server)
+Usage emissions = (usage energy per GPU) x (total GPU hours) x (average grid intensity during training)
+```
+
+### Example carbon calculation
+
+For the BLOOM model described above:
+
+| Component | Value |
+| --------- | -------------- |
+| Server embodied emissions | [2500 kgCO2e](https://www.hpe.com/psnow/doc/a50005151enw) for similar model |
+| GPU embodied emissions | [318 kgCO2e](https://localhost:3000/overview#modeling-azure-nd-a100-v4-series-gpu) |
+| Usage energy per GPU | [428 W](https://localhost:3000/overview#modeling-azure-nd-a100-v4-series-gpu) |
+| Datacenter PUE | 1.1 (Google average) |
+| Grid intensity | 57 kgCO2e / kWh |
+| Server use life | 4 years given rapid pace of change in GPU market |
+| Projected utilization | 95% given intense demand for GPUs |
+
+This produces:
+
+```
+GPU embodied emissions = (384) x (318 kgCO2e) x (0.323 years) / (4 years x 0.95) = 10,380 kgCO2e
+Server embodied emissions = (48) x (2500 kgCO2e) x (0.323 years) / (4 years x 0.95) = 10,200 kgCO2e
+Usage energy per GPU = 428 W
+Usage emissions = (0.428 kW) x (1,082,990 hours) x (57 gCO2e/kWh) = 26,421 kgCO2e
+```
+
+Note that this calculation produces a higher estimate for embodied emissions than the 11.2 mtCO2e in the BLOOM paper referenced above for three reasons. First, the embodied emissions for the A100 are higher based on a more detailed paper. Second, we use a shorter use life as hardware efficiency is increasing extremely quickly in the AI space and these servers will be obsolete more quickly than general-purpose servers. Third, we use a higher utilization number based on increased demand for GPUs.
+
+## Calculation of water impact
+
+TODO
+
+### Example of water impact calculation
+
+TODO
+
+## Amortization of impact across use life
+
+TODO
+
+### Example of amortization
+
+TODO
