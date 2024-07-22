@@ -51,7 +51,8 @@
       "group": "Generative AI",
       "pages": [
         "overview",
-        "training"
+        "training",
+        "inference"
       ]
     }
   ],

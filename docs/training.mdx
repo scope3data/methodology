@@ -63,15 +63,17 @@ When disclosed data is not present or not complete, we need to use predictive or
 | Server model | Use the most common server or instance type for the training year |
 | GPUs used | Use the average cluster size for similar models |
 | Servers used | Divide GPUs used by average GPUs per server |
-| Location | Assume US average if not disclosed | 
+| Location | Use the US as a relatively high-carbon country |
+| Datacenter PUE | Use location average |
+| Datacenter WUE | Use location average |
 | Total reserved time | Use the average ratio of reserved time to GPU hours |
 | Reservation start time | Use the published model date minus the total reserved time |
 | GPU hours for final model | Predict using parameters, architecture, and training year |
 | GPU hours for intermediate models | Predict based on ratio of final to intermediate for other disclosed models |
 
-### Example normalization
+### Example normalization: BLOOM 176B
 
-TODO
+The BLOOM paper includes most of the required parameters for carbon emissions. However, it does not include data for water consumption. We use the fallbacks for the missing data points in the calculations below.
 
 ## Calculation of carbon emissions
 
@@ -101,8 +103,8 @@ For the BLOOM model described above:
 | Component | Value |
 | --------- | -------------- |
 | Server embodied emissions | [2500 kgCO2e](https://www.hpe.com/psnow/doc/a50005151enw) for similar model |
-| GPU embodied emissions | [318 kgCO2e](https://localhost:3000/overview#modeling-azure-nd-a100-v4-series-gpu) |
-| Usage energy per GPU | [428 W](https://localhost:3000/overview#modeling-azure-nd-a100-v4-series-gpu) |
+| GPU embodied emissions | [318 kgCO2e](https://dl.acm.org/doi/pdf/10.1145/3604930.3605705) |
+| Usage energy per GPU | [428 W](https://dl.acm.org/doi/pdf/10.1145/3604930.3605705) |
 | Datacenter PUE | 1.1 (Google average) |
 | Grid intensity | 57 kgCO2e / kWh |
 | Server use life | 4 years given rapid pace of change in GPU market |
@@ -121,15 +123,38 @@ Note that this calculation produces a higher estimate for embodied emissions tha
 
 ## Calculation of water impact
 
-TODO
+The water impact of training includes:
+- The water consumed to cool the servers during the training period (using the "water utilization efficiency" or WUE of the datacenter)
+- The water consumed to produce the electricity used by the servers
+- The water consumed to produce the chips and servers
 
-### Example of water impact calculation
+The water impact is calculated by:
+```
+Datacenter water consumption = (Usage energy per GPU) x (total GPU hours) x (datacenter WUE)
+Electricity water consumption = (Usage energy per GPU) x (total GPU hours) x (electricity WUE)
+Manufacturing water consumption = (Water consumption per GPU) x (total GPUs)
+```
 
-TODO
+### Example of water impact calculation for BLOOM 176B
+
+| Component | Value |
+| --------- | ----- |
+| Datacenter WUE |  5 L/kWh (average of water paper |
+| Electricity WUE |  [3.67 L/kWh](https://files.wri.org/d8/s3fs-public/guidance-calculating-water-use-embedded-purchased-electricity_0.pdf) |
+| Manufacturing WUE | 112 L/chip |
+
+This produces:
+```
+Datacenter H2O = (0.428 kW) x (1,082,990 hours) x 5 L/kWh = 2317.6 kL
+Electricity H20 = (0.428 kW) x (1,082,990 hours) x 3.67 L/kWh = 1701.1 kL
+Manufacturing H20 = (112 L/chip) x (384 chips) = 43.0 kL
+```
 
 ## Amortization of impact across use life
 
-TODO
+A foundational model is likely to be used heavily for a period of time then made obsolete by newer models that are more effective and/or more efficient. The current use life of a model appears to be 6 to 12 months.
+
+Since there is no way to predict the number of inferences for a model or the effectively use life, we propose that each model set a predicted use life and predicted inference volume. On a regular basis, the 
 
 ### Example of amortization
 

@@ -1,0 +1,25 @@
+---
+title: "Inference"
+---
+
+
+## Modeling Azure ND A100 v4-series GPU
+
+From [Andrew A. Chien, Liuzixuan Lin, Hai Nguyen, Varsha Rao, Tristan Sharma, and Rajini Wijayawardana. 2023. Reducing the Carbon Impact of Generative AI Inference (today and in 2035). In 2nd Workshop on Sustainable Computer Systems (HotCarbon ’23), July 9, 2023, Boston, MA, USA. ACM, New York, NY, USA, 7 pages.](https://dl.acm.org/doi/pdf/10.1145/3604930.3605705):
+
+𝑇𝐷𝑃 = 0.428 kW per GPU (1/8 of 3.43 kW for the instance) x 1.1 PUE
+
+𝑂𝐼 = 0.35 is TFLOPS per inference assuming GPT-3 model (around 175 billion weights) processed with BF16 operations. 
+
+𝐼𝑊 = 5 is the number of inferences per output word (assumed window/sampling of 5 for each output word)
+
+𝑊𝐶 is the output word count (measured average of 185 output words/request)
+
+𝐶 = 156 TFLOPS is the GPU capacity assuming 50% efficiency
+
+𝐸h𝑤 is per-GPU emission calculated as 1/8 of estimated per-instance emissions:
+𝐸h𝑤 = 1/8 (𝑃𝐹 +𝐸𝐺𝑃𝑈 +𝐸𝐶𝑃𝑈 +𝐸𝐷𝑅𝐴𝑀 +𝐸𝑆𝑆𝐷 +𝐸𝐻𝐷𝐷)
+where 𝑃𝐹 is IC packaging Carbon footprint while 𝐸𝐺𝑃𝑈 , 𝐸𝐶𝑃𝑈 , 𝐸𝐷𝑅𝐴𝑀, 𝐸𝑆𝑆𝐷, and 𝐸𝐻𝐷𝐷 are GPU, CPU, memory, and storage emissions, respectively. We estimate these emissions based on previous reports [26] and instance hardware specifications [1, 3, 11], yielding 𝐸h𝑤 = 318 kgCO2 per GPU
+
+### Water Use
+44.8 L/8" wafer-layer (2015 data)
