@@ -22,4 +22,37 @@ From [Andrew A. Chien, Liuzixuan Lin, Hai Nguyen, Varsha Rao, Tristan Sharma, an
 where 𝑃𝐹 is IC packaging Carbon footprint while 𝐸𝐺𝑃𝑈 , 𝐸𝐶𝑃𝑈 , 𝐸𝐷𝑅𝐴𝑀, 𝐸𝑆𝑆𝐷, and 𝐸𝐻𝐷𝐷 are GPU, CPU, memory, and storage emissions, respectively. We estimate these emissions based on previous reports [26] and instance hardware specifications [1, 3, 11], yielding 𝐸h𝑤 = 318 kgCO2 per GPU
 
 ### Water Use
-44.8 L/8" wafer-layer (2015 data)
+Water consumption per wafer-layer (Liter/12-inch equivalent wafer mask layer) from [TSMC 2022 ESG report](https://esg.tsmc.com/en-US/file/public/e-all_2022.pdf)
+
+With the help of Claude 3.5 Sonnet:
+
+1. Given information:
+   - Water consumption: 137.3 L per 12-inch equivalent wafer mask layer
+   - A100 (GA100) die size: 826 mm² or 8.26 cm²
+
+2. Area of a 12-inch wafer:
+   - 12 inches = 30.48 cm
+   - Area of 12" wafer = π * (30.48/2)² ≈ 729.66 cm²
+
+3. Estimated A100 chips per wafer:
+   - 729.66 cm² / 8.26 cm² ≈ 88.34 chips
+   - Accounting for edge wastage, let's estimate 70 chips per wafer
+
+4. Water use per chip per layer:
+   - 137.3 L / 70 chips ≈ 1.96 L per chip per layer
+
+5. Estimated number of layers:
+   - For a 7nm process chip like the A100, let's assume 75 layers
+
+6. Estimated total water use per A100 chip:
+   - 1.96 L * 75 layers ≈ 147 L per A100 chip
+
+Based on this calculation, each A100 chip might require approximately 147 liters of water in its manufacturing process.
+
+Caveats:
+- This is an estimate based on average water use per wafer layer.
+- It doesn't account for potential water recycling or specific process variations.
+- The actual number of layers may differ.
+- Additional water use in other manufacturing steps is not included.
+
+For a more precise figure, you'd need detailed information from NVIDIA or their manufacturing partners about the specific processes used for the A100.

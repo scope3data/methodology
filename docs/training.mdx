@@ -141,21 +141,87 @@ Manufacturing water consumption = (Water consumption per GPU) x (total GPUs)
 | --------- | ----- |
 | Datacenter WUE |  5 L/kWh (average of water paper |
 | Electricity WUE |  [3.67 L/kWh](https://files.wri.org/d8/s3fs-public/guidance-calculating-water-use-embedded-purchased-electricity_0.pdf) |
-| Manufacturing WUE | 112 L/chip |
+| Manufacturing WUE | 147 L/chip |
 
 This produces:
 ```
 Datacenter H2O = (0.428 kW) x (1,082,990 hours) x 5 L/kWh = 2317.6 kL
 Electricity H20 = (0.428 kW) x (1,082,990 hours) x 3.67 L/kWh = 1701.1 kL
-Manufacturing H20 = (112 L/chip) x (384 chips) = 43.0 kL
+Manufacturing H20 = (147 L/chip) x (384 chips) = 56.5 kL
 ```
 
 ## Amortization of impact across use life
 
-A foundational model is likely to be used heavily for a period of time then made obsolete by newer models that are more effective and/or more efficient. The current use life of a model appears to be 6 to 12 months.
+A general-purpose language model is likely to be used heavily for a period of time then made obsolete by newer models that are more effective and/or more efficient. Specialized models may have longer use lives. Open source models enable fine tuning that will create stickiness for ongoing use.
 
-Since there is no way to predict the number of inferences for a model or the effectively use life, we propose that each model set a predicted use life and predicted inference volume. On a regular basis, the 
+Each model should have a projected use life and track the actual and projected number of inferences for each month during that use life. As actual inference numbers are calculated each month, the projections for the remaining use life should be updated. Since actual inference numbers are sensitive, the model developer could publish the percent of amortizated training cost remaining.
+
+### Amortization schedule tables
+
+Initial amortization schedule
+
+PI means the total projected inferences
+N means the total use life in months
+TC means the total training cost 
+
+| Data point                           | Month 1     | Month 2           | Month 3         | ... | Month N |
+| ------------------------------------ | ----------- | ----------------- | --------------- | --- | ------- |
+| Remaining use life                   | N           | N - 1             | N - 2           |     | 0       |
+| Training cost remaining (TCR)        | TC          | TC - TC / N       | TC - 2 x TC / N |     | 0       |
+| Projected inferences remaining (PCR) | PI          | PI x (N - 1)      | PI X (N - 2)    |     | 0       |
+| Training cost per inference (TPI)    | TCR1 / PCR1 | TCR2 / PCR2       | TCR3 / PCR3     |     | 0       |
+| Training cost "billed" (TCB)         | TC/N x TPI  | TCB1 + TC/N x TPI |                 |     | TC      |
+
+Amortization schedule after month 1
+
+| Data point                           | Month 1     | Month 2          | Month 3           | ... | Month N |
+| ------------------------------------ | ----------- | ---------------- | ----------------- | --- | ------- |
+| Remaining use life                   | N           | N - 1            | N - 2             |     | 0       |
+| Training cost remaining (TCR)        | TC          | TC - TCB1        | TC - TCB2         |     | 0       |
+| Projected inferences remaining (PCR) | PI          | AI1 x (N - 1)    | AI1 x (N - 2)     |     | 0       |
+| Training cost per inference (TPI)    | TCR1 / PCR1 | TCR2 / PCR2      | TCR3 / PCR3       |     | TC / PI |
+| Actual inferences                    | AI1         |                  |                   |     |         |
+| Training cost "billed" (TCB)         | AI1 x TPI   | TCB1 + AI2 x TPI |                   |     | TC      |
+ 
+We propose the following framework:
+1. Models should have a projected use life based on time to obsolence
+2. Models should have a projected number of inferences to be performed during that use life
+3. An amort
+3. Each month, the model should update this amortization schedule with the actual number of inferences and rellocate the remainder
+4. Rather than share the actual and projected inferences, the model 
+
+### Open Questions
+
+- How to estimate projected inferences and use life for a new model (vs an upgrade)
+- How to estimate actual inferences for a closed model that doesn't disclose usage
+- How to estimate actual inferences for an open source model like LLAMA where the use is not happening in a centralized fashion
 
 ### Example of amortization
 
-TODO
+Traffic to ChatGPT was [relatively flat](https://uk.pcmag.com/ai/152411/openais-gpt-4o-gives-chatgpt-a-big-traffic-bump) from April 2023 to April 2024, averaging around 50M visits a day.  Assuming [5 queries per visit and 925 inferences per query](https://dl.acm.org/doi/pdf/10.1145/3604930.3605705), this would represent 7T inferences per month.
+
+With the impending release of GPT-4o, a reasonable projection would be that traffic would continue at the same rate, and that the model lifecycle would be around a year given the 14-month gap between GPT-4 and GPT-4o.
+
+The initial amortization schedule would look like:
+
+| Data point                           | Month 1     | Month 2 | Month 3 | ... | Month 14 |
+| ------------------------------------ | ----------- | ------- | ------- | --- | -------- |
+| Remaining use life                   | 14          | 13      | 12      |     | 0        |
+| Training cost remaining (TCR)        | 46 mt       | 43 mt   | 39 mt   |     | 0        | 
+| Projected inferences remaining (PCR) | 98T         | 91      | 84      |     | 0        |
+| Training cost per inference (TPI)    | .46g/Mq     | .46g/Mq | .46g/Mq |     | 0        |
+| Training cost "billed" (TCB)         | 3 mt        | 3 mt    | 3 mt    |     | 0        |
+
+What actually happened was that thanks to the new model, traffic to chatgpt.com increased by 55% in June 2024 after the release of GPT-4o.
+
+| Data point                           | Month 1     | Month 2 | Month 3 | ... | Month 14 |
+| ------------------------------------ | ----------- | ------- | ------- | --- | -------- |
+| Remaining use life                   | 14          | 13      | 12      |     | 0        |
+| Training cost remaining (TCR)        | 46 mt       | 41 mt   | 38 mt   |     | 0        | 
+| Projected inferences remaining (PCR) | 98T         | 143T    | 132T    |     | 0        |
+| Training cost per inference (TPI)    | .46g/Mq     | .28g/Mq | .28g/Mq |     | 0        |
+| Actual inferences                    | 11T         |         |         |     |          |
+| Training cost "billed" (TCB)         | 5 mt        |         |         |     |          |
+
+The spike in traffic means that the model was effectively overbilled in month 1, making the projected training cost per inference much lower thanks to higher projected volume and the lower remaining training cost.
+
