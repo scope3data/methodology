@@ -14,15 +14,16 @@ The key components of the training cost of the model include:
 - (Allocated emissions from generation of the training and test data)
 - (Allocated operational and embodied emissions of development and testing infrastructure)
 
+[Carbon Emissions and Large Neural Network Training](https://arxiv.org/pdf/2104.10350) includes a table that shows the impact of changing the model, the datacenter, the gpu, and the energy grid in training a model:
+
+![Table of training costs](images/table1_carbon_emissions.png)
+
 ## Disclosure of training costs
 
 To fully assess the environmental impact of a large language model (LLM), model developers should disclose the technical infrastructure used for training and how this infrastructure was engaged during the training process.
 
 Infrastructure data:
-- GPU manufacturer, model, and specs
-- Server manufacturer, model, and specs - if hosted in a cloud, what instance type
-- Number of GPUs in the cluster
-- Number of servers in the cluster
+- [Training cluster](/cluster) details
 - Training cluster location(s) - if hosted in a cloud, which region(s)
 
 Operational data:
@@ -68,7 +69,7 @@ When disclosed data is not present or not complete, we need to use predictive or
 | Datacenter WUE | Use location average |
 | Total reserved time | Use the average ratio of reserved time to GPU hours |
 | Reservation start time | Use the published model date minus the total reserved time |
-| GPU hours for final model | Predict using parameters, architecture, and training year |
+| GPU hours for final model | Predict using parameters and architecture per [OpenCarbonEval](https://arxiv.org/pdf/2405.12843) |
 | GPU hours for intermediate models | Predict based on ratio of final to intermediate for other disclosed models |
 
 ### Example normalization: BLOOM 176B
@@ -79,21 +80,18 @@ The BLOOM paper includes most of the required parameters for carbon emissions. H
 
 To calculate CO2 emissions, we use the [Software Carbon Intensity formula](https://localhost:3000/overview#co2-intensity). We need a few data points:
 
-- The embodied emissions of the server used for training
-- The embodied emissions of the GPU used for training
-- The total power draw of the GPU used for training
-- The total power draw of the server used for training aside from the GPUs
+- The [usage energy per GPU hour](/cluster#energy-perone-gpu-hour) for the cluster
+- The [embodied emissions per reserved hour](/cluster#embodied-emissions) for the cluster
 - The carbon intensity of the grid in the training location(s) during the training time period
-- The projected use life of the servers (including their GPUs) used for training
-- The projected utilization of the servers used for training, noting that utilization means "time reserved" not "time active"
 
 The training emissions will be:
 
 ```
-GPU embodied emissions = (number of GPUs) x (GPU embodied emissions) x (training time) / (use life x utilization)
-Server embodied emissions = (number of servers) x (server embodied emissions) x (training time) / (use life x utilization)
-Usage energy per GPU = (GPU power draw) + (server power draw) / (GPUs per server)
-Usage emissions = (usage energy per GPU) x (total GPU hours) x (average grid intensity during training)
+Total emissions = (embodied emissions) + (usage emissions)
+
+Embodied emissions = (cluster embodied emissions per hour) x (training time)
+
+Usage emissions = (usage energy per GPU-hour) x (total GPU hours) x (average grid intensity during training)
 ```
 
 ### Example carbon calculation
@@ -110,13 +108,30 @@ For the BLOOM model described above:
 | Server use life | 4 years given rapid pace of change in GPU market |
 | Projected utilization | 95% given intense demand for GPUs |
 
-This produces:
+Modeling the cluster produces:
+```
+E(gpu-h) = (.428 kW) x (1.1)
+         = .471 kW
+
+EmbEm(h) = ((384 GPUs) x (318 kgCO2e/GPU) +
+             (48 servers) x (2500 kgCO2e/server))
+            / (4 years)
+            / (8760 hours/year)
+            / (95% utilization)
+         = 7.27 kgCO2e/hour
 
 ```
-GPU embodied emissions = (384) x (318 kgCO2e) x (0.323 years) / (4 years x 0.95) = 10,380 kgCO2e
-Server embodied emissions = (48) x (2500 kgCO2e) x (0.323 years) / (4 years x 0.95) = 10,200 kgCO2e
-Usage energy per GPU = 428 W
-Usage emissions = (0.428 kW) x (1,082,990 hours) x (57 gCO2e/kWh) = 26,421 kgCO2e
+
+For 1,082,990 GPU hours and 2832 hours (118 days) of training time, training emissions were:
+
+```
+EmbEm(training) = (7.27 kgCO2e/h) x (2832 h)
+                = 20,589 kgCO2e
+
+OpEm(training)  = (.471 kW) x (1082990 h) x (57 kgCOw2/kWh)
+                = 29,075 kgCO2e
+
+Em(training)    = 49.7 mtCO2e
 ```
 
 Note that this calculation produces a higher estimate for embodied emissions than the 11.2 mtCO2e in the BLOOM paper referenced above for three reasons. First, the embodied emissions for the A100 are higher based on a more detailed paper. Second, we use a shorter use life as hardware efficiency is increasing extremely quickly in the AI space and these servers will be obsolete more quickly than general-purpose servers. Third, we use a higher utilization number based on increased demand for GPUs.
@@ -132,7 +147,7 @@ The water impact is calculated by:
 ```
 Datacenter water consumption = (Usage energy per GPU) x (total GPU hours) x (datacenter WUE)
 Electricity water consumption = (Usage energy per GPU) x (total GPU hours) x (electricity WUE)
-Manufacturing water consumption = (Water consumption per GPU) x (total GPUs)
+Manufacturing water consumption = (Cluster embodied H2O per hour) x (total training hours)
 ```
 
 ### Example of water impact calculation for BLOOM 176B
@@ -141,13 +156,22 @@ Manufacturing water consumption = (Water consumption per GPU) x (total GPUs)
 | --------- | ----- |
 | Datacenter WUE |  5 L/kWh (average of water paper |
 | Electricity WUE |  [3.67 L/kWh](https://files.wri.org/d8/s3fs-public/guidance-calculating-water-use-embedded-purchased-electricity_0.pdf) |
-| Manufacturing WUE | 147 L/chip |
+| Manufacturing WUE | 147 L/GPU |
+
+Modeling the cluster produces:
+```
+EmbH2O(h) = ((384 GPUs) x (147 L/GPU))
+            / (4 years)
+            / (8760 hours/year)
+            / (95% utilization)
+          = 1.7 L/h
+```
 
 This produces:
 ```
 Datacenter H2O = (0.428 kW) x (1,082,990 hours) x 5 L/kWh = 2317.6 kL
 Electricity H20 = (0.428 kW) x (1,082,990 hours) x 3.67 L/kWh = 1701.1 kL
-Manufacturing H20 = (147 L/chip) x (384 chips) = 56.5 kL
+Manufacturing H20 = (2832 h) x (1.7 L/h) = 4.8 kL
 ```
 
 ## Amortization of impact across use life
@@ -183,13 +207,6 @@ Amortization schedule after month 1
 | Actual inferences                    | AI1         |                  |                   |     |         |
 | Training cost "billed" (TCB)         | AI1 x TPI   | TCB1 + AI2 x TPI |                   |     | TC      |
  
-We propose the following framework:
-1. Models should have a projected use life based on time to obsolence
-2. Models should have a projected number of inferences to be performed during that use life
-3. An amort
-3. Each month, the model should update this amortization schedule with the actual number of inferences and rellocate the remainder
-4. Rather than share the actual and projected inferences, the model 
-
 ### Open Questions
 
 - How to estimate projected inferences and use life for a new model (vs an upgrade)

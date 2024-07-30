@@ -1,58 +1,63 @@
 ---
 title: "Inference"
+description: "Methodology for calculating the amortized emissions from executing inference on AI models"
 ---
 
+## Overview
 
-## Modeling Azure ND A100 v4-series GPU
+To model inference requires understanding the emissions per inference for a model on a particular host given certain parameters. There are *many* factors that determine how a model is executed including [batching strategies](https://www.anyscale.com/blog/continuous-batching-llm-inference#continuous-batching), [paged attention](https://blog.vllm.ai/2023/06/20/vllm.html), and optimizations like quantization. The intention of this methodology is to provide a framework that both calculates and predicts the emissions cost of inference with the flexibility to include future optimizations as they appear.
 
-From [Andrew A. Chien, Liuzixuan Lin, Hai Nguyen, Varsha Rao, Tristan Sharma, and Rajini Wijayawardana. 2023. Reducing the Carbon Impact of Generative AI Inference (today and in 2035). In 2nd Workshop on Sustainable Computer Systems (HotCarbon ’23), July 9, 2023, Boston, MA, USA. ACM, New York, NY, USA, 7 pages.](https://dl.acm.org/doi/pdf/10.1145/3604930.3605705):
+The most accurate way to calculate inference emissions is to measure the actual energy use of the model running on real-world hardware. This is rarely possible. Using a controlled hardware environment for model testing, for instance as proposed by [Efficiency Pentathlon: A Standardized Arena for Efficiency Evaluation](https://arxiv.org/pdf/2307.09701), will not account for optimizations built for specific production hardware or real-world workloads.
 
-𝑇𝐷𝑃 = 0.428 kW per GPU (1/8 of 3.43 kW for the instance) x 1.1 PUE
+Inference speed may be limited by the framework or by compute. Maximum performance will be achieved when models are not limited by [framework overhead](https://arxiv.org/pdf/2302.06117).
 
-𝑂𝐼 = 0.35 is TFLOPS per inference assuming GPT-3 model (around 175 billion weights) processed with BF16 operations. 
+## Characterizing an inference job
 
-𝐼𝑊 = 5 is the number of inferences per output word (assumed window/sampling of 5 for each output word)
+### Model
 
-𝑊𝐶 is the output word count (measured average of 185 output words/request)
+The model is defined by various parameters:
+- The base model used including the current [amortized training cost per inference](/training#amortization-of-impact-across-use-life)
+- The current amortized fine-tuning cost per inference if applicable
+- Quantization or other optimizations applied to the model
+- The task being performed (eg image generation, text generation, text to speech, speech to text)
 
-𝐶 = 156 TFLOPS is the GPU capacity assuming 50% efficiency
+### Technical infrastructure
 
-𝐸h𝑤 is per-GPU emission calculated as 1/8 of estimated per-instance emissions:
-𝐸h𝑤 = 1/8 (𝑃𝐹 +𝐸𝐺𝑃𝑈 +𝐸𝐶𝑃𝑈 +𝐸𝐷𝑅𝐴𝑀 +𝐸𝑆𝑆𝐷 +𝐸𝐻𝐷𝐷)
-where 𝑃𝐹 is IC packaging Carbon footprint while 𝐸𝐺𝑃𝑈 , 𝐸𝐶𝑃𝑈 , 𝐸𝐷𝑅𝐴𝑀, 𝐸𝑆𝑆𝐷, and 𝐸𝐻𝐷𝐷 are GPU, CPU, memory, and storage emissions, respectively. We estimate these emissions based on previous reports [26] and instance hardware specifications [1, 3, 11], yielding 𝐸h𝑤 = 318 kgCO2 per GPU
+The datacenter:
+- PUE
+- WUE
+- Physical location (which grid)
+- On-site generation and storage (impacts 247 CFE analysis)
 
-### Water Use
-Water consumption per wafer-layer (Liter/12-inch equivalent wafer mask layer) from [TSMC 2022 ESG report](https://esg.tsmc.com/en-US/file/public/e-all_2022.pdf)
+The servers:
+- Usage energy (W)
+- Embodied emissions
+- GPUs per server
 
-With the help of Claude 3.5 Sonnet:
+The GPUs:
+- Make/model
 
-1. Given information:
-   - Water consumption: 137.3 L per 12-inch equivalent wafer mask layer
-   - A100 (GA100) die size: 826 mm² or 8.26 cm²
+Supporting services:
+- RAG database or other context generation
 
-2. Area of a 12-inch wafer:
-   - 12 inches = 30.48 cm
-   - Area of 12" wafer = π * (30.48/2)² ≈ 729.66 cm²
+### Parameters
 
-3. Estimated A100 chips per wafer:
-   - 729.66 cm² / 8.26 cm² ≈ 88.34 chips
-   - Accounting for edge wastage, let's estimate 70 chips per wafer
+Parameters will depend on the task and may not be fully deterministic. For instance, in image generation, the parameters might be the desired output resolution (1024x1024) and the prompt. In text generation, the input prompt doesn't determine the length or computational complexity of producing the output.
 
-4. Water use per chip per layer:
-   - 137.3 L / 70 chips ≈ 1.96 L per chip per layer
+#### Image Generation
+- Input prompt length in tokens
+- Output width and height
+- Input image(s) width/height
 
-5. Estimated number of layers:
-   - For a 7nm process chip like the A100, let's assume 75 layers
 
-6. Estimated total water use per A100 chip:
-   - 1.96 L * 75 layers ≈ 147 L per A100 chip
+#### Text Generation
+- Input prompt length in tokens
+- Input image(s) width/height
 
-Based on this calculation, each A100 chip might require approximately 147 liters of water in its manufacturing process.
+## Calculation of inference emissions
 
-Caveats:
-- This is an estimate based on average water use per wafer layer.
-- It doesn't account for potential water recycling or specific process variations.
-- The actual number of layers may differ.
-- Additional water use in other manufacturing steps is not included.
+```
+Emissions per inference = (amortized training emissions) + (amortized fine-tuning emissions) +
+                      (inference operational emissions) + (inference embodied emissions)
+Inference embodied emissions = (inference cluster embodied emissions per hour)
 
-For a more precise figure, you'd need detailed information from NVIDIA or their manufacturing partners about the specific processes used for the A100.

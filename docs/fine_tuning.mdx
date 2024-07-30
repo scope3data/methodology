@@ -1,0 +1,20 @@
+---
+title: "Fine-tuning"
+description: "Methodology for calculating the normalized, amortized emissions from fine-tuning AI models"
+---
+
+## Overview
+
+From [Energy and Carbon Considerations of Fine-Tuning BERT](https://arxiv.org/pdf/2311.10267):
+We find that pre-training BERT is equivalent to anywhere from 400 (MNLI) to 45,000 (RTE) fine-tuning runs depending on the dataset size, and that number of training tokens is a reasonable heuristic for estimating fine-tuning energy use. The “true” number of training tokens seen, accounting for dynamic padding of sequences to the maximum length in a batch, is a better predictor than relying on to mean or median number of tokens per example. Further comparison of fine-tuning inference energy intensity across tasks confirms that example sequence length holds a much stronger influence on energy intensity in the fine-tuning phase than in the inference phase, in alignment with expectations from previous work.
+
+We find that, controlling for hardware, energy consumption scales most predictably with wall clock time and number of tokens encountered during training (including the pad tokens added to sequences to match the maximum sequence length in a batch).
+
+## Calculating fine-tuning costs
+
+The key factors in determining fine-tuning costs are:
+- Number of tokens
+- Model
+- GPU
+
+## Amortizing fine-tuning costs

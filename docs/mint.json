@@ -52,7 +52,9 @@
       "pages": [
         "overview",
         "training",
-        "inference"
+        "inference",
+        "nvidia_a100",
+        "cluster"
       ]
     }
   ],

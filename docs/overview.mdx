@@ -71,6 +71,22 @@ Similarly to scope 1, the WUE for the grid will vary based on the fuel sources u
 ### Scope 3 water consumption
 AI chip and server manufacturing uses a huge amount of water. For example, ultrapure water is needed for wafer fabrication, and clean water is also needed for keeping semiconductor plants cool. Overall, a large semiconductor plant may withdraw several million liters of water each dayUnlike scope-1 and scope-2 water usage, the data for scope-3 water usage (including withdrawal and consumption) remains largely obscure.
 
+# Embodied emissions
+
+From [LLMCarbon: Modeling the End-to-end Carbon Footprint of Large Language Models](https://arxiv.org/pdf/2309.14393), the embodied carbon from a chip can be estimated based on its area: "The Carbon emitted Per unit Area (CPA) is contingent on various semiconductor fabrication parameters, including yield, energy con- sumption per unit area during manufacturing, emissions from chemicals utilized in hardware production, and emissions associated with raw material sourcing for fabrication."
+
+These are the representative values shared by the article. By aggregating all of the components of the technical infstructure used to train or operate a model, the total embodied emissions can be calculated.
+
+| hardware | description | unit | CPA |
+| -------- | ----------- | ---- | --- |
+| CPU | TSMC 16nm | 147 mm² | 1 kgCO2/cm² |
+| DRAM | Micron 18nm | 256 GB | 0.4 kgCO2/GB |
+| SSD | Samsung 20nm | 32 TB | 0.018kgCO2/GB |
+| TPUv3 | TSMC 16nm | 700 mm² | 1 kgCO2/cm² |
+| TPUv4 | TSMC 7nm | 400 mm² | 1.6 kgCO2/cm² |
+| V100 | TSMC 12nm | 815 mm² | 1.2 kgCO2/cm² |
+| H100 | TSMC 4nm | 814 mm² | 1.8 kgCO2/cm² |
+
 # References
 
 #### Making AI Less Thirsty
