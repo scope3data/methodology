@@ -15,6 +15,8 @@ A cluster is defined by:
 - Number of GPUs in the cluster
 - Number of servers in the cluster
 
+Note that we do not include racks, networking gear, or other datacenter infrastructure in the definition of the cluster; this should probably be improved in a future version. The PUE/WUE for the datacenter do account for usage energy from the cooling infrastructure.
+
 ### Example
 
 | Component | Disclosed data |
@@ -62,7 +64,7 @@ E(gpu-hour) = E(100,0) / 1000 / (number of GPUs)
 
 ### Embodied emissions
 
-- The embodied emissions of the server
+- The embodied emissions of the server (see [Towards Green AI](https://arxiv.org/pdf/2407.10237) for an example PCF)
 - The embodied emissions of the GPU
 - The projected use life of the server (up to 6 years for cloud platforms, but suggest using 3-4 years for AI instances given pace of change)
 - The projected utilization of the servers, noting that utilization means "time reserved" not "time active"

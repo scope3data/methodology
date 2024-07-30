@@ -32,7 +32,7 @@
   },
   "navigation": [
     {
-      "group": "Methodology",
+      "group": "Advertising",
       "pages": [
         "lifecycle",
         "data_transfer",
@@ -52,6 +52,7 @@
       "pages": [
         "overview",
         "training",
+        "fine_tuning",
         "inference",
         "nvidia_a100",
         "cluster"

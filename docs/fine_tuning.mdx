@@ -10,11 +10,89 @@ We find that pre-training BERT is equivalent to anywhere from 400 (MNLI) to 45,0
 
 We find that, controlling for hardware, energy consumption scales most predictably with wall clock time and number of tokens encountered during training (including the pad tokens added to sequences to match the maximum sequence length in a batch).
 
-## Calculating fine-tuning costs
+## Disclosure of fine-tuning costs
 
-The key factors in determining fine-tuning costs are:
-- Number of tokens
-- Model
-- GPU
+To assess the environmental impact of fine-tuning a model, developers should disclose the technical infrastructure used for fine-tuning and the duration of this training process.
 
-## Amortizing fine-tuning costs
+Infrastructure data:
+- [Fine-tuning cluster](/cluster) details
+- Managed service used (eg AWS Bedrock)
+- Physical location of the datacenter where the fine-tuning occurred
+
+Operational data:
+- Based model
+- Total fine-tuning time
+- GPU and CPU utilization during fine-tuning
+- Total fine-tuning tokens, including padding, if total time not available, for instance if using a managed service
+- Start time
+
+Usage data:
+- Expected use life in days
+- Expected inferences per day
+
+### Example disclosure
+
+| Component | Disclosed data |
+| --------- | -------------- |
+| Base model | Llama 2 |
+| GPU | Nvidia A100 80GB |
+| Server | HPE Apollo 6500 Gen10 Plus |
+| Number of GPUs | 4 |
+| Number of servers | 1 |
+| Server location | AWS US West (Oregon) |
+| Total reserved time | 12 hours |
+| Average CPU utilization | 12% |
+| Average GPU utilization | 47% |
+
+## Normalization of disclosed data
+
+When disclosed data is not present or not complete, we need to use predictive or heuristic data to fill in the gaps.
+
+| Missing data point | Mechanism to replace |
+| - | - |
+| GPU model | Use the most common GPU for the training year (for instance, 2022 is Nvidia A100) |
+| Server model | Use the most common server or instance type for the training year |
+| Cluster size | Assume 1 server for fine-tuning |
+| Location | Use the US as a relatively high-carbon country |
+| Datacenter PUE | Use location average |
+| Datacenter WUE | Use location average |
+| Total fine-tuning time | Predict from number of tokens and model |
+| Start time | Use the published model date minus the total reserved time |
+| GPU and CPU utilization | Predict from model |
+
+### Example normalization: AWS Bedrock fine-tuning
+
+When a managed service is used, we need to make some assumptions about the underlying execution.
+
+| Component       | Disclosed data |
+| --------------- | -------------- |
+| Base model      | Llama 2 |
+| Managed service | AWS Bedrock |
+| Region          | US West (Oregon) |
+| Start time      | July 6, 2024 17:01 |
+| Tokens          | 48,123 |
+
+TODO - model a standard AWS instance for this use case & doco the token->time prediction
+
+## Calculation of carbon emissions and water use
+
+Use the same calculations outlined in [Training](/training#calculation-of-carbon-emissions).
+
+## Amortization of fine-tuning impact across use life
+
+To amortize the fine-tuning impact, we need to estimate the number of inferences that the model will perform during its use-life. This applies both for fine-tuning a base model or for fine-tuning a previously fine-tuned model (aka continuous fine-tuning), except that in the latter case the use life should be considered the time until the next fine-tuning is performed (eg one day).
+
+```
+EmissionsPerInference(fine-tuning) = Em(fine-tuning) / (inferences per day) / (use life days)
+```
+
+### Example
+A model is fine-tuned daily using 12.8kgCO2e and 18.3 LH2O. On average, the model performs 1000 inferences a day.
+
+```
+EmPerInf(fine-tuning)  = (12.8 kgCO2e) / (1000 inf/d) / (1 d)
+                       = 12.8 gCO2e/inf
+
+H2OPerInf(fine-tuning) = (18.3 LH2O) / (1000 inf/d) / (1 d)
+                       = 18.3 mlH2O/inf
+```
