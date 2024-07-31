@@ -1,5 +1,55 @@
 # AUTO_GENERATED from docs/snippets
 defaults:
+  country_l_h20_per_kwh:
+    AR: 11.450000000
+    AU: 4.730000000
+    AT: 5.720000000
+    BE: 2.620000000
+    BR: 18.600000000
+    BG: 4.620000000
+    CA: 8.170000000
+    CL: 10.520000000
+    CN: 6.010000000
+    CY: 1.290000000
+    CZ: 3.210000000
+    DK: 3.190000000
+    EE: 2.200000000
+    FI: 4.530000000
+    FR: 3.670000000
+    DE: 1.950000000
+    GB: 2.330000000
+    GR: 5.140000000
+    HU: 3.690000000
+    IS: 6.140000000
+    IN: 3.440000000
+    ID: 2.260000000
+    IE: 1.480000000
+    IT: 4.840000000
+    JP: 2.310000000
+    LV: 2.550000000
+    LT: 5.900000000
+    LU: 12.780000000
+    MY: 1.680000000
+    MT: 1.120000000
+    MX: 5.300000000
+    NL: 3.430000000
+    NZ: 14.970000000
+    false: 6.660000000
+    PL: 2.510000000
+    PT: 9.590000000
+    RO: 7.360000000
+    RU: 3.460000000
+    SK: 5.790000000
+    SI: 2.980000000
+    KR: 1.890000000
+    ES: 6.210000000
+    SE: 6.030000000
+    CH: 5.660000000
+    TW: 1.490000000
+    TH: 2.890000000
+    TR: 4.920000000
+    UA: 2.130000000
+    US: 3.130000000
   default_audio_bitrate_kbps:
     pc: 160
     phone: 160
@@ -103,7 +153,13 @@ defaults:
   default_emissions_per_bid_request_gco2_per_imp: 0.114420000
   default_emissions_per_creative_request_gco2_per_imp: 0.000300000
   default_emissions_per_rtdp_request_gco2_per_imp: 0.010000000
+  default_gpu_embodied_emissions_gco2e_per_second:
+    a100: 0.003360000
+  default_gpu_watts_pre_pue:
+    a100: 428
   default_image_compression_ratio: 10
+  default_inferences_per_request:
+    gpt3_chat: 925
   default_network_embodied_emissions_gco2e_per_kb:
     scope3:
       fixed: 0.000004430
@@ -273,6 +329,8 @@ defaults:
     social: 0.150000000
     streaming-video: 0.049000000
     web: 0.049000000
+  default_s_per_inference:
+    gpt3: 0.002240000
   default_time_in_view_seconds: 6
   default_usage_kwh_per_gb:
     scope3:
@@ -306,3 +364,30 @@ defaults:
       JAPAC: 0.000300000
       LATAM: 0.000100000
       NAMER: 0.000100000
+  us_grid_subregion_l_h20_per_kwh:
+    akgd: 3.420000000
+    akms: 15.370000000
+    aznm: 4.970000000
+    camx: 5.190000000
+    erct: 1.270000000
+    frcc: 1.490000000
+    hims: 2.400000000
+    hioa: 1.450000000
+    mroe: 3.060000000
+    mrow: 3.100000000
+    newe: 4.110000000
+    nwpp: 9.480000000
+    nycw: 1.850000000
+    nyli: 1.630000000
+    nyup: 8.080000000
+    rfce: 2.310000000
+    rfcm: 2.510000000
+    rfcw: 2.220000000
+    rmpa: 2.580000000
+    spno: 1.730000000
+    spso: 2.030000000
+    srmv: 2.240000000
+    srmw: 2.670000000
+    srso: 2.290000000
+    srtv: 3.640000000
+    srvc: 2.370000000
