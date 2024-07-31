@@ -32,7 +32,7 @@
   },
   "navigation": [
     {
-      "group": "Methodology",
+      "group": "Advertising",
       "pages": [
         "lifecycle",
         "data_transfer",
@@ -45,6 +45,17 @@
         "digital_out_of_home",
         "data_quality",
         "calculations"
+      ]
+    },
+    {
+      "group": "Generative AI",
+      "pages": [
+        "overview",
+        "training",
+        "fine_tuning",
+        "inference",
+        "nvidia_a100",
+        "cluster"
       ]
     }
   ],
