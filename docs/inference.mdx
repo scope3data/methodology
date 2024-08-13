@@ -63,3 +63,10 @@ H2O(inference, params) = (amortized training water) + (amortized fine-tuning wat
 To model inference requires understanding the emissions per inference for a model on a particular host given certain parameters. There are *many* factors that determine how a model is executed including [batching strategies](https://www.anyscale.com/blog/continuous-batching-llm-inference#continuous-batching), [paged attention](https://blog.vllm.ai/2023/06/20/vllm.html), and optimizations like quantization. The intention of this methodology is to provide a framework that both calculates and predicts the emissions cost of inference with the flexibility to include future optimizations as they appear.
 
 Inference speed may be limited by the framework or by compute. Maximum performance will be achieved when models are not limited by [framework overhead](https://arxiv.org/pdf/2302.06117).  In an optimal scenario, inference can use the full capacity and power of a GPU, as described by [Towards Pareto Optimal Throughput in Small Language Model Serving](https://arxiv.org/pdf/2404.03353). 
+
+Per Wilkins, Keshav, Mortier (2024) [Offline Energy-Optimal LLM Serving](https://arxiv.org/pdf/2407.04014), The number of input tokens and number of output tokens both individually have a substantial impact on energy consumption and runtime, with output tokens having a larger effect size as indicated by the higher 𝐹 statistic. Also, the interaction term shows that the input and output tokens depend on each other while impacting en- ergy consumption and runtime.
+
+We therefore propose a model to describe the total energy consumption for a model 𝐾 as a function of input and output tokens, 𝜏𝑖𝑛 and 𝜏𝑜𝑢𝑡 , respectively:
+𝑒𝐾 (𝜏𝑖𝑛, 𝜏𝑜𝑢𝑡 ) = 𝛼𝐾,0𝜏𝑖𝑛 + 𝛼𝐾,1𝜏𝑜𝑢𝑡 + 𝛼𝐾,2𝜏𝑖𝑛𝜏𝑜𝑢𝑡
+
+This model has high explainability for the effect of input and output tokens on energy and runtime for inference of these different LLMs.
