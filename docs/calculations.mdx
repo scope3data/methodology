@@ -98,17 +98,18 @@ Native product carousel
 
 ### Property
 
-| Field                                           | Required | Description                                                                                    |
-| ----------------------------------------------- | -------- | ---------------------------------------------------------------------------------------------- |
-| `channels`                                      | Yes      | The channel(s) of this property                                                                |
-| `average_seconds_per_session_excluding_ads`     | Yes      | The average length of a session on this property excluding ads (eg 44 min of a 60 min TV show) |
-| `average_imps_per_session`                      | Yes      | The average number of impressions per session                                                  |
-| `average_data_kb_per_session_excluding_ads`     | Yes      | The average number of KB transferred during a session excluding ads                            |
-| `ad_funded_percentage`                          | Yes      | 0-100 The percentage of content funded by advertising (eg 50)                                  |
-| `allocated_adjusted_corporate_emissions_kgco2e` | Yes      | This property's share of corporate emissions                                                   |
-| `total_sessions`                                | Yes      | Number of sessions in the same time period as corporate emissions                              |
-| `organization_model_quality`                    | Yes      | Parent organization model quality (1-5)                                                        |
-| `model_quality`                                 | Yes      | Model quality (1-5)                                                                            |
+| Field                                           | Description                                                                                    |
+| ----------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `channels`                                      | The channel(s) of this property                                                                |
+| `average_seconds_per_session_excluding_ads`     | The average length of a session on this property excluding ads (eg 44 min of a 60 min TV show) |
+| `average_imps_per_session`                      | The average number of impressions per session                                                  |
+| `average_data_kb_per_session_excluding_ads`     | The average number of KB transferred during a session excluding ads                            |
+| `video_bitrate_kbps`                            | The average bitrate for a CTV-BVOD property (e.g. 4200 kbps)                                   |
+| `ad_funded_percentage`                          | 0-100 The percentage of content funded by advertising (eg 50)                                  |
+| `allocated_adjusted_corporate_emissions_kgco2e` | This property's share of corporate emissions                                                   |
+| `total_sessions`                                | Number of sessions in the same time period as corporate emissions                              |
+| `organization_model_quality`                    | Parent organization model quality (1-5)                                                        |
+| `model_quality`                                 | Model quality (1-5)                                                                            |
 
 ### Ad Platform
 
@@ -360,6 +361,7 @@ default_bitrate_kbps =
 video_bitrate_kbps =
       creative_video_bitrate_kbps ??
       creative_video_size_bytes x 8 / 1000 / creative_video_duration  ??
+      property.video_bitrate_kbps[device_type] ??
       default_bitrate_kbps
 video_duration = creative_video_duration_seconds ?? ad_format.video_duration_seconds
 seconds_watched = creative_video_view_time_seconds ??
@@ -484,7 +486,7 @@ media_data_transfer_embodied_emissions_gco2_per_imp =
 For CTV/BVOD, use the power model:
 
 ```
-video_bitrate_kbps = default_video_bitrate_kbps[device_type]
+video_bitrate_kbps = property.video_bitrate_kbps[device_type] ?? default_video_bitrate_kbps[device_type]
 
 power_watts =
       baseload_watts +
