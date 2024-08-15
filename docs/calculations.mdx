@@ -381,7 +381,10 @@ video_bytes = (video_bitrate_kbps / 8 x 1000 x seconds_streamed + creative_video
 For CTV/BVOD, use the power model:
 
 ```
-video_bitrate_kbps = creative_video_bitrate_kbps ?? default_video_bitrate_kbps[device_type]
+video_bitrate_kbps =
+      creative_video_bitrate_kbps ??
+      property.video_bitrate_kbps[device_type] ??
+      default_video_bitrate_kbps[device_type]
 
 power_watts =
       baseload_watts +
