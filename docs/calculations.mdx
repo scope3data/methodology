@@ -55,12 +55,14 @@ import ChannelMappingDefaults from "/snippets/defaults_channel_mapping.mdx";
 | ------------------------ | -------------------------------------------------------------------------------------------- |
 | `rendered_width_pixels`  | Width of the creative when rendered. Leave blank for responsive (will assume screen width)   |
 | `rendered_height_pixels` | Height of the creative when rendered. Leave blank for responsive (will assume screen height) |
-| `image_sizes`            | Array of image dimensions (eg `["300x250", "70x70"]`)                                        |
+| `image_sizes_pixels`     | Array of image dimensions (eg `["300x250", "70x70"]`)                                        |
 | `audio_duration_seconds` | Audio duration (if applicable)                                                               |
 | `video_duration_seconds` | Video duration (if applicable)                                                               |
 | `video_player`           | Video player used to render video (if applicable)                                            |
 | `other_assets_bytes`     | Metadata, text, html, etc                                                                    |
 | `ad_platforms`           | Ad serving, verification, and measurement ad platforms wrapping or embedded in the ad format |
+| `identifier`             | The identifying information, including name, channel, and device type                        |
+| `vendor`                 | The name of the serving vendor                                                               |
 
 #### Sample Ad Formats:
 
@@ -145,7 +147,9 @@ Native product carousel
 | `device_type`                              | See [device types](#device-types)                                                                           |
 | `network_type`                             | See [network types](#network-types)                                                                         |
 | `property`                                 | See [property](#property)                                                                                   |
-| `creative_ad_format`                       | Either a basic or vendor-provided ad format                                                                 |
+| `identifier`                               | The identifying information, including name, channel, and device type                                       |
+| `vendor`                                   | The name of the serving vendor                                                                              |
+| `ad_format`                                | Either a basic or vendor-provided ad format                                                                 |
 | `creative_ad_platforms`                    | Ad serving, verification, and measurement ad platforms wrapping or embedded in the creative                 |
 | `creative_total_image_data_transfer_bytes` | Total bytes for the data transfer for the image itself for all impressions, ideally measured by the CDN     |
 | `creative_image_sizes`                     | Array of image sizes included in the creative                                                               |
@@ -159,7 +163,7 @@ Native product carousel
 | `creative_video_view_time_seconds`         | Average time, in seconds, that a video is viewed                                                            |
 | `creative_video_view_rate`                 | Average percentage of a video that is viewed                                                                |
 | `creative_time_in_view_seconds`            | Time that the creative was visible on the device                                                            |
-| `creative_is_3p_served`                    | Is the ad format served by a third party ad server                                                          |
+| `creative_is_3p_served`                    | Is the ad format served by a third-party ad server                                                          |
 
 ## Defaults
 
@@ -236,13 +240,13 @@ Providers should clearly and publicly document:
 
 ## Fallbacks
 
-We use all data we have available on every single request but in many situations we may lack some information, for this
-we have a series of fallbacks to be able to provide reasonable estimates in most situations.
+We use all the available data on every request, but in many situations, we may lack some information. 
+For this, we have a series of fallbacks to be able to provide reasonable estimates in most situations.
 
-To determine network when it's not submitted we calculate costs associated to network type
+To determine network when it's not submitted, we calculate costs associated to network type
 as a weighted average of the fixed and mobile usage in the country (if available) or worldwide.
 
-We can also generally determine the channel from the property or when that is ambiguous but we have device information
+We can also generally determine the channel from the property or when that is ambiguous, but we have device information
 we fall back to a default channel by device.
 
 ```
@@ -459,7 +463,7 @@ media_data_transfer_emissions_gco2_per_imp =
       media_data_transfer_embodied_emissions_gco2_per_imp
 ```
 
-Determing the session seconds for a single impressions
+Determining the session seconds for a single impressions
 
 ```
 session_seconds_per_imp =
