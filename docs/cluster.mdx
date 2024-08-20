@@ -14,8 +14,15 @@ A cluster is defined by:
 - Server manufacturer, model, and specs - if hosted in a cloud, what instance type
 - Number of GPUs in the cluster
 - Number of servers/instances in the cluster (if static)
+- Cloud region or datacenter details (see below)
 
-Note that we do not include racks, networking gear, or other datacenter infrastructure in the definition of the cluster; this should probably be improved in a future version. The PUE/WUE for the datacenter do account for usage energy from the cooling infrastructure.
+### Datacenter details
+A datacenter is defined by:
+- PUE
+- WUE
+- Grid region
+- On-site or dedicated renewable energy by hour
+- Overhead equipment (racks, networking gear, etc) embodied emissions per server-hour (usage is included in PUE) - cool [tour of a Meta datacenter](https://metainfrahardware.com/#/web/1)
 
 ### Example
 
@@ -45,7 +52,7 @@ The cluster methodology produces the following outputs:
 The energy calculation uses derived data from the cluster definition:
 - The TDP of the GPU (provided by the manufacturer)
 - The TDP of the CPU (provided by the manufacturer)
-- The idle power draw of the server (see [Cloud Carbon Footprint](https://www.cloudcarbonfootprint.org) for common cloud instances)
+- The idle power draw of the server (see [Cloud Carbon Footprint](https://www.cloudcarbonfootprint.org) for common cloud instances). This power draw should include DRAM, NIC, SSD, and other components in the server. Boavizta has [some tools](https://www.google.com/url?q=https://doc.api.boavizta.org/Explanations/devices/server/&sa=D&source=docs&ust=1724184341034574&usg=AOvVaw10-gZiQ2k2VAyugfFulyqp) to help model this.
 
 The energy use of the cluster E based on the GPU utilization G and the CPU utilization C is:
 ```
@@ -66,7 +73,7 @@ E(gpu-hour) = E(100,0) / 1000 / (number of GPUs)
 
 - The embodied emissions of the server (see [Towards Green AI](https://arxiv.org/pdf/2407.10237) for an example PCF)
 - The embodied emissions of the GPU
-- The projected use life of the server (up to 6 years for cloud platforms, but suggest using 3-4 years for AI instances given pace of change)
+- The projected use life of the server (up to 6 years for cloud platforms, but suggest using 4 years for AI instances given pace of change)
 - The projected utilization of the servers, noting that utilization means "time reserved" not "time active"
 
 ```
