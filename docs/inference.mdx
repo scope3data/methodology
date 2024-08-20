@@ -22,9 +22,21 @@ The activity of the inference service should be provided on an hourly basis to m
 - Date and time, aggregated by hour
 - Cluster size (as multiple of base cluster)
 - Average CPU and GPU utilization
-- For key parameters (image size & steps, input/output tokens):
+- Use case
+- For key parameters (see below by use case)
   - Number of requests
   - Request latency (or other proxy for computation)
+
+### Image parameters
+- Input and output size
+- Output quality
+- LoRA models used
+
+LoRA model training can be modeled using the same methodology as full models.
+
+### Text generation / chat parameters
+- Input tokens
+- Output tokens
 
 ## Calculating emissions and water usage
 
@@ -34,28 +46,22 @@ usage emissions = (cluster size) x E(gpu%, cpu%) x (datacenter PUE) x (average g
 
 embodied emissions = (cluster size) x EmbEm(1)
 
-total emissions = (usage emissions) + (embodied emissions)
+inference emissions = (usage emissions) + (embodied emissions)
 
 water usage = (cluster size) x E(gpu%, cpu%) x (cluster WUE)
 
 embodied water usage = (cluster size) x EmbH2O(1)
 
-total water = (water usage) + (embodied water usage)
+inference water = (water usage) + (embodied water usage)
 ```
 
-For a set of parameters, calculate the intensity as the proportion of total computation:
+The emissions per request includes the amortized training for the base model and any add-ons (like LoRA) and fine-tuning emissions:
 ```
-Intensity(params) = (request latency) x (number of requests)
-                    / sum((number of requests), (request latency)
-```
+Em(inference) = sum(amortized training emissions) + (amortized fine-tuning emissions) +
+                        (inference emissions)
 
-The emissions per request includes the amortized training and fine-tuning emissions:
-```
-Em(inference, params) = (amortized training emissions) + (amortized fine-tuning emissions) +
-                        (total emissions) x Intensity(params)
-
-H2O(inference, params) = (amortized training water) + (amortized fine-tuning water) +
-                        (total water) x Intensity(params)
+H2O(inference) = sum(amortized training water) + (amortized fine-tuning water) +
+                        (inference water)
 ```
 
 ## Various research findings

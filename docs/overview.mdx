@@ -6,7 +6,7 @@ title: "Overview"
 
 
 
-From [Making AI Less Thirsty](#making-ai-less-thirsty): The global AI demand may be accountable for 4.2 – 6.6 billion cubic meters of water withdrawal in 2027, which is more than the total annual water with- drawal of 4 – 6 Denmark or half of the United Kingdom. This is very concerning, as freshwater scarcity has become one of the most pressing challenges shared by all of us in the wake of the rapidly growing popula- tion, depleting water resources, and aging water infrastructures.
+From [Making AI Less Thirsty](#making-ai-less-thirsty): The global AI demand may be accountable for 4.2 – 6.6 billion cubic meters of water withdrawal in 2027, which is more than the total annual water withdrawal of 4 – 6 Denmark or half of the United Kingdom. This is very concerning, as freshwater scarcity has become one of the most pressing challenges shared by all of us in the wake of the rapidly growing popula- tion, depleting water resources, and aging water infrastructures.
 
 # Modeling the environmental impact of a GenAI model
 
@@ -59,10 +59,16 @@ There are two related but different types of water usage — water withdrawal (a
 - Cooling towers: depending on the weather conditions and operational settings, data centers can evaporate about 1 – 9 liters per kWh of server energy (about 1 L/kWh for Google’s annualized global number and 9 L/kWh for a large commercial data center during the summer in Arizona.
 - Outside air cooling with water assistance: Water consumption of 0.2 L/kWh averaged over Meta’s global data centers. Note that when the outside air temperature is high, outside air cooling evaporates a significant amount of water, thus resulting in a low average but high peak water withdrawal.
 
+The US average WUE according to [United States Data Center Energy Usage Report (2016)](https://eta.lbl.gov/publications/united-states-data-center-energy) is 1.8 L/kWh.
+
 The WUE coefficient for cooling should vary over time based on the outside temperature. Concretely, WUE increases significantly for cooling towers when the outside wet bulb temperature increases, and increases for outside air cooling when the outside dry bulb temperature is too hot or the humidity is too low.
+
+Microsoft confirms this in [How Microsoft measures datacenter water and energy use to improve Azure Cloud sustainability (2022)](https://azure.microsoft.com/en-us/blog/how-microsoft-measures-datacenter-water-and-energy-use-to-improve-azure-cloud-sustainability/): "[T]here are variables that can impact WUE—many of which relate to the location of the datacenter. Humid locations often have more atmospheric water, while arid locations have very little. Datacenters in colder parts of the world, like Sweden and Finland operate in naturally cooler environments so require less water for cooling. Our datacenter designs minimize water use. The chart below shows (in blue) our estimated or designed WUE figure, and in grey, our actual WUE figure. Again, Asia Pacific is higher due to higher ambient temperatures and as a result the need in some places for water-cooled chillers." Microsoft's WUE is 0.55 L/kWh in the Americas, 1.65 L/kWh in Asia Pacific, and 0.1 in EMEA.
 
 ### Scope 2 (off-site) water consumption
 Per [Water use of electricity technologies], Water consumption depends on the fuel source (coal, natural gas, biomass, nuclear) and the cooling mechanism (wet cooling, closed-loop cooling, etc). As examples, a closed-loop nuclear plant uses 2.5 L/kWh, whereas a once-through coal plant uses 0.4 L/kWh.
+
+From [EDF Lifecycle analysis of French nuclear plants (2022)](https://www.edf.fr/sites/groupe/files/2022-06/edfgroup_acv-4_etude_20220616.pdf), the average WUE is 1.3 L/kWh.
 
 For electricity generation, the U.S. national average water withdrawal and consumption are estimated at about 43.8 L/kWh and 3.1 L/kWh, respectively.
 
