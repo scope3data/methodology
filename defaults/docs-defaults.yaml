@@ -58,7 +58,7 @@ defaults:
     audio: phone
     ctv-bvod: tv
     social: phone
-    streaming-video: tv
+    streaming-video: pc
     web: pc
   default_device_embodied_emissions_per_second:
     scope3:
@@ -248,7 +248,7 @@ defaults:
     ctv-bvod: 15s-video-ctv-bvod-tv
     dooh: landscape-dooh
     social: 1080-1920-sponsored-post-social-phone
-    streaming-video: 15s-video-streaming-video-tv
+    streaming-video: 15s-video-streaming-video-pc
     web: leaderboard-web-pc
   default_property_ad_funded_percentage_by_channel:
     app: 100
