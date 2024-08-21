@@ -65,7 +65,7 @@ defaults:
     audio: 1500
     ctv-bvod: 2580
     social: 240
-    streaming-video: 2580
+    streaming-video: 300
     web: 320
   default_baseload_watts:
     fixed: 9.550000000
@@ -108,7 +108,7 @@ defaults:
     audio: phone
     ctv-bvod: tv
     social: phone
-    streaming-video: tv
+    streaming-video: pc
     web: pc
   default_device_embodied_emissions_per_second:
     scope3:
@@ -167,7 +167,7 @@ defaults:
     sri:
       fixed: 0.000004430
       mobile: 0.000007970
-  default_non_primary_video_bitrate_kbps: 2500
+  default_non_primary_video_bitrate_kbps: 1200
   default_percent_mobile:
     scope3: 23.600000000
     sri: 10.000000000
@@ -304,7 +304,7 @@ defaults:
     ctv-bvod: 15s-video-ctv-bvod-tv
     dooh: landscape-dooh
     social: 1080-1920-sponsored-post-social-phone
-    streaming-video: 15s-video-streaming-video-tv
+    streaming-video: 15s-video-streaming-video-pc
     web: leaderboard-web-pc
   default_property_ad_funded_percentage_by_channel:
     app: 100
@@ -319,12 +319,12 @@ defaults:
     audio: 4.800000000
     ctv-bvod: 8.256000000
     social: 24
-    streaming-video: 8.256000000
+    streaming-video: 1
     web: 32
   default_property_g_per_imp_by_channel:
     app: 0.049000000
     audio: 0.049000000
-    ctv-bvod: 0.049000000
+    ctv-bvod: 0.280000000
     dooh: 0.049000000
     social: 0.150000000
     streaming-video: 0.049000000
@@ -340,10 +340,10 @@ defaults:
       fixed: 0.068700000
       mobile: 0.236000000
   default_video_bitrate_kbps:
-    pc: 8000
-    phone: 2500
-    tablet: 5000
-    tv: 8000
+    pc: 1200
+    phone: 800
+    tablet: 1000
+    tv: 3690
   default_video_player_download_trigger:
     app: impression
     ctv-bvod: impression
