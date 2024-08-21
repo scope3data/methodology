@@ -166,24 +166,24 @@ TODO - update above to use cluster metrics and include PUE for the scope 2 numbe
 
 | Component | Value |
 | --------- | ----- |
-| Datacenter WUE |  5 L/kWh (average of water paper |
-| Electricity WUE |  [3.67 L/kWh](https://files.wri.org/d8/s3fs-public/guidance-calculating-water-use-embedded-purchased-electricity_0.pdf) |
-| Manufacturing WUE | 147 L/GPU |
+| Datacenter WUE |  1.8 L/kWh (US average) |
+| Electricity WUE |  [3.67 L/kWh](https://files.wri.org/d8/s3fs-public/guidance-calculating-water-use-embedded-purchased-electricity_0.pdf) - note that 2022 data nuclear data from FR indicates lower numbers that WRI report |
+| Manufacturing WUE | 412 L/GPU |
 
 Modeling the cluster produces:
 ```
-EmbH2O(h) = ((384 GPUs) x (147 L/GPU))
+EmbH2O(h) = ((384 GPUs) x (412 L/GPU))
             / (4 years)
             / (8760 hours/year)
             / (95% utilization)
-          = 1.7 L/h
+          = 4.75 L/h
 ```
 
 This produces:
 ```
-Datacenter H2O = (0.428 kW) x (2653326 hours) x 5 L/kWh = 5,678 kL
+Datacenter H2O = (0.428 kW) x (2653326 hours) x 1.8 L/kWh = 2,044 kL
 Electricity H20 = (0.428 kW) x (2653326 hours) x 3.67 L/kWh = 4,168 kL
-Manufacturing H20 = (2832 h) x (1.7 L/h) = 4.8 kL
+Manufacturing H20 = (2832 h) x (4.75 L/h) = 13.5 kL
 ```
 
 ## Amortization of impact across use life

@@ -22,37 +22,16 @@ where 𝑃𝐹 is IC packaging Carbon footprint while 𝐸𝐺𝑃𝑈 , 𝐸�
 
 ## Water Use
 
-Water consumption per wafer-layer (Liter/12-inch equivalent wafer mask layer) from [TSMC 2022 ESG report](https://esg.tsmc.com/en-US/file/public/e-all_2022.pdf)
+Data for A100:
+- Water consumption per wafer-layer (Liter/12-inch equivalent wafer mask layer) from [TSMC 2022 ESG report](https://esg.tsmc.com/en-US/file/public/e-all_2022.pdf): 137.3 L per 12-inch equivalent wafer mask layer
+- Mask layers for the TSMC 7nm process: [87](https://www.3dincites.com/2021/08/sustainability-in-the-semiconductor-fab-and-sub-fab/#)
+- A100 chips per wafer: the A100 is 826 mm² which is similar to the H100's 814 mm², and the H100 yields [29 sets per 12" wafer](https://www.nextbigfuture.com/2024/06/growing-size-of-ai-chips-forces-tsmc-to-work-on-tripling-the-size-of-wafers.html)
 
-With the help of Claude 3.5 Sonnet:
+Using the [manufacturing water use formula](https://localhost:3000/cluster#embodied-water-use):
+```
+(water use per chip) = (water use per wafer mask layer) x (mask layers) / (chips per wafer)
 
-1. Given information:
-   - Water consumption: 137.3 L per 12-inch equivalent wafer mask layer
-   - A100 (GA100) die size: 826 mm² or 8.26 cm²
+(water use per A100) = (137.3 L/layer) x (87 layers/wafer) / (29 chips/wafer) = 411.9 L/chip
+```
 
-2. Area of a 12-inch wafer:
-   - 12 inches = 30.48 cm
-   - Area of 12" wafer = π * (30.48/2)² ≈ 729.66 cm²
-
-3. Estimated A100 chips per wafer:
-   - 729.66 cm² / 8.26 cm² ≈ 88.34 chips
-   - Accounting for edge wastage, let's estimate 70 chips per wafer
-
-4. Water use per chip per layer:
-   - 137.3 L / 70 chips ≈ 1.96 L per chip per layer
-
-5. Estimated number of layers:
-   - For a 7nm process chip like the A100, let's assume 75 layers
-
-6. Estimated total water use per A100 chip:
-   - 1.96 L * 75 layers ≈ 147 L per A100 chip
-
-Based on this calculation, each A100 chip might require approximately 147 liters of water in its manufacturing process.
-
-Caveats:
-- This is an estimate based on average water use per wafer layer.
-- It doesn't account for potential water recycling or specific process variations.
-- The actual number of layers may differ.
-- Additional water use in other manufacturing steps is not included.
-
-For a more precise figure, you'd need detailed information from NVIDIA or their manufacturing partners about the specific processes used for the A100.
+Note: this doesn't include the memory chips that are also on the A100... need to find a source for the water use there
