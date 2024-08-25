@@ -12,11 +12,17 @@ As an example of what constitutes an AI cluster, Meta has [documented their genA
 ## Inputs: Defining a cluster
 
 A cluster is defined by:
-- GPU manufacturer, model, and specs (see [gpu specs](https://github.com/mlco2/impact/blob/master/data/gpus.csv))
-- Server manufacturer, model, and specs - if hosted in a cloud, what instance type
-- Number of GPUs in the cluster
 - Number of servers/instances in the cluster (if static)
+- Cloud instance type or server details (see below)
 - Cloud region or datacenter details (see below)
+
+### Server details
+A server is defined by:
+- CPU manufacturer and model
+- GPU manufacturer and model (see [gpu specs](https://github.com/mlco2/impact/blob/master/data/gpus.csv))
+- Memory in GB
+- Number of CPUs
+- Number of GPUs
 
 ### Datacenter details
 A datacenter is defined by:
@@ -54,11 +60,12 @@ The cluster methodology produces the following outputs:
 The energy calculation uses derived data from the cluster definition:
 - The TDP of the GPU (provided by the manufacturer)
 - The TDP of the CPU (provided by the manufacturer)
-- The idle power draw of the server (see [Cloud Carbon Footprint](https://www.cloudcarbonfootprint.org) for common cloud instances). This power draw should include DRAM, NIC, SSD, and other components in the server. Boavizta has [some tools](https://www.google.com/url?q=https://doc.api.boavizta.org/Explanations/devices/server/&sa=D&source=docs&ust=1724184341034574&usg=AOvVaw10-gZiQ2k2VAyugfFulyqp) to help model this.
+- The TDP of the memory (provided by the manufacturer)
+- The idle power draw of the server (see [Cloud Carbon Footprint](https://www.cloudcarbonfootprint.org) for common cloud instances). This power draw should include NIC, SSD, and other components in the server. Boavizta has [some tools](https://www.google.com/url?q=https://doc.api.boavizta.org/Explanations/devices/server/&sa=D&source=docs&ust=1724184341034574&usg=AOvVaw10-gZiQ2k2VAyugfFulyqp) to help model this.
 
 The energy use of the cluster E based on the GPU utilization G and the CPU utilization C is:
 ```
-E(G,C) = ((idle cluster power) + (net CPU TDP) x (number of CPUs) + (net GPU TDP) x (number of GPUs))
+E(G,C) = ((idle cluster power) + (memory TDP) + (net CPU TDP) x (number of CPUs) + (net GPU TDP) x (number of GPUs))
 ```
 
 Note that this must be multiplied by the datacenter PUE or WUE!
