@@ -23,12 +23,14 @@ defaults:
   default_channel_by_device:
     pc:
     - ctv-bvod
+    - streaming-video
     - social
     - audio
     - web
     phone:
     - social
     - ctv-bvod
+    - streaming-video
     - audio
     - app
     - web
@@ -37,11 +39,13 @@ defaults:
     tablet:
     - social
     - ctv-bvod
+    - streaming-video
     - audio
     - app
     - web
     tv:
     - ctv-bvod
+    - streaming-video
     - social
     - audio
     - app
@@ -51,7 +55,7 @@ defaults:
     ctv-bvod: 0
     dooh: 0
     social: 1000
-    streaming-video: 0
+    streaming-video: 1000
     web: 1500
   default_device_by_channel:
     app: phone
