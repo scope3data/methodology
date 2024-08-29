@@ -26,12 +26,14 @@ defaults:
     - social
     - audio
     - web
+    - streaming-video
     phone:
     - social
     - ctv-bvod
     - audio
     - app
     - web
+    - streaming-video
     smart-speaker:
     - audio
     tablet:
@@ -40,18 +42,20 @@ defaults:
     - audio
     - app
     - web
+    - streaming-video
     tv:
     - ctv-bvod
     - social
     - audio
     - app
+    - streaming-video
   default_consumer_device_request_size_bytes:
     app: 1000
     audio: 1000
     ctv-bvod: 0
     dooh: 0
     social: 1000
-    streaming-video: 0
+    streaming-video: 1000
     web: 1500
   default_device_by_channel:
     app: phone
