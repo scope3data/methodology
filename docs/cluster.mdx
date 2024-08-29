@@ -55,6 +55,22 @@ The cluster methodology produces the following outputs:
 - Peak throughput-α (as described by [OpenCarbonEval](https://arxiv.org/pdf/2405.12843))
 - Peak TFLOPs/s
 
+### Embodied emissions
+
+From [LLMCarbon: Modeling the End-to-end Carbon Footprint of Large Language Models](https://arxiv.org/pdf/2309.14393), the embodied carbon from a chip can be estimated based on its area: "The Carbon emitted Per unit Area (CPA) is contingent on various semiconductor fabrication parameters, including yield, energy consumption per unit area during manufacturing, emissions from chemicals utilized in hardware production, and emissions associated with raw material sourcing for fabrication."
+
+These are the representative values shared by the article. By aggregating all of the components of the technical infstructure used to train or operate a model, the total embodied emissions can be calculated.
+
+| hardware | description | unit | CPA |
+| -------- | ----------- | ---- | --- |
+| CPU | TSMC 16nm | 147 mm² | 1 kgCO2/cm² |
+| DRAM | Micron 18nm | 256 GB | 0.4 kgCO2/GB |
+| SSD | Samsung 20nm | 32 TB | 0.018kgCO2/GB |
+| TPUv3 | TSMC 16nm | 700 mm² | 1 kgCO2/cm² |
+| TPUv4 | TSMC 7nm | 400 mm² | 1.6 kgCO2/cm² |
+| V100 | TSMC 12nm | 815 mm² | 1.2 kgCO2/cm² |
+| H100 | TSMC 4nm | 814 mm² | 1.8 kgCO2/cm² |
+
 ### Energy use
 
 The energy calculation uses derived data from the cluster definition:

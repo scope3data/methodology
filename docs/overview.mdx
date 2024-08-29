@@ -4,9 +4,9 @@ title: "Overview"
 
 # Why modeling the environmental impact of GenAI matters
 
-*Todo - add more here!*
+Per [Goldman Sachs research](https://www.goldmansachs.com/insights/articles/AI-poised-to-drive-160-increase-in-power-demand), Some AI innovations will boost computing speed faster than they ramp up their electricity use, but the widening use of AI will still imply an increase in the technology’s consumption of power. A single ChatGPT query requires 2.9 watt-hours of electricity, compared with 0.3 watt-hours for a Google search, according to the International Energy Agency. Goldman Sachs Research estimates the overall increase in data center power consumption from AI to be on the order of 200 terawatt-hours per year between 2023 and 2030. By 2028, our analysts expect AI to represent about 19% of data center power demand.
 
-From [Making AI Less Thirsty](#making-ai-less-thirsty): The global AI demand may be accountable for 4.2 – 6.6 billion cubic meters of water withdrawal in 2027, which is more than the total annual water withdrawal of 4 – 6 Denmark or half of the United Kingdom. This is very concerning, as freshwater scarcity has become one of the most pressing challenges shared by all of us in the wake of the rapidly growing popula- tion, depleting water resources, and aging water infrastructures.
+From [Making AI Less Thirsty](#making-ai-less-thirsty): The global AI demand may be accountable for 4.2 – 6.6 billion cubic meters of water withdrawal in 2027, which is more than the total annual water withdrawal of 4 – 6 Denmark or half of the United Kingdom. This is very concerning, as freshwater scarcity has become one of the most pressing challenges shared by all of us in the wake of the rapidly growing population, depleting water resources, and aging water infrastructures.
 
 # Modeling the environmental impact of a GenAI model
 
@@ -14,100 +14,23 @@ Measuring the environmental impact of a generative AI model requires a lifecycle
 
 The impact of a GenAI model can be categorized by scope, where scope 1 represents the direct emissions and water use from operations; scope 2 represents the emissions and water use from the electricity consumed during operations; and scope 3 represents emissions and water use from the production of materials used in the server and datacenter hardware as well as the impact from the supply chain that contributed to the production of the model: people, software, offices, travel, data sources, and so forth.
 
+The impact of each scope can be summarized across the three key components of the environmental impact as follows:
+
 | Scope | Operational CO2e | Embodied CO2e | Consumed H2O |
 | ----- | ---------------- | ------------- | ------------ |
 | 1     | on-site generation | N/a | datacenter cooling |
 | 2     | datacenter electricity use | manufacturing of power distribution and generation | electricity generation |
 | 3     | corporate value chain | server and chip manufacturing | server and chip manufacturing |
 
-Each phase of the lifecycle of an AI model is split into a separate page:
+Each phase of the lifecycle of an AI model contributes to the environmental impact. Each phase is split into a separate page:
 1. [Training a base model](/training)
 2. Adapting a base model through fine-tuning
 3. [Using a model for inference](/inference), potentially with auxiliary systems like RAG
-
-The sections below explain the methodology for modelling carbon and water impact.
-
-# Software Carbon Intensity
-
-From [Measuring the Carbon Intensity of AI](#measuring-the-carbon-intensity-of-ai).
-
-As developed by the Green Software Foundation, the Software Carbon Intensity(SCI) is a rate, carbon emissions per one functional unit, or R. The equation used to calculate the SCI value of a software system is therefore:
-
-`SCI = ((E * I) + M) per R`
-
-where
-
-E = Energy consumed by a software system. Specifically, we focus on energy consumption of Graphical Processing Units, or GPUs. The units used are kilowatt-hours (kWh).
-
-I = Location-based marginal carbon emissions for the grid that powers the datacenter. WattTime provides measure- ments of grams of carbon dioxide equivalent per kilowatt- hour of electricity (gCO2eq/kWh)
-
-M = Embodied carbon (also referred to as “embedded carbon”) is the amount of carbon emitted during the creation, usage, and disposal of a hardware device. When software runs on a device, a fraction of the total embodied emissions of the device is allocated to the software.
-
-R = Functional unit. In this instance, we are defining the functional unit as one machine learning training job, but it is extensible to other scenarios.
-
-Specifically, the SCI uses a "consequential" carbon accounting approach, which aims to quantify the marginal change in emissions caused by decisions or interventions.
-
-Data centers have a number of electricity uses that are important, but will not be covered by our tool. According to the U.S. Department of Energy: “The electricity consumed in these data centers is mainly by the equipment (50%) and HVAC (25%–40%)” [47]. Such other sources of emissions can be accounted for using methods such as Power Usage Effectiveness (PUE), which can be used to describe the proportion of electricity consumption by the computing equipment vs. other sources.
-
-# Water
-
-Data centers use an enormous amount of water for both on-site cooling and off-site electricity generation
-
-There are two related but different types of water usage — water withdrawal (a.k.a. water abstraction) and water consumption, both of which are important for holistically understanding the impacts on water stress and availability. Water withdrawal: It refers to freshwater taken from the ground or surface water sources, either tem- porarily or permanently, and then used for agricultural, industrial or municipal uses (normally excluding water used for hydroelectricity generation). Water consumption: It is defined as “water withdrawal minus water discharge”, and means the amount of water “evaporated, transpired, incorporated into products or crops, or otherwise removed from the im- mediate water environment”
-
-### Scope 1 (on-site) water consumption
-- Cooling towers: depending on the weather conditions and operational settings, data centers can evaporate about 1 – 9 liters per kWh of server energy (about 1 L/kWh for Google’s annualized global number and 9 L/kWh for a large commercial data center during the summer in Arizona.
-- Outside air cooling with water assistance: Water consumption of 0.2 L/kWh averaged over Meta’s global data centers. Note that when the outside air temperature is high, outside air cooling evaporates a significant amount of water, thus resulting in a low average but high peak water withdrawal.
-
-The US average WUE according to [United States Data Center Energy Usage Report (2016)](https://eta.lbl.gov/publications/united-states-data-center-energy) is 1.8 L/kWh.
-
-The WUE coefficient for cooling should vary over time based on the outside temperature. Concretely, WUE increases significantly for cooling towers when the outside wet bulb temperature increases, and increases for outside air cooling when the outside dry bulb temperature is too hot or the humidity is too low.
-
-Microsoft confirms this in [How Microsoft measures datacenter water and energy use to improve Azure Cloud sustainability (2022)](https://azure.microsoft.com/en-us/blog/how-microsoft-measures-datacenter-water-and-energy-use-to-improve-azure-cloud-sustainability/): "[T]here are variables that can impact WUE—many of which relate to the location of the datacenter. Humid locations often have more atmospheric water, while arid locations have very little. Datacenters in colder parts of the world, like Sweden and Finland operate in naturally cooler environments so require less water for cooling. Our datacenter designs minimize water use. The chart below shows (in blue) our estimated or designed WUE figure, and in grey, our actual WUE figure. Again, Asia Pacific is higher due to higher ambient temperatures and as a result the need in some places for water-cooled chillers." Microsoft's WUE is 0.55 L/kWh in the Americas, 1.65 L/kWh in Asia Pacific, and 0.1 in EMEA.
-
-### Scope 2 (off-site) water consumption
-Per [Water use of electricity technologies], Water consumption depends on the fuel source (coal, natural gas, biomass, nuclear) and the cooling mechanism (wet cooling, closed-loop cooling, etc). As examples, a closed-loop nuclear plant uses 2.5 L/kWh, whereas a once-through coal plant uses 0.4 L/kWh.
-
-From [EDF Lifecycle analysis of French nuclear plants (2022)](https://www.edf.fr/sites/groupe/files/2022-06/edfgroup_acv-4_etude_20220616.pdf), the average WUE is 1.3 L/kWh.
-
-For electricity generation, the U.S. national average water withdrawal and consumption are estimated at about 43.8 L/kWh and 3.1 L/kWh, respectively.
-
-Similarly to scope 1, the WUE for the grid will vary based on the fuel sources used and by cooling factors like the temperature and humidity.
-
-### Scope 3 water consumption
-AI chip and server manufacturing uses a huge amount of water. For example, ultrapure water is needed for wafer fabrication, and clean water is also needed for keeping semiconductor plants cool. Overall, a large semiconductor plant may withdraw several million liters of water each dayUnlike scope-1 and scope-2 water usage, the data for scope-3 water usage (including withdrawal and consumption) remains largely obscure.
-
-# Embodied emissions
-
-From [LLMCarbon: Modeling the End-to-end Carbon Footprint of Large Language Models](https://arxiv.org/pdf/2309.14393), the embodied carbon from a chip can be estimated based on its area: "The Carbon emitted Per unit Area (CPA) is contingent on various semiconductor fabrication parameters, including yield, energy con- sumption per unit area during manufacturing, emissions from chemicals utilized in hardware production, and emissions associated with raw material sourcing for fabrication."
-
-These are the representative values shared by the article. By aggregating all of the components of the technical infstructure used to train or operate a model, the total embodied emissions can be calculated.
-
-| hardware | description | unit | CPA |
-| -------- | ----------- | ---- | --- |
-| CPU | TSMC 16nm | 147 mm² | 1 kgCO2/cm² |
-| DRAM | Micron 18nm | 256 GB | 0.4 kgCO2/GB |
-| SSD | Samsung 20nm | 32 TB | 0.018kgCO2/GB |
-| TPUv3 | TSMC 16nm | 700 mm² | 1 kgCO2/cm² |
-| TPUv4 | TSMC 7nm | 400 mm² | 1.6 kgCO2/cm² |
-| V100 | TSMC 12nm | 815 mm² | 1.2 kgCO2/cm² |
-| H100 | TSMC 4nm | 814 mm² | 1.8 kgCO2/cm² |
 
 # References
 
 #### Making AI Less Thirsty
 Pengfei Li, Jianyi Yang, Mohammad A. Islam, Shaolei Ren. [Making AI Less “Thirsty”: Uncovering and Addressing the Secret Water Footprint of AI Models](https://arxiv.org/pdf/2304.03271). 2023.
-
-#### Measuring the Carbon Intensity of AI
-Jesse Dodge, Taylor Prewitt, Remi Tachet Des Combes, Erika Odmark, Roy Schwartz, Emma Strubell, Alexandra Sasha Luccioni, Noah A. Smith, Nicole DeCario, and Will Buchanan. 2022. [Measuring the Carbon Intensity of AI in Cloud Instances](https://dl.acm.org/doi/pdf/10.1145/3531146.3533234) In 2022 ACM Conference on Fairness, Accountability, and Transparency (FAccT ’22), June 21–24, 2022, Seoul, Republic of Korea. ACM, New York, NY, USA, 18 pages.
-
-#### Water use of electricity technologies
-Yi Jin, Paul Behrens, Arnold Tukker, Laura Scherer. [Water use of electricity technologies: A global meta-analysis](https://www.sciencedirect.com/science/article/pii/S1364032119305994?via%3Dihub)
-
-# Data Sources
-
-#### Water Use by Country and US Grid Region
-Used in [Water use defaults](/snippets/defaults_wue): Paul Reig, Tianyi Luo, Eric Christensen, and Julie Sinistore. [WRI Guidance for Calculating Water Use Embedded in Purchased Electricity](https://files.wri.org/d8/s3fs-public/guidance-calculating-water-use-embedded-purchased-electricity_0.pdf)
 
 # Credits
 

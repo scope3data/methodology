@@ -1,0 +1,28 @@
+---
+title: "Software Carbon Intensity"
+---
+
+From [Measuring the Carbon Intensity of AI](#measuring-the-carbon-intensity-of-ai).
+
+As developed by the Green Software Foundation, the Software Carbon Intensity(SCI) is a rate, carbon emissions per one functional unit, or R. The equation used to calculate the SCI value of a software system is therefore:
+
+`SCI = ((E * I) + M) per R`
+
+where
+
+E = Energy consumed by a software system. Specifically, we focus on energy consumption of Graphical Processing Units, or GPUs. The units used are kilowatt-hours (kWh).
+
+I = Location-based marginal carbon emissions for the grid that powers the datacenter. WattTime provides measurements of grams of carbon dioxide equivalent per kilowatt- hour of electricity (gCO2eq/kWh)
+
+M = Embodied carbon (also referred to as “embedded carbon”) is the amount of carbon emitted during the creation, usage, and disposal of a hardware device. When software runs on a device, a fraction of the total embodied emissions of the device is allocated to the software.
+
+R = Functional unit. In this instance, we are defining the functional unit as one machine learning training job, but it is extensible to other scenarios.
+
+Specifically, the SCI uses a "consequential" carbon accounting approach, which aims to quantify the marginal change in emissions caused by decisions or interventions.
+
+Data centers have a number of electricity uses that are important, but will not be covered by our tool. According to the U.S. Department of Energy: “The electricity consumed in these data centers is mainly by the equipment (50%) and HVAC (25%–40%)” [47]. Such other sources of emissions can be accounted for using methods such as Power Usage Effectiveness (PUE), which can be used to describe the proportion of electricity consumption by the computing equipment vs. other sources.
+
+# References
+
+#### Measuring the Carbon Intensity of AI
+Jesse Dodge, Taylor Prewitt, Remi Tachet Des Combes, Erika Odmark, Roy Schwartz, Emma Strubell, Alexandra Sasha Luccioni, Noah A. Smith, Nicole DeCario, and Will Buchanan. 2022. [Measuring the Carbon Intensity of AI in Cloud Instances](https://dl.acm.org/doi/pdf/10.1145/3531146.3533234) In 2022 ACM Conference on Fairness, Accountability, and Transparency (FAccT ’22), June 21–24, 2022, Seoul, Republic of Korea. ACM, New York, NY, USA, 18 pages.
