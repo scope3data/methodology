@@ -32,19 +32,37 @@
   },
   "navigation": [
     {
-      "group": "Methodology",
+      "group": "Foundations",
       "pages": [
-        "lifecycle",
+        "software_carbon_intensity",
+        "water",
         "data_transfer",
         "corporate_model",
+        "consumer_devices",
+        "cluster",
+        "nvidia_a100"
+      ]
+    },
+    {
+      "group": "Advertising",
+      "pages": [
+        "lifecycle",
         "publisher_model",
         "property_metrics",
-        "consumer_devices",
         "creative",
         "ad_tech_model",
         "digital_out_of_home",
         "data_quality",
         "calculations"
+      ]
+    },
+    {
+      "group": "Generative AI",
+      "pages": [
+        "overview",
+        "training",
+        "fine_tuning",
+        "inference"
       ]
     }
   ],
