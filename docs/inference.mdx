@@ -5,7 +5,9 @@ description: "Methodology for calculating the impact of managing an AI inference
 
 ## Overview
 
-An "inference service" is a service that exposes a single model for inference. This service will be hosted on a cluster of servers or cloud instances, potentially with reserved capacity and the ability to auto-scale with volume.
+Inference, or using the models to get responses to user prompts, uses less energy each session, but eventually involves many more sessions. An “inference service” is a service that exposes a single model for inference. This service will be hosted on a cluster of servers or cloud instances, potentially with reserved capacity and the ability to auto-scale with volume.
+
+Sometimes these models are only trained once, and then deployed to the cloud and used by millions of users for inference. In that case, deploying large deep-learning models to the cloud for inference purposes also consumes a lot of energy. Analysts [report](https://www.forbes.com/sites/moorinsights/2019/05/09/google-cloud-doubles-down-on-nvidia-gpus-for-inference/?sh=7aa7fce46792) that NVIDIA estimates that 80–90% of the energy cost of neural networks lies in ongoing inference processing after a model has been trained.
 
 Model:
 - The base model used including the current [amortized training cost per inference](/training#amortization-of-impact-across-use-life)
