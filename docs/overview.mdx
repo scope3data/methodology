@@ -4,17 +4,35 @@ title: "Overview"
 
 # Why modeling the environmental impact of GenAI matters
 
-Per [Goldman Sachs research](https://www.goldmansachs.com/insights/articles/AI-poised-to-drive-160-increase-in-power-demand), Some AI innovations will boost computing speed faster than they ramp up their electricity use, but the widening use of AI will still imply an increase in the technology’s consumption of power. A single ChatGPT query requires 2.9 watt-hours of electricity, compared with 0.3 watt-hours for a Google search, according to the International Energy Agency. Goldman Sachs Research estimates the overall increase in data center power consumption from AI to be on the order of 200 terawatt-hours per year between 2023 and 2030. By 2028, our analysts expect AI to represent about 19% of data center power demand.
+AI is now the fastest-growing consumer of energy on the planet, already using 1% of global energy today, and projected to grow 10 times each year for the foreseeable future. And while some AI technologies will improve computing speed [without necessarily increasing their electricity usage](https://arxiv.org/pdf/2304.03271), as generative AI becomes more widely accessible, it will undoubtedly and dramatically increase electricity use. Goldman Sachs Research estimates the overall increase in data center power consumption from AI to be on the order of 200 terawatt-hours per year between 2023 and 2030. By 2028, the study expects AI to represent about 19% of data center power demand.
 
-From [Making AI Less Thirsty](#making-ai-less-thirsty): The global AI demand may be accountable for 4.2 – 6.6 billion cubic meters of water withdrawal in 2027, which is more than the total annual water withdrawal of 4 – 6 Denmark or half of the United Kingdom. This is very concerning, as freshwater scarcity has become one of the most pressing challenges shared by all of us in the wake of the rapidly growing population, depleting water resources, and aging water infrastructures.
+In addition to the strain on electricity, generative AI requires a significant amount of water. Generative AI requires significant computing power, all of which runs through servers that run through thousands of calculations to perform tasks. In completing those calculations, these servers, typically [housed in data centers](https://www.washingtonpost.com/dc-md-va/interactive/2024/data-centers-tour-northern-virginia/?itid=lk_inline_manual_8), generate heat. Often, water systems are used to cool the equipment and keep it functioning. Water transports the heat generated in the data centers into cooling towers to help it escape the building, [similar to how the human body uses sweat to keep cool](https://www.washingtonpost.com/technology/2024/09/18/energy-ai-use-electricity-water-data-centers/). So water-intensive is this demand, that the projected [global AI demand on water](https://arxiv.org/pdf/2304.03271) in 2027 will be equivalent to more than the total annual of half of the United Kingdom. This is especially concerning as freshwater scarcity is rapidly becoming a pressing challenge. 
+
+The methodology below provides a comprehensive framework for how to measure and track the carbon footprint and water use of generative AI. An AI model has three phases — training, fine-tuning, and inference — and there are opportunities to be more sustainable at every phase. This methodology is divided by these three phases, and lists outstanding questions in each category for further exploration.
 
 # Modeling the environmental impact of a GenAI model
 
-Measuring the environmental impact of a generative AI model requires a lifecycle assessment (LCA) that maps to existing standards like the [Greenhouse Gas Protocol (GHG Protocol)](https://ghgprotocol.org) and the [Software Carbon Intensity (SCI) Specification](https://github.com/Green-Software-Foundation/sci), and the [WRI guidance for calculating water use embedded in purchased electricity](https://files.wri.org/d8/s3fs-public/guidance-calculating-water-use-embedded-purchased-electricity_0.pdf).
+The methodology is divided into three phases of the AI lifecycle:
 
-The impact of a GenAI model can be categorized by scope, where scope 1 represents the direct emissions and water use from operations; scope 2 represents the emissions and water use from the electricity consumed during operations; and scope 3 represents emissions and water use from the production of materials used in the server and datacenter hardware as well as the impact from the supply chain that contributed to the production of the model: people, software, offices, travel, data sources, and so forth.
+- [**Training**](/training): Initial phase where AI models learn from large datasets.
+- [**Adaptation**](/fine_tuning): Fine-tuning models for specific tasks.
+- [**Inference**](/inference): Real-time generation of outputs when AI models are deployed.
 
-The impact of each scope can be summarized across the three key components of the environmental impact as follows:
+Measuring the environmental impact of a generative AI model requires a full lifecycle assessment (LCA) which traces the environmental cost of a generative AI model from the mining used to produce the hardware, to the training of large language models, to its use and beyond. For measuring water usage and carbon emissions, the methodology relies on existing standards to measure the LCA like the [**Greenhouse Gas Protocol (GHG Protocol)**](https://ghgprotocol.org/) and the [**Software Carbon Intensity (SCI) Specification**](https://github.com/Green-Software-Foundation/sci), and the [**WRI guidance for calculating water use embedded in purchased electricity**](https://files.wri.org/d8/s3fs-public/guidance-calculating-water-use-embedded-purchased-electricity_0.pdf). 
+
+The methodology assesses the environmental impact of generative AI through these key indicators, which are further categorized into three scopes, based on the [Greenhouse Gas Protocol](https://ghgprotocol.org/) framework. Scope 1 represents the direct emissions and water use from operations; scope 2 represents the emissions and water use from the electricity consumed during operations; and scope 3 represents emissions and water use from the production of materials used in the server and datacenter hardware as well as the impact from the supply chain that contributed to the production of the model: people, software, offices, travel, data sources, and so forth.
+
+These scopes help differentiate between direct and indirect emissions, as well as the broader supply chain impacts, ensuring a comprehensive assessment of both carbon and water footprints throughout the AI lifecycle. 
+
+Data centers use an enormous amount of water for both on-site cooling and off-site electricity generation. There are two related but different types of water usage — water withdrawal (a.k.a. water abstraction) and water consumption, both of which are important for holistically understanding the impacts on water stress and availability. Water withdrawal refers to freshwater taken from the ground or surface water sources, either temporarily or permanently, and then used for agricultural, industrial or municipal uses (normally excluding water used for hydroelectricity generation). Water consumption is defined as “water withdrawal minus water discharge”, and means the amount of water “evaporated, transpired, incorporated into products or crops, or otherwise removed from the immediate water environment.” For more information on water usage, please visit the “Water Intensity” page. 
+
+Using these indicators, each phase of generative AI is assessed through three environmental metrics:
+
+- **Operational CO2e**: Emissions generated during system use.
+- **Embodied CO2e**: Emissions across the system's entire lifecycle, including raw material extraction and manufacturing.
+- **Consumed H2O**: Water usage at each stage.
+
+By addressing all three scopes and considering the lifecycle of AI systems from creation to deployment, stakeholders can better manage and mitigate the environmental footprint of their generative AI technologies through the various phases of generative AI. In modeling the carbon footprint of generative AI, we evaluate the operation CO2e, embodied CO2e, and consumed H2O across all three scopes:
 
 | Scope | Operational CO2e | Embodied CO2e | Consumed H2O |
 | ----- | ---------------- | ------------- | ------------ |
@@ -22,10 +40,6 @@ The impact of each scope can be summarized across the three key components of th
 | 2     | datacenter electricity use | manufacturing of power distribution and generation | electricity generation |
 | 3     | corporate value chain | server and chip manufacturing | server and chip manufacturing |
 
-Each phase of the lifecycle of an AI model contributes to the environmental impact. Each phase is split into a separate page:
-1. [Training a base model](/training) using large datasets
-2. Adapting a base model through fine-tuning for specific tasks
-3. [Using a model for inference](/inference), real-time generation of outputs when AI models are deployed
 
 # References
 
