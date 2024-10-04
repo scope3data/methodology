@@ -5,7 +5,7 @@ description: "Methodology for calculating the normalized, amortized emissions fr
 
 ## Overview
 
-We need to model the environmental impact of the computation for the trained model. The training costs of genAI models are often disclosed in some form. These costs must be normalized and then amortized across the expected use-life of the model.
+To effectively model the water and carbon emission associated with generative AI, we first start with modeling the climate cost of training large language models. Training requires large or small models to learn from large datasets by adjusting its parameters through multiple iterations, allowing it to identify patterns and make predictions or generate outputs based on new inputs.
 
 The key components of the training cost of the model include:
 - The operational energy used to train the final model
@@ -14,31 +14,24 @@ The key components of the training cost of the model include:
 - (Allocated emissions from generation of the training and test data)
 - (Allocated operational and embodied emissions of development and testing infrastructure)
 
-[Carbon Emissions and Large Neural Network Training](https://arxiv.org/pdf/2104.10350) includes a table that shows the impact of changing the model, the datacenter, the gpu, and the energy grid in training a model:
+The methodology uses infrastructure data, referring to the resources needed to train the AI models, such as hardware specifications, location of energy grid, etc.; and operational data, referring to the consumption of resources and the process needed to train the models.  
 
-![Table of training costs](images/table1_carbon_emissions.png)
+| **Infrastructure data** | **Operational data** |
+| --- | --- |
+| [**Training cluster**](http://localhost:3000/cluster) details | Total reserved/owned wall clock time for intermediate and final model training |
+| Training cluster location(s), including if hosted in a cloud, which region(s) | GPU hours for intermediate model training |
+|  | GPU hours for final model training |
 
-## Disclosure of training costs
+## A Note on Disclosure 
 
-To fully assess environmental impact, model developers should disclose the technical infrastructure used for training and how this infrastructure was engaged during the training process.
+While the training costs of generative AI are often disclosed in some form, there is some variability in disclosure. Disclosure of the technical infrastructure used for training AI models is often limited. Most companies in the AI industry do not consistently provide detailed information regarding the energy consumption involved. To better assess environmental impact, model developers should disclose the technical infrastructure used for training and how this infrastructure was engaged during the training process.
 
-Infrastructure data:
-- [Training cluster](/cluster) details
-- Training cluster location(s) - if hosted in a cloud, which region(s)
+As an example of a relatively complete disclosure, see Bender, E. M., Gebru, T., McMillan-Major, A., & Shmitchell, S. (2022). [**On the Dangers of Stochastic Parrots: Can Language Models Be Too Big?**](https://arxiv.org/pdf/2211.02001) *Proceedings of the 2022 ACM Conference on Fairness, Accountability, and Transparency (FAccT '22)*. Bender et. al. estimate the carbon footprint of Bloom, a 176B parameter language model, finding that the final training emitted is approximately 24.7 tonnes of CO2eq when only we considering dynamic power consumption, and 50.5 tonnes when accounting for all processes ranging from equipment manufacturing to energy-based operational consumption.
 
-Operational data:
-- Total reserved/owned wall clock time for intermediate and final model training
-- GPU hours for intermediate model training
-- GPU hours for final model training
+Infrastructure data                                                       
 
-### Example disclosure
-
-As an example of a relatively complete disclosure, see [Sasha Luccioni, Sylvain Viguier, and Anne-Laure Ligozat. 2022. Estimating the carbon footprint of Bloom, a 176B parameter language model.](https://arxiv.org/pdf/2211.02001): "We estimate that BLOOM’s final training emitted approximately 24.7 tonnes of CO2eq if we consider only the dynamic power consumption, and 50.5 tonnes if we account for all processes ranging from equipment manufacturing to energy-based operational consumption."
-
-Infrastructure data
-
-| Component | Disclosed data |
-| --------- | -------------- |
+| **Component** | **Disclosed data** |
+| --- | --- |
 | GPU | Nvidia A100 80GB |
 | Server | HPE Apollo 6500 Gen10 Plus |
 | Number of GPUs | 384 |
@@ -46,14 +39,15 @@ Infrastructure data
 | Training location | France |
 
 Training data
-
-| Component | Disclosed data |
-| --------- | -------------- |
+| **Component** | **Disclosed data** |
+| --- | --- |
 | Total reserved time | 118 days |
 | Reservation start time | January 2022 (?) |
 | GPU hours for final model | 1,082,990 |
 
-## Normalization of disclosed data
+Various factors—such as the choice of GPU, the location and efficiency of the data center, the carbon intensity of the local energy grid, and the size of the AI model—significantly impact the carbon emissions generated during model training. The table from Carbon Emissions and Large Neural Network Training illustrates these impacts. 
+
+![Table of training costs](images/table1_carbon_emissions.png)
 
 When disclosed data is not present or not complete, we need to use predictive or heuristic data to fill in the gaps.
 
@@ -71,20 +65,14 @@ When disclosed data is not present or not complete, we need to use predictive or
 | GPU hours for final model | Predict using parameters and architecture per [OpenCarbonEval](https://arxiv.org/pdf/2405.12843) |
 | GPU hours for intermediate models | Predict based on ratio of final to intermediate for other disclosed models |
 
-### Example normalization: BLOOM 176B
+For example, taking a look at the BLOOM model mentioned above, while the data disclosed is comprehensive, it does not include water use. To calculate water use, we use the fallbacks for the missing data points in our calculation. BLOOM provides us with the ratio of intermediate to final GPU hours of 1.45. We therefore make the following assumption: The 35.8 tons of CO2 for the intermediate models implies proportional reservation and usage as the final model (1.45x). Using the 289 days of reserved training time, we can now calculate other crucial data points. Namely the reservation start time, which is crucial because power intensity changes depending on the time of the year. The study stated an end date of June 2022, and subtracting 289 days from the finish date, takes us back to August 2021. The chart below normalizes the data the paper provides to calculate water use (below).
 
-The BLOOM paper includes most of the required parameters for carbon emissions. However, it does not include data for water consumption. We use the fallbacks for the missing data points in the calculations below.
-
-Some assumptions:
-- The 35.8 tons of CO2 for the intermediate models implies proportional reservation and usage as the final model (1.45x)
-
-Normalized training data
-
-| Component | Disclosed data |
-| --------- | -------------- |
+| **Component** | **Disclosed data** |
+| --- | --- |
 | Total reserved time | 289 days (118 x 1.45) |
 | Reservation start time | August 2021 (finish date of June 2022 minus 289 days) |
 | GPU hours for final model | 2,653,326 (1,082,990 x 1.45) |
+
 
 ## Calculation of carbon emissions
 
@@ -164,6 +152,8 @@ TODO - update above to use cluster metrics and include PUE for the scope 2 numbe
 
 ### Example of water impact calculation for BLOOM 176B
 
+We now move to calculating the water usage of BLOOM 176B.
+
 | Component | Value |
 | --------- | ----- |
 | Datacenter WUE |  1.8 L/kWh (US average) |
@@ -188,17 +178,10 @@ Manufacturing H2O = (2832 h) x (4.75 L/h) = 13.5 kL
 
 ## Amortization of impact across use life
 
-A general-purpose model is likely to be used heavily for a period of time then made obsolete by newer models that are more effective and/or more efficient. Specialized models may have longer use lives. Open source models enable fine tuning that will create stickiness for ongoing use.
+And finally, we amortize the data. We propose using a similar model to financial amortization, which projects how many inferences will happen over the use life of a model. And every month, this number is updated based on actuals. Therefore, each model should have a projected use life and will additionally track the actual and projected number of inferences for each month during that use life. As actual inference numbers are calculated each month, the projections for the remaining use life would be updated. Since actual inference numbers are sensitive, the model developer could publish the percent of amortized training cost remaining.
 
-Each model should have a projected use life and track the actual and projected number of inferences for each month during that use life. As actual inference numbers are calculated each month, the projections for the remaining use life should be updated. Since actual inference numbers are sensitive, the model developer could publish the percent of amortized training cost remaining.
+Therefore, the initial amortization schedule is as follows, where PI means the total projected inferences; N means the total use life in months; TC means the total training cost:
 
-### Amortization schedule tables
-
-Initial amortization schedule
-
-PI means the total projected inferences
-N means the total use life in months
-TC means the total training cost 
 
 | Data point                           | Month 1     | Month 2           | Month 3         | ... | Month N |
 | ------------------------------------ | ----------- | ----------------- | --------------- | --- | ------- |
@@ -218,20 +201,14 @@ Amortization schedule after month 1
 | Training cost per inference (TPI)    | TCR1 / PCR1 | TCR2 / PCR2      | TCR3 / PCR3       |     | TC / PI |
 | Actual inferences                    | AI1         |                  |                   |     |         |
 | Training cost "billed" (TCB)         | AI1 x TPI   | TCB1 + AI2 x TPI |                   |     | TC      |
- 
-### Open Questions
 
-- How to estimate projected inferences and use life for a new model (vs an upgrade)
-- How to estimate actual inferences for a closed model that doesn't disclose usage
-- How to estimate actual inferences for an open source model like LLAMA where the use is not happening in a centralized fashion
+
+A general-purpose model is likely to be used heavily for a period of time then made obsolete by newer models that are more effective and/or more efficient. Specialized models may have longer use lives. Open source models enable fine tuning that will create stickiness for ongoing use.
 
 ### Example of amortization
 
-Traffic to ChatGPT was [relatively flat](https://uk.pcmag.com/ai/152411/openais-gpt-4o-gives-chatgpt-a-big-traffic-bump) from April 2023 to April 2024, averaging around 50M visits a day.  Assuming [5 queries per visit and 925 inferences per query](https://dl.acm.org/doi/pdf/10.1145/3604930.3605705), this would represent 7T inferences per month.
+To apply this in more concrete terms, we model chatGPT queries. Traffic to ChatGPT was [relatively flat](https://uk.pcmag.com/ai/152411/openais-gpt-4o-gives-chatgpt-a-big-traffic-bump) from April 2023 to April 2024, averaging around 50M visits a day. Assuming 5 queries per visit and 925 inferences per query, this would represent 7T inferences per month. Based on historical use-life cases, we project that each chatGPT model (GPT-4, GPT-4o) has about a 14-month use-life. Based on this alone, we now can calculate the number of inferences by multiplying 7T inferences per month by 14 months to arrive at 98T inferences in “Projected inferences remaining.”  We now can calculate the training cost per inference by dividing aggregate training cost remaining of 46 mt by the projected inferences remaining of 98T, to arrive at .46g/Mq. The initial amortization schedule would look like:
 
-With the impending release of GPT-4o, a reasonable projection would be that traffic would continue at the same rate, and that the model lifecycle would be around a year given the 14-month gap between GPT-4 and GPT-4o.
-
-The initial amortization schedule would look like:
 
 | Data point                           | Month 1     | Month 2 | Month 3 | ... | Month 14 |
 | ------------------------------------ | ----------- | ------- | ------- | --- | -------- |
@@ -241,7 +218,7 @@ The initial amortization schedule would look like:
 | Training cost per inference (TPI)    | .46g/Mq     | .46g/Mq | .46g/Mq |     | 0        |
 | Training cost "billed" (TCB)         | 3 mt        | 3 mt    | 3 mt    |     | 0        |
 
-What actually happened was that thanks to the new model, traffic to chatgpt.com increased by 55% in June 2024 after the release of GPT-4o.
+Now, let’s apply these projects to actual data. With the impending release of GPT-4o, a reasonable projection would be that traffic would continue at the same rate, and that the model lifecycle would be around a year given the 14-month gap between GPT-4 and GPT-4o. What actually happened was that thanks to the new model, traffic to chatgpt.com increased by 55% in June 2024 after the release of GPT-4o. 
 
 | Data point                           | Month 1     | Month 2 | Month 3 | ... | Month 14 |
 | ------------------------------------ | ----------- | ------- | ------- | --- | -------- |
@@ -253,4 +230,10 @@ What actually happened was that thanks to the new model, traffic to chatgpt.com 
 | Training cost "billed" (TCB)         | 5 mt        |         |         |     |          |
 
 The spike in traffic means that the model was effectively overbilled in month 1, making the projected training cost per inference much lower thanks to higher projected volume and the lower remaining training cost.
+
+It is important to note that this data is not meant to be exact, given the assumptions made, but to model the kinds of calculations and frameworks we would use once data is provided. For future iterations of this model, we plan to explore the following: 
+
+- How to estimate projected inferences and use life for a new model (vs an upgrade)
+- How to estimate actual inferences for a closed model that doesn’t disclose usage
+- How to estimate actual inferences for an open source model like LLAMA where the use is not happening in a centralized fashion
 
