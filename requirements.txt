@@ -160,9 +160,9 @@ pyyaml==6.0.1 ; python_version >= "3.10" \
 sniffio==1.3.1 ; python_version >= "3.10" \
     --hash=sha256:2f6da418d1f1e0fddd844478f41680e794e6051915791a034ff65e5f100525a2 \
     --hash=sha256:f4324edc670a0f49750a81b895f35c3adb843cca46f0530f79fc1babb23789dc
-starlette==0.36.3 ; python_version >= "3.10" \
-    --hash=sha256:13d429aa93a61dc40bf503e8c801db1f1bca3dc706b10ef2434a36123568f044 \
-    --hash=sha256:90a671733cfb35771d8cc605e0b679d23b992f8dcfad48cc60b38cb29aeb7080
+starlette==0.40.0 ; python_version >= "3.10" \
+    --hash=sha256:1a3139688fb298ce5e2d661d37046a66ad996ce94be4d4983be019a23a04ea35 \
+    --hash=sha256:c494a22fae73805376ea6bf88439783ecfba9aac88a43911b48c653437e784c4
 typing-extensions==4.10.0 ; python_version >= "3.10" \
     --hash=sha256:69b1a937c3a517342112fb4c6df7e72fc39a38e7891a5730ed4985b5214b5475 \
     --hash=sha256:b0abd7c89e8fb96f98db18d86106ff1d90ab692004eb746cf6eda2682f91b3cb
