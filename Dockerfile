@@ -8,8 +8,6 @@ WORKDIR /app
 COPY . ./
 COPY pyproject.toml /app
 
-RUN echo "hello world"
-
 ENV PYTHONPATH=/app
 RUN pip install -r requirements.txt
 
