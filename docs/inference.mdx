@@ -7,30 +7,43 @@ description: "Methodology for calculating the impact of managing an AI inference
 
 An "inference service" is a service that exposes a single model for inference. This service will be hosted on a cluster of servers or cloud instances, potentially with reserved capacity and the ability to auto-scale with volume.
 
-Model:
-- The base model used including the current [amortized training cost per inference](/training#amortization-of-impact-across-use-life)
-- The current [amortized fine-tuning cost per inference](/fine_tuning#amortization-of-fine-tuning-impact-across-use-life) if applicable
+For purposes of this document, a "request" is the full prompt or input made to the inference service, and a "response" is the text, image, audio, or video returned to the client. The execution of the underlying model is an "inference".
 
-Cluster data:
+![Inference energy model](images/inference_model.png)
+
+To compute the environment impact of a request, we:
+1. calculate cluster energy use on a continuous basis
+2. use activity logs to calculate the number of concurrent requests at each time
+3. calculate the energy use per second of request duration
+4. model the expected request duration for a given set of request parameters
+
+## Cluster energy use
+
+The cluster is defined by:
 - [Cluster](/cluster) details
 - Cluster location(s) - if hosted in a cloud, which region(s)
 - Cluster throughput (per server/instance if autoscaling)
 
-## Activity data
+On a running basis - ideally measured every few seconds - provide:
+- The size of the cluster in nodes (to account for autoscaling)
+- The CPU utilization of each node
+- The utilization of each GPU
+- The power usage of each GPU
 
-The activity of the inference service should be provided on an hourly basis to map to grid intensity from renewables:
-- Date and time, aggregated by hour
-- Cluster size (as multiple of base cluster)
-- Average CPU and GPU utilization
-- Use case
-- For key parameters (see below by use case)
-  - Number of requests
-  - Request latency (or other proxy for computation)
+As an example, NVIDIA's Triton inference server provides these data through a [metrics service](https://docs.nvidia.com/deeplearning/triton-inference-server/user-guide/docs/user_guide/metrics.html).
 
-### Image parameters
+## Activity logs
+
+For each request, provide:
+
+- Timestamp when computation began
+- Time taken to execute the computation phase of the request
+- Input and output metrics (see below for examples by use case)
+
+### Image metrics
 - Input and output size
 - Output quality
-- LoRA models used
+- LoRA model(s) used
 
 LoRA model training can be modeled using the same methodology as full models.
 
@@ -38,30 +51,73 @@ LoRA model training can be modeled using the same methodology as full models.
 - Input tokens
 - Output tokens
 
-## Calculating emissions and water usage
+## Energy per request duration and complexity
 
-For a given hour:
+For each request, predict the duration (`predicted_request_duration`) and the number of inferences (`predicted_inferences`). A simple prediction might be:
 ```
-usage emissions = (cluster size) x E(gpu%, cpu%) x (datacenter PUE) x (average grid intensity)
-
-embodied emissions = (cluster size) x EmbEm(1)
-
-inference emissions = (usage emissions) + (embodied emissions)
-
-water usage = (cluster size) x E(gpu%, cpu%) x (cluster WUE)
-
-embodied water usage = (cluster size) x EmbH2O(1)
-
-inference water = (water usage) + (embodied water usage)
+predicted_request_duration = avg(duration)
+predicted_inferences = (average output tokens + 1)
 ```
 
-The emissions per request includes the amortized training for the base model and any add-ons (like LoRA) and fine-tuning emissions:
-```
-Em(inference) = sum(amortized training emissions) + (amortized fine-tuning emissions) +
-                        (inference emissions)
+Next, calculate the baseline power use of the cluster and spread it across requests by duration:
 
-H2O(inference) = sum(amortized training water) + (amortized fine-tuning water) +
-                        (inference water)
+```
+baseline_energy_per_request_second = E(0,0) / sum(duration)
+```
+
+Calculate the marginal energy per inference:
+```
+marginal_gpu_per_inference = sum(gpu_pct)/sum(inferences)
+marginal_cpu_per_inference = sum(cpu_pct)/sum(inferences)
+
+marginal_energy_per_gpu_pct = E(1,0) - E(0, 0)
+marginal_energy_per_cpu_pct = E(0,1) - E(0, 0)
+
+marginal_energy_per_inference = marginal_gpu_per_inference x marginal_energy_per_gpu_pct +
+                                marginal_cpu_per_inference x marginal_energy_per_cpu_pct
+```
+
+Calculate the energy use for a request:
+```
+usage_energy_per_request = baseline_energy_per_request_second x predicted_request_duration +
+                     marginal_energy_per_inference x predicted_inferences
+```
+
+## Calculating emissions and water usage for a request
+
+Calculate embodied emissions and water usage using predicted request duration:
+```
+embodied_emissions_per_second = EmbEm(1) / 3600
+embodied_emissions_per_request_second = embodied_emissions_per_second / sum(duration)
+
+embodied_emissions_per_request = predicted_request_duration x embodied_emissions_per_request_second
+
+embodied_h2o_per_second = EmbH2O(1) / 3600
+embodied_h2o_per_request_second = embodied_h2o_per_second / sum(duration)
+
+embodied_h2o_per_request = predicted_request_duration x embodied_emissions_per_request_second
+```
+
+Calculate the training and fine-tuning emissions using:
+- The base model used including the current [amortized training cost per inference](/training#amortization-of-impact-across-use-life)
+- The current [amortized fine-tuning cost per inference](/fine_tuning#amortization-of-fine-tuning-impact-across-use-life) if applicable
+```
+training_emissions_per_request = predicted_inferences x
+                                 (training_emissions_per_request + fine_tuning_emissions_per_request)
+training_h20_per_request = predicted_inferences x
+                                 (training_h20_per_request + fine_tuning_h20_per_request)
+```
+
+Sum all emissions and water use to produce total impact for a request:
+
+```
+request_emissions = usage_energy_per_request x (average grid intensity) +
+                    embodied_emissions_per_request +
+                    training_emissions_per_request
+
+request_h20_impact = usage_energy_per_request x (cluster WUE) +
+                    embodied_h2o_per_request +
+                    training_h2o_per_request
 ```
 
 ## Various research findings
