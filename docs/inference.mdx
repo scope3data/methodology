@@ -88,14 +88,10 @@ usage_energy_per_request = baseline_energy_per_request_second x predicted_reques
 Calculate embodied emissions and water usage using predicted request duration:
 ```
 embodied_emissions_per_second = EmbEm(1) / 3600
-embodied_emissions_per_request_second = embodied_emissions_per_second / sum(duration)
-
-embodied_emissions_per_request = predicted_request_duration x embodied_emissions_per_request_second
+embodied_emissions_per_request = predicted_request_duration x embodied_emissions_per_second
 
 embodied_h2o_per_second = EmbH2O(1) / 3600
-embodied_h2o_per_request_second = embodied_h2o_per_second / sum(duration)
-
-embodied_h2o_per_request = predicted_request_duration x embodied_emissions_per_request_second
+embodied_h2o_per_request = predicted_request_duration x embodied_h2o_per_second
 ```
 
 Calculate the training and fine-tuning emissions using:
