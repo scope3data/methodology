@@ -59,12 +59,6 @@ predicted_request_duration = avg(duration)
 predicted_inferences = (average output tokens + 1)
 ```
 
-Next, calculate the baseline power use of the cluster and spread it across requests by duration:
-
-```
-baseline_energy_per_request_second = E(0,0) / sum(duration)
-```
-
 Calculate the marginal energy per inference:
 ```
 marginal_gpu_per_inference = sum(gpu_pct)/sum(inferences)
@@ -77,9 +71,9 @@ marginal_energy_per_inference = marginal_gpu_per_inference x marginal_energy_per
                                 marginal_cpu_per_inference x marginal_energy_per_cpu_pct
 ```
 
-Calculate the energy use for a request:
+Calculate the energy use for a request, taking into account the idle cluster power:
 ```
-usage_energy_per_request = baseline_energy_per_request_second x predicted_request_duration +
+usage_energy_per_request = idle_cluster_power x predicted_request_duration +
                      marginal_energy_per_inference x predicted_inferences
 ```
 
