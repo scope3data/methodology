@@ -77,15 +77,15 @@ When disclosed data is not present or not complete, we need to use predictive or
 The BLOOM paper includes most of the required parameters for carbon emissions. However, it does not include data for water consumption. We use the fallbacks for the missing data points in the calculations below.
 
 Some assumptions:
-- The 35.8 tons of CO2 for the intermediate models implies proportional reservation and usage as the final model (1.45x)
+- The 35.8 tons of CO2 for the intermediate models implies proportional reservation and usage as the final model. The total emissions for all models is then 35.8+24.69 tons, so we can extrapolate by a factor of 2.45x.
 
 Normalized training data
 
 | Component | Disclosed data |
 | --------- | -------------- |
-| Total reserved time | 289 days (118 x 1.45) |
+| Total reserved time | 289 days (118 x 2.45) |
 | Reservation start time | August 2021 (finish date of June 2022 minus 289 days) |
-| GPU hours for final model | 2,653,326 (1,082,990 x 1.45) |
+| GPU hours for final model | 2,653,326 (1,082,990 x 2.45) |
 
 ## Calculation of carbon emissions
 
@@ -205,7 +205,7 @@ TC means the total training cost
 | ------------------------------------ | ----------- | ----------------- | --------------- | --- | ------- |
 | Remaining use life                   | N           | N - 1             | N - 2           |     | 0       |
 | Training cost remaining (TCR)        | TC          | TC - TC / N       | TC - 2 x TC / N |     | 0       |
-| Projected inferences remaining (PCR) | PI          | PI x (N - 1)      | PI X (N - 2)    |     | 0       |
+| Projected inferences remaining (PCR) | PI          | PI x (N - 1) / N  | PI X (N - 2) / N|     | 0       |
 | Training cost per inference (TPI)    | TCR1 / PCR1 | TCR2 / PCR2       | TCR3 / PCR3     |     | 0       |
 | Training cost "billed" (TCB)         | TC/N x TPI  | TCB1 + TC/N x TPI |                 |     | TC      |
 
@@ -215,7 +215,7 @@ Amortization schedule after month 1
 | ------------------------------------ | ----------- | ---------------- | ----------------- | --- | ------- |
 | Remaining use life                   | N           | N - 1            | N - 2             |     | 0       |
 | Training cost remaining (TCR)        | TC          | TC - TCB1        | TC - TCB2         |     | 0       |
-| Projected inferences remaining (PCR) | PI          | AI1 x (N - 1)    | AI1 x (N - 2)     |     | 0       |
+| Projected inferences remaining (PCR) | PI          | AI1 x (N - 1) / N| AI1 x (N - 2) / N |     | 0       |
 | Training cost per inference (TPI)    | TCR1 / PCR1 | TCR2 / PCR2      | TCR3 / PCR3       |     | TC / PI |
 | Actual inferences                    | AI1         |                  |                   |     |         |
 | Training cost "billed" (TCB)         | AI1 x TPI   | TCB1 + AI2 x TPI |                   |     | TC      |
