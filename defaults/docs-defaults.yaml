@@ -61,10 +61,10 @@ defaults:
     app: phone
     audio: phone
     ctv-bvod: tv
+    dooh: tv
     social: phone
     streaming-video: pc
     web: pc
-    dooh: tv
   default_device_embodied_emissions_per_second:
     scope3:
       pc: 0.007000000
