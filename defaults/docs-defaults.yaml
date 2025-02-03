@@ -322,37 +322,13 @@ defaults:
       JAPAC: 0.000300000
       LATAM: 0.000100000
       NAMER: 0.000100000
-  default_percent_broadcasting_type:
-    cable: 0.285000000
-    iptv: 0.252000000
-    ota: 0.262000000
-    satellite: 0.200000000
-  default_percent_broadcasting_type_by_country:
-    AU:
-      cable: 0.120000000
-      iptv: 0.530000000
-      ota: 0.590000000
-      satellite: 0.060000000
-    DE:
-      cable: 0.416000000
-      iptv: 0.096000000
-      ota: 0.034000000
-      satellite: 0.455000000
-    FR:
-      cable: 0
-      iptv: 0.460000000
-      ota: 0.460000000
-      satellite: 0.080000000
-    GB:
-      cable: 0.089000000
-      iptv: 0.275000000
-      ota: 0.406000000
-      satellite: 0.230000000
-    US:
-      cable: 0.433000000
-      iptv: 0.207000000
-      ota: 0.192000000
-      satellite: 0.167000000
+  default_device_per_impression:
+    app: 1
+    audio: 1
+    ctv-bvod: 1
+    linear-tv: 0.625000000
+    streaming-video: 1
+    web: 1
   default_infrastructure_power_by_broadcasting_type_per_household_watt:
     cable: TODO
     iptv: TODO
@@ -389,10 +365,34 @@ defaults:
       iptv: 100
       ota: 50
       satellite: 340
-  default_device_per_impression:
-    app: 1
-    audio: 1
-    ctv-bvod: 1
-    linear-tv: 0.625
-    streaming-video: 1
-    web: 1
+  default_percent_broadcasting_type:
+    cable: 0.285000000
+    iptv: 0.252000000
+    ota: 0.262000000
+    satellite: 0.200000000
+  default_percent_broadcasting_type_by_country:
+    AU:
+      cable: 0.120000000
+      iptv: 0.530000000
+      ota: 0.590000000
+      satellite: 0.060000000
+    DE:
+      cable: 0.416000000
+      iptv: 0.096000000
+      ota: 0.034000000
+      satellite: 0.455000000
+    FR:
+      cable: 0
+      iptv: 0.460000000
+      ota: 0.460000000
+      satellite: 0.080000000
+    GB:
+      cable: 0.089000000
+      iptv: 0.275000000
+      ota: 0.406000000
+      satellite: 0.230000000
+    US:
+      cable: 0.433000000
+      iptv: 0.207000000
+      ota: 0.192000000
+      satellite: 0.167000000
