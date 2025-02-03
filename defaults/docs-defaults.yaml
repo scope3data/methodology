@@ -88,6 +88,13 @@ defaults:
     phone: 1920
     tablet: 2048
     tv: 1080
+  default_device_per_impression:
+    app: 1
+    audio: 1
+    ctv-bvod: 1
+    linear-tv: 0.625000000
+    streaming-video: 1
+    web: 1
   default_device_watts:
     scope3:
       pc: 53.200000000
@@ -115,6 +122,16 @@ defaults:
   default_emissions_per_creative_request_gco2_per_imp: 0.000300000
   default_emissions_per_rtdp_request_gco2_per_imp: 0.010000000
   default_image_compression_ratio: 10
+  default_infrastructure_power_by_broadcasting_type_per_household_watt:
+    cable: TODO
+    iptv: TODO
+    ota: TODO
+    satellite: TODO
+  default_infrastructure_power_per_viewing_hour_by_broadcasting_type_watt:
+    cable: 31.900000000
+    iptv: 152
+    ota: 7.390000000
+    satellite: 13
   default_network_embodied_emissions_gco2e_per_kb:
     scope3:
       fixed: 0.000004430
@@ -123,6 +140,63 @@ defaults:
       fixed: 0.000004430
       mobile: 0.000007970
   default_non_primary_video_bitrate_kbps: 1200
+  default_number_of_channels_by_broadcasting_type:
+    cable: 150
+    iptv: 150
+    ota: 49
+    satellite: 270
+  default_number_of_channels_by_broadcasting_type_by_country:
+    DE:
+      cable: 40
+      iptv: 300
+      ota: 30
+      satellite: 300
+    FR:
+      cable: 0
+      iptv: 150
+      ota: 27
+      satellite: 150
+    GB:
+      cable: 250
+      iptv: 40
+      ota: 100
+      satellite: 300
+    US:
+      cable: 153
+      iptv: 100
+      ota: 50
+      satellite: 340
+  default_percent_broadcasting_type:
+    cable: 0.285000000
+    iptv: 0.252000000
+    ota: 0.262000000
+    satellite: 0.200000000
+  default_percent_broadcasting_type_by_country:
+    AU:
+      cable: 0.120000000
+      iptv: 0.530000000
+      ota: 0.590000000
+      satellite: 0.060000000
+    DE:
+      cable: 0.416000000
+      iptv: 0.096000000
+      ota: 0.034000000
+      satellite: 0.455000000
+    FR:
+      cable: 0
+      iptv: 0.460000000
+      ota: 0.460000000
+      satellite: 0.080000000
+    GB:
+      cable: 0.089000000
+      iptv: 0.275000000
+      ota: 0.406000000
+      satellite: 0.230000000
+    US:
+      cable: 0.433000000
+      iptv: 0.207000000
+      ota: 0.192000000
+      satellite: 0.167000000
   default_percent_mobile:
     scope3: 23.600000000
     sri: 10.000000000
@@ -322,77 +396,3 @@ defaults:
       JAPAC: 0.000300000
       LATAM: 0.000100000
       NAMER: 0.000100000
-  default_device_per_impression:
-    app: 1
-    audio: 1
-    ctv-bvod: 1
-    linear-tv: 0.625000000
-    streaming-video: 1
-    web: 1
-  default_infrastructure_power_by_broadcasting_type_per_household_watt:
-    cable: TODO
-    iptv: TODO
-    ota: TODO
-    satellite: TODO
-  default_infrastructure_power_per_viewing_hour_by_broadcasting_type_watt:
-    cable: 31.900000000
-    iptv: 152
-    ota: 7.390000000
-    satellite: 13
-  default_number_of_channels_by_broadcasting_type:
-    cable: 150
-    iptv: 150
-    ota: 49
-    satellite: 270
-  default_number_of_channels_by_broadcasting_type_by_country:
-    DE:
-      cable: 40
-      iptv: 300
-      ota: 30
-      satellite: 300
-    FR:
-      cable: 0
-      iptv: 150
-      ota: 27
-      satellite: 150
-    GB:
-      cable: 250
-      iptv: 40
-      ota: 100
-      satellite: 300
-    US:
-      cable: 153
-      iptv: 100
-      ota: 50
-      satellite: 340
-  default_percent_broadcasting_type:
-    cable: 0.285000000
-    iptv: 0.252000000
-    ota: 0.262000000
-    satellite: 0.200000000
-  default_percent_broadcasting_type_by_country:
-    AU:
-      cable: 0.120000000
-      iptv: 0.530000000
-      ota: 0.590000000
-      satellite: 0.060000000
-    DE:
-      cable: 0.416000000
-      iptv: 0.096000000
-      ota: 0.034000000
-      satellite: 0.455000000
-    FR:
-      cable: 0
-      iptv: 0.460000000
-      ota: 0.460000000
-      satellite: 0.080000000
-    GB:
-      cable: 0.089000000
-      iptv: 0.275000000
-      ota: 0.406000000
-      satellite: 0.230000000
-    US:
-      cable: 0.433000000
-      iptv: 0.207000000
-      ota: 0.192000000
-      satellite: 0.167000000
