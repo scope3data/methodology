@@ -369,11 +369,6 @@ defaults:
     ota: 49
     satellite: 270
   default_number_of_channels_by_broadcasting_type_by_country:
-    AU:
-      cable: TODO
-      iptv: TODO
-      ota: TODO
-      satellite: TODO
     DE:
       cable: 40
       iptv: 300
