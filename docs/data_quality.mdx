@@ -6,9 +6,9 @@ Each data element included in an emissions model should include:
 
 - Grid mix data quality (1-5)
 - Organization data quality (1-5)
+- Ad tech platform data quality (1-5)
 - Property data quality (1-5)
 - Ad stack data quality (1-5)
-- Average ad platform data quality (1-5)
 - Ad format data quality (1-5)
 
 In addition, it's important that the provided activity data has sufficient granularity for accurate modeling:
@@ -43,20 +43,38 @@ Criteria for accurate sustainability data at the organization level:
 | All scope 3 categories provided | +1            |
 | Lines of business broken out    | +1            |
 
-## Ad Platform
+## Ad tech platforms
 
-An ad platform should provide 1) requests received, 2) requests sent (traffic shaping), and 3) emissions data from datacenters or cloud providers. The ad platform score starts at 1 and increments based on the presence of various data elements.
+Any ad tech platform (SSP, DSP, media selling platform, traffic shaping technology etc.) should provide data in the following three categories:
 
-| Ad platform data element          | Data Quality |
-| --------------------------------- | ------------- |
-| Server emissions and request data | +1            |
-| Traffic shaping data              | +1            |
-| All data provided monthly         | +1            |
-| All data provided regionally      | +1            |
+- Supply - What ad inventory they have access to and how they integrate with publishers
+- Requests Handling - How much carbon emissions are produced to handle an ad request
+- Traffic Shaping - How they integrate with downstream demand partners (so we can better estimate their “secondary” emissions)
 
-Example: A company provides annual server emissions, requests received, and traffic shaping data. This would be data quality 3.
+The quality score for each group starts at 1 and increments based on the presence of below data elements.
 
-The average ad platform data quality is the average score of all direct ad platforms that the property works with.
+| Supply Quality Score                                                                               | Data Quality |
+| -------------------------------------------------------------------------------------------------- | ------------ |
+| Inventory List Provided                                                                            | +1           |
+| Total Request per Inventory ID                                                                     | +1           |
+| Above data broken down by at least 1 additional dimension (placement, country, channel, seller ID) | +1           |
+| Data is shared monthly                                                                             | +1           |
+
+| Request Quality Score                                | Data Quality |
+| ---------------------------------------------------- | ------------ |
+| Server Emissions                                     | +1           |
+| Total Bid Requests                                   | +1           |
+| Above data broken down by server location            | +1           |
+| Organization data quality ≥ 3                        | +1           |
+
+| Traffic Shaping Quality Score                                                                 | Data Quality |
+| --------------------------------------------------------------------------------------------- | ------------ |
+| Ratio of ad requests processed vs bid requests sent for each integrated demand partner        | +1           |
+| Above data broken out by inventory ID                                                         | +1           |
+| Above data broken out by country                                                              | +1           |
+| Data is shared monthly                                                                        | +1           |
+
+For DSPs, real time data providers might be used instead of “demand partners” under Traffic Shaping Quality Score.
 
 ## Property
 
