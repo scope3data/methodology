@@ -30,6 +30,7 @@ TEST_ATP_DEFAULTS_FILE = "defaults/atp-defaults.yaml"
 TEST_NETWORKING_DEFAULTS_FILE = "defaults/networking-defaults.yaml"
 TEST_TRANSMISSION_RATE_DEFAULTS_FILE = "defaults/transmission_rate-defaults.yaml"
 TEST_DOCS_DEFAULTS_FILE = "defaults/docs-defaults.yaml"
+TEST_BROADCASTING_DEFAULTS_FILE = "defaults/broadcasting-defaults.yaml"
 
 TEST_TRANSMISSION_RATE_HIGH = TransmissionRate.load_default_yaml(
     StreamingResolution.HIGH.value,
@@ -239,7 +240,7 @@ class TestAPI(unittest.TestCase):
         )
 
         docs_defs = docs_defaults
-        self.assertEqual(len(docs_defs), 34)
+        self.assertEqual(len(docs_defs), 41)
 
     def test_get_all_con_networking_connection_device_fixed_defaults(self):
         """Test get_all_networking_connection_device_defaults returns expected output"""
