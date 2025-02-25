@@ -58,11 +58,14 @@
     },
     {
       "group": "Generative AI",
+      "pages": ["overview", "training", "fine_tuning", "inference"]
+    },
+    {
+      "group": "Brand Standards",
       "pages": [
-        "overview",
-        "training",
-        "fine_tuning",
-        "inference"
+        "brand_standards/philosophy",
+        "brand_standards/floor",
+        "brand_standards/publisher"
       ]
     }
   ],
