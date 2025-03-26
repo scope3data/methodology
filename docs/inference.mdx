@@ -7,7 +7,7 @@ description: "Methodology for calculating the impact of running AI inference"
 
 Inference is the process of an AI model responding to a request. 
 
-A common example is an AI chatbot. The request and the response consist of text, which is encoded in "tokens" (words or sub-words). Other common examples include text-to-image, image-to-image, text-to-video, etc.
+A common example is an AI chatbot. The request and the response consist of text, which is encoded in "tokens" (words or sub-words). Other common AI use cases include image generation, image modification, video generation, etc.
 
 Typically a model is hosted on a cluster of servers or cloud instances, with the goal of maximizing throughput (tokens or responses per second) for a given latency (time to respond) constraint.
 
@@ -17,7 +17,7 @@ Scope3's methodology for inference takes in a model, input and output parameters
 
 ## Inference duration prediction
 
-The key element of energy usage and environmental impact is the duration of the inference request. Many factors influence the duration. 
+The key element of energy usage and environmental impact is the duration of the inference request - how long the computation takes. Many factors influence the duration. 
 In particular, the model used (including the model's precision, in bytes), the size of the input and output, and the hardware configuration have a large influence.
 
 There are also many additional factors that determine how a model is executed including [batching strategies](https://www.anyscale.com/blog/continuous-batching-llm-inference#continuous-batching), 
@@ -58,8 +58,12 @@ These expressions are theoretical. Therefore we fit a linear regression to bench
 to predict real-world inference duration:
 
 $$
-\hat{t_{total}} = k_{in} * t_{in} + k_{out} * t_{out}
+\hat{t_{total}} = \beta_{in} * t_{in} + \beta_{out} * t_{out}
 $$
+
+where:
+
+- $\beta_{in}$ and $\beta_{out}$ are the learned coefficients of the linear regression
 
 ## Energy calculation
 
@@ -122,6 +126,7 @@ $$
 where: 
 - $P_m^p$ is the number of parameters in model $m$ from provider $p$
 - $c_m^p$ is the cost of inference for model $m$ from provider $p$
+- $\beta_{0}^p$ and $\beta_{1}^p$ are the learned coefficients of the linear regression
 
 Once we have a prediction for each model-provider pair, we average the predictions using the (inverse, squared) [standard error of the prediction](https://people.duke.edu/~rnau/mathreg.htm) as the weight, to get a final prediction per model:
 
