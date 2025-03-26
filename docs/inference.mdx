@@ -1,124 +1,149 @@
 ---
-title: "Inference Service"
-description: "Methodology for calculating the impact of managing an AI inference service"
+title: "Inference"
+description: "Methodology for calculating the impact of running AI inference"
 ---
 
 ## Overview
 
-An "inference service" is a service that exposes a single model for inference. This service will be hosted on a cluster of servers or cloud instances, potentially with reserved capacity and the ability to auto-scale with volume.
+Inference is the process of an AI model responding to a request. 
 
-For purposes of this document, a "request" is the full prompt or input made to the inference service, and a "response" is the text, image, audio, or video returned to the client. The execution of the underlying model is an "inference".
+A common example is an AI chatbot. The request and the response consist of text, which is encoded in "tokens" (words or sub-words). Other common examples include text-to-image, image-to-image, text-to-video, etc.
 
-![Inference energy model](images/inference_model.png)
+Typically a model is hosted on a cluster of servers or cloud instances, with the goal of maximizing throughput (tokens or responses per second) for a given latency (time to respond) constraint.
 
-To compute the environment impact of a request, we:
-1. calculate cluster energy use on a continuous basis
-2. use activity logs to calculate the number of concurrent requests at each time
-3. calculate the energy use per second of request duration
-4. model the expected request duration for a given set of request parameters
+A consumer of AI inference can either host a model locally, host a model on a cloud service (e.g. AWS, Together.ai) or use a managed service provider endpoint (e.g. OpenAI, Google Vertex AI).
 
-## Cluster energy use
+Scope3's methodology for inference takes in a model, input and output parameters, and information about your inference service. It then estimates the energy required and environmental impact for that inference.
+
+## Inference duration prediction
+
+The key element of energy usage and environmental impact is the duration of the inference request. Many factors influence the duration. 
+In particular, the model used (including the model's precision, in bytes), the size of the input and output, and the hardware configuration have a large influence.
+
+There are also many additional factors that determine how a model is executed including [batching strategies](https://www.anyscale.com/blog/continuous-batching-llm-inference#continuous-batching), 
+[paged attention](https://blog.vllm.ai/2023/06/20/vllm.html), and optimizations like quantization. 
+The intention of this methodology is to provide a framework that both calculates and predicts the emissions cost of inference with the flexibility to include future optimizations as they appear.
+
+### Text-to-Text inference duration prediction
+
+[Baseten](https://www.baseten.co/blog/llm-transformer-inference-guide/) summarizes LLM inference duration. 
+(For a deeper dive, see [kipply's post on inference arithmetic](https://kipp.ly/transformer-inference-arithmetic/)).
+LLM inference duration can be broken down into two parts:
+
+1. Input token ("prefill") duration - the time required to process all of the input tokens
+2. Output token ("decode") duration - the time required to generate all of the output tokens
+
+Prefill duration is compute bound whereas decode duration is memory bound:
+
+$$
+t_{in} = \frac{2 * P_m * n_{in}}{A_{f}(b)}
+$$
+$$
+t_{out} = \frac{b * P_m * n_{out}}{A_{bw}}
+$$
+
+where: 
+- $P_m$ is the number of parameters in the model
+- $n_{in}$ and $n_{out}$ are the number of input and output tokens
+- $b$ is the precision of the model parameters, in bytes (e.g. 2, for FP16)
+- $A_{f}(b)$ is the computational capacity of the model, in FLOPs, for the given precision
+- $A_{bw}$ is the memory bandwidth of the GPU
+
+The total duration is the sum:
+$$
+t_{total} = t_{in} + t_{out}
+$$
+
+These expressions are theoretical. Therefore we fit a linear regression to benchmarked [inference speed data](https://github.com/NVIDIA/TensorRT-LLM/blob/main/docs/source/performance/perf-overview.md) 
+to predict real-world inference duration:
+
+$$
+\hat{t_{total}} = k_{in} * t_{in} + k_{out} * t_{out}
+$$
+
+## Energy calculation
+
+Given the predicted inference duration, we can calculate the energy use per inference:
+
+$$
+E = \hat{t_{total}} * \left[ P_{idle} + \left(N_{gpu} * P_{gpu}\right) + \left(N_{cpu} * P_{cpu}\right) \right]
+$$
+
+where:
+- $P_{idle}$, $P_{gpu}$, and $P_{cpu}$ are the power consumption of the idle server, GPU and CPU respectively
+- $N_{gpu}$ and $N_{cpu}$ are the number of GPUs and CPUs on the server
+
+{/* ```
+usage_energy_per_request = predicted_request_duration x 
+                                [ (gpu_power x gpu_count) 
+                                  + (cpu_power x cpu_count) 
+                                  + idle_power ]
+``` */}
+
+### Cluster energy use
 
 The cluster is defined by:
 - [Cluster](/cluster) details
 - Cluster location(s) - if hosted in a cloud, which region(s)
-- Cluster throughput (per server/instance if autoscaling)
 
-On a running basis - ideally measured every few seconds - provide:
-- The size of the cluster in nodes (to account for autoscaling)
-- The CPU utilization of each node
-- The utilization of each GPU
-- The power usage of each GPU
+## Calculating emissions and water usage for an inference request
 
-As an example, NVIDIA's Triton inference server provides these data through a [metrics service](https://docs.nvidia.com/deeplearning/triton-inference-server/user-guide/docs/user_guide/metrics.html).
-
-## Activity logs
-
-For each request, provide:
-
-- Timestamp when computation began
-- Time taken to execute the computation phase of the request
-- Input and output metrics (see below for examples by use case)
-
-### Image metrics
-- Input and output size
-- Output quality
-- LoRA model(s) used
-
-LoRA model training can be modeled using the same methodology as full models.
-
-### Text generation / chat parameters
-- Input tokens
-- Output tokens
-
-## Energy per request duration and complexity
-
-For each request, predict the duration (`predicted_request_duration`) and the number of inferences (`predicted_inferences`). A simple prediction might be:
-```
-predicted_request_duration = avg(duration)
-predicted_inferences = (average output tokens + 1)
-```
-
-Calculate the marginal energy per inference:
-```
-marginal_gpu_per_inference = sum(gpu_pct)/sum(inferences)
-marginal_cpu_per_inference = sum(cpu_pct)/sum(inferences)
-
-marginal_energy_per_gpu_pct = E(1,0) - E(0, 0)
-marginal_energy_per_cpu_pct = E(0,1) - E(0, 0)
-
-marginal_energy_per_inference = marginal_gpu_per_inference x marginal_energy_per_gpu_pct +
-                                marginal_cpu_per_inference x marginal_energy_per_cpu_pct
-```
-
-Calculate the energy use for a request, taking into account the idle cluster power:
-```
-usage_energy_per_request = idle_cluster_power x predicted_request_duration +
-                     marginal_energy_per_inference x predicted_inferences
-```
-
-## Calculating emissions and water usage for a request
-
-Calculate embodied emissions and water usage using predicted request duration:
+Calculate embodied emissions and water usage using predicted inference duration (see [Server cluster](/cluster) for more information about embodied emissions):
 ```
 embodied_emissions_per_second = EmbEm(1) / 3600
-embodied_emissions_per_request = predicted_request_duration x embodied_emissions_per_second
+embodied_emissions_per_inference = predicted_inference_duration x embodied_emissions_per_second
 
 embodied_h2o_per_second = EmbH2O(1) / 3600
-embodied_h2o_per_request = predicted_request_duration x embodied_h2o_per_second
+embodied_h2o_per_inference = predicted_inference_duration x embodied_h2o_per_second
 ```
 
 Calculate the training and fine-tuning emissions using:
 - The base model used including the current [amortized training cost per inference](/training#amortization-of-impact-across-use-life)
 - The current [amortized fine-tuning cost per inference](/fine_tuning#amortization-of-fine-tuning-impact-across-use-life) if applicable
 ```
-training_emissions_per_request = predicted_inferences x
-                                 (training_emissions_per_request + fine_tuning_emissions_per_request)
-training_h20_per_request = predicted_inferences x
-                                 (training_h20_per_request + fine_tuning_h20_per_request)
+training_emissions_per_inference = training_emissions_per_inference + fine_tuning_emissions_per_inference
+training_h20_per_inference = training_h20_per_inference + fine_tuning_h20_per_inference
 ```
 
-Sum all emissions and water use to produce total impact for a request:
+Sum all emissions and water use to produce total impact for an inference request:
 
 ```
-request_emissions = usage_energy_per_request x (average grid intensity) +
-                    embodied_emissions_per_request +
-                    training_emissions_per_request
+inference_emissions = usage_energy_per_inference x average_grid_intensity +
+                    embodied_emissions_per_inference +
+                    training_emissions_per_inference
 
-request_h20_impact = usage_energy_per_request x (cluster WUE) +
-                    embodied_h2o_per_request +
-                    training_h2o_per_request
+inference_h20_impact = usage_energy_per_inference x cluster_WUE +
+                    embodied_h2o_per_inference +
+                    training_h2o_per_inference
 ```
 
-## Various research findings
+## Closed Model Parameter Estimation
+Many providers do not disclose number of model parameters. For LLMs with unknown parameter counts, we use a linear regression model to produce a best estimate. 
+It is [well-documented](https://epoch.ai/gradient-updates/frontier-language-models-have-become-much-smaller) that the cost a provider charges for inference is a good predictor of model size. 
+For each popular provider, we fit a linear regression model to predict the number of parameters based on the cost, on a log-log scale:
 
-To model inference requires understanding the emissions per inference for a model on a particular host given certain parameters. There are *many* factors that determine how a model is executed including [batching strategies](https://www.anyscale.com/blog/continuous-batching-llm-inference#continuous-batching), [paged attention](https://blog.vllm.ai/2023/06/20/vllm.html), and optimizations like quantization. The intention of this methodology is to provide a framework that both calculates and predicts the emissions cost of inference with the flexibility to include future optimizations as they appear.
+$$
+\hat{ln(P_m^p)} = \beta_{0}^p + \beta_{1}^p * ln(c_m^p)
+$$
+
+where: 
+- $P_m^p$ is the number of parameters in model $m$ from provider $p$
+- $c_m^p$ is the cost of inference for model $m$ from provider $p$
+
+Once we have a prediction for each model-provider pair, we average the predictions using the (inverse, squared) [standard error of the prediction](https://people.duke.edu/~rnau/mathreg.htm) as the weight, to get a final prediction per model:
+
+$$
+\hat{P_m} = \frac{\sum_p{w_m^p * \hat{P_m^p}}}{\sum_p{w_m^p}}
+$$
+$$
+w_m^p = \frac{1}{{SE_m^p}^2}
+$$
+
+### Conservative Estimates
+Instead of using the point estimate prediction, we use the 95% confidence interval to produce a conservative estimate of the number of model parameters. 
+The method uses the weighted standard error of the prediction, which uses the standard errors from each individual prediction, as above.
+
+## Various Additional Research Findings
 
 Inference speed may be limited by the framework or by compute. Maximum performance will be achieved when models are not limited by [framework overhead](https://arxiv.org/pdf/2302.06117).  In an optimal scenario, inference can use the full capacity and power of a GPU, as described by [Towards Pareto Optimal Throughput in Small Language Model Serving](https://arxiv.org/pdf/2404.03353). 
 
-Per Wilkins, Keshav, Mortier (2024) [Offline Energy-Optimal LLM Serving](https://arxiv.org/pdf/2407.04014), The number of input tokens and number of output tokens both individually have a substantial impact on energy consumption and runtime, with output tokens having a larger effect size as indicated by the higher 𝐹 statistic. Also, the interaction term shows that the input and output tokens depend on each other while impacting en- ergy consumption and runtime.
-
-We therefore propose a model to describe the total energy consumption for a model 𝐾 as a function of input and output tokens, 𝜏𝑖𝑛 and 𝜏𝑜𝑢𝑡 , respectively:
-𝑒𝐾 (𝜏𝑖𝑛, 𝜏𝑜𝑢𝑡 ) = 𝛼𝐾,0𝜏𝑖𝑛 + 𝛼𝐾,1𝜏𝑜𝑢𝑡 + 𝛼𝐾,2𝜏𝑖𝑛𝜏𝑜𝑢𝑡
-
-This model has high explainability for the effect of input and output tokens on energy and runtime for inference of these different LLMs.
