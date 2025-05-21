@@ -47,9 +47,9 @@
         "consumer_devices",
         "creative",
         "ad_tech_model",
-        "digital_out_of_home",
         "data_quality",
-        "calculations"
+        "calculations",
+        "channels_consideration"
       ]
     }
   ],
