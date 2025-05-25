@@ -67,11 +67,11 @@ defaults:
     web: pc
   default_device_embodied_emissions_per_second:
     scope3:
-      pc: 0.007000000
-      phone: 0.005800000
+      pc: 0.013200000
+      phone: 0.009460000
       smart-speaker: 0.006100000
-      tablet: 0.002900000
-      tv: 0.009600000
+      tablet: 0.012800000
+      tv: 0.008890000
     sri:
       pc: 0.013200000
       phone: 0.009460000
@@ -84,11 +84,11 @@ defaults:
     tv: 1080
   default_device_watts:
     scope3:
-      pc: 53.200000000
-      phone: 0.770000000
+      pc: 29.400000000
+      phone: 2.856000000
       smart-speaker: 2.500000000
-      tablet: 3.000000000
-      tv: 87.400000000
+      tablet: 29.400000000
+      tv: 81.600000000
     sri:
       pc: 29.400000000
       phone: 2.856000000
@@ -278,7 +278,7 @@ defaults:
     social: 0.150000000
     streaming-video: 0.049000000
     web: 0.049000000
-  default_time_in_view_seconds: 6
+  default_time_in_view_seconds: 3
   default_usage_kwh_per_gb:
     scope3:
       fixed: 0.030000000
