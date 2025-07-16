@@ -14,7 +14,7 @@ defaults:
     app: 140
     audio: 1500
     ctv-bvod: 2580
-    linear-tv: 2580
+    linear-tv: 3600
     social: 240
     streaming-video: 300
     web: 320
@@ -309,7 +309,7 @@ defaults:
     audio: 100
     ctv-bvod: 100
     dooh: 100
-    linear-tv: 100
+    linear-tv: 10
     social: 100
     streaming-video: 100
     web: 100
@@ -317,7 +317,7 @@ defaults:
     app: 14
     audio: 4.800000000
     ctv-bvod: 8.256000000
-    linear-tv: 8.256000000
+    linear-tv: 3
     social: 24
     streaming-video: 1
     web: 32
@@ -334,10 +334,10 @@ defaults:
     linear-tv: 790
   default_time_in_view_seconds: 6
   default_tv_home_equipment_embodied_gco2e_per_second_by_tv_distribution_method:
-    cable: 0.010700000
-    iptv: 0.010700000
-    ota: 0.003600000
-    satellite: 0.023000000
+    cable: 0.005346759
+    iptv: 0.005492307
+    ota: 0.001354252
+    satellite: 0.011423331
   default_tv_home_equipment_power_by_tv_distribution_method_watt:
     cable: 16
     iptv: 21
