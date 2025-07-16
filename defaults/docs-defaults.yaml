@@ -14,7 +14,7 @@ defaults:
     app: 140
     audio: 1500
     ctv-bvod: 2580
-    linear-tv: 3600
+    linear-tv: 2580
     social: 240
     streaming-video: 300
     web: 320
@@ -309,7 +309,7 @@ defaults:
     audio: 100
     ctv-bvod: 100
     dooh: 100
-    linear-tv: 10
+    linear-tv: 100
     social: 100
     streaming-video: 100
     web: 100
@@ -317,7 +317,7 @@ defaults:
     app: 14
     audio: 4.800000000
     ctv-bvod: 8.256000000
-    linear-tv: 3
+    linear-tv: 21.500000000
     social: 24
     streaming-video: 1
     web: 32
