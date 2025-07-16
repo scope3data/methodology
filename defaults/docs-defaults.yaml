@@ -122,6 +122,9 @@ defaults:
   default_emissions_per_creative_request_gco2_per_imp: 0.000300000
   default_emissions_per_rtdp_request_gco2_per_imp: 0.010000000
   default_image_compression_ratio: 10
+  default_iptv_network_distribution:
+    fixed: 0.999000000
+    mobile: 0.001000000
   default_network_embodied_emissions_gco2e_per_kb:
     scope3:
       fixed: 0.000004430
@@ -327,6 +330,8 @@ defaults:
     social: 0.150000000
     streaming-video: 0.049000000
     web: 0.049000000
+  default_property_g_per_play_by_channel:
+    linear-tv: 790
   default_time_in_view_seconds: 6
   default_tv_home_equipment_embodied_gco2e_per_second_by_tv_distribution_method:
     cable: 0.010700000
