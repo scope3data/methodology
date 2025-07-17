@@ -256,7 +256,7 @@ defaults:
       ZA: 30.945000000
       ZW: 33.026000000
   default_percent_tv_distribution_method:
-    cable: 28.500000000
+    cable: 28.600000000
     iptv: 25.200000000
     ota: 26.200000000
     satellite: 20
