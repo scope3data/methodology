@@ -8,6 +8,7 @@ defaults:
     tv: 160
   default_average_data_kb_per_session_seconds_excluding_ads_by_channel:
     app: 29.500000000
+    search: 1.011000000
     social: 38
     web: 1.011000000
   default_average_seconds_per_session_excluding_ads_by_channel:
@@ -15,6 +16,7 @@ defaults:
     audio: 1500
     ctv-bvod: 2580
     linear-tv: 2580
+    search: 120
     social: 240
     streaming-video: 300
     web: 320
@@ -27,6 +29,7 @@ defaults:
       - social
       - audio
       - web
+      - search
       - streaming-video
       - linear-tv
     phone:
@@ -35,6 +38,7 @@ defaults:
       - audio
       - app
       - web
+      - search
       - streaming-video
       - linear-tv
     smart-speaker:
@@ -45,6 +49,7 @@ defaults:
       - audio
       - app
       - web
+      - search
       - streaming-video
       - linear-tv
     tv:
@@ -56,6 +61,7 @@ defaults:
     audio: 1000
     ctv-bvod: 0
     dooh: 0
+    search: 150
     social: 1000
     streaming-video: 1000
     web: 1500
@@ -65,6 +71,7 @@ defaults:
     ctv-bvod: tv
     dooh: tv
     linear-tv: tv
+    search: phone
     social: phone
     streaming-video: pc
     web: pc
@@ -112,6 +119,8 @@ defaults:
   default_dynamic_watts_per_mbps:
     fixed: 0.030000000
     mobile: 1.530000000
+  default_emissions_ad_selection_gco2_per_imp_by_channel:
+    search: 0.001229300
   default_emissions_generic_ad_server_gco2_per_imp: 0.000016000
   default_emissions_generic_ad_server_gco2_per_imp_by_channel:
     social: 0.004300000
@@ -289,6 +298,7 @@ defaults:
     ctv-bvod: 15s Video
     dooh: Landscape - 1920x1080 Image
     linear-tv: 30s Video
+    search: Responsive Search Ad
     social: Sponsored Post - 1080x1920 Image
     streaming-video: 15s Video
     web: Leaderboard - 728x90 Banner
@@ -298,6 +308,7 @@ defaults:
     ctv-bvod: 15s-video-ctv-bvod-tv
     dooh: landscape-dooh
     linear-tv: 30s-video-ctv-bvod-tv
+    search: responsive-search-ad-search-phone
     social: 1080-1920-sponsored-post-social-phone
     streaming-video: 15s-video-streaming-video-pc
     web: leaderboard-web-pc
@@ -307,6 +318,7 @@ defaults:
     ctv-bvod: 100
     dooh: 100
     linear-tv: 100
+    search: 100
     social: 100
     streaming-video: 100
     web: 100
@@ -315,6 +327,7 @@ defaults:
     audio: 4.800000000
     ctv-bvod: 8.256000000
     linear-tv: 21.500000000
+    search: 12
     social: 24
     streaming-video: 1
     web: 32
@@ -323,6 +336,7 @@ defaults:
     audio: 0.049000000
     ctv-bvod: 0.280000000
     dooh: 0.049000000
+    search: 0.049000000
     social: 0.150000000
     streaming-video: 0.049000000
     web: 0.049000000
