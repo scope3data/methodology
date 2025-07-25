@@ -24,7 +24,6 @@ defaults:
   default_channel_by_device:
     pc:
       - ctv-bvod
-      - streaming-video
       - social
       - audio
       - web
@@ -33,7 +32,6 @@ defaults:
     phone:
       - social
       - ctv-bvod
-      - streaming-video
       - audio
       - app
       - web
@@ -44,7 +42,6 @@ defaults:
     tablet:
       - social
       - ctv-bvod
-      - streaming-video
       - audio
       - app
       - web
@@ -53,11 +50,7 @@ defaults:
     tv:
       - linear-tv
       - ctv-bvod
-      - streaming-video
-      - social
       - audio
-      - app
-      - streaming-video
   default_consumer_device_request_size_bytes:
     app: 1000
     audio: 1000
