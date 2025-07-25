@@ -24,6 +24,7 @@ defaults:
   default_channel_by_device:
     pc:
       - ctv-bvod
+      - streaming-video
       - social
       - audio
       - web
@@ -32,6 +33,7 @@ defaults:
     phone:
       - social
       - ctv-bvod
+      - streaming-video
       - audio
       - app
       - web
@@ -42,6 +44,7 @@ defaults:
     tablet:
       - social
       - ctv-bvod
+      - streaming-video
       - audio
       - app
       - web
@@ -50,6 +53,7 @@ defaults:
     tv:
       - linear-tv
       - ctv-bvod
+      - streaming-video
       - social
       - audio
       - app
@@ -267,7 +271,7 @@ defaults:
       ota: 45.400000000
       satellite: 4.600000000
     DE:
-      cable: 41.600000000
+      cable: 41.500000000
       iptv: 9.600000000
       ota: 3.400000000
       satellite: 45.500000000
@@ -284,7 +288,7 @@ defaults:
     US:
       cable: 43.300000000
       iptv: 20.700000000
-      ota: 19.200000000
+      ota: 19.300000000
       satellite: 16.700000000
   default_platform_ad_format_by_channel:
     app: Interstitial - 1080x1920 Banner
@@ -326,7 +330,6 @@ defaults:
     audio: 0.049000000
     ctv-bvod: 0.280000000
     dooh: 0.049000000
-    linear-tv: 0.280000000
     social: 0.150000000
     streaming-video: 0.049000000
     web: 0.049000000
