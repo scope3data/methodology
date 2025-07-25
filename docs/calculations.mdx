@@ -1,3 +1,7 @@
+---
+title: "Calculations"
+---
+
 import ConventionalModelDefaults from "/snippets/defaults_conventional_model.mdx";
 import PowerModelDefaults from "/snippets/defaults_power_model.mdx";
 import VideoPlayerDefaults from "/snippets/defaults_video_player.mdx";
@@ -8,6 +12,7 @@ import TimeInViewDefaults from "/snippets/defaults_time_in_view.mdx";
 import AdPlatformDefaults from "/snippets/defaults_ad_platform.mdx";
 import NetworkTrafficDefaults from "/snippets/defaults_network_traffic.mdx";
 import ChannelMappingDefaults from "/snippets/defaults_channel_mapping.mdx";
+import BroadcastingDefaults from "/snippets/defaults_broadcasting.mdx";
 
 # Detailed walkthrough of calculations
 
@@ -24,6 +29,8 @@ import ChannelMappingDefaults from "/snippets/defaults_channel_mapping.mdx";
 | `streaming-video` | Website or app with online video content       |
 | `audio`           | Audio content (podcasts, streaming music)      |
 | `dooh`            | Digital out of home - billboards, transit, etc |
+| `search`          | A Search engine (Google, Bing, etc)            |
+| `dooh`            | Scheduled broadcast or cable television        |
 
 ### Device Types
 
@@ -222,6 +229,10 @@ Observations from various channels
 
 <ChannelMappingDefaults />
 
+### Broadcasting defaults
+
+<BroadcastingDefaults />
+
 ## Lookups from external sources
 
 ### Carbon intensity by country, region, and UTC Date/Time
@@ -233,7 +244,7 @@ Providers should clearly and publicly document:
 
 `lookup_carbon_intensity_gco2e_per_kwh(country, region, utc_datetime)` should look up the carbon intensity in gCO2e based on 100-year global warming potential (GWP100) from a database at no less than hourly granularity.
 
-`lookup_carbon_intensity_quality(country, region)` should return the quality of the underlying grid mix data on a scale of 1-5 per [Model Quality](./model_quality)
+`lookup_carbon_intensity_quality(country, region)` should return the quality of the underlying grid mix data on a scale of 1-5 per [Model Quality](#model-quality).
 
 ## Fallbacks
 

@@ -14,6 +14,7 @@ defaults:
     app: 140
     audio: 1500
     ctv-bvod: 2580
+    linear-tv: 2580
     social: 240
     streaming-video: 300
     web: 320
@@ -22,41 +23,51 @@ defaults:
     mobile: 1.200000000
   default_channel_by_device:
     pc:
-    - ctv-bvod
-    - social
-    - audio
-    - web
+      - ctv-bvod
+      - social
+      - audio
+      - web
+      - streaming-video
+      - linear-tv
     phone:
-    - social
-    - ctv-bvod
-    - audio
-    - app
-    - web
+      - social
+      - ctv-bvod
+      - audio
+      - app
+      - web
+      - streaming-video
+      - linear-tv
     smart-speaker:
-    - audio
+      - audio
     tablet:
-    - social
-    - ctv-bvod
-    - audio
-    - app
-    - web
+      - social
+      - ctv-bvod
+      - audio
+      - app
+      - web
+      - streaming-video
+      - linear-tv
     tv:
-    - ctv-bvod
-    - social
-    - audio
-    - app
+      - linear-tv
+      - ctv-bvod
+      - social
+      - audio
+      - app
+      - streaming-video
   default_consumer_device_request_size_bytes:
     app: 1000
     audio: 1000
     ctv-bvod: 0
     dooh: 0
     social: 1000
-    streaming-video: 0
+    streaming-video: 1000
     web: 1500
   default_device_by_channel:
     app: phone
     audio: phone
     ctv-bvod: tv
+    dooh: tv
+    linear-tv: tv
     social: phone
     streaming-video: pc
     web: pc
@@ -77,6 +88,13 @@ defaults:
     phone: 1920
     tablet: 2048
     tv: 1080
+  default_device_per_impression:
+    app: 1
+    audio: 1
+    ctv-bvod: 1
+    linear-tv: 0.667000000
+    streaming-video: 1
+    web: 1
   default_device_watts:
     scope3:
       pc: 53.200000000
@@ -104,6 +122,9 @@ defaults:
   default_emissions_per_creative_request_gco2_per_imp: 0.000300000
   default_emissions_per_rtdp_request_gco2_per_imp: 0.010000000
   default_image_compression_ratio: 10
+  default_iptv_network_distribution:
+    fixed: 0.999000000
+    mobile: 0.001000000
   default_network_embodied_emissions_gco2e_per_kb:
     scope3:
       fixed: 0.000004430
@@ -234,11 +255,43 @@ defaults:
       YE: 11.392000000
       ZA: 30.945000000
       ZW: 33.026000000
+  default_percent_tv_distribution_method:
+    cable: 28.600000000
+    iptv: 25.200000000
+    ota: 26.200000000
+    satellite: 20
+  default_percent_tv_distribution_method_by_country:
+    AU:
+      cable: 9.200000000
+      iptv: 40.800000000
+      ota: 45.400000000
+      satellite: 4.600000000
+    DE:
+      cable: 41.600000000
+      iptv: 9.600000000
+      ota: 3.400000000
+      satellite: 45.500000000
+    FR:
+      cable: 0
+      iptv: 46
+      ota: 46
+      satellite: 8
+    GB:
+      cable: 8.900000000
+      iptv: 27.500000000
+      ota: 40.600000000
+      satellite: 23
+    US:
+      cable: 43.300000000
+      iptv: 20.700000000
+      ota: 19.200000000
+      satellite: 16.700000000
   default_platform_ad_format_by_channel:
     app: Interstitial - 1080x1920 Banner
     audio: 30s Audio
     ctv-bvod: 15s Video
     dooh: Landscape - 1920x1080 Image
+    linear-tv: 30s Video
     social: Sponsored Post - 1080x1920 Image
     streaming-video: 15s Video
     web: Leaderboard - 728x90 Banner
@@ -247,6 +300,7 @@ defaults:
     audio: 30s-audio-digital-audio-phone
     ctv-bvod: 15s-video-ctv-bvod-tv
     dooh: landscape-dooh
+    linear-tv: 30s-video-ctv-bvod-tv
     social: 1080-1920-sponsored-post-social-phone
     streaming-video: 15s-video-streaming-video-pc
     web: leaderboard-web-pc
@@ -255,6 +309,7 @@ defaults:
     audio: 100
     ctv-bvod: 100
     dooh: 100
+    linear-tv: 100
     social: 100
     streaming-video: 100
     web: 100
@@ -262,6 +317,7 @@ defaults:
     app: 14
     audio: 4.800000000
     ctv-bvod: 8.256000000
+    linear-tv: 21.500000000
     social: 24
     streaming-video: 1
     web: 32
@@ -270,10 +326,29 @@ defaults:
     audio: 0.049000000
     ctv-bvod: 0.280000000
     dooh: 0.049000000
+    linear-tv: 0.280000000
     social: 0.150000000
     streaming-video: 0.049000000
     web: 0.049000000
+  default_property_g_per_play_by_channel:
+    linear-tv: 790
   default_time_in_view_seconds: 6
+  default_tv_home_equipment_embodied_gco2e_per_second_by_tv_distribution_method:
+    cable: 0.005346759
+    iptv: 0.005492307
+    ota: 0.001354252
+    satellite: 0.011423331
+  default_tv_home_equipment_power_by_tv_distribution_method_watt:
+    cable: 16
+    iptv: 21
+    ota: 1
+    satellite: 22
+  default_tv_signal_preparation_power_watt: 16700
+  default_tv_signal_transmission_embodied_gco2e_per_second: 27
+  default_tv_signal_transmission_power_by_tv_distribution_method_watt:
+    cable: 16000
+    ota: 165000
+    satellite: 3150
   default_usage_kwh_per_gb:
     scope3:
       fixed: 0.030000000

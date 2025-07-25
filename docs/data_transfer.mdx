@@ -1,3 +1,7 @@
+---
+title: "Data transfer"
+---
+
 # Emissions from Data Transfer
 
 ![Global ICT footprint vs bandwidth](images/malmodin-sweden-2018.png)
@@ -21,8 +25,8 @@ These bottom-up numbers indicate that the majority of emissions from broadband u
 - As a starting point in understanding all the various approaches for understanding the carbon footprint of various networks, we recommend [this article by Gauthier Roussilhe](https://gauthierroussilhe.com/articles/explications-sur-l-empreinte-carbone-du-streaming-et-du-transfert-de-donnees).
 - [Base Station Energy Use in Dense Urban and Suburban Areas](https://ieeexplore.ieee.org/document/10005276?source=authoralert) includes a table of the base station (RAT) energy use for 3G, 4G, and 5G with 2.8, 0.104, and 0.0104 kWh/GB respectively
 - [Power consumption evaluation of mobile radio access networks using a bottom-up approach](https://hera.futuregenerations.be/sites/www.futuregenerations.be/files/summary_masterthesis4g5g_louisgolard.pdf) proposes 10 kbit/J for 4G base stations, equivalent to 0.23 kWh/GB. It suggests 5G is 3-4x more efficient, approximately 0.06 kWh/GB.
- - For mobile vs fixed data the [2020 EU ICT impact study](https://circabc.europa.eu/sd/a/8b7319ba-ce4f-49ea-a6e6-b28df00b20d1/ICT%20impact%20study%20final.pdf) suggests 0.03 kWh/GB for fixed, 0.14 kWh/GB for mobile.
- - The 0.03 kWh/GB number aligns with what is in the graphic above (0.03 W/Mbps) at relatively low bandwidth. [Aslan et al](https://onlinelibrary.wiley.com/doi/10.1111/jiec.12630) suggest that fixed-line networks should be 0.06 kWh/GB in 2020 and halving every two years. This is consistent with the 0.03 kWh/GB figure.
+- For mobile vs fixed data the [2020 EU ICT impact study](https://circabc.europa.eu/sd/a/8b7319ba-ce4f-49ea-a6e6-b28df00b20d1/ICT%20impact%20study%20final.pdf) suggests 0.03 kWh/GB for fixed, 0.14 kWh/GB for mobile.
+- The 0.03 kWh/GB number aligns with what is in the graphic above (0.03 W/Mbps) at relatively low bandwidth. [Aslan et al](https://onlinelibrary.wiley.com/doi/10.1111/jiec.12630) suggest that fixed-line networks should be 0.06 kWh/GB in 2020 and halving every two years. This is consistent with the 0.03 kWh/GB figure.
 - Per DIMPACT methodology, "Range 0.1 – 1.0 kWh/GB (2020). After review of the available data the Carbon Trust used a value of 0.1 kWh/GB based on [Pihkoka et al](https://www.mdpi.com/2071-1050/10/7/2494) in their Whitepaper ‘Carbon impact of video streaming’ (2021)"
 - Greenspector has a highly detailed analysis of the impact of data transfer [here](https://greenspector.com/en/what-impact-does-the-network-have-on-digital-services/).
 - Malmodin J, Lundén D. [The Energy and Carbon Footprint of the Global ICT and E&M Sectors 2010–2015](https://doi.org/10.3390/su10093027). Sustainability. 2018; 10(9):3027.
@@ -30,6 +34,7 @@ These bottom-up numbers indicate that the majority of emissions from broadband u
 ## Power usage by bandwidth (Conventional Model)
 
 The ideal data source would factor in:
+
 - Relative use of fixed connections, 3G, 4G, and 5G on a per-country basis
 - The exponential growth of data use, ideally split between streaming and non-streaming use cases
 
@@ -78,4 +83,5 @@ Mobile Network Energy (Amn) = 1.2W + 1.53W/Mbps
 The [SRI methodology](https://www.sri-france.org/wp-content/uploads/2023/06/SRI_Calculating-the-carbon-footprint_V2.pdf) includes embodied emissions data from ADEME/Negaoctet, which seem reasonable.
 
 ## Handling unknown networks
+
 The SRI methodology suggests a ratio of 90% fixed to 10% mobile. However, this ratio is not representative globally. The ITU publishes [research](https://datahub.itu.int) on fixed and mobile traffic by country. This indicates that for 2022 the weighted average of global traffic was 23.6% mobile. However, this research notably omits the US which is likely similar to other advanced economies in the 5% range, so we have added this to the dataset as an estimate (along with the 10% France number for SRI consistency).

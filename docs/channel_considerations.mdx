@@ -1,0 +1,229 @@
+---
+title: "Channel Considerations"
+---
+
+# Channel-Specific Modeling Considerations
+
+Different advertising channels require specific modeling approaches due to their unique characteristics, infrastructure, and consumption patterns. This document outlines the modeling considerations for Linear TV and Digital Out-of-Home (DOOH) channels, which share some common elements but also have distinct measurement requirements.
+
+# Linear TV
+
+## Definition and Scope
+
+We classify Linear TV as content that is transmitted via traditional broadcast methods and follows a predetermined programming schedule.
+
+### Glossary
+
+| Term              | Definition                                                                                                 |
+| ----------------- | ---------------------------------------------------------------------------------------------------------- |
+| TV Network        | The organization or company responsible for distributing TV content (e.g., BBC, NBC, Canal+).              |
+| TV Channel        | A specific frequency within a TV network (e.g., BBC One, ESPN2)..                                          |
+| Broadcast Method  | The type of infrastructure used to transmit Linear TV content (e.g., OTA/DTT, Cable, Satellite, IPTV).     |
+| Co-viewing Factor | An average number of viewers per TV device, used to estimate device-level reach from audience impressions. |
+
+### Definition of Broadcast methods
+
+| Broadcast method                                          | Equipment involved                                                                                          |
+| --------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| Over-the-air (OTA) & Digital Terrestrial Television (DTT) | Transmitting towers, repeaters, household antennas…                                                         |
+| Cable                                                     | Same as the Internet network (infrastructure is typically shared across telephone, television and Internet) |
+| Satellite                                                 | Transmitting Satellite dishes, Satellite, Receiving satellite dishes, set top boxes                         |
+| IPTV (Internet Protocol Television)                       | Internet network, set top boxes                                                                             |
+
+## Boundaries of Measurement
+
+The Scope3 Linear TV model focuses on estimating emissions coming from the distribution (broadcasting) and consumer viewing of television content and advertising.
+
+| Lifecycle Category               | Emissions Source                                       | Status       | Includes                                                                                                                                                              |
+| -------------------------------- | ------------------------------------------------------ | ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Media Production                 | Content production                                     | Not Included |                                                                                                                                                                       |
+| Creative Production              | Ad production                                          | Not included |                                                                                                                                                                       |
+| Media Distribution               | Corporate emissions from TV network                    | Included     |                                                                                                                                                                       |
+| Media & Creative Distribution    | Broadcast Signal preparation, transmission & reception | Included     | Encoding & multiplexing<br/>OTA/DTT, cable, Satellite & IPTV networks (use phase & embodied)<br/>Household Equipment used for signal reception (use phase & embodied) |
+| Media & Creative Consumer Device | TV viewing                                             | Included     | Television device (use phase & embodied)                                                                                                                              |
+
+## Emissions Calculation Methodology
+
+### Corporate Emissions
+
+For Linear TV, we estimate corporate emissions per TV spot rather than per audience or household impression. We do this to avoid having differing numbers depending on fluctuating TV ratings.
+All other aspects of our calculations for corporate emissions remain as described in [Corporate Emissions](./corporate_model).
+
+### Broadcast Signal Emissions
+
+#### Encoding & Multiplexing
+
+In [_A comparison of the carbon footprint of digital terrestrial television with video-on-demand_](https://downloads.bbc.co.uk/rd/pubs/whp/whp-pdf-files/WHP189.pdf) the BBC estimated that their encoding & multiplexing facility required a power draw of 400kW to encode TV content for their 24 channels.
+
+We use this estimate to derive that it takes an average power draw of 16.7kW to encode and multiplex TV content for one channel (no matter the number of viewing households). For TV networks and/or channels where actual power usage data is available, we use those values instead of the average.
+
+#### Signal Transmission
+
+##### Energy Use
+
+For each TV broadcast method we consider a fixed energy consumption required to broadcast the signal no matter the number of viewing households.
+
+Different TV broadcast methods have varying power efficiency in different countries but for now we do not differentiate between countries.
+
+For each TV broadcast method we have derived power draw estimates from annual energy consumption, either from primary sourced energy consumption data shared with Scope3 by network operators or from the BBC paper.
+
+| TV Broadcast Method | Energy consuming sources                               | Required Power for signal transmission of 1 TV channel | Source(s)                     | Assumptions                                                                                                                                                                                    |
+| ------------------- | ------------------------------------------------------ | ------------------------------------------------------ | ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| OTA/DTT             | Over the air transmission network                      | 165 kW                                                 | Terrestrial Network operators | - National distribution                                                                                                                                                                        |
+| Cable               | Cable network                                          | 16 kW                                                  | BBC paper                     | - TV represents 53% of cable network usage<br/>- The Virgin Media cable network provider in the UK hosts 400 channels.                                                                         |
+| Satellite           | Uplink transmission from TV station tower to satellite | 3.15kW                                                 | BBC paper                     | - No emissions coming from downlink transmission from space satellite to household dishes (satellites being powered by the sun)<br/>- Assuming equal energy usage across all BBC's 24 channels |
+
+Once again, for TV networks and/or channels where actual power usage data is available, we use those values instead of the above defaults.
+
+##### Embodied Emissions
+
+In the absence of data specific to each TV broadcast method, we utilize our estimates of the embodied emissions as the fixed Internet network (0.00000443 gCO2e per kb) to derive the embodied emissions of each broadcast method per second, assuming 6Mbps per transmitter per channel, across 1000 transmitters.
+
+```equation
+embodied_emissions_gco2e_per_second = 0.00000443 gCO2e/kb * 1000 transmitters * 6000 kbps/channel = 27 gCO2e/second/channel
+```
+
+#### Broadcast Method Usage
+
+The prevalence of each TV broadcast method varies by TV network and geographically. For example, in France OTA/DTT and IPTV are the most widely used broadcast methods in terms of households, whereas in Germany satellite is the most prevalent method. We apply a country-specific ratio of broadcast methods for major markets, and use a global average for other countries.
+
+| Country         | % of households using OTA/DTT | % of households using cable | % of households using satellite | % of households using IPTV |
+| --------------- | ----------------------------- | --------------------------- | ------------------------------- | -------------------------- |
+| Global Defaults | 26%                           | 29%                         | 20%                             | 25%                        |
+| USA             | 19%                           | 43%                         | 17%                             | 21%                        |
+| UK              | 41%                           | 9%                          | 23%                             | 27%                        |
+| France          | 46%                           | 0%                          | 8%                              | 46%                        |
+| Germany         | 3%                            | 42%                         | 46%                             | 9%                         |
+| Australia       | 48%                           | 0%                          | 8%                              | 44%                        |
+
+### Household Equipment Emissions
+
+#### Energy Consumption
+
+We consider some household equipment "passive", meaning that they do not require any power to receive the broadcast signal, and others "active".
+
+| Component                           | Broadcasting Method(s)  | Global % of household with that equipment for that broadcast method | Active or Passive | Estimated Power Draw | Source(s)                                            |
+| ----------------------------------- | ----------------------- | ------------------------------------------------------------------- | ----------------- | -------------------- | ---------------------------------------------------- |
+| Household antena                    | OTA/DTT                 | 100%                                                                | Passive           | 0W                   | -                                                    |
+| Satellite dish                      | Satellite               | 100%                                                                | Passive           | 0W                   | -                                                    |
+| Low-Noise Block Downconverter (LNB) | Satellite               | 100%                                                                | Active            | 5W                   | Average across various manufacturers' specifications |
+| Signal Amplifier                    | OTA/DTT & Satellite     | 20%                                                                 | Active            | 5W                   | BBC paper                                            |
+| Decoder / STB                       | Cable, Satellite & IPTV | 100%                                                                | Active            | 16W                  | BBC paper                                            |
+| Co-axial cable                      | Cable & IPTV            | 100%                                                                | Passive           | 0W                   | -                                                    |
+| Home router                         | IPTV                    | 100%                                                                | Active            | 5W                   | See [Data Transfer](./data_transfer)                 |
+
+#### Embodied Emissions
+
+Similarly to how we model consumer devices (see [Consumer Devices](./consumer_devices)), we estimate _Production Energy per Use Second_ (PEPS) for each and every piece of household equipment.
+
+| Component                           | Broadcasting Method(s)  | Global % of household with that equipment for that broadcast method | Equipment use Allocation % for Linear TV | Lifetime Impact kgCO2e (excluding use) | Usage (h/day) | Years in use | PEPS (gCO2e/s) | Mass (grams) | Example Unit                                 |
+| ----------------------------------- | ----------------------- | ------------------------------------------------------------------- | ---------------------------------------- | -------------------------------------- | ------------- | ------------ | -------------- | ------------ | -------------------------------------------- |
+| Household antena                    | OTA/DTT                 | 100%                                                                | 100%                                     | 127                                    | 3.9           | 20           | 0.001239121    | 860          | Clearstream 2MAX HDTV Antenna                |
+| Satellite dish                      | Satellite               | 100%                                                                | 100%                                     | 592                                    | 3.9           | 20           | 0.005776061    | 4000         | Cahors SMC65 White Fibreglass Satellite Dish |
+| Low-Noise Block Downconverter (LNB) | Satellite               | 100%                                                                | 100%                                     | 37                                     | 3.9           | 20           | 0.000361004    | 250          | Universal 0.1dB Satellite LNB                |
+| Signal Amplifier                    | OTA/DTT & Satellite     | 20%                                                                 | 100%                                     | 59                                     | 3.9           | 20           | 0.000115131    | 400          | Antenna Signal Amplifier                     |
+| Decoder / STB                       | Cable, Satellite & IPTV | 100%                                                                | 100%                                     | 265                                    | 3.9           | 20           | 0.005171135    | 1790         | Technisat Technicorder ISIO SC               |
+| Co-axial cable                      | Cable & IPTV            | 100%                                                                | 100%                                     | 18                                     | 3.9           | 20           | 0.000175623    | 120          | CIMPLE CO Coaxial Cable                      |
+| Home router                         | IPTV                    | 100%                                                                | 50%                                      | 45.9                                   | 24            | 5            | 0.000145548    | 310          | Fritz!Box 7530                               |
+
+#### Summary
+
+| Broadcast Method | Variable Power per viewing device | PEPs (gCO2e/s) |
+| ---------------- | --------------------------------- | -------------- |
+| OTA/DTT          | 1W                                | 0.00135        |
+| Cable            | 16W                               | 0.00535        |
+| Satellite        | 22W                               | 0.0114         |
+| IPTV             | 21W                               | 0.00549        |
+
+### TV Viewing Emissions
+
+We follow the same methodology as described in [Consumer Devices](./consumer_devices), accounting for both use phase (energy consumption) and embodied emission (production & disposal).
+
+We adapt the "synthetic TV system" for Linear TV accordingly:
+
+- Set-top boxes (STBs) and decoders are excluded, as they are already accounted for under household equipment.
+- We retain the assumption from Urban et al. that 7% of televisions come with a sound bar.
+
+This results in the following TV system:
+
+| Device                | Power (W) | PEPS (gCO2e/s) |
+| --------------------- | --------- | -------------- |
+| TV System (Linear TV) | 75        | 0.0096         |
+
+### Estimating the number of TV impressions
+
+We estimate the number of TV devices reached using a co-viewing factor of 1.5, in line with published audience measurement benchmarks across major markets. This means that for every 1.5 audience impressions, we assume one TV device was used to view the content.
+Example:
+
+- Input: 1,000,000 audience impressions for a TV spot
+- Device count estimate: 1,000,000 ÷ 1.5 = 666,667 TV devices
+
+# Digital Out-of-Home (DOOH)
+
+## Definition and Scope
+
+Digital Out-of-Home (DOOH) refers to digital displays used for advertising in public spaces, such as billboards, transit displays, and retail screens. Unlike Linear TV, DOOH screens are owned or leased by media owners who have direct control over their operation and maintenance.
+
+## Boundaries of Measurement
+
+DOOH screens, like consumer devices, require energy to display an ad. Energy consumption during the use phase is in fact the highest source of emissions.
+However, on the contrary to consumer devices, billboards are owned or leased by media owners who therefore have a high level of operational control over the screen attributes that influence embodied and energy related emissions (venue category, manufacturer, model, size, location and positioning, operating hours, brightness settings etc...). For that reason, we are including emissions from screens' energy usage and production to "media distribution".
+
+| Emissions source            | Lifecycle category    | Status           |
+| --------------------------- | --------------------- | ---------------- |
+| Screens' embodied emissions | Media Distribution    | In-development   |
+| Screens' energy consumption | Media Distribution    | Included         |
+| Corporate emissions         | Media Distribution    | Included         |
+| Use of Ad Technology        | Ad Selection          | In-development   |
+| Creative data transfers     | Creative Distribution | Included         |
+| Screens' recycling/disposal | Disposal              | To be considered |
+
+## Emissions Calculation Methodology
+
+### Screen Emissions
+
+#### Embodied Emissions
+
+Coming soon
+
+#### Energy Consumption
+
+On the contrary to [consumer device emissions](./consumer_devices), we have found no credible research paper describing the power draw of large digital billboards. As such, we estimate for individual screens based on a variety of input data sources (listed in order from most accurate to least accurate):
+
+- Electricity metres installed on the screens themselves and monitoring power draw in near real-time.
+- Power bills received by media owners on a monthly, quaterly or yearly basis, for a group of or for individual screens.
+- Technical specifications from screen manufacturers like Daktronics, Samsung or Panasonic. We have found that these often document maximum power draw (instead of average power draw), which can lead to an over-estimation of energy consumption.
+- Extrapolation based on physical dimensions and one of the above data point for screens from the same media owner.
+- Extrapolation based on physical dimensions and venue type, off the back of data for 500k+ screens kindly provided to us by early partners (including DOOH programmatic platform Hivestack and DOOH media owners JCDecaux ANZ, Go Media and Lumo).
+
+When no screen attribute or energy data is available to us for a given screen, we estimate the power draw of that screen to be "the 80th percentile" amongst screens that media owner and/or venue category and/or country (based on statistical relevance). This approach aims to incentivize more media owners to share power draw data with us and the wider advertising industry.
+
+### Corporate Emissions
+
+See [Corporate Emissions](./corporate_model)
+
+### Ad Selection Emissions
+
+On the contrary to other digital channels, in DOOH no standard like ads.txt exist to allow DOOH media owners' to disclose the vendors used in their monetization waterfall, making [mapping the ad tech graph](./publisher_model#mapping-the-ad-tech-graph) more difficult.
+We are currently developping alternative ways for DOOH media owners to share this information with us. Until then, ad selection emissions will be considered 0.
+
+### Creative Data Transfer Emissions
+
+See [Emissions from Data Transfer](./data_transfer)
+
+### Screen Disposal Emissions
+
+To be discussed.
+
+## Additional Considerations
+
+### Impression Multiplier
+
+One key difference between the digital out-of-home channel and others is its one-to-many nature, meaning that most likely one ad play can be viewed by multiple individuals around the screen.
+For this reason, our modelling is done "per play" and translated to "per impression" through the use of a screen specific average impression multiplier provided by partners (media owners and platforms).
+
+When no impression multiplier data is provided to us for a given screen, we once again estimate that value to be the 80th percentile amongst screens that media owner and/or venue category and/or country (based on statistical relevance).
+
+### Renewable Energy Usage
+
+To be discussed.

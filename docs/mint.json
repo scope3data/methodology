@@ -11,6 +11,11 @@
       "icon": "github",
       "name": "GitHub",
       "url": "https://github.com/scope3data/methodology"
+    },
+    {
+      "icon": "flask",
+      "name": "Preview Methodology",
+      "url": "https://preview.methodology.scope3.com"
     }
   ],
   "colors": {
@@ -42,9 +47,9 @@
         "consumer_devices",
         "creative",
         "ad_tech_model",
-        "digital_out_of_home",
         "data_quality",
-        "calculations"
+        "calculations",
+        "channel_considerations"
       ]
     }
   ],

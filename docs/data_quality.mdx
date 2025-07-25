@@ -1,3 +1,7 @@
+---
+title: "Data quality"
+---
+
 Given the many layers of assumptions and allocations involved in modeling the emissions of the complex advertising supply chain, it is critical to understand the accuracy of emissions data both for assessing provider quality and as a gating factor to incorporate data into corporate and regulatory reporting.
 
 ## Data Quality Components
@@ -6,12 +10,13 @@ Each data element included in an emissions model should include:
 
 - Grid mix data quality (1-5)
 - Organization data quality (1-5)
+- Ad tech platform data quality (1-5)
 - Property data quality (1-5)
 - Ad stack data quality (1-5)
-- Average ad platform data quality (1-5)
 - Ad format data quality (1-5)
 
 In addition, it's important that the provided activity data has sufficient granularity for accurate modeling:
+
 - Input granularity score (1-5)
 
 ## Grid mix
@@ -19,12 +24,12 @@ In addition, it's important that the provided activity data has sufficient granu
 Grid intensity can fluctuate significantly on an hourly basis due to the variable nature of both renewable energy sources (sun, wind) and electricity demand. To achieve effective decarbonization, having hourly data is critical. However, this isn't broadly available in many countries.
 
 | Data source and timescale  | Data Quality |
-| -------------------------- | ------------- |
-| Worldwide                  | 1             |
-| Country, monthly or annual | 2             |
-| Country, daily             | 3             |
-| Country + region, daily    | 4             |
-| Country + region, hourly   | 5             |
+| -------------------------- | ------------ |
+| Worldwide                  | 1            |
+| Country, monthly or annual | 2            |
+| Country, daily             | 3            |
+| Country + region, daily    | 4            |
+| Country + region, hourly   | 5            |
 
 ## Organization
 
@@ -37,26 +42,44 @@ Criteria for accurate sustainability data at the organization level:
 - A sustainability report should be published within 6 months of the end of the previous calendar year to be considered for sustainability purposes.
 
 | Report element                  | Data Quality |
-| ------------------------------- | ------------- |
-| Scope 1 and 2, market-based     | +1            |
-| Location-based scope 2          | +1            |
-| All scope 3 categories provided | +1            |
-| Lines of business broken out    | +1            |
+| ------------------------------- | ------------ |
+| Scope 1 and 2, market-based     | +1           |
+| Location-based scope 2          | +1           |
+| All scope 3 categories provided | +1           |
+| Lines of business broken out    | +1           |
 
-## Ad Platform
+## Ad tech platforms
 
-An ad platform should provide 1) requests received, 2) requests sent (traffic shaping), and 3) emissions data from datacenters or cloud providers. The ad platform score starts at 1 and increments based on the presence of various data elements.
+Any ad tech platform (SSP, DSP, media selling platform, traffic shaping technology etc.) should provide data in the following three categories:
 
-| Ad platform data element          | Data Quality |
-| --------------------------------- | ------------- |
-| Server emissions and request data | +1            |
-| Traffic shaping data              | +1            |
-| All data provided monthly         | +1            |
-| All data provided regionally      | +1            |
+- Supply - What ad inventory they have access to and how they integrate with publishers
+- Requests Handling - How much carbon emissions are produced to handle an ad request
+- Traffic Shaping - How they integrate with downstream demand partners (so we can better estimate their “secondary” emissions)
 
-Example: A company provides annual server emissions, requests received, and traffic shaping data. This would be data quality 3.
+The quality score for each group starts at 1 and increments based on the presence of below data elements.
 
-The average ad platform data quality is the average score of all direct ad platforms that the property works with.
+| Supply Quality Score                                                                               | Data Quality |
+| -------------------------------------------------------------------------------------------------- | ------------ |
+| Inventory List Provided                                                                            | +1           |
+| Total Request per Inventory ID                                                                     | +1           |
+| Above data broken down by at least 1 additional dimension (placement, country, channel, seller ID) | +1           |
+| Data is shared monthly                                                                             | +1           |
+
+| Request Quality Score                     | Data Quality |
+| ----------------------------------------- | ------------ |
+| Server Emissions                          | +1           |
+| Total Bid Requests                        | +1           |
+| Above data broken down by server location | +1           |
+| Organization data quality ≥ 3             | +1           |
+
+| Traffic Shaping Quality Score                                                          | Data Quality |
+| -------------------------------------------------------------------------------------- | ------------ |
+| Ratio of ad requests processed vs bid requests sent for each integrated demand partner | +1           |
+| Above data broken out by inventory ID                                                  | +1           |
+| Above data broken out by country                                                       | +1           |
+| Data is shared monthly                                                                 | +1           |
+
+For DSPs, real time data providers might be used instead of “demand partners” under Traffic Shaping Quality Score.
 
 ## Property
 
@@ -66,12 +89,12 @@ For web, app, social, CTV and digital audio media properties, the three key metr
 These metrics can be extrapolated from other publicly shared metrics (such as Monthly Active Users, Revenue, etc.), or estimated by 3rd party tools that employ panels (such as SimilarWeb). They can also be observed through crawling and scraping, or measured directly by the publisher through tools like Google Analytics.
 
 | Property Metrics                | Example Data Source             | Data Quality |
-| ------------------------------- | ------------------------------- | ------------- |
-| Not available                   | N/a                             | 1             |
-| Extrapolated from other metrics | Yearly Financial Report         | 2             |
-| 3rd party estimated             | Panels                          | 3             |
-| Observed                        | Controlled Crawling or Scraping | 4             |
-| 1st party measured              | Publisher Analytics             | 5             |
+| ------------------------------- | ------------------------------- | ------------ |
+| Not available                   | N/a                             | 1            |
+| Extrapolated from other metrics | Yearly Financial Report         | 2            |
+| 3rd party estimated             | Panels                          | 3            |
+| Observed                        | Controlled Crawling or Scraping | 4            |
+| 1st party measured              | Publisher Analytics             | 5            |
 
 Each key metric’ data quality is evaluated separately, then the property’ data quality score is the lower closest integer (floor) of the sum of each key metric’ data quality score divided by 3.
 
@@ -90,34 +113,34 @@ For DOOH screens, the key metric is power draw.
 It can be acquired on a per screen basis, for example using a power metre, or can be estimated using using screen size or manufacturer specifications.
 
 | Property Metrics                                         | Granularity       | Data Quality |
-| -------------------------------------------------------- | ----------------- | ------------- |
-| Not available                                            | N/a               | 1             |
-| Extrapolated based on physical dimensions and venue type | N/a               | 2             |
-| Derived from manufacturer’ specifications (typical draw) | N/a               | 3             |
-| Observed from energy bills or measured through metres    | Monthly or Yearly | 4             |
-| Observed from energy bills or measured through metres    | Hourly            | 5             |
+| -------------------------------------------------------- | ----------------- | ------------ |
+| Not available                                            | N/a               | 1            |
+| Extrapolated based on physical dimensions and venue type | N/a               | 2            |
+| Derived from manufacturer’ specifications (typical draw) | N/a               | 3            |
+| Observed from energy bills or measured through metres    | Monthly or Yearly | 4            |
+| Observed from energy bills or measured through metres    | Hourly            | 5            |
 
 ## Ad Stack
 
 The accuracy of the ad stack used by the publisher for the placement depends on accurate representation of all direct and indirect ad platforms. The ad stack score starts at 1 and increments based on provided data components.
 
 | Ad Stack Component                                | Data Quality |
-| ------------------------------------------------- | ------------- |
-| Ad stack mapped via observed data                 | +1            |
-| Ads.txt validated                                 | +1            |
-| Ad platforms mapped to region, device, and format | +1            |
-| Placements mapped to GPID and ad platform         | +1            |
+| ------------------------------------------------- | ------------ |
+| Ad stack mapped via observed data                 | +1           |
+| Ads.txt validated                                 | +1           |
+| Ad platforms mapped to region, device, and format | +1           |
+| Placements mapped to GPID and ad platform         | +1           |
 
 ## Ad Format
 
 The ad format data should include all of elements included upon the initial render of the ad format. Advertiser-provided assets should be identified so that they can be replaced with actual data during the measurement process. All ad platforms that are part of the rendering process should be included, especially ad servers, real-time measurement providers, and video players.
 
-| Ad Format data element                                         | Data Quality |
-| -------------------------------------------------------------- | ------------- |
-| Technical specs provided                                       | +1            |
-| Media assets identified                                        | +1            |
-| All static assets measured and included                        | +1            |
-| Video player is identified and has data quality of at least 3 | +1            |
+| Ad Format data element                                        | Data Quality |
+| ------------------------------------------------------------- | ------------ |
+| Technical specs provided                                      | +1           |
+| Media assets identified                                       | +1           |
+| All static assets measured and included                       | +1           |
+| Video player is identified and has data quality of at least 3 | +1           |
 
 ## Input granularity
 
@@ -144,12 +167,12 @@ Granularity % is the percentage of recommended input fields that are provided an
 ### Input granularity to data quality map
 
 | Granularity % | Data Quality |
-| ------------- | ------------- |
-| < 30%         | 1             |
-| 30% - 50%     | 2             |
-| 50% - 70%     | 3             |
-| 70% - 90%     | 4             |
-| 90% - 100%    | 5             |
+| ------------- | ------------ |
+| < 30%         | 1            |
+| 30% - 50%     | 2            |
+| 50% - 70%     | 3            |
+| 70% - 90%     | 4            |
+| 90% - 100%    | 5            |
 
 ### Input granularity example
 
