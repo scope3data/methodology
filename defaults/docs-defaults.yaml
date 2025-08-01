@@ -298,7 +298,7 @@ defaults:
     ctv-bvod: 15s Video
     dooh: Landscape - 1920x1080 Image
     linear-tv: 30s Video
-    search: Responsive Search Ad
+    search: Generic Search Ad
     social: Sponsored Post - 1080x1920 Image
     streaming-video: 15s Video
     web: Leaderboard - 728x90 Banner
@@ -308,7 +308,7 @@ defaults:
     ctv-bvod: 15s-video-ctv-bvod-tv
     dooh: landscape-dooh
     linear-tv: 30s-video-ctv-bvod-tv
-    search: responsive-search-ad-search-phone
+    search: generic-search-ad-search-phone
     social: 1080-1920-sponsored-post-social-phone
     streaming-video: 15s-video-streaming-video-pc
     web: leaderboard-web-pc
