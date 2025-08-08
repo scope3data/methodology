@@ -65,7 +65,7 @@ defaults:
     social: 1000
     streaming-video: 1000
     web: 1500
-  default_count_ad_platforms:
+  default_count_ad_platform:
     dooh: 6
     search: 1
   default_device_by_channel:
