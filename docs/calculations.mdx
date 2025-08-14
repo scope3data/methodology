@@ -557,20 +557,24 @@ get_platform_emissions(ad_platform):
 ad_selection_platform_emissions_gco2_per_imp = 0
 data_transfer_bytes = 0
 
-for platform in placement.ad_platforms:
-  ad_selection_platform_emissions_gco2_per_imp += get_platform_emissions(platform)
-  platform_bytes =
-      platform.average_bid_request_size ??
-      default_consumer_device_request_size_bytes[channel]
-  data_transfer_bytes += default_consumer_device_request_size_bytes[channel]
-  if platform.sends_client_side_requests:
-    for bidder in platform.bidders:
-      bidder_bytes =
-          bidder.average_bid_request_size ??
-          default_consumer_device_request_size_bytes[channel]
-      data_transfer_bytes +=
-          bidder_bytes x
-          platform.distribution_rate_by_bidder_by_country[country, bidder] ?? 1
+if channel in ['search', 'dooh']:
+      data_transfer_bytes = default_count_ad_platform[channel] * default_consumer_device_request_size_bytes[channel]
+      ad_selection_platform_emissions_gco2_per_imp = default_emissions_ad_selection_gco2_per_imp_by_channel[channel]
+else:
+      for platform in placement.ad_platforms:
+            ad_selection_platform_emissions_gco2_per_imp += get_platform_emissions(platform)
+            platform_bytes =
+                  platform.average_bid_request_size ??
+                  default_consumer_device_request_size_bytes[channel]
+            data_transfer_bytes += default_consumer_device_request_size_bytes[channel]
+            if platform.sends_client_side_requests:
+                  for bidder in platform.bidders:
+                        bidder_bytes =
+                              bidder.average_bid_request_size ??
+                              default_consumer_device_request_size_bytes[channel]
+                        data_transfer_bytes +=
+                              bidder_bytes x
+                              platform.distribution_rate_by_bidder_by_country[country, bidder] ?? 1
 ```
 
 ### Ad Selection - Data Transfer

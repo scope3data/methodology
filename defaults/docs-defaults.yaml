@@ -60,11 +60,14 @@ defaults:
     app: 1000
     audio: 1000
     ctv-bvod: 0
-    dooh: 0
+    dooh: 1000
     search: 150
     social: 1000
     streaming-video: 1000
     web: 1500
+  default_count_ad_platform:
+    dooh: 6
+    search: 1
   default_device_by_channel:
     app: phone
     audio: phone
@@ -120,6 +123,7 @@ defaults:
     fixed: 0.030000000
     mobile: 1.530000000
   default_emissions_ad_selection_gco2_per_imp_by_channel:
+    dooh: 0.003840000
     search: 0.001229300
   default_emissions_generic_ad_server_gco2_per_imp: 0.000016000
   default_emissions_generic_ad_server_gco2_per_imp_by_channel:
