@@ -397,10 +397,10 @@ defaults:
       NAMER: 0.000100000
   default_impressions_per_creative: 10000000
   default_storage_kgco2e_per_gb:
-    cloud_storage: 0.0253
-    hard_disk_drive: 0.16
-    linear_tape_open: 0.00114
-    solid_state_drive: 0.02
+    cloud_storage: 0.025300000
+    hard_disk_drive: 0.160000000
+    linear_tape_open: 0.001140000
+    solid_state_drive: 0.020000000
   default_storage_usage_pct:
     cloud_storage: 45
     hard_disk_drive: 25
