@@ -317,6 +317,7 @@ defaults:
     social: 1080-1920-sponsored-post-social-phone
     streaming-video: 15s-video-streaming-video-pc
     web: leaderboard-web-pc
+  default_platform_embodied_emissions_per_bid_request_gco2e_per_imp: 0.000015000
   default_property_ad_funded_percentage_by_channel:
     app: 100
     audio: 100
