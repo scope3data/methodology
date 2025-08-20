@@ -25,37 +25,37 @@ defaults:
     mobile: 1.200000000
   default_channel_by_device:
     pc:
-    - ctv-bvod
-    - social
-    - audio
-    - web
-    - search
-    - streaming-video
-    - linear-tv
+      - ctv-bvod
+      - social
+      - audio
+      - web
+      - search
+      - streaming-video
+      - linear-tv
     phone:
-    - social
-    - ctv-bvod
-    - audio
-    - app
-    - web
-    - search
-    - streaming-video
-    - linear-tv
+      - social
+      - ctv-bvod
+      - audio
+      - app
+      - web
+      - search
+      - streaming-video
+      - linear-tv
     smart-speaker:
-    - audio
+      - audio
     tablet:
-    - social
-    - ctv-bvod
-    - audio
-    - app
-    - web
-    - search
-    - streaming-video
-    - linear-tv
+      - social
+      - ctv-bvod
+      - audio
+      - app
+      - web
+      - search
+      - streaming-video
+      - linear-tv
     tv:
-    - linear-tv
-    - ctv-bvod
-    - audio
+      - linear-tv
+      - ctv-bvod
+      - audio
   default_consumer_device_request_size_bytes:
     app: 1000
     audio: 1000
