@@ -125,8 +125,8 @@ Native product carousel
 | Field                                                 | Description                                                                                 |
 | ----------------------------------------------------- | ------------------------------------------------------------------------------------------- |
 | `emissions_per_creative_request_per_geo_gco2_per_imp` | Adjusted, allocated emissions per creative request by continent (NAMER, LATAM, EMEA, JAPAC) |
-| `emissions_per_bid_request_per_geo_gco2_per_imp`      | Adjusted, allocated emissions per bid request by continent (NAMER, LATAM, EMEA, JAPAC)      |
-| `emissions_per_rtdp_request_per_geo_gco2_per_imp`     | Adjusted, allocated emissions per rtdp request by continent (NAMER, LATAM, EMEA, JAPAC)     |
+| `usage_emissions_per_bid_request_per_geo_gco2_per_imp`      | Adjusted, allocated emissions per bid request by continent (NAMER, LATAM, EMEA, JAPAC)      |
+| `usage_emissions_per_rtdp_request_per_geo_gco2_per_imp`     | Adjusted, allocated emissions per rtdp request by continent (NAMER, LATAM, EMEA, JAPAC)     |
 | `bidders`                                             | Array of ad platforms that are sent bid requests                                            |
 | `real_time_data_providers`                            | Array of ad platforms that are sent real-time data requests (not propagated)                |
 | `distribution_rate_by_bidder_by_country`              | Traffic shaping data for each bidder by country (eg `'xandr.com', 'US', 0.58`)              |
@@ -549,10 +549,10 @@ media_corporate_emissions_gco2_per_imp =
 
 ```
 get_platform_emissions(ad_platform):
-      direct_emissions = emissions_per_bid_request_per_geo_gco2_per_imp
+      direct_emissions = usage_emissions_per_bid_request_per_geo_gco2_per_imp
       rtdp_emissions = 0
       for rtdp in ad_platform.real_time_data_providers:
-            rtdp_emissions += emissions_per_rtdp_request_per_geo_gco2_per_imp
+            rtdp_emissions += usage_emissions_per_rtdp_request_per_geo_gco2_per_imp
       bidder_emissions = 0
       for bidder in ad_platform.bidders:
             bidder_emissions += get_platform_emissions(bidder) x
