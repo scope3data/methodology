@@ -6,6 +6,12 @@ defaults:
     smart-speaker: 160
     tablet: 160
     tv: 160
+  default_audio_power_utilization:
+    pc: 0.840000000
+    phone: 0.360000000
+    smart-speaker: 1.000000000
+    tablet: 0.360000000
+    tv: 0.920000000
   default_average_data_kb_per_session_seconds_excluding_ads_by_channel:
     app: 29.500000000
     search: 1.011000000

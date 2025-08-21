@@ -122,17 +122,17 @@ Native product carousel
 
 ### Ad Platform
 
-| Field                                                 | Description                                                                                 |
-| ----------------------------------------------------- | ------------------------------------------------------------------------------------------- |
-| `emissions_per_creative_request_per_geo_gco2_per_imp` | Adjusted, allocated emissions per creative request by continent (NAMER, LATAM, EMEA, JAPAC) |
-| `usage_emissions_per_bid_request_per_geo_gco2_per_imp`      | Adjusted, allocated emissions per bid request by continent (NAMER, LATAM, EMEA, JAPAC)      |
-| `usage_emissions_per_rtdp_request_per_geo_gco2_per_imp`     | Adjusted, allocated emissions per rtdp request by continent (NAMER, LATAM, EMEA, JAPAC)     |
-| `bidders`                                             | Array of ad platforms that are sent bid requests                                            |
-| `real_time_data_providers`                            | Array of ad platforms that are sent real-time data requests (not propagated)                |
-| `distribution_rate_by_bidder_by_country`              | Traffic shaping data for each bidder by country (eg `'xandr.com', 'US', 0.58`)              |
-| `average_bid_request_size`                            | Average size of a client-side bid request                                                   |
-| `sends_client_side_requests`                          | Does this platform send client-side bid requests (eg prebid client)                         |
-| `model_quality`                                       | Model quality (1-5)                                                                         |
+| Field                                                   | Description                                                                                 |
+| ------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| `emissions_per_creative_request_per_geo_gco2_per_imp`   | Adjusted, allocated emissions per creative request by continent (NAMER, LATAM, EMEA, JAPAC) |
+| `usage_emissions_per_bid_request_per_geo_gco2_per_imp`  | Adjusted, allocated emissions per bid request by continent (NAMER, LATAM, EMEA, JAPAC)      |
+| `usage_emissions_per_rtdp_request_per_geo_gco2_per_imp` | Adjusted, allocated emissions per rtdp request by continent (NAMER, LATAM, EMEA, JAPAC)     |
+| `bidders`                                               | Array of ad platforms that are sent bid requests                                            |
+| `real_time_data_providers`                              | Array of ad platforms that are sent real-time data requests (not propagated)                |
+| `distribution_rate_by_bidder_by_country`                | Traffic shaping data for each bidder by country (eg `'xandr.com', 'US', 0.58`)              |
+| `average_bid_request_size`                              | Average size of a client-side bid request                                                   |
+| `sends_client_side_requests`                            | Does this platform send client-side bid requests (eg prebid client)                         |
+| `model_quality`                                         | Model quality (1-5)                                                                         |
 
 ### Placement
 
@@ -435,12 +435,6 @@ for platform in [creative_platforms, ad_format.ad_platforms]:
 ### Creative Delivery - Consumer Device
 
 ```
-audio_device_coverage =
-      device_type == 'smart-speaker' ? 1 : 0
-audio_device_coverage_seconds =
-      audio_device_coverage x
-      audio_duration
-
 device_pixels = default_device_width[device_type] x default_device_height[device_type]
 rendered_width = ad_format.rendered_width_pixels ?? default_device_width[device_type]
 rendered_height = ad_format.rendered_height_pixels ?? default_device_height[device_type]
@@ -453,10 +447,11 @@ time_in_view =
       creative_time_in_view_seconds ??
       default_time_in_view_seconds
 
-device_coverage_seconds =
-      audio_duration ?
-      audio_device_coverage_seconds :
-      visual_device_coverage x time_in_view
+if channel == digital-audio :
+	device_power_utilization == 'smart-speaker' ? 1 : default_audio_power_utilization[device_type]
+	energy_adjusted_active_seconds = device_power_utilization * audio_duration
+else:
+	energy_adjusted_active_seconds = visual_device_coverage x time_in_view
 
 creative_consumer_device_usage_emissions_gco2_per_imp =
       device_coverage_seconds / 3600 x
