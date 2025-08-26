@@ -4,7 +4,7 @@ title: "Channel Considerations"
 
 # Channel-Specific Modeling Considerations
 
-Different advertising channels require specific modeling approaches due to their unique characteristics, infrastructure, and consumption patterns. This document outlines the modeling considerations for Linear TV and Digital Out-of-Home (DOOH) channels, which share some common elements but also have distinct measurement requirements.
+Different advertising channels require specific modeling approaches due to their unique infrastructure, operational characteristics, and consumption patterns. This document details the methodology considerations for Linear TV, Digital Out-of-Home (DOOH), and Classic Out-of-Home (OOH). While these channels share some common principles, each has distinct lifecycle boundaries, data requirements, and default assumptions that reflect the nature of their delivery and usage.
 
 # Linear TV
 
@@ -211,10 +211,6 @@ We encourage DOOH media owners to share this information with us via [Ad Stack D
 
 See [Emissions from Data Transfer](./data_transfer)
 
-### Screen Disposal Emissions
-
-To be discussed.
-
 ## Additional Considerations
 
 ### Impression Multiplier
@@ -224,6 +220,65 @@ For this reason, our modelling is done "per play" and translated to "per impress
 
 When no impression multiplier data is provided to us for a given screen, we once again estimate that value to be the 80th percentile amongst screens that media owner and/or venue category and/or country (based on statistical relevance).
 
-### Renewable Energy Usage
+# Classic Out-Of-Home
 
-To be discussed.
+## Definition and Scope
+
+Classic OOH includes outdoor advertising displayed on non-digital panels such as posters, billboards, and transit wraps. Unlike DOOH, these formats rely on physical assets printed on paper, vinyl, or similar materials and mounted on a fixed structure. This category excludes print media such as magazines or newspapers. In our data model, the primary object representing inventory is the panel (sometimes called a “frame” in certain markets), which describes the physical structure where ads are displayed. For this channel, emissions come from tangible processes like material extraction, printing, transportation, installation, and disposal — introducing lifecycle considerations unique to physical media..
+
+Transient OOH advertising - displayed on moving vehicles such as buses, taxis, or trains — is also covered under this model when the vehicle’s primary purpose is not advertising.
+
+## Measurement Boundaries & GMSF Alignment
+
+Our classic OOH model aligns closely with the Global Media Sustainability Framework (GMSF) and introduces lifecycle categories that reflect the physical nature of this channel. Unlike digital media, classic OOH requires consideration of ad production, logistics, and end-of-life treatment of physical assets.
+
+The model aligns with GMSF and covers the following categories:
+| Emissions source | Description |
+| ---------------------- | ----------------------------------------------------------------------- |
+| Display structure | Amortized emissions from manufacturing the supporting structure over its expected lifetime.|
+| Creation | Emissions from printing the advertisement and, where relevant, producing materials used for display.|
+| Distribution | Transportation and storage of physical assets prior to installation.|
+| Operations | Energy consumption for illumination and mechanical rotation during the display period.|
+| Disposal | Emissions from transporting and processing ad materials and structures at the end of their use, including recycling or landfill.|
+| Corporate emissions | Corporate emissions from the media owner.|
+
+## Emissions Calculation Methodology
+
+Emissions for classic OOH are calculated using a combination of panel-level data (when available) and venue-type or country-level averages as fallback. We allocate emissions across lifecycle categories using campaign duration and share of time on each panel. Where detailed attributes such as size, illumination, or transportation distances are provided, calculations are more precise.
+
+### Panel Object
+
+To support granular measurement, classic OOH introduces a panel object (similar to the “screen” object used for DOOH). A panel represents the physical structure where ads are displayed and carries attributes relevant for emissions estimation:
+
+| Attributes                                 | Description                                                                                        |
+| ------------------------------------------ | -------------------------------------------------------------------------------------------------- |
+| Panel Identifier                           | Identifier of the panel, provided by the media owner                                               |
+| Media Owner                                | Name of the organization that owns the panel                                                       |
+| Country / Region / Postcode                | Location of the panel.                                                                             |
+| Physical Width / Physical Height           | Dimensions of the panel in centimeters.                                                            |
+| Average Daily Contacts                     | Average number of people exposed to the ad per day (if available).                                 |
+| Expected Lifetime Years                    | Expected lifetime of the panel for amortizing embodied emissions.                                  |
+| Average Daily Illumination Hours           | Average daily hours of illumination.                                                               |
+| Illumination Power Draw                    | Power draw (in watts) for illumination.                                                            |
+| Energy Consumption Per Mechanical Rotation | Energy required for a single mechanical rotation (if applicable).                                  |
+| Mechanical Rotations Per Day               | Average number of rotations per day (if applicable).                                               |
+| Average Structure Production Emissions     | Total embodied emissions of the display structure (if available), excluding end of life emissions. |
+| Average Ad Production Emissions            | Emissions from ad asset production (if printed by media owner).                                    |
+| Recycling Percentage of Structure          | Percentage of the structure expected to be recycled at end of life.                                |
+| Recycling Percentage of Ad                 | Percentage of the ad expected to be recycled at end of life.                                       |
+
+| distance attributes | Distances for logistics: printing → storage, storage → panel, panel → disposal. |
+
+The accuracy of emissions estimates for classic OOH depends on the granularity of data provided. The most precise results come from panel-level data shared by media owners, including physical dimensions, energy use, and distances for installation and disposal. Where this information is not available, we apply venue-type and country-level averages derived from industry benchmarks and Scope3 research.
+
+If panel-level data is unavailable, we apply venue-type averages by country, then global defaults. These defaults evolve as more partners share verified data.
+
+### Possible Improvements
+
+This is the first version of our classic OOH emissions model, and we expect it to evolve as better data and industry standards emerge. Key areas of focus for future iterations could include:
+
+- Refined recycling modeling: incorporating more accurate data on recycling rates and emissions from different end-of-life scenarios for both ad materials and structures.
+- Material-specific defaults: differentiating production and disposal impacts based on material type (e.g., paper vs. vinyl).
+- Transport mode-specific defaults: Accounting for the type of vehicles used during installation and disposal logistics, including differences between electric, hybrid, and fuel-powered fleets.
+- Regionalized defaults: applying localized emission factors for printing, storage, and disposal processes, reflecting regional infrastructure and grid intensity.
+- Integration with industry data: leveraging data shared by media owners and OOH associations to replace assumptions with verified inputs.
