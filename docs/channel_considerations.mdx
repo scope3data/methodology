@@ -281,3 +281,105 @@ This is the first version of our classic OOH emissions model, and we expect it t
 - Transport mode-specific defaults: Accounting for the type of vehicles used during installation and disposal logistics, including differences between electric, hybrid, and fuel-powered fleets.
 - Regionalized defaults: applying localized emission factors for printing, storage, and disposal processes, reflecting regional infrastructure and grid intensity.
 - Integration with industry data: leveraging data shared by media owners and OOH associations to replace assumptions with verified inputs.
+
+# Traditional Radio
+
+## Definition and Scope
+
+We classify Traditional Radio as content that is transmitted via traditional broadcast methods and follows a predetermined programming schedule.
+
+## Glossary
+
+| Term | Definition |
+| --- | --- |
+| Radio Network | The organization or company responsible for distributing radio content (e.g., BBC). |
+| Radio Station | A specific frequency within a radio network (e.g., BBC Radio 1). |
+| Broadcast Method | The type of infrastructure used to transmit broadcast audio content (e.g., OTA/DAB, FM, Satellite). |
+| Co-listening Factor | An average number of listeners per radio device, used to estimate device-level reach from audience impressions. |
+
+## Definition of Broadcast methods
+
+| Broadcast method | Definition |
+| --- | --- |
+| FM | For Frequency Modulation: Radio broadcasting that varies the frequency of the carrier wave. |
+| AM | For Amplitude Modulation: Radio broadcasting that varies the amplitude of the carrier wave; enables long-range coverage. |
+| Over-the-air (OTA) | Includes terrestrial digital radio broadcasting methods such as DAB(+), DRM, HD Radio, ISDB-Tsb |
+| Satellite | Includes large-scale, satellite radio services like SiriusXM |
+
+We assume that, for all audio broadcast methods, the consumer device is the only required equipment.
+
+## Measurement Boundaries & GMSF Alignment
+
+The Scope3 Traditional Radio model focuses on estimating emissions coming from the distribution (broadcasting) and consumer listening to audio content and advertising.
+
+| Lifecycle Category | Emissions Source | Status | Includes |
+| --- | --- | --- | --- |
+| Media Production | Content production | Not Included |  |
+| Creative Production | Ad production | Not included |  |
+| Tech Manipulation | Post-production storage & Others technical operations | Not included |  |
+| Media Distribution | Corporate emissions from radio network | Included |  |
+| Media & Creative Distribution | Broadcast Signal preparation & transmission  | Included | Encoding, multiplexing and transmission infrastructure (use phase & embodied) |
+| Media & Creative Consumer Device | Reception & Audio listening | Included | Radio device used for reception (use phase & embodied) |
+
+## Emissions Calculation Methodology
+
+### Corporate Emissions
+
+Similarly to Linear TV, we estimate corporate emissions per radio spot rather than per audience or household impression. We do this to avoid having differing numbers depending on fluctuating Radio ratings. All other aspects of our calculations for corporate emissions remain as described in [Corporate Emissions](./corporate_model).
+
+### Broadcast Signal Emissions
+
+In [_The energy footprint of BBC radio services: now and in the future_](https://downloads.bbc.co.uk/rd/pubs/whp/whp-pdf-files/WHP393.pdf) (2020) the BBC provides estimated energy use for each broadcasting method for BBC radio in 2018, broken down by process: signal preparation, signal distribution (referred to as Transmission in the report), and consumption.
+
+#### Signal Preparation
+
+The BBC estimates that signal preparation is marginal for all audio broadcasting methods. We derived average defaults from our Linear TV methodology. For networks and/or channels where actual power usage data is available, we use those values instead of the average.
+
+#### Signal Transmission
+
+**Energy Use & Embodied Emissions**
+
+For each audio broadcast method, we assume a fixed energy consumption required to transmit the signal, regardless of the number of radios receiving it. Different audio broadcast methods exhibit varying power efficiency across countries, but for now we do not differentiate between countries.
+
+For each audio broadcast method, we derived power draw estimates from annual energy consumption, either based on primary data shared with Scope3 by network operators or from publicly available sources.
+
+In the absence of embodied emissions data specific to each audio broadcast method, we derived default values from various studies, including, in addition to the BBC paper:
+
+- [_ICT Impact study, Final report, VHK and Viegand Maagøe for the European Commission_](https://susproc.jrc.ec.europa.eu/product-bureau/sites/default/files/2020-11/IA_report-ICT_study_final_2020_(CIRCABC).pdf) - 2020
+- [_Study of the Environmental Impact of Audiovisual Usage in France - ADEME ARCEP_](https://www.editionmultimedia.fr/wp-content/uploads/2024/10/Rapport-Arcom-Arcep-Ademe-Impact-environnemental-2022-2030-de-laudiovisuel-07-10-24.pdf) (FR) - 2024
+
+Power draws & embodied emissions of each audio broadcast method for the signal transmission of one radio channel:
+
+| Audio Broadcast Method | Energy consuming sources | Signal Transmission Power per Radio Channel | Embodied emissions gCO2e/s | Source(s) | Assumptions |
+| --- | --- | --- | --- | --- | --- |
+| FM | FM transmission infrastructure | 15 kW | 7g | [ADEME ARCEP](https://www.editionmultimedia.fr/wp-content/uploads/2024/10/Rapport-Arcom-Arcep-Ademe-Impact-environnemental-2022-2030-de-laudiovisuel-07-10-24.pdf), [BBC](https://downloads.bbc.co.uk/rd/pubs/whp/whp-pdf-files/WHP393.pdf) |  |
+| AM | AM transmission infrastructure | 62 kW | 10g | [ADEME ARCEP](https://www.editionmultimedia.fr/wp-content/uploads/2024/10/Rapport-Arcom-Arcep-Ademe-Impact-environnemental-2022-2030-de-laudiovisuel-07-10-24.pdf), [BBC](https://downloads.bbc.co.uk/rd/pubs/whp/whp-pdf-files/WHP393.pdf) |  |
+| OTA/DAB | Over the air transmission network | 5 kW | 5g | [ADEME ARCEP](https://www.editionmultimedia.fr/wp-content/uploads/2024/10/Rapport-Arcom-Arcep-Ademe-Impact-environnemental-2022-2030-de-laudiovisuel-07-10-24.pdf), [BBC](https://downloads.bbc.co.uk/rd/pubs/whp/whp-pdf-files/WHP393.pdf), [Bayerischer Rundfunk](file:///Users/bdavy/Downloads/green-radio-studie-102.pdf), [MDR](https://www.worlddab.org/system/news/documents/000/011/985/original/Digitalradio_Vortrag_Daemmerschoppen_final_%28002%29.pdf?1619108841), [GatesAir](https://www.gatesair.com/media-center/news/gatesair-amplifies-efficiency-savings-for-dab-radio-networks) | Estimated to be more efficient than FM |
+| Satellite | Uplink transmission from Radio station tower to satellite | 3.15 kW | 6g | [BBC](https://downloads.bbc.co.uk/rd/pubs/whp/whp-pdf-files/WHP189.pdf) | Similar to Linear TV |
+
+For radio networks and/or channels where actual data are available, we use the contributed values instead of the above defaults.
+
+### Broadcast Method Usage
+
+The prevalence of each audio broadcast method varies geographically. For example, in France FM is the most widely used broadcast methods in terms of consumption, whereas in the UK OTA/DAB+ is the most prevalent method ([Ofcom](https://www.ofcom.org.uk/siteassets/resources/documents/research-and-data/multi-sector/media-nations/2025/media-nations-2025-uk-report.pdf)). 
+
+We apply a country-specific ratio of broadcast methods for major markets, and use a global average for other countries.
+
+| Country | % of total radio listening FM | % of total radio listening AM | % of total radio listening OTA/DAB | % of total radio listening Satellite | Source |
+| --- | --- | --- | --- | --- | --- |
+| Global Defaults | 60% | 15% | 20% | 5% |  |
+| FR | 95% | insignificant | 5% | 0% | [ADEME ARCEP](https://www.editionmultimedia.fr/wp-content/uploads/2024/10/Rapport-Arcom-Arcep-Ademe-Impact-environnemental-2022-2030-de-laudiovisuel-07-10-24.pdf) |
+| UK | 39% | grouped with FM | 61% | 0% | [Ofcom](https://www.ofcom.org.uk/siteassets/resources/documents/research-and-data/multi-sector/media-nations/2025/media-nations-2025-uk-report.pdf) / [RAJAR](https://www.rajar.co.uk/docs/news/RAJAR_DataRelease_InfographicQ22025.pdf) |
+| AU | 75% | grouped with FM | 25% | 0% | [GFK Radio Ratings](https://james.cridland.net/blog/2025/how-australians-listen/) |
+
+This distribution is only for audio broadcasting methods, digital audio consumption over the internet is modelled in the dedicated **`digital-audio`** channel. We will continue to add country-specific distributions as we obtain additional data.
+
+## Radio Device Emissions
+
+We follow the same methodology as described [Consumer Devices](./consumer_devices), accounting for both use phase (energy consumption) and embodied emission (production & disposal). Since we do not have deterministic data on the devices used to listen to a given radio spot, we define a “synthetic Radio system” representative of the average listener. 
+
+See see [Consumer Devices - Radio](./consumer_devices#radio) for more details.
+
+## Estimating the number of Radio Spot impressions
+
+We consider an impression to be one person listening to a radio spot. Similarly to the Linear TV methodology, we estimate the number of radio devices reached using a co-listening factor of 1.5, in line with published audience measurement benchmarks across major markets. This means that for every 1.5 audience impressions, we assume one radio receiving device was used to listen to the content.
