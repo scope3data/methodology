@@ -20,8 +20,8 @@ defaults:
     web: 1.011000000
   default_average_seconds_per_session_excluding_ads_by_channel:
     app: 140
-    audio: 1500
     ctv-bvod: 2580
+    digital-audio: 1500
     linear-tv: 2580
     search: 120
     social: 240
@@ -35,7 +35,7 @@ defaults:
     pc:
       - ctv-bvod
       - social
-      - audio
+      - digital-audio
       - web
       - search
       - streaming-video
@@ -44,7 +44,7 @@ defaults:
     phone:
       - social
       - ctv-bvod
-      - audio
+      - digital-audio
       - app
       - web
       - search
@@ -54,11 +54,11 @@ defaults:
     radio:
       - traditional-radio
     smart-speaker:
-      - audio
+      - digital-audio
     tablet:
       - social
       - ctv-bvod
-      - audio
+      - digital-audio
       - app
       - web
       - search
@@ -68,7 +68,7 @@ defaults:
     tv:
       - linear-tv
       - ctv-bvod
-      - audio
+      - digital-audio
       - traditional-radio
   default_consumer_device_request_size_bytes:
     app: 1000
@@ -84,8 +84,8 @@ defaults:
     search: 1
   default_device_by_channel:
     app: phone
-    audio: phone
     ctv-bvod: tv
+    digital-audio: phone
     dooh: tv
     linear-tv: tv
     search: phone
@@ -113,8 +113,8 @@ defaults:
     tv: 1080
   default_device_per_impression:
     app: 1
-    audio: 1
     ctv-bvod: 1
+    digital-audio: 1
     linear-tv: 0.667000000
     streaming-video: 1
     traditional-radio: 0.667000000
@@ -292,10 +292,10 @@ defaults:
       ZA: 30.945000000
       ZW: 33.026000000
   default_percent_radio_distribution_method:
-    am: 0.150000000
-    fm: 0.600000000
-    ota: 0.200000000
-    satellite: 0.050000000
+    am: 15
+    fm: 60
+    ota: 20
+    satellite: 5
   default_percent_tv_distribution_method:
     cable: 28.600000000
     iptv: 25.200000000
@@ -329,8 +329,8 @@ defaults:
       satellite: 16.700000000
   default_platform_ad_format_by_channel:
     app: Interstitial - 1080x1920 Banner
-    audio: 30s Audio
     ctv-bvod: 15s Video
+    digital-audio: 30s Audio
     dooh: Landscape - 1920x1080 Image
     linear-tv: 30s Video
     search: Generic Search Ad
@@ -340,8 +340,8 @@ defaults:
     web: Leaderboard - 728x90 Banner
   default_platform_ad_format_identifier_by_channel:
     app: interstitial-app-phone
-    audio: 30s-audio-digital-audio-phone
     ctv-bvod: 15s-video-ctv-bvod-tv
+    digital-audio: 30s-audio-digital-audio-phone
     dooh: landscape-dooh
     linear-tv: 30s-video-ctv-bvod-tv
     search: generic-search-ad-search-phone
@@ -352,8 +352,8 @@ defaults:
   default_platform_embodied_emissions_per_bid_request_gco2e_per_imp: 0.000015000
   default_property_ad_funded_percentage_by_channel:
     app: 100
-    audio: 100
     ctv-bvod: 100
+    digital-audio: 100
     dooh: 100
     linear-tv: 100
     search: 100
@@ -363,8 +363,8 @@ defaults:
     web: 100
   default_property_average_imps_per_session_by_channel:
     app: 14
-    audio: 4.800000000
     ctv-bvod: 8.256000000
+    digital-audio: 4.800000000
     linear-tv: 21.500000000
     search: 12
     social: 24
@@ -373,8 +373,8 @@ defaults:
     web: 32
   default_property_g_per_imp_by_channel:
     app: 0.049000000
-    audio: 0.049000000
     ctv-bvod: 0.280000000
+    digital-audio: 0.049000000
     dooh: 0.049000000
     search: 0.049000000
     social: 0.150000000
