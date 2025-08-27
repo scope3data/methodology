@@ -3,6 +3,7 @@ defaults:
   default_audio_bitrate_kbps:
     pc: 160
     phone: 160
+    radio: 160
     smart-speaker: 160
     tablet: 160
     tv: 160
