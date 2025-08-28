@@ -458,6 +458,7 @@ creative_consumer_device_usage_emissions_gco2_per_imp =
       device_coverage_seconds / 3600 x
       default_device_watts[device_type] / 1000 x
       lookup_carbon_intensity_gco2e_per_kwh(country, region, utc_datetime)
+      + default_device_usage_emissions_from_fuel_consumption_per_second[device_type]
 
 creative_consumer_device_embodied_emissions_gco2_per_imp =
       device_coverage_seconds x
@@ -526,6 +527,7 @@ media_consumer_device_usage_emissions_gco2_per_imp =
       session_seconds_per_imp / 3600 x
       default_device_watts[device_type] / 1000 x
       lookup_carbon_intensity_gco2e_per_kwh(country, region, utc_datetime)
+      + default_device_usage_emissions_from_fuel_consumption_per_second[device_type]
 
 media_consumer_device_embodied_emissions_gco2_per_imp =
       session_seconds_per_imp x

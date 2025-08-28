@@ -3,12 +3,14 @@ defaults:
   default_audio_bitrate_kbps:
     pc: 160
     phone: 160
+    radio: 160
     smart-speaker: 160
     tablet: 160
     tv: 160
   default_audio_power_utilization:
     pc: 0.840000000
     phone: 0.360000000
+    radio: 1.000000000
     smart-speaker: 1.000000000
     tablet: 0.360000000
     tv: 0.920000000
@@ -19,12 +21,13 @@ defaults:
     web: 1.011000000
   default_average_seconds_per_session_excluding_ads_by_channel:
     app: 140
-    audio: 1500
     ctv-bvod: 2580
+    digital-audio: 1500
     linear-tv: 2580
     search: 120
     social: 240
     streaming-video: 300
+    traditional-radio: 2580
     web: 320
   default_baseload_watts:
     fixed: 9.550000000
@@ -33,35 +36,41 @@ defaults:
     pc:
       - ctv-bvod
       - social
-      - audio
+      - digital-audio
       - web
       - search
       - streaming-video
       - linear-tv
+      - traditional-radio
     phone:
       - social
       - ctv-bvod
-      - audio
+      - digital-audio
       - app
       - web
       - search
       - streaming-video
       - linear-tv
+      - traditional-radio
+    radio:
+      - traditional-radio
     smart-speaker:
-      - audio
+      - digital-audio
     tablet:
       - social
       - ctv-bvod
-      - audio
+      - digital-audio
       - app
       - web
       - search
       - streaming-video
       - linear-tv
+      - traditional-radio
     tv:
       - linear-tv
       - ctv-bvod
-      - audio
+      - digital-audio
+      - traditional-radio
   default_consumer_device_request_size_bytes:
     app: 1000
     audio: 1000
@@ -76,18 +85,20 @@ defaults:
     search: 1
   default_device_by_channel:
     app: phone
-    audio: phone
     ctv-bvod: tv
+    digital-audio: phone
     dooh: tv
     linear-tv: tv
     search: phone
     social: phone
     streaming-video: pc
+    traditional-radio: radio
     web: pc
   default_device_embodied_emissions_per_second:
     scope3:
       pc: 0.007000000
       phone: 0.005800000
+      radio: 0.002514375
       smart-speaker: 0.006100000
       tablet: 0.002900000
       tv: 0.009600000
@@ -103,15 +114,24 @@ defaults:
     tv: 1080
   default_device_per_impression:
     app: 1
-    audio: 1
     ctv-bvod: 1
+    digital-audio: 1
     linear-tv: 0.667000000
     streaming-video: 1
+    traditional-radio: 0.667000000
     web: 1
+  default_device_usage_emissions_from_fuel_consumption_per_second:
+    pc: 0
+    phone: 0
+    radio: 0.005000000
+    smart-speaker: 0
+    tablet: 0
+    tv: 0
   default_device_watts:
     scope3:
       pc: 53.200000000
       phone: 0.770000000
+      radio: 6.550000000
       smart-speaker: 2.500000000
       tablet: 3.000000000
       tv: 87.400000000
@@ -272,6 +292,11 @@ defaults:
       YE: 11.392000000
       ZA: 30.945000000
       ZW: 33.026000000
+  default_percent_radio_distribution_method:
+    am: 15
+    fm: 60
+    ota: 20
+    satellite: 5
   default_percent_tv_distribution_method:
     cable: 28.600000000
     iptv: 25.200000000
@@ -305,48 +330,52 @@ defaults:
       satellite: 16.700000000
   default_platform_ad_format_by_channel:
     app: Interstitial - 1080x1920 Banner
-    audio: 30s Audio
     ctv-bvod: 15s Video
+    digital-audio: 30s Audio
     dooh: Landscape - 1920x1080 Image
     linear-tv: 30s Video
     search: Generic Search Ad
     social: Sponsored Post - 1080x1920 Image
     streaming-video: 15s Video
+    traditional-radio: 30s Radio
     web: Leaderboard - 728x90 Banner
   default_platform_ad_format_identifier_by_channel:
     app: interstitial-app-phone
-    audio: 30s-audio-digital-audio-phone
     ctv-bvod: 15s-video-ctv-bvod-tv
+    digital-audio: 30s-audio-digital-audio-phone
     dooh: landscape-dooh
     linear-tv: 30s-video-ctv-bvod-tv
     search: generic-search-ad-search-phone
     social: 1080-1920-sponsored-post-social-phone
     streaming-video: 15s-video-streaming-video-pc
+    traditional-radio: 30s-radio-traditional-radio-radio
     web: leaderboard-web-pc
   default_platform_embodied_emissions_per_bid_request_gco2e_per_imp: 0.000015000
   default_property_ad_funded_percentage_by_channel:
     app: 100
-    audio: 100
     ctv-bvod: 100
+    digital-audio: 100
     dooh: 100
     linear-tv: 100
     search: 100
     social: 100
     streaming-video: 100
+    traditional-radio: 100
     web: 100
   default_property_average_imps_per_session_by_channel:
     app: 14
-    audio: 4.800000000
     ctv-bvod: 8.256000000
+    digital-audio: 4.800000000
     linear-tv: 21.500000000
     search: 12
     social: 24
     streaming-video: 1
+    traditional-radio: 21.500000000
     web: 32
   default_property_g_per_imp_by_channel:
     app: 0.049000000
-    audio: 0.049000000
     ctv-bvod: 0.280000000
+    digital-audio: 0.049000000
     dooh: 0.049000000
     search: 0.049000000
     social: 0.150000000
@@ -354,6 +383,17 @@ defaults:
     web: 0.049000000
   default_property_g_per_play_by_channel:
     linear-tv: 790
+    traditional-radio: 790
+  default_radio_signal_transmission_embodied_by_radio_distribution_method_gco2e_per_second:
+    am: 10
+    fm: 7
+    ota: 5
+    satellite: 6
+  default_radio_signal_transmission_power_by_radio_distribution_method_watt:
+    am: 62000
+    fm: 15000
+    ota: 5000
+    satellite: 3150
   default_storage_kgco2e_per_gb:
     cloud_storage: 0.025300000
     hard_disk_drive: 0.160000000
