@@ -390,9 +390,9 @@ defaults:
     ota: 5
     satellite: 6
   default_radio_signal_transmission_power_by_radio_distribution_method_watt:
-    am: 62000
-    fm: 15000
-    ota: 5000
+    am: 273000
+    fm: 245000
+    ota: 106000
     satellite: 3150
   default_storage_kgco2e_per_gb:
     cloud_storage: 0.025300000
