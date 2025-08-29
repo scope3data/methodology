@@ -547,10 +547,10 @@ media_corporate_emissions_gco2_per_imp =
 
 ```
 get_platform_emissions(ad_platform):
-      direct_emissions = usage_emissions_per_bid_request_per_geo_gco2_per_imp
+      direct_emissions = usage_emissions_per_bid_request_per_geo_gco2_per_imp + default_platform_embodied_emissions_per_bid_request_gco2e_per_imp
       rtdp_emissions = 0
       for rtdp in ad_platform.real_time_data_providers:
-            rtdp_emissions += usage_emissions_per_rtdp_request_per_geo_gco2_per_imp
+            rtdp_emissions += usage_emissions_per_rtdp_request_per_geo_gco2_per_imp + default_platform_embodied_emissions_per_bid_request_gco2e_per_imp
       bidder_emissions = 0
       for bidder in ad_platform.bidders:
             bidder_emissions += get_platform_emissions(bidder) x
