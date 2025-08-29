@@ -1,5 +1,13 @@
 # AUTO_GENERATED from docs/snippets
 defaults:
+  creative_raw_asset_size_factor:
+    app: 20
+    streaming-video: 20
+    web: 20
+  creative_work_iterations_factor:
+    app: 1
+    streaming-video: 1
+    web: 1
   default_audio_bitrate_kbps:
     pc: 160
     phone: 160
