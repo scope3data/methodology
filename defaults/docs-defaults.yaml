@@ -166,7 +166,7 @@ defaults:
   default_emissions_per_creative_request_gco2_per_imp: 0.000300000
   default_emissions_per_rtdp_request_gco2_per_imp: 0.010000000
   default_image_compression_ratio: 10
-  default_impressions_per_creative: 10000000
+  default_impressions_per_creative: 1000000
   default_iptv_network_distribution:
     fixed: 0.999000000
     mobile: 0.001000000
