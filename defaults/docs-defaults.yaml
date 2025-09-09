@@ -452,7 +452,7 @@ defaults:
     social: impression
     streaming-video: impression
     web: impression
-  default_video_player_size_bytes: 192205
+  default_video_player_size_bytes: 350000
   generic_creative_ad_server:
     emissions_per_creative_request_per_geo_gco2_per_imp:
       EMEA: 0.000100000
