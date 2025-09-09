@@ -91,7 +91,6 @@ defaults:
   default_count_ad_platform:
     dooh: 6
     search: 1
-  default_display_other_assets_bytes: 50000
   default_device_by_channel:
     app: phone
     ctv-bvod: tv
@@ -154,6 +153,7 @@ defaults:
     phone: 1080
     tablet: 1536
     tv: 1920
+  default_display_other_assets_bytes: 50000
   default_dynamic_watts_per_mbps:
     fixed: 0.030000000
     mobile: 1.530000000
