@@ -91,6 +91,7 @@ defaults:
   default_count_ad_platform:
     dooh: 6
     search: 1
+  default_display_other_assets_bytes: 50000
   default_device_by_channel:
     app: phone
     ctv-bvod: tv
@@ -172,8 +173,8 @@ defaults:
     mobile: 0.001000000
   default_network_embodied_emissions_gco2e_per_kb:
     scope3:
-      fixed: 0.000004430
-      mobile: 0.000007970
+      fixed: 0.000002140
+      mobile: 0.000008700
     sri:
       fixed: 0.000004430
       mobile: 0.000007970
@@ -376,9 +377,9 @@ defaults:
     web: 100
   default_property_average_imps_per_session_by_channel:
     app: 14
-    ctv-bvod: 8.256000000
+    ctv-bvod: 18
     digital-audio: 4.800000000
-    linear-tv: 21.500000000
+    linear-tv: 30
     search: 12
     social: 24
     streaming-video: 1
@@ -435,8 +436,8 @@ defaults:
     satellite: 3150
   default_usage_kwh_per_gb:
     scope3:
-      fixed: 0.030000000
-      mobile: 0.140000000
+      fixed: 0.016500000
+      mobile: 0.117000000
     sri:
       fixed: 0.068700000
       mobile: 0.236000000
