@@ -153,6 +153,7 @@ defaults:
     phone: 1080
     tablet: 1536
     tv: 1920
+  default_display_creative_overhead_factor: 0.200000000
   default_display_other_assets_bytes: 50000
   default_dynamic_watts_per_mbps:
     fixed: 0.030000000
