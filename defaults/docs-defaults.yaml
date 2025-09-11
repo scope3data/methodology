@@ -104,22 +104,17 @@ defaults:
     web: pc
   default_device_embodied_emissions_per_second:
     scope3:
-      pc: 0.007000000
-      phone: 0.005800000
+      pc: 0.005450000
+      phone: 0.006550000
       radio: 0.002514375
       smart-speaker: 0.006100000
-      tablet: 0.002900000
-      tv: 0.009600000
+      tablet: 0.025700000
+      tv: 0.008650000
     sri:
       pc: 0.013200000
       phone: 0.009460000
       tablet: 0.012800000
       tv: 0.008890000
-  default_device_height:
-    pc: 1440
-    phone: 1920
-    tablet: 2048
-    tv: 1080
   default_device_per_impression:
     app: 1
     ctv-bvod: 1
@@ -137,22 +132,17 @@ defaults:
     tv: 0
   default_device_watts:
     scope3:
-      pc: 53.200000000
-      phone: 0.770000000
+      pc: 55.440000000
+      phone: 4.680000000
       radio: 6.550000000
       smart-speaker: 2.500000000
-      tablet: 3.000000000
-      tv: 87.400000000
+      tablet: 5.040000000
+      tv: 136.800000000
     sri:
       pc: 29.400000000
       phone: 2.856000000
       tablet: 29.400000000
       tv: 81.600000000
-  default_device_width:
-    pc: 2560
-    phone: 1080
-    tablet: 1536
-    tv: 1920
   default_display_creative_overhead_factor: 0.200000000
   default_display_other_assets_bytes: 50000
   default_dynamic_watts_per_mbps:
@@ -408,6 +398,16 @@ defaults:
     fm: 245000
     ota: 106000
     satellite: 3150
+  default_rendered_device_height:
+    pc: 1080
+    phone: 844
+    tablet: 820
+    tv: 1080
+  default_rendered_device_width:
+    pc: 1920
+    phone: 390
+    tablet: 1180
+    tv: 1920
   default_storage_kgco2e_per_gb:
     cloud_storage: 0.025300000
     hard_disk_drive: 0.160000000
