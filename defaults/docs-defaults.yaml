@@ -115,11 +115,6 @@ defaults:
       phone: 0.009460000
       tablet: 0.012800000
       tv: 0.008890000
-  default_device_height:
-    pc: 1440
-    phone: 1920
-    tablet: 2048
-    tv: 1080
   default_device_per_impression:
     app: 1
     ctv-bvod: 1
@@ -148,11 +143,6 @@ defaults:
       phone: 2.856000000
       tablet: 29.400000000
       tv: 81.600000000
-  default_device_width:
-    pc: 2560
-    phone: 1080
-    tablet: 1536
-    tv: 1920
   default_display_creative_overhead_factor: 0.200000000
   default_display_other_assets_bytes: 50000
   default_dynamic_watts_per_mbps:
@@ -408,6 +398,16 @@ defaults:
     fm: 245000
     ota: 106000
     satellite: 3150
+  default_rendered_device_height:
+    pc: 1080
+    phone: 844
+    tablet: 820
+    tv: 1080
+  default_rendered_device_width:
+    pc: 1920
+    phone: 390
+    tablet: 1180
+    tv: 1920
   default_storage_kgco2e_per_gb:
     cloud_storage: 0.025300000
     hard_disk_drive: 0.160000000

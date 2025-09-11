@@ -437,9 +437,9 @@ for platform in [creative_platforms, ad_format.ad_platforms]:
 ### Creative Delivery - Consumer Device
 
 ```
-device_pixels = default_device_width[device_type] x default_device_height[device_type]
-rendered_width = ad_format.rendered_width_pixels ?? default_device_width[device_type]
-rendered_height = ad_format.rendered_height_pixels ?? default_device_height[device_type]
+device_pixels = default_rendered_device_width[device_type] x default_rendered_device_height[device_type]
+rendered_width = ad_format.rendered_width_pixels ?? default_rendered_device_width[device_type]
+rendered_height = ad_format.rendered_height_pixels ?? default_rendered_device_height[device_type]
 visual_device_coverage =
       is_primary_experience ?
       1 :
