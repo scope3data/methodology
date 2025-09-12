@@ -1,13 +1,13 @@
 ```
 default_consumer_device_request_size_bytes:
-  web:             1500
-  app:             1000
-  ctv-bvod:        0
-  dooh:            1000
-  audio:           1000
-  social:          1000
-  streaming-video: 1000
-  search: 150
+  web:             3000
+  app:             3000
+  ctv-bvod:        3000
+  dooh:            3000
+  audio:           3000
+  social:          3000
+  streaming-video: 3000
+  search: 300
 
 default_emissions_per_creative_request_gco2_per_imp: 0.0003
 default_emissions_per_bid_request_gco2_per_imp:      0.11442
@@ -35,4 +35,6 @@ generic_measurement_platform:
     JAPAC: 0.0003
     LATAM: 0.0001
 default_platform_embodied_emissions_per_bid_request_gco2e_per_imp: 0.000015
+edge_node_embodied_gco2e_per_kb: 0.000000588
+edge_node_use_watts_per_kb: 0.00000043
 ```
