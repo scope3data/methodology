@@ -80,14 +80,14 @@ defaults:
       - digital-audio
       - traditional-radio
   default_consumer_device_request_size_bytes:
-    app: 1000
-    audio: 1000
-    ctv-bvod: 0
-    dooh: 1000
-    search: 150
-    social: 1000
-    streaming-video: 1000
-    web: 1500
+    app: 3000
+    audio: 3000
+    ctv-bvod: 3000
+    dooh: 3000
+    search: 300
+    social: 3000
+    streaming-video: 3000
+    web: 3000
   default_count_ad_platform:
     dooh: 6
     search: 1
@@ -455,6 +455,8 @@ defaults:
     streaming-video: impression
     web: impression
   default_video_player_size_bytes: 350000
+  edge_node_embodied_gco2e_per_kb: 0.000000588
+  edge_node_use_watts_per_kb: 0.000000430
   generic_creative_ad_server:
     emissions_per_creative_request_per_geo_gco2_per_imp:
       EMEA: 0.000100000
