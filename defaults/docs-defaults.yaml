@@ -181,7 +181,7 @@ defaults:
       mobile: 0.000007970
   default_non_primary_video_bitrate_kbps: 1200
   default_ooh_ad_production_kgco2e_emissions_per_sq_m: 3.780000000
-  default_ooh_campaign_duration_days: 14.000000000
+  default_ooh_campaign_duration_days: 14
   default_ooh_share_of_time_pct: 100.000000000
   default_panel_to_disposal_distance_km_per_sq_metre: 0.600000000
   default_panel_to_disposal_distance_per_ad_km: 4.000000000
