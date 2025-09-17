@@ -8,6 +8,10 @@ defaults:
     app: 1
     streaming-video: 1
     web: 1
+  default_ad_landfill_emissions_kgco2e_per_sq_metre: 0.291000000
+  default_ad_pct_recycling:
+    classic-ooh: 20.000000000
+  default_ad_recycling_emissions_kgco2e_per_sq_metre: 0.100000000
   default_audio_bitrate_kbps:
     pc: 160
     phone: 160
@@ -88,6 +92,7 @@ defaults:
     social: 3000
     streaming-video: 3000
     web: 3000
+  default_corporate_emissions_per_panel_per_day: 0.300000000
   default_count_ad_platform:
     dooh: 6
     search: 1
@@ -148,15 +153,20 @@ defaults:
   default_dynamic_watts_per_mbps:
     fixed: 0.030000000
     mobile: 1.530000000
+  default_embodied_emissions_kgco2e_per_sq_metre: 115.000000000
   default_emissions_ad_selection_gco2_per_imp_by_channel:
     dooh: 0.003840000
     search: 0.001229300
   default_emissions_generic_ad_server_gco2_per_imp: 0.000016000
   default_emissions_generic_ad_server_gco2_per_imp_by_channel:
     social: 0.004300000
+  default_emissions_kgco2e_per_km_travelled: 0.254300000
   default_emissions_per_bid_request_gco2_per_imp: 0.114420000
   default_emissions_per_creative_request_gco2_per_imp: 0.000300000
   default_emissions_per_rtdp_request_gco2_per_imp: 0.010000000
+  default_energy_kwh_per_mechanical_rotation_per_sq_metre_per_hour: 12.500000000
+  default_expected_lifetime_years: 10.000000000
+  default_illumination_power_draw_watts_per_sq_metre_per_hour: 100.000000000
   default_image_compression_ratio: 10
   default_impressions_per_creative: 1000000
   default_iptv_network_distribution:
@@ -170,6 +180,11 @@ defaults:
       fixed: 0.000004430
       mobile: 0.000007970
   default_non_primary_video_bitrate_kbps: 1200
+  default_ooh_ad_production_kgco2e_emissions_per_sq_m: 3.780000000
+  default_ooh_campaign_duration_days: 14.000000000
+  default_ooh_share_of_time_pct: 100.000000000
+  default_panel_to_disposal_distance_km_per_sq_metre: 0.600000000
+  default_panel_to_disposal_distance_per_ad_km: 4.000000000
   default_percent_mobile:
     scope3: 23.600000000
     sri: 10.000000000
@@ -355,6 +370,125 @@ defaults:
     traditional-radio: 30s-radio-traditional-radio-radio
     web: generic-gmsf-1-2-display-ad-web-pc
   default_platform_embodied_emissions_per_bid_request_gco2e_per_imp: 0.000015000
+  default_printing_to_storage_distance_km_per_ad:
+    classic-ooh:
+      AD: 0.500000000
+      AE: 0.500000000
+      AL: 0.500000000
+      AM: 0.500000000
+      AO: 0.500000000
+      AT: 0.500000000
+      AU: 0.500000000
+      AZ: 0.500000000
+      BD: 0.500000000
+      BE: 0.500000000
+      BG: 0.500000000
+      BH: 0.500000000
+      BJ: 0.500000000
+      BR: 0.500000000
+      BS: 0.500000000
+      BT: 0.500000000
+      BW: 0.500000000
+      BY: 0.500000000
+      CA: 0.500000000
+      CH: 0.500000000
+      CI: 0.500000000
+      CL: 0.500000000
+      CM: 0.500000000
+      CN: 0.500000000
+      CO: 0.500000000
+      CR: 0.500000000
+      CU: 0.500000000
+      CV: 0.500000000
+      CY: 0.500000000
+      CZ: 0.500000000
+      DE: 0.500000000
+      DJ: 0.500000000
+      DK: 0.500000000
+      DZ: 0.500000000
+      EC: 0.500000000
+      EG: 0.500000000
+      ES: 0.500000000
+      ET: 0.500000000
+      FI: 0.500000000
+      FR: 0.500000000
+      GB: 0.500000000
+      GE: 0.500000000
+      GH: 0.500000000
+      GQ: 0.500000000
+      GR: 0.500000000
+      HK: 0.500000000
+      HN: 0.500000000
+      HR: 0.500000000
+      HU: 0.500000000
+      ID: 0.500000000
+      IE: 0.500000000
+      IN: 0.500000000
+      IQ: 0.500000000
+      IR: 0.500000000
+      IS: 0.500000000
+      IT: 0.500000000
+      JM: 0.500000000
+      JO: 0.500000000
+      JP: 0.500000000
+      KE: 0.500000000
+      KG: 0.500000000
+      KM: 0.500000000
+      KR: 0.500000000
+      KW: 0.500000000
+      KZ: 0.500000000
+      LI: 0.500000000
+      LK: 0.500000000
+      LS: 0.500000000
+      LV: 0.500000000
+      MA: 0.500000000
+      MC: 0.500000000
+      ME: 0.500000000
+      MG: 0.500000000
+      MK: 0.500000000
+      MN: 0.500000000
+      MU: 0.500000000
+      MV: 0.500000000
+      MW: 0.500000000
+      MX: 0.500000000
+      MY: 0.500000000
+      NG: 0.500000000
+      NI: 0.500000000
+      NZ: 0.500000000
+      OM: 0.500000000
+      PF: 0.500000000
+      PK: 0.500000000
+      PL: 0.500000000
+      PT: 0.500000000
+      QA: 0.500000000
+      RO: 0.500000000
+      RS: 0.500000000
+      RU: 0.500000000
+      RW: 0.500000000
+      SA: 0.500000000
+      SC: 0.500000000
+      SI: 0.500000000
+      SK: 0.500000000
+      SM: 0.500000000
+      SN: 0.500000000
+      ST: 0.500000000
+      TG: 0.500000000
+      TH: 0.500000000
+      TN: 0.500000000
+      TR: 0.500000000
+      TT: 0.500000000
+      TW: 0.500000000
+      TZ: 0.500000000
+      UG: 0.500000000
+      US: 0.500000000
+      UY: 0.500000000
+      UZ: 0.500000000
+      VE: 0.500000000
+      VN: 0.500000000
+      VU: 0.500000000
+      YE: 0.500000000
+      ZA: 0.500000000
+      ZW: 0.500000000
   default_property_ad_funded_percentage_by_channel:
     app: 100
     ctv-bvod: 100
@@ -408,16 +542,141 @@ defaults:
     phone: 390
     tablet: 1180
     tv: 1920
+  default_storage_emissions_kgco2e_per_panel: 0.016483330
   default_storage_kgco2e_per_gb:
     cloud_storage: 0.025300000
     hard_disk_drive: 0.160000000
     linear_tape_open: 0.001140000
     solid_state_drive: 0.020000000
+  default_storage_to_installation_distance_km_per_ad:
+    classic-ooh:
+      AD: 4.000000000
+      AE: 4.000000000
+      AL: 4.000000000
+      AM: 4.000000000
+      AO: 4.000000000
+      AT: 4.000000000
+      AU: 4.000000000
+      AZ: 4.000000000
+      BD: 4.000000000
+      BE: 4.000000000
+      BG: 4.000000000
+      BH: 4.000000000
+      BJ: 4.000000000
+      BR: 4.000000000
+      BS: 4.000000000
+      BT: 4.000000000
+      BW: 4.000000000
+      BY: 4.000000000
+      CA: 4.000000000
+      CH: 4.000000000
+      CI: 4.000000000
+      CL: 4.000000000
+      CM: 4.000000000
+      CN: 4.000000000
+      CO: 4.000000000
+      CR: 4.000000000
+      CU: 4.000000000
+      CV: 4.000000000
+      CY: 4.000000000
+      CZ: 4.000000000
+      DE: 4.000000000
+      DJ: 4.000000000
+      DK: 4.000000000
+      DZ: 4.000000000
+      EC: 4.000000000
+      EG: 4.000000000
+      ES: 4.000000000
+      ET: 4.000000000
+      FI: 4.000000000
+      FR: 4.000000000
+      GB: 4.000000000
+      GE: 4.000000000
+      GH: 4.000000000
+      GQ: 4.000000000
+      GR: 4.000000000
+      HK: 4.000000000
+      HN: 4.000000000
+      HR: 4.000000000
+      HU: 4.000000000
+      ID: 4.000000000
+      IE: 4.000000000
+      IN: 4.000000000
+      IQ: 4.000000000
+      IR: 4.000000000
+      IS: 4.000000000
+      IT: 4.000000000
+      JM: 4.000000000
+      JO: 4.000000000
+      JP: 4.000000000
+      KE: 4.000000000
+      KG: 4.000000000
+      KM: 4.000000000
+      KR: 4.000000000
+      KW: 4.000000000
+      KZ: 4.000000000
+      LI: 4.000000000
+      LK: 4.000000000
+      LS: 4.000000000
+      LV: 4.000000000
+      MA: 4.000000000
+      MC: 4.000000000
+      ME: 4.000000000
+      MG: 4.000000000
+      MK: 4.000000000
+      MN: 4.000000000
+      MU: 4.000000000
+      MV: 4.000000000
+      MW: 4.000000000
+      MX: 4.000000000
+      MY: 4.000000000
+      NG: 4.000000000
+      NI: 4.000000000
+      NZ: 4.000000000
+      OM: 4.000000000
+      PF: 4.000000000
+      PK: 4.000000000
+      PL: 4.000000000
+      PT: 4.000000000
+      QA: 4.000000000
+      RO: 4.000000000
+      RS: 4.000000000
+      RU: 4.000000000
+      RW: 4.000000000
+      SA: 4.000000000
+      SC: 4.000000000
+      SI: 4.000000000
+      SK: 4.000000000
+      SM: 4.000000000
+      SN: 4.000000000
+      ST: 4.000000000
+      TG: 4.000000000
+      TH: 4.000000000
+      TN: 4.000000000
+      TR: 4.000000000
+      TT: 4.000000000
+      TW: 4.000000000
+      TZ: 4.000000000
+      UG: 4.000000000
+      US: 4.000000000
+      UY: 4.000000000
+      UZ: 4.000000000
+      VE: 4.000000000
+      VN: 4.000000000
+      VU: 4.000000000
+      YE: 4.000000000
+      ZA: 4.000000000
+      ZW: 4.000000000
   default_storage_usage_pct:
     cloud_storage: 45
     hard_disk_drive: 25
     linear_tape_open: 10
     solid_state_drive: 20
+  default_structure_expected_lifetime_years: 10.000000000
+  default_structure_landfill_emissions_kgco2e_per_sq_metre: 2.200000000
+  default_structure_pct_recycling:
+    classic-ooh: 58.750000000
+  default_structure_recycling_emissions_kgco2e_per_sq_metre: 0.000000000
   default_time_in_view_seconds: 3
   default_tv_home_equipment_embodied_gco2e_per_second_by_tv_distribution_method:
     cable: 0.005346759
