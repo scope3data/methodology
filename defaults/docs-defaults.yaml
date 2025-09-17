@@ -333,7 +333,7 @@ defaults:
       ota: 19.300000000
       satellite: 16.700000000
   default_platform_ad_format_by_channel:
-    app: Interstitial - 1080x1920 Banner
+    app: Generic GMSF 1.2 Display Ad
     ctv-bvod: 15s Video
     digital-audio: 30s Audio
     dooh: Landscape - 1920x1080 Image
@@ -342,9 +342,9 @@ defaults:
     social: Sponsored Post - 1080x1920 Image
     streaming-video: 15s Video
     traditional-radio: 30s Radio
-    web: Leaderboard - 728x90 Banner
+    web: Generic GMSF 1.2 Display Ad
   default_platform_ad_format_identifier_by_channel:
-    app: interstitial-app-phone
+    app: generic-gmsf-1-2-display-ad-app-phone
     ctv-bvod: 15s-video-ctv-bvod-tv
     digital-audio: 30s-audio-digital-audio-phone
     dooh: landscape-dooh
@@ -353,7 +353,7 @@ defaults:
     social: 1080-1920-sponsored-post-social-phone
     streaming-video: 15s-video-streaming-video-pc
     traditional-radio: 30s-radio-traditional-radio-radio
-    web: leaderboard-web-pc
+    web: generic-gmsf-1-2-display-ad-web-pc
   default_platform_embodied_emissions_per_bid_request_gco2e_per_imp: 0.000015000
   default_property_ad_funded_percentage_by_channel:
     app: 100
