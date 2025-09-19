@@ -164,7 +164,6 @@ defaults:
   default_emissions_per_bid_request_gco2_per_imp: 0.114420000
   default_emissions_per_creative_request_gco2_per_imp: 0.000300000
   default_emissions_per_rtdp_request_gco2_per_imp: 0.010000000
-  default_mechanical_rotation_power_draw_watts_per_sq_metre_per_hour: 12.500000000
   default_expected_lifetime_years: 10.000000000
   default_illumination_power_draw_watts_per_sq_metre_per_hour: 100.000000000
   default_image_compression_ratio: 10
@@ -172,6 +171,7 @@ defaults:
   default_iptv_network_distribution:
     fixed: 0.999000000
     mobile: 0.001000000
+  default_mechanical_rotation_power_draw_watts_per_sq_metre_per_hour: 12.500000000
   default_network_embodied_emissions_gco2e_per_kb:
     scope3:
       fixed: 0.000002140
