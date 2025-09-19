@@ -92,7 +92,7 @@ defaults:
     social: 3000
     streaming-video: 3000
     web: 3000
-  default_corporate_emissions_per_panel_per_day: 0.300000000
+  default_corporate_emissions_kgco2e_per_panel_per_day: 0.300000000
   default_count_ad_platform:
     dooh: 6
     search: 1
@@ -164,7 +164,7 @@ defaults:
   default_emissions_per_bid_request_gco2_per_imp: 0.114420000
   default_emissions_per_creative_request_gco2_per_imp: 0.000300000
   default_emissions_per_rtdp_request_gco2_per_imp: 0.010000000
-  default_energy_kwh_per_mechanical_rotation_per_sq_metre_per_hour: 12.500000000
+  default_mechanical_rotation_power_draw_watts_per_sq_metre_per_hour: 12.500000000
   default_expected_lifetime_years: 10.000000000
   default_illumination_power_draw_watts_per_sq_metre_per_hour: 100.000000000
   default_image_compression_ratio: 10
