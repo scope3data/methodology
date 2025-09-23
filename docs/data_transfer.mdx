@@ -38,15 +38,34 @@ The ideal data source would factor in:
 - Relative use of fixed connections, 3G, 4G, and 5G on a per-country basis
 - The exponential growth of data use, ideally split between streaming and non-streaming use cases
 
-The [SRI methodology](https://www.sri-france.org/wp-content/uploads/2023/06/SRI_Calculating-the-carbon-footprint_V2.pdf) (the latest "official" industry source) uses ADEME/Negaoctet calculations based on 2020 data in France, though unfortunately are not time-adjusted or adapted to different markets.
+The [GMSF 1.2](https://adnetzero.com/wp-content/uploads/2025/06/GlobalMediaSustainabilityFrameworkV1.2.pdf), the latest "official" industry source, uses ADEME data based on a this [study on the environmental footprint of French ISPs](https://librairie.ademe.fr/industrie-et-production-durable/6789-evaluation-de-l-empreinte-environnementale-de-la-fourniture-d-acces-a-internet-en-france.html#product-presentation) using 2023 data in France. Although based on primary and recent data the values are not time-adjusted or adapted to different markets.
+
+The initial ADEME work considers two components to calculate network-related electricity consumption for both fixed and mobile networks:
+
+- Component `a` (dynamic): models the consumption of the network infrastructure per amount of transferred data, expressed in kWh per MB.
+- Component `b` (static): models the consumption of the network infrastructure per user.
+
+To derive a conversion factor per unit of data transferred that combines the two components, the GMSF makes some assumptions regarding the average bandwidth:
+
+- 2.88 GB per hour for fixed networks (from the [Carbon Trust](https://ctprodstorageaccountp.blob.core.windows.net/prod-drupal-files/documents/resource/public/Carbon-impact-of-video-streaming.pdf) study)
+- 2.19 GB per hour for mobile networks (from Greenspector)
+
+The same approach is applied for embodied emissions. The resulting conventional model uses the following emission factors:
+
+| Emission factor                            | Unit          | Value      |
+| ------------------------------------------ | ------------- | ---------- |
+| Electricity consumption of mobile networks | kWh per MB    | 0.000117   |
+| Embodied emissions of mobile networks      | kgCO2e per MB | 0,0000087  |
+| Electricity consumption of fixed networks  | kWh per MB    | 0.0000165  |
+| Embodied emissions of fixed networks       | kgCO2e per MB | 0,00000214 |
 
 ## Power usage by time and bandwidth (Power Model)
 
+**Note**: We have deprecated the use of the Power Model to align with GMSF 1.2. The information below is valid only for CTV‑BVOD and OLV measurements conducted before October 2025.
+
 Per [Carbon Trust](https://ctprodstorageaccountp.blob.core.windows.net/prod-drupal-files/documents/resource/public/Carbon-impact-of-video-streaming.pdf):
 
-This white paper also presents a power model approach, which uses a marginal allocation methodology, where a baseload power is allocated per user, and a marginal energy component is allocated related to the data volume used. The power model approach recognises that the dynamic relation of energy to data volume in a network is very flat – i.e. there is a high fixed power baseload which does not vary in relation to the data volume, with
-only a small increase in power consumption in response
-to the data consumption.
+This white paper presents a power model approach, which uses a marginal allocation methodology, where a baseload power is allocated per user, and a marginal energy component is allocated related to the data volume used. The power model approach recognises that the dynamic relation of energy to data volume in a network is very flat – i.e. there is a high fixed power baseload which does not vary in relation to the data volume, with only a small increase in power consumption in response to the data consumption.
 
 ### Fixed Network
 
@@ -80,8 +99,8 @@ Mobile Network Energy (Amn) = 1.2W + 1.53W/Mbps
 
 ## Data transfer embodied emissions
 
-The [SRI methodology](https://www.sri-france.org/wp-content/uploads/2023/06/SRI_Calculating-the-carbon-footprint_V2.pdf) includes embodied emissions data from ADEME/Negaoctet, which seem reasonable.
+The GMSF 1.2 emission factors used include embodied emissions data.
 
 ## Handling unknown networks
 
-The SRI methodology suggests a ratio of 90% fixed to 10% mobile. However, this ratio is not representative globally. The ITU publishes [research](https://datahub.itu.int) on fixed and mobile traffic by country. This indicates that for 2022 the weighted average of global traffic was 23.6% mobile. However, this research notably omits the US which is likely similar to other advanced economies in the 5% range, so we have added this to the dataset as an estimate (along with the 10% France number for SRI consistency).
+The SRI methodology suggests a ratio of 90% fixed to 10% mobile. However, this ratio is not representative globally. The ITU publishes [research](https://datahub.itu.int) on fixed and mobile traffic by country. However, this dataset notably omits the US which is likely similar to other advanced economies in the 5% range, so we have added this to the dataset as an estimate.

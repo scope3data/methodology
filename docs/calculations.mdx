@@ -176,7 +176,8 @@ Native product carousel
 
 ### Conventional model data transfer by network type
 
-From [SRIxAD database 2.1](https://github.com/SRISyndicatRegiesInternet/SRIxAD-DigitalCampaignsCarbonFramework/releases/download/v2.1.0/Referentiel.SRI.x.AD.-.V2.1_partage.zip), original source ADEME_220830_v1.4
+Scope3 values from [GMSF 1.2](https://adnetzero.com/wp-content/uploads/2025/06/GlobalMediaSustainabilityFrameworkV1.2.pdf).
+SRI values from [SRIxAD database 2.1](https://github.com/SRISyndicatRegiesInternet/SRIxAD-DigitalCampaignsCarbonFramework/releases/download/v2.1.0/Referentiel.SRI.x.AD.-.V2.1_partage.zip), original source ADEME_220830_v1.4 (now considered outdated).
 
 <ConventionalModelDefaults />
 
@@ -188,13 +189,13 @@ From [Carbon impact of video streaming (Carbon Trust)](https://ctprodstorageacco
 
 ### Mobile to fixed ratios by country
 
-From [ITU Data Hub](https://datahub.itu.int/) (2022 data)
+From [ITU Data Hub](https://datahub.itu.int/) (2024 data)
 
 <NetworkTrafficDefaults />
 
 ### Video player characteristics
 
-Based on actual data transfer of https://vjs.zencdn.net/8.10.0/video.min.js on February 23, 2024
+Default video player size from [GMSF 1.2](https://adnetzero.com/wp-content/uploads/2025/06/GlobalMediaSustainabilityFrameworkV1.2.pdf)
 
 <VideoPlayerDefaults />
 
@@ -206,7 +207,9 @@ Based on [YouTube recommendations](https://support.google.com/youtube/answer/172
 
 ### Device size
 
-From common devices (Quad HD 27” monitor, iPhone 13, Nexus 5X, iPad Air 1/2, iPad 2/3, Nexus 9, 1080P TV)
+From common devices (Quad HD 27” monitor, iPhone 13, Nexus 5X, iPad Air 1/2, iPad 2/3, Nexus 9, 1080P TV).
+
+**Note**: We use the software resolution, not the hardware resolution, to avoid underestimating the actual visual coverage of the ad displayed on screen.
 
 <DeviceSizeDefaults />
 

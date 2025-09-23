@@ -28,11 +28,11 @@ To determine consumer device emissions we need to know whether the ad controls t
 
 - For a full screen or primary placement ad(standard TV/radio commercial, etc) the energy used by the consumer device during the display of the creative is determined by multiplying the duration of the creative by the energy use of the consumer device.
 
-- For an ad that is not full screen that is embedded in content- for instance, a banner ad on a web site, an autoplaying out-stream video, or a sponsored post in a social news feed - the energy use should be proportionate to the percentage of the consumer device used by the creative and the average time that the placement is in view. We assume a default of 6 seconds as the average time an embedded ad is in view.
+- For an ad that is not full screen that is embedded in content- for instance, a banner ad on a web site, an autoplaying out-stream video, or a sponsored post in a social news feed - the energy use should be proportionate to the percentage of the consumer device used by the creative and the average time that the placement is in view. We align with GMSF 1.2 and assume a default of 3 seconds as the average time an embedded ad is in view.
 
 The time the ad is on the device multiplied by the percentage of the screen/device used by the creative is `device coverage-seconds`. The embodied emissions for the delivery of the creative are `(device coverage-seconds) x (embodied emissions per second)` and the usage emissions are `(device coverage-seconds) x (energy per second)`. See [consumer device methodology](./consumer_devices) for details on the per-device calculations.
 
-For instance, a 30 second video ad played on a television will use 0.73 Wh of energy and an allocation of 0.63 gCO2e from the production of the television. A split-screen ad using half the screen would use half the energy and production emissions.
+For instance, a 30 second video ad played on a television will use 1.14 Wh of energy and an allocation of 0.26 gCO2e from the production of the television. A split-screen ad using half the screen would use half the energy and production emissions.
 
 Format notes:
 
@@ -41,9 +41,7 @@ Format notes:
 
 ### Data Transfer Emissions
 
-For CTV, where the creative is typically inserted into the video stream, we use a slightly modified version of the the Carbon Trust "Power Model" to calculate emissions as described in the [data transfer methodology](./data_transfer). This uses the duration, network type, and device type to calculate the marginal impact of the creative on network infrastructure.
-
-For all other channels, we use the conventional model based on the payload of a creative (the number of bytes transferred to display the ad). We calculate the energy used per GB from the [data transfer methodology](./data_transfer) based on the network type.
+For all channels, we use the conventional model based on the payload of a creative (the number of bytes transferred to display the ad). We calculate the energy used per GB from the [data transfer methodology](./data_transfer) based on the network type.
 
 A modeled ad format consists of:
 
