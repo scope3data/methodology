@@ -31,14 +31,11 @@ These bottom-up numbers indicate that the majority of emissions from broadband u
 - Greenspector has a highly detailed analysis of the impact of data transfer [here](https://greenspector.com/en/what-impact-does-the-network-have-on-digital-services/).
 - Malmodin J, Lundén D. [The Energy and Carbon Footprint of the Global ICT and E&M Sectors 2010–2015](https://doi.org/10.3390/su10093027). Sustainability. 2018; 10(9):3027.
 
-## Power usage by bandwidth (Conventional Model)
+## Power usage and embodied emissions by bandwidth (Conventional Model)
 
-The ideal data source would factor in:
+We apply the conventional model to all channels.
 
-- Relative use of fixed connections, 3G, 4G, and 5G on a per-country basis
-- The exponential growth of data use, ideally split between streaming and non-streaming use cases
-
-The [GMSF 1.2](https://adnetzero.com/wp-content/uploads/2025/06/GlobalMediaSustainabilityFrameworkV1.2.pdf), the latest "official" industry source, uses ADEME data based on a this [study on the environmental footprint of French ISPs](https://librairie.ademe.fr/industrie-et-production-durable/6789-evaluation-de-l-empreinte-environnementale-de-la-fourniture-d-acces-a-internet-en-france.html#product-presentation) using 2023 data in France. Although based on primary and recent data the values are not time-adjusted or adapted to different markets.
+The [GMSF 1.2](https://adnetzero.com/wp-content/uploads/2025/06/GlobalMediaSustainabilityFrameworkV1.2.pdf), the latest "official" industry source, uses ADEME emission factors based on a this [study on the environmental footprint of French ISPs](https://librairie.ademe.fr/industrie-et-production-durable/6789-evaluation-de-l-empreinte-environnementale-de-la-fourniture-d-acces-a-internet-en-france.html#product-presentation). Although based on primary and recent data (2023) the values are unfortunately not time-adjusted or adapted to different markets.
 
 The initial ADEME work considers two components to calculate network-related electricity consumption for both fixed and mobile networks:
 
@@ -55,9 +52,9 @@ The same approach is applied for embodied emissions. The resulting conventional 
 | Emission factor                            | Unit          | Value      |
 | ------------------------------------------ | ------------- | ---------- |
 | Electricity consumption of mobile networks | kWh per MB    | 0.000117   |
-| Embodied emissions of mobile networks      | kgCO2e per MB | 0,0000087  |
+| Embodied emissions of mobile networks      | kgCO2e per MB | 0.0000087  |
 | Electricity consumption of fixed networks  | kWh per MB    | 0.0000165  |
-| Embodied emissions of fixed networks       | kgCO2e per MB | 0,00000214 |
+| Embodied emissions of fixed networks       | kgCO2e per MB | 0.00000214 |
 
 ## Power usage by time and bandwidth (Power Model)
 
@@ -96,10 +93,6 @@ We use the same numbers as Carbon Trust
 ```equation
 Mobile Network Energy (Amn) = 1.2W + 1.53W/Mbps
 ```
-
-## Data transfer embodied emissions
-
-The GMSF 1.2 emission factors used include embodied emissions data.
 
 ## Handling unknown networks
 

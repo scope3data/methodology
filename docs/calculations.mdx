@@ -176,7 +176,7 @@ Native product carousel
 
 ### Conventional model data transfer by network type
 
-Scope3 values from [GMSF 1.2](https://adnetzero.com/wp-content/uploads/2025/06/GlobalMediaSustainabilityFrameworkV1.2.pdf).
+The Scope3 values below are from [GMSF 1.2](https://adnetzero.com/wp-content/uploads/2025/06/GlobalMediaSustainabilityFrameworkV1.2.pdf).
 SRI values from [SRIxAD database 2.1](https://github.com/SRISyndicatRegiesInternet/SRIxAD-DigitalCampaignsCarbonFramework/releases/download/v2.1.0/Referentiel.SRI.x.AD.-.V2.1_partage.zip), original source ADEME_220830_v1.4 (now considered outdated).
 
 <ConventionalModelDefaults />
@@ -189,7 +189,7 @@ From [Carbon impact of video streaming (Carbon Trust)](https://ctprodstorageacco
 
 ### Mobile to fixed ratios by country
 
-From [ITU Data Hub](https://datahub.itu.int/) (2024 data)
+From [ITU Data Hub](https://datahub.itu.int/) (2024 data), these ratios do not apply to TV and Smart Speakers for which a specific `default_percent_mobile_by_device_type` is set.
 
 <NetworkTrafficDefaults />
 
@@ -221,17 +221,19 @@ See [Consumer Devices](./consumer_devices)
 
 ### Time in view for non-video ads
 
-Observations from various channels
+Default in view time from [GMSF 1.2](https://adnetzero.com/wp-content/uploads/2025/06/GlobalMediaSustainabilityFrameworkV1.2.pdf)
 
 <TimeInViewDefaults />
 
 ### Ad platform defaults
 
-Observations from various channels
+Observations from various channels and CDN / Edge Node emission factors from [GMSF 1.2](https://adnetzero.com/wp-content/uploads/2025/06/GlobalMediaSustainabilityFrameworkV1.2.pdf)
 
 <AdPlatformDefaults />
 
 ### Channel and device type mappings
+
+The default ad formats for the Web and App channels are based on the [GMSF 1.2](https://adnetzero.com/wp-content/uploads/2025/06/GlobalMediaSustainabilityFrameworkV1.2.pdf) defaults for creative payload.
 
 <ChannelMappingDefaults />
 
@@ -240,6 +242,8 @@ Observations from various channels
 <BroadcastingDefaults />
 
 ### Creative storage defaults
+
+Emission factors from [GMSF 1.2](https://adnetzero.com/wp-content/uploads/2025/06/GlobalMediaSustainabilityFrameworkV1.2.pdf), along with assumptions on average distribution per storage type and default impressions per creative, are used to allocate the storage emissions of creative materials (also called the master bundle).
 
 <CreativeStorageDefaults />
 
@@ -329,6 +333,19 @@ we fall back to a default channel by device.
 ```
 
 ## Calculating Emissions
+
+### Tech Manipulation - Creative Storage
+
+```
+creative_storage_gco2_per_imp =
+(default_linear_tape_open_storage_kgco2e_per_gb * default_linear_tape_open_storage_usage_pct
++ default_hard_disk_drive_storage_kgco2e_per_gb * default_hard_disk_drive_storage_usage_pct
++ default_solid_state_drive_storage_kgco2e_per_gb * default_solid_state_drive_storage_kgco2e_per_gb
++ default_cloud_storage_kgco2e_per_gb * default_cloud_storage_usage_pct)
+* 1000
+* ((creative_data_transfer_bytes * creative_raw_asset_size_factor[Channel] + creative_data_transfer_bytes * creative_work_iterations_factor[Channel]) / 1000000000)
+/ default_impressions_per_creative
+```
 
 ### Creative Delivery - Data Transfer
 
@@ -434,7 +451,16 @@ creative_platforms = creative_ad_platforms ?? default_creative_platforms
 
 creative_platform_emissions_gco2_per_imp = 0
 for platform in [creative_platforms, ad_format.ad_platforms]:
-      creative_platform_emissions_gco2_per_imp += platform.emissions_per_creative_request_per_geo_gco2_per_imp
+			emissions_per_creative_request_per_geo_gco2_per_imp =
+				platform.emissions_per_creative_request_per_geo_gco2_per_imp ??
+				((creative_data_transfer_bytes / 1000) x
+				(edge_node_use_watts_per_kb / 1000) x
+				lookup_carbon_intensity_gco2e_per_kwh(country, region, utc_datetime))
+				+
+				(creative_data_transfer_bytes / 1000 x
+				edge_node_embodied_gco2e_per_kb)
+
+      creative_platform_emissions_gco2_per_imp += emissions_per_creative_request_per_geo_gco2_per_imp
 ```
 
 ### Creative Delivery - Consumer Device
