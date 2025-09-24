@@ -2,10 +2,17 @@
 defaults:
   creative_raw_asset_size_factor_by_channel:
     app: 20
+    ctv-bvod: 50
+    digital-audio: 5
+    dooh: 5
+    linear-tv: 50
     streaming-video: 20
     web: 20
   creative_work_iterations_factor_by_channel:
     app: 1
+    ctv-bvod: 1
+    dooh: 1
+    linear-tv: 1
     streaming-video: 1
     web: 1
   default_audio_bitrate_kbps:
