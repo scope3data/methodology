@@ -6,14 +6,21 @@ defaults:
     digital-audio: 5
     dooh: 5
     linear-tv: 50
+    search: 0
+    social: 20
     streaming-video: 20
+    traditional-radio: 5
     web: 20
   creative_work_iterations_factor_by_channel:
     app: 1
     ctv-bvod: 1
+    digital-audio: 1
     dooh: 1
     linear-tv: 1
+    search: 1
+    social: 1
     streaming-video: 1
+    traditional-radio: 1
     web: 1
   default_audio_bitrate_kbps:
     pc: 160
