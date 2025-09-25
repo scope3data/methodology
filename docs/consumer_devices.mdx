@@ -24,7 +24,7 @@ To calculate the _Lifecycle Emissions Per Second of Use_ (LEPS), we multiply the
 
 `LEPS = PEPS + GI • UEPS`
 
-The following sections outline the sources and assumptions used to calculate these metrics for various device types.
+The following sections outline the sources and assumptions used to calculate these metrics for various device types. Note that, after the release of the [October 2025 Emission Model](https://docs.scope3.com/changelog/october-2025-emissions-model#/), we use the default emission factors from version 1.2 of the Global Media Sustainability Framework (GMSF) for these consumer devices: TV, Phone, Tablet and Personal Computer.
 
 ## Personal Computer
 
@@ -44,9 +44,11 @@ From [Urban et al](#urban-et-al-2019):
 | Laptop  | 122                | 11 (idle), 22 (active) | 3.0 (idle), 3.7 (active) |
 | Monitor | 101                | 30                     | 5.5                      |
 
-Since we do not know the exact device a consumer is using (most reporting is aggregated to device type), we use install base to create a synthetic "personal computer". See [PC emissions model](supporting/pc_emissions_model.xlsx). Based on this analysis, a personal computer uses an average of 53.2 W of energy while in use, and has Production Energy of 0.005 gCO2e per second of use.
+Since we do not know the exact device a consumer is using (most reporting is aggregated to device type), we used to use the install base to create a synthetic "personal computer". See [PC emissions model](supporting/pc_emissions_model.xlsx). Based on this analysis, a personal computer uses an average of 53.2 W of energy while in use, and has Production Energy of 0.005 gCO2e per second of use.
 
 ![Visual representation of the PC emissions model](images/pc_emissions_model.png)
+
+We use the following defaults from [GMSF 1.2](https://adnetzero.com/wp-content/uploads/2025/06/GlobalMediaSustainabilityFrameworkV1.2.pdf): a use-phase energy intensity of 0.0000154 kWh per second (55.44 W power draw) and embodied emissions of 0.00000545 kgCO2e per second. The listed data sources are ADEME ([Base Empreinte, "Numérique 2.0" dataset, 2025](https://base-empreinte.ademe.fr/)) and Scope3.
 
 ## Tablet
 
@@ -56,6 +58,8 @@ We don't have a stat on daily usage of tablets. Assuming that people use them in
 
 For energy use, [iBatteryLife](https://ibatterylife.com/ipad-battery-life-test/) compares multiple iPad models and battery life is around 10 hours for each. The average iPad, per [Sir Apfelot](https://sir-apfelot.de/en/battery-capacity-ipad-mah-19060/), has around 30 Wh of battery capacity. Thus, a tablet has an average power draw of 3W.
 
+We use the following defaults from [GMSF 1.2](https://adnetzero.com/wp-content/uploads/2025/06/GlobalMediaSustainabilityFrameworkV1.2.pdf): a use-phase energy intensity of 0.0000014 kWh per second (5.04 W power draw) and embodied emissions of 0.0000257 kgCO2e per second. The embodied emission factor is much higher than for the other devices due to considering low daily usage. The listed data source is ADEME ([Base Empreinte, "Numérique 2.0" dataset, 2025](https://base-empreinte.ademe.fr/)).
+
 ## Smartphone
 
 From [Negaoctet](#Negaoctet), a "smartphone; use mix, personal use; average configuration: 6,61 inches screen mix of LCD and OLED technologies, 7,3 GB RAM, 180 GB memory, 2,5 years lifespan; RAS" has 33.6 kgCO2e per year of embodied emissions.
@@ -63,6 +67,8 @@ From [Negaoctet](#Negaoctet), a "smartphone; use mix, personal use; average conf
 The typical person uses her phone for 4 hours and 23 minutes a day per [Statista](https://www.statista.com/statistics/1045353/mobile-device-daily-usage-time-in-the-us/). This yields a PEPS of 0.0058 gCO2e/s. (Note: SRI uses a 3 hrs/day number)
 
 As an example, per [GSM Arena](#gsmarena), the Apple iPhone 13 takes 16 hours and 8 minutes to run out of battery when browsing the internet (similar to video playback). In idle mode, it takes 174 hours to discharge. It has 12.41Wh of battery capacity per [Macworld](#macworld). Thus, the iphone consumes 0.77W when active, and 0.071W when idle.
+
+We use the following defaults from [GMSF 1.2](https://adnetzero.com/wp-content/uploads/2025/06/GlobalMediaSustainabilityFrameworkV1.2.pdf): a use-phase energy intensity of 0.0000013 kWh per second (4.68 W power draw) and embodied emissions of 0.00000655 kgCO2e per second. The use-phase value is considered conservative and based on video playback. The listed data source is ADEME ([Base Empreinte, "Numérique 2.0" dataset, 2025](https://base-empreinte.ademe.fr/)).
 
 ## Television
 
@@ -87,6 +93,8 @@ Based on 3.9 hours/day of usage, the embodied emissions from a TV and set top bo
 
 A detailed study of many TV models can be found at [ecocostsavings.com](https://ecocostsavings.com/tv-wattage/), indicating that the average power draw of a TV in the US is 59W active, 0.5W standby. This data is not tied to a scientific study but does indicate that overall power usage may have declined since the Urban study above.
 
+We use the following defaults from [GMSF 1.2](https://adnetzero.com/wp-content/uploads/2025/06/GlobalMediaSustainabilityFrameworkV1.2.pdf): a use-phase energy intensity of 0.000038 kWh per second (136.8 W power draw) and embodied emissions of 0.00000865 kgCO2e per second. The listed data source is ADEME ([Base Empreinte, "Numérique 2.0" dataset, 2025](https://base-empreinte.ademe.fr/)).
+
 ## Smart Speaker
 
 From a [NRDC report by Horowitz, Hardy, and Tian](#nrdc-2019):
@@ -110,40 +118,40 @@ Below, we detail our assumptions and sources for each component of the calculati
 
 ### Device lifespan
 
-| Studies / Source | Car Audio (years) | Portable Receiver (years) | Hi-Fi (years) | Alarm Clock Radio & Docking Station (years) |
-| --- | --- | --- | --- | --- |
-| [ADEME ARCEP](https://www.editionmultimedia.fr/wp-content/uploads/2024/10/Rapport-Arcom-Arcep-Ademe-Impact-environnemental-2022-2030-de-laudiovisuel-07-10-24.pdf) - France (2024) | 10 | 5 | 5 | 5 |
-| [ACEA](https://www.acea.auto/figure/average-age-of-eu-vehicle-fleet-by-country/) - Europe (2022) | 12.3 |  |  |  |
-| [Bureau of Transportation Statistics](https://www.bts.gov/content/average-age-automobiles-and-trucks-operation-united-states) - USA (2024) | 14 |  |  |  |
-| [Department for Transport & Ricardo](https://assets.publishing.service.gov.uk/media/623b0fb28fa8f540f3202c12/lifecycle-analysis-of-UK-road-vehicles.pdf) - UK (2024) | 14 |  |  |  |
-| [FordAV](https://www.fordav.com/solutions/lifecycle-of-av-systems/) - Global (N/A) |  |  | 10+ |  |
-| WW Assumption | 10 | 5 | 10 | 5 |
+| Studies / Source                                                                                                                                                                   | Car Audio (years) | Portable Receiver (years) | Hi-Fi (years) | Alarm Clock Radio & Docking Station (years) |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------- | ------------------------- | ------------- | ------------------------------------------- |
+| [ADEME ARCEP](https://www.editionmultimedia.fr/wp-content/uploads/2024/10/Rapport-Arcom-Arcep-Ademe-Impact-environnemental-2022-2030-de-laudiovisuel-07-10-24.pdf) - France (2024) | 10                | 5                         | 5             | 5                                           |
+| [ACEA](https://www.acea.auto/figure/average-age-of-eu-vehicle-fleet-by-country/) - Europe (2022)                                                                                   | 12.3              |                           |               |                                             |
+| [Bureau of Transportation Statistics](https://www.bts.gov/content/average-age-automobiles-and-trucks-operation-united-states) - USA (2024)                                         | 14                |                           |               |                                             |
+| [Department for Transport & Ricardo](https://assets.publishing.service.gov.uk/media/623b0fb28fa8f540f3202c12/lifecycle-analysis-of-UK-road-vehicles.pdf) - UK (2024)               | 14                |                           |               |                                             |
+| [FordAV](https://www.fordav.com/solutions/lifecycle-of-av-systems/) - Global (N/A)                                                                                                 |                   |                           | 10+           |                                             |
+| WW Assumption                                                                                                                                                                      | 10                | 5                         | 10            | 5                                           |
 
 ### Daily Usage
 
-| Studies / Source | Car Audio (hours per day) | Portable Receiver (hours per day) | Hi-Fi (hours per day) | Alarm Clock Radio & Docking Station (hours per day) |
-| --- | --- | --- | --- | --- |
-| [ADEME ARCEP](https://www.editionmultimedia.fr/wp-content/uploads/2024/10/Rapport-Arcom-Arcep-Ademe-Impact-environnemental-2022-2030-de-laudiovisuel-07-10-24.pdf) - France (2024) | 0.75 | 2 | 2 | 2 |
-| [ICT Impact](https://susproc.jrc.ec.europa.eu/product-bureau/sites/default/files/2020-11/IA_report-ICT_study_final_2020_(CIRCABC).pdf) - Europe (2020) |  | 2 | 2 | 2 |
-| [EBU Audio in Cars](https://www.worlddab.org/files/document/file/4868/2.2_2023-06-21_150623_Automotive_WorldDAB_Matthieu_Rawolle_updated_v_for_WDAB_upload.pdf?1687340460) - Europe (2022) | 0.5 |  |  |  |
-| [Rajar All Radio Listening](https://www.rajar.co.uk/docs/news/RAJAR_DataRelease_InfographicQ12024.pdf) - UK (2024) | 0.73 (20.5 hours per week, 25% in car) |  |  |  |
-| [Edison Research Share of Ear](https://www.edisonresearch.com/wp-content/uploads/2023/04/Gen-Z-In-Car-Audio-NAB-2023-1.pdf) - USA (2022) | 0.6 (1 hour and 3 min daily audio in car from which 59% is AM/FM) |  |  |  |
-| WW Assumption | 0.75 | 2 | 2 | 2 |
+| Studies / Source                                                                                                                                                                           | Car Audio (hours per day)                                         | Portable Receiver (hours per day) | Hi-Fi (hours per day) | Alarm Clock Radio & Docking Station (hours per day) |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------- | --------------------------------- | --------------------- | --------------------------------------------------- |
+| [ADEME ARCEP](https://www.editionmultimedia.fr/wp-content/uploads/2024/10/Rapport-Arcom-Arcep-Ademe-Impact-environnemental-2022-2030-de-laudiovisuel-07-10-24.pdf) - France (2024)         | 0.75                                                              | 2                                 | 2                     | 2                                                   |
+| [ICT Impact](<https://susproc.jrc.ec.europa.eu/product-bureau/sites/default/files/2020-11/IA_report-ICT_study_final_2020_(CIRCABC).pdf>) - Europe (2020)                                   |                                                                   | 2                                 | 2                     | 2                                                   |
+| [EBU Audio in Cars](https://www.worlddab.org/files/document/file/4868/2.2_2023-06-21_150623_Automotive_WorldDAB_Matthieu_Rawolle_updated_v_for_WDAB_upload.pdf?1687340460) - Europe (2022) | 0.5                                                               |                                   |                       |                                                     |
+| [Rajar All Radio Listening](https://www.rajar.co.uk/docs/news/RAJAR_DataRelease_InfographicQ12024.pdf) - UK (2024)                                                                         | 0.73 (20.5 hours per week, 25% in car)                            |                                   |                       |                                                     |
+| [Edison Research Share of Ear](https://www.edisonresearch.com/wp-content/uploads/2023/04/Gen-Z-In-Car-Audio-NAB-2023-1.pdf) - USA (2022)                                                   | 0.6 (1 hour and 3 min daily audio in car from which 59% is AM/FM) |                                   |                       |                                                     |
+| WW Assumption                                                                                                                                                                              | 0.75                                                              | 2                                 | 2                     | 2                                                   |
 
 ### Embodied Emissions
 
-| Studies / Source | Car Audio (kgCO2e) | Portable Receiver (kgCO2e) | Hi-Fi (kgCO2e) | Alarm Clock Radio & Docking Station (kgCO2e) |
-| --- | --- | --- | --- | --- |
-| Derived from [ADEME ARCEP](https://www.editionmultimedia.fr/wp-content/uploads/2024/10/Rapport-Arcom-Arcep-Ademe-Impact-environnemental-2022-2030-de-laudiovisuel-07-10-24.pdf) LCAs | 3.62E+01 | 1.66E+01 | 3.62E+01 | 1.66E+01 |
-| WW Assumption | 3.62E+01 | 1.66E+01 | 3.62E+01 | 1.66E+01 |
+| Studies / Source                                                                                                                                                                     | Car Audio (kgCO2e) | Portable Receiver (kgCO2e) | Hi-Fi (kgCO2e) | Alarm Clock Radio & Docking Station (kgCO2e) |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------ | -------------------------- | -------------- | -------------------------------------------- |
+| Derived from [ADEME ARCEP](https://www.editionmultimedia.fr/wp-content/uploads/2024/10/Rapport-Arcom-Arcep-Ademe-Impact-environnemental-2022-2030-de-laudiovisuel-07-10-24.pdf) LCAs | 3.62E+01           | 1.66E+01                   | 3.62E+01       | 1.66E+01                                     |
+| WW Assumption                                                                                                                                                                        | 3.62E+01           | 1.66E+01                   | 3.62E+01       | 1.66E+01                                     |
 
 ### Use Emissions
 
-| Energy Consumption and Electricity Source | Car Audio (W) | Portable Receiver (W) | Hi-Fi (W) | Alarm Clock Radio & Docking Station (W) |
-| --- | --- | --- | --- | --- |
-| [ADEME ARCEP](https://www.editionmultimedia.fr/wp-content/uploads/2024/10/Rapport-Arcom-Arcep-Ademe-Impact-environnemental-2022-2030-de-laudiovisuel-07-10-24.pdf) - France (2024) | 38 (diesel) | 4.8 (grid) | 38 (grid) | 4.8 (grid) |
-| [Intertek](https://assets.publishing.service.gov.uk/media/5a7c7d0940f0b62aff6c2062/DRAP_Future_Energy_Report.pdf) - UK (2013) |  | 4.69 (grid) |  |  |
-| WW Assumption | 38 (diesel) - conservative | 4.8 (grid) | 38 (grid) | 4.8 (grid) |
+| Energy Consumption and Electricity Source                                                                                                                                          | Car Audio (W)              | Portable Receiver (W) | Hi-Fi (W) | Alarm Clock Radio & Docking Station (W) |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------- | --------------------- | --------- | --------------------------------------- |
+| [ADEME ARCEP](https://www.editionmultimedia.fr/wp-content/uploads/2024/10/Rapport-Arcom-Arcep-Ademe-Impact-environnemental-2022-2030-de-laudiovisuel-07-10-24.pdf) - France (2024) | 38 (diesel)                | 4.8 (grid)            | 38 (grid) | 4.8 (grid)                              |
+| [Intertek](https://assets.publishing.service.gov.uk/media/5a7c7d0940f0b62aff6c2062/DRAP_Future_Energy_Report.pdf) - UK (2013)                                                      |                            | 4.69 (grid)           |           |                                         |
+| WW Assumption                                                                                                                                                                      | 38 (diesel) - conservative | 4.8 (grid)            | 38 (grid) | 4.8 (grid)                              |
 
 For the usage phase of Car Audio, we use the [ADEME ARCEP](https://www.editionmultimedia.fr/wp-content/uploads/2024/10/Rapport-Arcom-Arcep-Ademe-Impact-environnemental-2022-2030-de-laudiovisuel-07-10-24.pdf) approach considering the power consumption of a car radio to be equal to that of Hi-Fi systems, at 38 Wh/h. Using a thermal engine efficiency of 40%, an alternator efficiency of 80%, and an energy content of 8.9 kWh per liter of fuel, the volume of fuel required for the operation of the car radio over a given period of time is calculated.
 
@@ -160,34 +168,34 @@ We calculate that supplying 38W of electricity requires `118.75W` from a diesel 
 
 ### Linear Radio Consumption Distribution by Device
 
-| Market | Car Audio | Portable Receiver | Hi-Fi | Alarm Clock Radio & Docking Station | Source |
-| --- | --- | --- | --- | --- | --- |
-| FR | 43% | 22% | 17.5% | 17.5% | [ADEME ARCEP](https://www.editionmultimedia.fr/wp-content/uploads/2024/10/Rapport-Arcom-Arcep-Ademe-Impact-environnemental-2022-2030-de-laudiovisuel-07-10-24.pdf) p.111 Sankey Diagram |
-| US | dominant (50-60%) |  |  |  | [Edison Research - Share of Ear](https://www.mediajobsreport.com/articles/am-fm-radio-dominates-in-car-listening-new-edison-%E2%80%98share-of-ear%E2%80%99-analysis-finds) |
-| UK | 62% |  |  |  | [Ofcom Audio Survey 2025](https://www.ofcom.org.uk/siteassets/resources/documents/research-and-data/multi-sector/media-nations/2025/media-nations-2025-uk-report.pdf?v=401287) (p93) indicates share of ears by location |
-| AU | ~40+% |  |  |  | [GfK Australian Share of Audio 2022](https://47012339.fs1.hubspotusercontent-ap1.net/hubfs/47012339/Insights/GfK_SOA_COMMERCIAL_External_VER02_300123-Final.pdf) p.20 |
-| WW Suggestion | 50% | 25% | 12.5% | 12.5% |  |
+| Market        | Car Audio         | Portable Receiver | Hi-Fi | Alarm Clock Radio & Docking Station | Source                                                                                                                                                                                                                   |
+| ------------- | ----------------- | ----------------- | ----- | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| FR            | 43%               | 22%               | 17.5% | 17.5%                               | [ADEME ARCEP](https://www.editionmultimedia.fr/wp-content/uploads/2024/10/Rapport-Arcom-Arcep-Ademe-Impact-environnemental-2022-2030-de-laudiovisuel-07-10-24.pdf) p.111 Sankey Diagram                                  |
+| US            | dominant (50-60%) |                   |       |                                     | [Edison Research - Share of Ear](https://www.mediajobsreport.com/articles/am-fm-radio-dominates-in-car-listening-new-edison-%E2%80%98share-of-ear%E2%80%99-analysis-finds)                                               |
+| UK            | 62%               |                   |       |                                     | [Ofcom Audio Survey 2025](https://www.ofcom.org.uk/siteassets/resources/documents/research-and-data/multi-sector/media-nations/2025/media-nations-2025-uk-report.pdf?v=401287) (p93) indicates share of ears by location |
+| AU            | ~40+%             |                   |       |                                     | [GfK Australian Share of Audio 2022](https://47012339.fs1.hubspotusercontent-ap1.net/hubfs/47012339/Insights/GfK_SOA_COMMERCIAL_External_VER02_300123-Final.pdf) p.20                                                    |
+| WW Suggestion | 50%               | 25%               | 12.5% | 12.5%                               |                                                                                                                                                                                                                          |
 
 ### Synthetic Radio Device Profile
 
-| Device            | Lifespan (years) | Daily Usage (hours) | Total Hours | Total Embodied Emissions (kgCO2e) | Embodied Emissions per s (gCO2e) | Energy consumption per s (W) | Use Emissions per s (gCO2e) | Distribution |
-| ----------------- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Car Audio.        | 10 | 0.75 | 2700 (10*360*0.75) | 3,62E+01 | 3,72E-03 (3,62E+01 / (2700 * 3600)*1000) | 38 | 0.01 (0.036 kgCO2e per hour) | 50% |
-| Portable Receiver | 5 | 2 | 3600 | 1,66E+01 | 1,28E-03 | 4.8 | electricity grid EF | 25% |
-| Hi-Fi             | 10 | 2 | 7200 | 3,62E+01 | 1,40E-03 | 38 | electricity grid EF | 12.5% |
-| Alarm Clock Radio & Docking Station | 5 | 2 | 3600 | 1,66E+01 | 1,28E-03 | 4.8 | electricity grid EF | 12.5% |
-| **Synthetic Radio Device** | 8.125 | 1.375 | 3600 | 2.88E+01 | 0.002514375 | 6.55 (excl. car audio) |  |  |
+| Device                              | Lifespan (years) | Daily Usage (hours) | Total Hours        | Total Embodied Emissions (kgCO2e) | Embodied Emissions per s (gCO2e)         | Energy consumption per s (W) | Use Emissions per s (gCO2e)  | Distribution |
+| ----------------------------------- | ---------------- | ------------------- | ------------------ | --------------------------------- | ---------------------------------------- | ---------------------------- | ---------------------------- | ------------ |
+| Car Audio.                          | 10               | 0.75                | 2700 (10*360*0.75) | 3,62E+01                          | 3,72E-03 (3,62E+01 / (2700 * 3600)*1000) | 38                           | 0.01 (0.036 kgCO2e per hour) | 50%          |
+| Portable Receiver                   | 5                | 2                   | 3600               | 1,66E+01                          | 1,28E-03                                 | 4.8                          | electricity grid EF          | 25%          |
+| Hi-Fi                               | 10               | 2                   | 7200               | 3,62E+01                          | 1,40E-03                                 | 38                           | electricity grid EF          | 12.5%        |
+| Alarm Clock Radio & Docking Station | 5                | 2                   | 3600               | 1,66E+01                          | 1,28E-03                                 | 4.8                          | electricity grid EF          | 12.5%        |
+| **Synthetic Radio Device**          | 8.125            | 1.375               | 3600               | 2.88E+01                          | 0.002514375                              | 6.55 (excl. car audio)       |                              |              |
 
 ## Summary
 
-| Device            | Power Draw (W)     | PEPS (gCO2e/s) |
-| ----------------- | ------------------ | -------------- |
-| Personal computer | 53.2               | 0.007          |
-| Tablet            | 3                  | 0.0029         |
-| Smartphone        | 0.77               | 0.0058         |
-| TV System         | 87.4               | 0.0096         |
-| Smart Speaker     | 2.5                | 0.0061         |
-| Radio             | 6.55 (excl. in-car)| 0.0025         |
+| Device            | Power Draw (W)      | PEPS (gCO2e/s) |
+| ----------------- | ------------------- | -------------- |
+| Personal computer | 53.2                | 0.007          |
+| Tablet            | 3                   | 0.0029         |
+| Smartphone        | 0.77                | 0.0058         |
+| TV System         | 87.4                | 0.0096         |
+| Smart Speaker     | 2.5                 | 0.0061         |
+| Radio             | 6.55 (excl. in-car) | 0.0025         |
 
 ## Notes and Caveats
 
