@@ -162,6 +162,7 @@ defaults:
       phone: 2.856000000
       tablet: 29.400000000
       tv: 81.600000000
+  default_digital_screen_landfill_emissions_kgco2e_per_sq_metre: 20.900000000
   default_display_creative_overhead_factor: 0.200000000
   default_display_other_assets_bytes: 50000
   default_dynamic_watts_per_mbps:
