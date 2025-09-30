@@ -52,7 +52,7 @@ defaults:
     linear-tv: 2580
     search: 120
     social: 240
-    streaming-video: 300
+    streaming-video: 143
     traditional-radio: 2580
     web: 320
   default_baseload_watts:
