@@ -323,7 +323,9 @@ defaults:
       ZW: 22.887000000
   default_percent_mobile_by_device_type:
     scope3:
+      pc: 3.000000000
       smart-speaker: 0.001000000
+      tablet: 10.000000000
       tv: 0.001000000
   default_percent_radio_distribution_method:
     am: 15
