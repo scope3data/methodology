@@ -165,8 +165,8 @@ defaults:
   default_digital_screen_landfill_emissions_kgco2e_per_sq_metre: 20.900000000
   default_display_creative_overhead_factor: 0.200000000
   default_display_other_assets_bytes: 50000
-  default_downstream_transport_emissions_kgco2e_tonne_transported_per_km: 0.6382
-  default_downstream_travelled_distance_km: 100.0
+  default_downstream_transport_emissions_kgco2e_tonne_transported_per_km: 0.638200000
+  default_downstream_travelled_distance_km: 100.000000000
   default_dynamic_watts_per_mbps:
     fixed: 0.030000000
     mobile: 1.530000000
@@ -182,7 +182,7 @@ defaults:
   default_emissions_per_creative_request_gco2_per_imp: 0.000300000
   default_emissions_per_rtdp_request_gco2_per_imp: 0.010000000
   default_expected_lifetime_years: 10.000000000
-  default_freight_transport_emissions_kgco2e_tonne_transported_per_km: 0.11
+  default_freight_transport_emissions_kgco2e_tonne_transported_per_km: 0.110000000
   default_illumination_power_draw_watts_per_sq_metre_per_hour: 100.000000000
   default_image_compression_ratio: 10
   default_impressions_per_creative: 1000000
@@ -202,7 +202,7 @@ defaults:
   default_ooh_campaign_duration_days: 14
   default_ooh_share_of_time_pct: 100.000000000
   default_panel_to_disposal_distance_per_ad_km: 4.000000000
-  default_papermill_to_printer_distance_km: 500.0
+  default_papermill_to_printer_distance_km: 500.000000000
   default_percent_mobile:
     scope3: 23.600000000
     sri: 10.000000000
@@ -391,87 +391,87 @@ defaults:
     web: generic-gmsf-1-2-display-ad-web-pc
   default_platform_embodied_emissions_per_bid_request_gco2e_per_imp: 0.000015000
   default_print_avg_readership:
-    newspaper: 2.0
-    magazine: 5.0
-    leaflet: 0.5
-  default_print_media_corporate_emissions_per_page_gco2e: 0.05
+    newspaper: 2.000000000
+    magazine: 5.000000000
+    leaflet: 0.500000000
+  default_print_media_corporate_emissions_per_page_gco2e: 0.050000000
   default_print_medium_ad_to_edit_ratio:
-    newspaper: 0.40
-    magazine: 0.50
-    leaflet: 1.0
-  default_print_medium_incineration_emission_factor_kgco2e_per_kg: 0.00641
-  default_print_medium_landfill_emission_factor_kgco2e_per_kg: 1.16
+    newspaper: 0.400000000
+    magazine: 0.500000000
+    leaflet: 1.000000000
+  default_print_medium_incineration_emission_factor_kgco2e_per_kg: 0.006410000
+  default_print_medium_landfill_emission_factor_kgco2e_per_kg: 1.160000000
   default_print_medium_page_surface_sq_meter:
-    newspaper: 0.228
-    magazine: 0.062
-    leaflet: 0.031
+    newspaper: 0.228000000
+    magazine: 0.062000000
+    leaflet: 0.031000000
   default_print_medium_paper_gsm:
     newspaper: 45
     magazine: 90
     leaflet: 90
-  default_print_medium_paper_production_emissions_gco2e_gram: 0.001345
-  default_print_medium_reader_incineration_percentage: 15.0
+  default_print_medium_paper_production_emissions_gco2e_gram: 0.001345000
+  default_print_medium_reader_incineration_percentage: 15.000000000
   default_print_medium_reader_incineration_percentage_by_country:
-    GB: 17.0
-    FR: 25.0
-    DE: 13.0
-    NL: 13.0
-    ES: 20.0
-    IT: 16.0
-    US: 8.0
-    CA: 10.0
-    AU: 12.0
-    JP: 17.0
-    CN: 15.0
-    IN: 10.0
-  default_print_medium_reader_landfill_percentage: 20.0
+    GB: 17.000000000
+    FR: 25.000000000
+    DE: 13.000000000
+    NL: 13.000000000
+    ES: 20.000000000
+    IT: 16.000000000
+    US: 8.000000000
+    CA: 10.000000000
+    AU: 12.000000000
+    JP: 17.000000000
+    CN: 15.000000000
+    IN: 10.000000000
+  default_print_medium_reader_landfill_percentage: 20.000000000
   default_print_medium_reader_landfill_percentage_by_country:
-    UK: 5.0
-    FR: 5.0
-    DE: 2.0
-    NL: 1.0
-    ES: 7.0
-    IT: 5.0
-    US: 24.0
-    CA: 20.0
-    AU: 10.0
-    JP: 1.0
-    CN: 35.0
-    IN: 60.0
-  default_print_medium_reader_recycling_percentage: 65.0
+    UK: 5.000000000
+    FR: 5.000000000
+    DE: 2.000000000
+    NL: 1.000000000
+    ES: 7.000000000
+    IT: 5.000000000
+    US: 24.000000000
+    CA: 20.000000000
+    AU: 10.000000000
+    JP: 1.000000000
+    CN: 35.000000000
+    IN: 60.000000000
+  default_print_medium_reader_recycling_percentage: 65.000000000
   default_print_medium_reader_recycling_percentage_by_country:
-    GB: 78.0
-    FR: 70.0
-    DE: 85.0
-    NL: 86.0
-    ES: 73.0
-    IT: 79.0
-    US: 68.0
-    CA: 70.0
-    AU: 78.0
-    JP: 82.0
-    CN: 50.0
-    IN: 30.0
-  default_print_medium_recycling_emission_factor_kgco2e_per_kg: 0.00641
+    GB: 78.000000000
+    FR: 70.000000000
+    DE: 85.000000000
+    NL: 86.000000000
+    ES: 73.000000000
+    IT: 79.000000000
+    US: 68.000000000
+    CA: 70.000000000
+    AU: 78.000000000
+    JP: 82.000000000
+    CN: 50.000000000
+    IN: 30.000000000
+  default_print_medium_recycling_emission_factor_kgco2e_per_kg: 0.006410000
   default_print_medium_total_pages:
     newspaper: 40
     magazine: 100
     leaflet: 1
-  default_print_medium_unsold_incineration_percentage: 15.0
-  default_print_medium_unsold_landfill_percentage: 5.0
-  default_print_medium_unsold_recycling_percentage: 80.0
+  default_print_medium_unsold_incineration_percentage: 15.000000000
+  default_print_medium_unsold_landfill_percentage: 5.000000000
+  default_print_medium_unsold_recycling_percentage: 80.000000000
   default_print_sellthrough_rate_pct:
-    newspaper: 80.0
-    magazine: 65.0
-    leaflet: 100.0
+    newspaper: 80.000000000
+    magazine: 65.000000000
+    leaflet: 100.000000000
   default_print_spoilage_waste_rate:
-    newspaper: 0.05
-    magazine: 0.05
+    newspaper: 0.050000000
+    magazine: 0.050000000
   default_printing_finishing_emissions_gco2e_per_page:
-    newspapers: 1.0
-    magazines: 1.5
-    leaflet: 2.0
-  default_printer_to_storage_distance_km: 100.0
+    newspapers: 1.000000000
+    magazines: 1.500000000
+    leaflet: 2.000000000
+  default_printer_to_storage_distance_km: 100.000000000
   default_printing_to_storage_distance_km_per_ad:
     classic-ooh:
       AD: 0.500000000
