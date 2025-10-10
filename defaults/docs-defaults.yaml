@@ -470,8 +470,8 @@ defaults:
   default_printer_to_storage_distance_km: 100.000000000
   default_printing_finishing_emissions_gco2e_per_page:
     leaflet: 2.000000000
-    magazines: 1.500000000
-    newspapers: 1.000000000
+    magazine: 1.500000000
+    newspaper: 1.000000000
   default_printing_to_storage_distance_km_per_ad:
     classic-ooh:
       AD: 0.500000000
