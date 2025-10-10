@@ -432,11 +432,11 @@ defaults:
     DE: 2.000000000
     ES: 7.000000000
     FR: 5.000000000
+    GB: 5.000000000
     IN: 60.000000000
     IT: 5.000000000
     JP: 1.000000000
     NL: 1.000000000
-    UK: 5.000000000
     US: 24.000000000
   default_print_medium_reader_recycling_percentage: 65.000000000
   default_print_medium_reader_recycling_percentage_by_country:
