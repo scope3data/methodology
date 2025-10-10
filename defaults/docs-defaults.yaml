@@ -391,24 +391,24 @@ defaults:
     web: generic-gmsf-1-2-display-ad-web-pc
   default_platform_embodied_emissions_per_bid_request_gco2e_per_imp: 0.000015000
   default_print_avg_readership:
+    leaflet: 0.500000000
     magazine: 5.000000000
     newspaper: 2.000000000
-    leaflet: 0.500000000
   default_print_media_corporate_emissions_per_page_gco2e: 0.050000000
   default_print_medium_ad_to_edit_ratio:
+    leaflet: 1.000000000
     magazine: 0.500000000
     newspaper: 0.400000000
-    leaflet: 1.000000000
   default_print_medium_incineration_emission_factor_kgco2e_per_kg: 0.006410000
   default_print_medium_landfill_emission_factor_kgco2e_per_kg: 1.160000000
   default_print_medium_page_surface_sq_meter:
+    leaflet: 0.031000000
     magazine: 0.062000000
     newspaper: 0.228000000
-    leaflet: 0.031000000
   default_print_medium_paper_gsm:
+    leaflet: 90
     magazine: 90
     newspaper: 45
-    leaflet: 90
   default_print_medium_paper_production_emissions_gco2e_gram: 0.001345000
   default_print_medium_reader_incineration_percentage: 15.000000000
   default_print_medium_reader_incineration_percentage_by_country:
@@ -454,24 +454,24 @@ defaults:
     US: 68.000000000
   default_print_medium_recycling_emission_factor_kgco2e_per_kg: 0.006410000
   default_print_medium_total_pages:
+    leaflet: 1
     magazine: 100
     newspaper: 40
-    leaflet: 1
   default_print_medium_unsold_incineration_percentage: 15.000000000
   default_print_medium_unsold_landfill_percentage: 5.000000000
   default_print_medium_unsold_recycling_percentage: 80.000000000
   default_print_sellthrough_rate_pct:
+    leaflet: 100.000000000
     magazine: 65.000000000
     newspaper: 80.000000000
-    leaflet: 100.000000000
   default_print_spoilage_waste_rate:
     newspaper: 0.050000000
     magazine: 0.050000000
+  default_printer_to_storage_distance_km: 100.000000000
   default_printing_finishing_emissions_gco2e_per_page:
+    leaflet: 2.000000000
     magazines: 1.500000000
     newspapers: 1.000000000
-    leaflet: 2.000000000
-  default_printer_to_storage_distance_km: 100.000000000
   default_printing_to_storage_distance_km_per_ad:
     classic-ooh:
       AD: 0.500000000
