@@ -465,8 +465,8 @@ defaults:
     magazine: 65.000000000
     newspaper: 80.000000000
   default_print_spoilage_waste_rate:
-    newspaper: 0.050000000
     magazine: 0.050000000
+    newspaper: 0.050000000
   default_printer_to_storage_distance_km: 100.000000000
   default_printing_finishing_emissions_gco2e_per_page:
     leaflet: 2.000000000
