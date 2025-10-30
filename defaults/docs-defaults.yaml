@@ -396,7 +396,7 @@ defaults:
   default_print_ad_format_by_medium:
     leaflet: Full Page Leaflet
     magazine: Full Page Magazine
-    newspaper: Full Page Newspaper
+    newspaper: Quarter Page Newspaper
   default_print_avg_readership:
     leaflet: 0.500000000
     magazine: 5.000000000
