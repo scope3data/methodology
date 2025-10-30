@@ -370,6 +370,7 @@ defaults:
       satellite: 16.700000000
   default_platform_ad_format_by_channel:
     app: Generic GMSF 1.2 Display Ad
+    classic-ooh: 6 Sheet
     ctv-bvod: 15s Video
     digital-audio: 30s Audio
     dooh: Landscape - 1920x1080 Image
@@ -381,6 +382,7 @@ defaults:
     web: Generic GMSF 1.2 Display Ad
   default_platform_ad_format_identifier_by_channel:
     app: generic-gmsf-1-2-display-ad-app-phone
+    classic-ooh: 6-sheet-classic-ooh-panel
     ctv-bvod: 15s-video-ctv-bvod-tv
     digital-audio: 30s-audio-digital-audio-phone
     dooh: landscape-dooh
@@ -391,6 +393,10 @@ defaults:
     traditional-radio: 30s-radio-traditional-radio-radio
     web: generic-gmsf-1-2-display-ad-web-pc
   default_platform_embodied_emissions_per_bid_request_gco2e_per_imp: 0.000015000
+  default_print_ad_format_by_medium:
+    leaflet: Full Page Leaflet
+    magazine: Full Page Magazine
+    newspaper: Full Page Newspaper
   default_print_avg_readership:
     leaflet: 0.500000000
     magazine: 5.000000000
