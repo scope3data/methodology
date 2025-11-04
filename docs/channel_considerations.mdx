@@ -275,6 +275,131 @@ This is the first version of our classic OOH emissions model, and we expect it t
 - Regionalized defaults: applying localized emission factors for printing, storage, and disposal processes, reflecting regional infrastructure and grid intensity.
 - Integration with industry data: leveraging data shared by media owners and OOH associations to replace assumptions with verified inputs.
 
+# Print
+
+## Definition and Scope
+
+Print encompasses print publications (newspapers and magazines), direct mail, and door drops. These formats rely on physical assets printed on paper, vinyl, or similar materials.
+
+## Boundaries of Measurement
+
+The Scope3 print model estimates emissions from the physical production, distribution, and end-of-life processing of printed advertising materials and their associated editorial content.
+
+The model aligns with GMSF and covers the following categories:
+
+| Lifecycle Category | Emissions Source | Includes |
+| --- | --- | --- |
+| Creation | Physical print production | Paper production & transport, printing & finishing (ink, consumables), paper production & transport, printing & finishing |
+| Distribution | Storage & delivery | Transportation to storage, storage (where material), distribution to points of sale/letterboxes |
+| All  | Corporate  | Corporate emissions  |
+| Consumption  | End-of-life processing | Transportation of unsold materials, recycling, incineration, landfill treatment |
+
+## Emissions Calculation Methodology
+
+### Production Emissions
+
+### Paper Production
+
+We estimate paper-related emissions based on physical dimensions, paper weight (gsm), and production emission factors. When publication-specific data is available, we use those values; otherwise, we apply defaults based on print medium type (newspaper, magazine, leaflet).
+
+Paper emissions include raw material extraction, pulp processing, and paper manufacturing. The calculation accounts for both the ad material and a proportional allocation of editorial content based on the ad-to-content ratio.
+
+### Printing & Finishing
+
+Printing and finishing emissions include prepress, printing processes, consumables (ink, glue), and packaging. Default emission factors vary by print medium, reflecting differences in production intensity between newspapers, magazines, and leaflets.
+
+### Paper Transport 
+
+We estimate emissions from transporting paper from mills to printers using distance-based calculations and freight transport emission factors. Default transport distances are country-specific where data is available.
+
+### Distribution Emissions
+
+### Transportation to Storage
+
+Emissions from transporting printed materials from printers to storage facilities are calculated using freight transport emission factors and default transport distances.
+
+### Storage
+
+Storage emissions are considered minimal for print materials stored in ambient conditions. In line with GMSF guidance, we do not currently model storage emissions but may introduce factors for climate-controlled storage in future iterations.
+
+### Downstream Distribution
+
+We model emissions from distributing printed materials from storage to points of sale or direct delivery to letterboxes. This uses van-based transport emission factors and estimated delivery distances.
+
+### End-of-Life Processing
+
+### Unsold Materials
+
+We account for emissions from transporting and processing unsold materials, applying print medium-specific sell-through rates. Unsold materials are allocated across recycling, incineration, and landfill disposal methods using defaults that reflect typical waste management practices.
+
+### Post-Reader Disposal
+
+For materials that reach readers, we apply country-specific recycling, incineration, and landfill rates to reflect regional waste management infrastructure. Each disposal method has distinct emission factors:
+
+- Recycling: lowest emissions
+- Incineration: moderate emissions from combustion
+- Landfill: highest emissions due to methane generation
+
+### Print Spoilage
+
+We apply a print medium-specific waste rate to account for spoilage during the press run, typically 5% for newspapers and magazines.
+
+### Corporate Emissions
+
+Corporate emissions are allocated on a per-page basis, reflecting the publisher's operational footprint. This follows the same methodology as described in [Corporate Emissions](https://claude.ai/chat/corporate_model).
+
+## Publication Object
+
+To enable granular and accurate measurement, print publications are represented by a publication object that carries attributes relevant for emissions estimation. This is conceptually similar to the "screen" object used for DOOH.
+
+### Publication Attributes
+
+The accuracy of emissions estimates for print depends on the granularity of data provided. The most precise results come from publication-level data shared by publishers.
+
+| Attribute | Description | Example Value |
+| --- | --- | --- |
+| Publication Identifier | Unique identifier for the publication | "vogue-us-print" |
+| Media Owner | Organization that owns the publication | "Condé Nast" |
+| Print Medium | Type of print publication | "magazine" |
+| Country | Primary distribution country | "US" |
+| Circulation | Average copies distributed per issue | 500,000 |
+| Physical Width / Height | Page dimensions in millimeters | 210mm × 297mm |
+| Paper GSM | Paper weight in grams per square meter | 90 |
+| Total Pages per Issue | Average page count | 100 |
+| Ad-to-Content Ratio | Percentage of content that is advertising | 0.50 (50%) |
+| Readers per Copy | Average number of readers per copy | 5.0 |
+| Sell-through Rate | Percentage of printed copies distributed | 65% |
+| Paper Production Emissions | Custom emission factor per page (if available) | 2.5 gCO2e/page |
+| Printing & Finishing Emissions | Custom emission factor per page (if available) | 1.5 gCO2e/page |
+
+## Translating Print Metrics to Impressions
+
+Print advertising is often reported in physical copies or circulation figures rather than individual impressions. We convert between these metrics using:
+
+**Print Circulation** is the number of copies distributed (sold or otherwise provided) per issue, verified by audit bureaux.
+
+**Readership** represents the estimated number of people who read or are exposed to an issue. Readership is typically higher than circulation due to pass-along readership (shared copies in waiting rooms, households, etc.).
+
+**Readers per Copy (RPC)** is the multiplier showing how many people on average read one copy.
+
+We estimate total impressions using:
+
+```
+impressions = circulation × readers_per_copy × ad_visibility_probability
+```
+
+Where ad visibility probability reflects the likelihood that a given ad placement is viewed, which varies by format, section, and position within the publication.
+
+## Potential Improvements
+
+This is the first version of our print emissions model, and we expect it to evolve as better data and industry standards emerge. Key areas of focus for future iterations could include: 
+
+- Material-specific emission factors (coated vs. uncoated paper, recycled content)
+- Transport mode-specific factors (electric vs. diesel delivery vehicles)
+- Refined recycling modeling: incorporating more accurate data on recycling rates and emissions from different end-of-life scenarios
+- Regionalized defaults: applying localized emission factors for printing, storage, and disposal processes, reflecting regional infrastructure and grid intensity
+- Integration with industry data: leveraging data shared by media owners and print associations to replace assumptions with verified inputs
+
 # Traditional Radio
 
 ## Definition and Scope
