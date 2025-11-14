@@ -394,25 +394,30 @@ defaults:
     web: generic-gmsf-1-2-display-ad-web-pc
   default_platform_embodied_emissions_per_bid_request_gco2e_per_imp: 0.000015000
   default_print_ad_format_by_medium:
+    journal: Full Page Magazine
     leaflet: Full Page Leaflet
     magazine: Full Page Magazine
     newspaper: Quarter Page Newspaper
   default_print_avg_readership:
+    journal: 5.000000000
     leaflet: 0.500000000
     magazine: 5.000000000
     newspaper: 2.000000000
   default_print_media_corporate_emissions_per_page_gco2e: 0.050000000
   default_print_medium_ad_to_edit_ratio:
+    journal: 0.500000000
     leaflet: 1.000000000
     magazine: 0.500000000
     newspaper: 0.400000000
   default_print_medium_incineration_emission_factor_kgco2e_per_kg: 0.006410000
   default_print_medium_landfill_emission_factor_kgco2e_per_kg: 1.160000000
   default_print_medium_page_surface_sq_meter:
+    journal: 0.062000000
     leaflet: 0.031000000
     magazine: 0.062000000
     newspaper: 0.228000000
   default_print_medium_paper_gsm:
+    journal: 90
     leaflet: 90
     magazine: 90
     newspaper: 45
@@ -468,14 +473,17 @@ defaults:
   default_print_medium_unsold_landfill_percentage: 5.000000000
   default_print_medium_unsold_recycling_percentage: 80.000000000
   default_print_sellthrough_rate_pct:
+    journal: 65.000000000
     leaflet: 100.000000000
     magazine: 65.000000000
     newspaper: 80.000000000
   default_print_spoilage_waste_rate:
+    journal: 0.050000000
     magazine: 0.050000000
     newspaper: 0.050000000
   default_printer_to_storage_distance_km: 100.000000000
   default_printing_finishing_emissions_gco2e_per_page:
+    journal: 1.500000000
     leaflet: 2.000000000
     magazine: 1.500000000
     newspaper: 1.000000000
