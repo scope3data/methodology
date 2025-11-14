@@ -466,6 +466,7 @@ defaults:
     US: 68.000000000
   default_print_medium_recycling_emission_factor_kgco2e_per_kg: 0.006410000
   default_print_medium_total_pages:
+    journal: 100
     leaflet: 1
     magazine: 100
     newspaper: 40
