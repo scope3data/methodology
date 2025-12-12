@@ -97,6 +97,8 @@ defaults:
       - ctv-bvod
       - digital-audio
       - traditional-radio
+      - web
+      - search
   default_consumer_device_request_size_bytes:
     app: 3000
     audio: 3000
@@ -828,6 +830,7 @@ defaults:
     app: impression
     ctv-bvod: impression
     dooh: play
+    search: impression
     social: impression
     streaming-video: impression
     web: impression
