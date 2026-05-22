@@ -112,6 +112,8 @@ defaults:
   default_count_ad_platform:
     dooh: 6
     search: 1
+  default_datacenter_compute_embodied_emissions_kgCO2e_per_second: 0.00000713
+  default_datacenter_compute_use_phase_kwh_per_second: 0.000164
   default_device_by_channel:
     app: phone
     ctv-bvod: tv
@@ -798,6 +800,7 @@ defaults:
     classic-ooh: 58.750000000
   default_structure_recycling_emissions_kgco2e_per_sq_metre: 0.000000000
   default_time_in_view_seconds: 3
+  default_transcoding_outputs_number: 6
   default_tv_home_equipment_embodied_gco2e_per_second_by_tv_distribution_method:
     cable: 0.005346759
     iptv: 0.005492307
@@ -808,7 +811,8 @@ defaults:
     iptv: 21
     ota: 1
     satellite: 22
-  default_tv_signal_preparation_power_watt: 16700
+  default_tv_signal_preparation_embodied_gco2e_per_second: 0.00713
+  default_tv_signal_preparation_power_watt: 590.4
   default_tv_signal_transmission_embodied_gco2e_per_second: 27
   default_tv_signal_transmission_power_by_tv_distribution_method_watt:
     cable: 16000
@@ -826,6 +830,7 @@ defaults:
     phone: 800
     tablet: 1000
     tv: 3690
+  default_video_transcoding_time_seconds: 30
   default_video_player_download_trigger:
     app: impression
     ctv-bvod: impression
