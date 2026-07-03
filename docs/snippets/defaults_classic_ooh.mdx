@@ -1,4 +1,31 @@
 ```
+default_material_mass_kg_per_sq_metre_by_ooh_ad_format:
+  6 Sheet:        0.150
+  96 Sheet:       0.170
+  Small A1:       0.150
+  2 Sheet Poster: 0.150
+default_material_by_ooh_ad_format:
+  6 Sheet:        recycled_paper
+  96 Sheet:       backlit_paper
+  Small A1:       recycled_paper
+  2 Sheet Poster: recycled_paper
+default_eol_kgco2e_emissions_per_kg_by_material:
+  recycled_paper: 0.15894
+  backlit_paper:  0.15894
+default_substrate_production_kgco2e_emissions_per_kg_by_material:
+  recycled_paper: 1.05
+  backlit_paper:  0.92
+default_manufacturing_kgco2e_emissions_per_kg_by_material:
+  recycled_paper: 0.257
+  backlit_paper:  0.257
+default_printing_to_storage_distance_km:
+  classic-ooh: 200
+default_freight_transport_kgco2e_emissions_per_tonne_km:
+  classic-ooh: 0.792
+default_storage_to_site_distance_km_per_ad:
+  classic-ooh: 0.7
+default_installation_transport_kgco2e_emissions_per_vehicle_km:
+  classic-ooh: 0.256
 default_ad_landfill_emissions_kgco2e_per_sq_metre: 0.291
 default_ad_pct_recycling:
   classic-ooh: 20.0
@@ -9,6 +36,7 @@ default_emissions_kgco2e_per_km_travelled: 0.2543
 default_mechanical_rotation_power_draw_watts_per_sq_metre_per_hour: 12.5
 default_digital_screen_landfill_emissions_kgco2e_per_sq_metre: 20.9
 default_expected_lifetime_years: 10.0
+default_illumination_power_draw_watts_per_sq_metre: 21.4
 default_illumination_power_draw_watts_per_sq_metre_per_hour: 100.0
 default_ooh_ad_production_kgco2e_emissions_per_sq_metre: 3.78
 default_ooh_campaign_duration_days: 14
