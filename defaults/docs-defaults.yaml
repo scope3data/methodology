@@ -60,45 +60,45 @@ defaults:
     mobile: 1.200000000
   default_channel_by_device:
     pc:
-    - ctv-bvod
-    - social
-    - digital-audio
-    - web
-    - search
-    - streaming-video
-    - linear-tv
-    - traditional-radio
+      - ctv-bvod
+      - social
+      - digital-audio
+      - web
+      - search
+      - streaming-video
+      - linear-tv
+      - traditional-radio
     phone:
-    - social
-    - ctv-bvod
-    - digital-audio
-    - app
-    - web
-    - search
-    - streaming-video
-    - linear-tv
-    - traditional-radio
+      - social
+      - ctv-bvod
+      - digital-audio
+      - app
+      - web
+      - search
+      - streaming-video
+      - linear-tv
+      - traditional-radio
     radio:
-    - traditional-radio
+      - traditional-radio
     smart-speaker:
-    - digital-audio
+      - digital-audio
     tablet:
-    - social
-    - ctv-bvod
-    - digital-audio
-    - app
-    - web
-    - search
-    - streaming-video
-    - linear-tv
-    - traditional-radio
+      - social
+      - ctv-bvod
+      - digital-audio
+      - app
+      - web
+      - search
+      - streaming-video
+      - linear-tv
+      - traditional-radio
     tv:
-    - linear-tv
-    - ctv-bvod
-    - digital-audio
-    - traditional-radio
-    - web
-    - search
+      - linear-tv
+      - ctv-bvod
+      - digital-audio
+      - traditional-radio
+      - web
+      - search
   default_consumer_device_request_size_bytes:
     app: 3000
     audio: 3000
@@ -394,7 +394,7 @@ defaults:
       ota: 19.300000000
       satellite: 16.700000000
   default_platform_ad_format_by_channel:
-    app: Generic GMSF Display Ad
+    app: Generic GMSF 1.2 Display Ad
     classic-ooh: 6 Sheet
     ctv-bvod: 15s Video
     digital-audio: 30s Audio
@@ -404,7 +404,7 @@ defaults:
     social: Sponsored Post - 1080x1920 Image
     streaming-video: 15s Video
     traditional-radio: 30s Radio
-    web: Generic GMSF Display Ad
+    web: Generic GMSF 1.2 Display Ad
   default_platform_ad_format_identifier_by_channel:
     app: generic-gmsf-1-2-display-ad-app-phone
     classic-ooh: 6-sheet-classic-ooh-panel
