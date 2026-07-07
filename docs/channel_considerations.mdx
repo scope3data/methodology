@@ -26,9 +26,9 @@ We classify Linear TV as content that is transmitted via traditional broadcast m
 | Broadcast method                                          | Equipment involved                                                                                          |
 | --------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
 | Over-the-air (OTA) & Digital Terrestrial Television (DTT) | Transmitting towers, repeaters, household antennas…                                                         |
-| Cable                                                     | Same as the Internet network (infrastructure is typically shared across telephone, television and Internet) |
+| Cable                                                     | Managed cable television distribution infrastructure (shared physical network). |
 | Satellite                                                 | Transmitting Satellite dishes, Satellite, Receiving satellite dishes, set top boxes                         |
-| IPTV (Internet Protocol Television)                       | Internet network, set top boxes                                                                             |
+| IPTV (Internet Protocol Television)                       | IP-based managed multicast television delivery over telecom infrastructure.                                                                             |
 
 ## Boundaries of Measurement
 
@@ -39,7 +39,7 @@ The Scope3 Linear TV model focuses on estimating emissions coming from the distr
 | Media Production                 | Content production                                     | Not Included |                                                                                                                                                                       |
 | Creative Production              | Ad production                                          | Not included |                                                                                                                                                                       |
 | Media Distribution               | Corporate emissions from TV network                    | Included     |                                                                                                                                                                       |
-| Media & Creative Distribution    | Broadcast Signal preparation, transmission & reception | Included     | Encoding & multiplexing<br/>OTA/DTT, cable, Satellite & IPTV networks (use phase & embodied)<br/>Household Equipment used for signal reception (use phase & embodied) |
+| Media & Creative Distribution    | Broadcast Signal preparation, transmission & reception | Included     | Signal preparation, multiplexing, transmission infrastructure, and household signal reception equipment. Per GMSF v1.3 guidance, creative transcoding is modelled separately under Tech Manipulation for unicast/multicast delivery (e.g. IPTV), while equivalent broadcast-side transformation activities remain included in distribution. |
 | Media & Creative Consumer Device | TV viewing                                             | Included     | Television device (use phase & embodied)                                                                                                                              |
 
 ## Emissions Calculation Methodology
@@ -98,6 +98,8 @@ The prevalence of each TV broadcast method varies by TV network and geographical
 
 ### Household Equipment Emissions
 
+Scope3 retains household signal reception equipment emissions in Linear TV, even though GMSF v1.3 excludes these infrastructure components.
+
 #### Energy Consumption
 
 We consider some household equipment "passive", meaning that they do not require any power to receive the broadcast signal, and others "active".
@@ -137,7 +139,7 @@ Similarly to how we model consumer devices (see [Consumer Devices](./consumer_de
 
 ### TV Viewing Emissions
 
-We follow the same methodology as described in [Consumer Devices](./consumer_devices), accounting for both use phase (energy consumption) and embodied emission (production & disposal), aligned with GMSF 1.2:
+We follow the same methodology as described in [Consumer Devices](./consumer_devices), accounting for both use phase (energy consumption) and embodied emission (production & disposal), aligned with GMSF:
 
 | Device                | Power (W) | PEPS (gCO2e/s) |
 | --------------------- | --------- | -------------- |
