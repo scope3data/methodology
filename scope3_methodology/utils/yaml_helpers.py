@@ -76,17 +76,10 @@ def yaml_load(stream, **kwargs):
     return yaml.load(stream, Loader, **kwargs)  # type: ignore
 
 
-class CustomDumper(yaml.Dumper):
-    """Custom Dumper that indents list items under their parent key"""
-
-    def increase_indent(self, flow=False, indentless=False):
-        return super().increase_indent(flow=flow, indentless=False)
-
-
 def yaml_dump(obj: object):
     """Custom yaml dump to correctly write Decimal fields"""
     # Do not print tags, produces invalid yaml
     yaml.emitter.Emitter.process_tag = lambda *args: False  # type: ignore
     # Print all values without pointers and aliases
-    CustomDumper.ignore_aliases = lambda *args: True  # type: ignore
-    return yaml.dump(obj, default_flow_style=False, Dumper=CustomDumper)
+    yaml.Dumper.ignore_aliases = lambda *args: True  # type: ignore
+    return yaml.dump(obj, default_flow_style=False, Dumper=yaml.Dumper)

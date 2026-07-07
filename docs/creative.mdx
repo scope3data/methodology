@@ -28,7 +28,7 @@ To determine consumer device emissions we need to know whether the ad controls t
 
 - For a full screen or primary placement ad(standard TV/radio commercial, etc) the energy used by the consumer device during the display of the creative is determined by multiplying the duration of the creative by the energy use of the consumer device.
 
-- For an ad that is not full screen that is embedded in content- for instance, a banner ad on a web site, an autoplaying out-stream video, or a sponsored post in a social news feed - the energy use should be proportionate to the percentage of the consumer device used by the creative and the average time that the placement is in view. We align with GMSF and assume a default of 3 seconds as the average time an embedded ad is in view.
+- For an ad that is not full screen that is embedded in content- for instance, a banner ad on a web site, an autoplaying out-stream video, or a sponsored post in a social news feed - the energy use should be proportionate to the percentage of the consumer device used by the creative and the average time that the placement is in view. We align with GMSF 1.2 and assume a default of 3 seconds as the average time an embedded ad is in view.
 
 The time the ad is on the device multiplied by the percentage of the screen/device used by the creative is `device coverage-seconds`. The embodied emissions for the delivery of the creative are `(device coverage-seconds) x (embodied emissions per second)` and the usage emissions are `(device coverage-seconds) x (energy per second)`. See [consumer device methodology](./consumer_devices) for details on the per-device calculations.
 
@@ -41,7 +41,7 @@ Format notes:
 
 ### Tech Manipulation / Physical Production Emissions
 
-For digital channels we model the emissions related to the storage of creative materials (also called the master bundle). We use emission factors per type of storage from [GMSF](https://adnetzero.com/global-media-sustainability-framework/), along with assumptions to allocate these emissions per impression:
+For digital channels we model the emissions related to the storage of creative materials (also called the master bundle). We use emission factors per type of storage from [GMSF 1.2](https://adnetzero.com/wp-content/uploads/2025/06/GlobalMediaSustainabilityFrameworkV1.2.pdf), along with assumptions to allocate these emissions per impression:
 
 - the average distribution per storage type,
 - the default impressions per creative,
@@ -73,7 +73,7 @@ The total data transfer from a creative can be calculated as `static assets + vi
 
 For digital channels, we calculate Ad Platform emissions corresponding to the Ad Serving and Measurement processes. See the [defaults](./calculations#ad-platform-defaults) and associated [calculations](./calculations#creative-delivery-platform) used.
 
-By default, we apply the emission factors from [GMSF](https://adnetzero.com/global-media-sustainability-framework/), which evaluate Ad Serving from a CDN/Edge Node. These emission factors are expressed per unit of data transferred from a creative.
+By default, we apply the emission factors from [GMSF 1.2](https://adnetzero.com/wp-content/uploads/2025/06/GlobalMediaSustainabilityFrameworkV1.2.pdf), which evaluate Ad Serving from a CDN/Edge Node. These emission factors are expressed per unit of data transferred from a creative.
 
 - Use-phase energy intensity of transferring 1MB from an edge node: 4.30E-07 kWh / MB
 - Embodied emissions intensity of transferring 1MB from an edge node: 5.88E-07 kgCO2e / MB

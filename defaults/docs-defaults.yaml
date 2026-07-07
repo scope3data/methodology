@@ -112,8 +112,6 @@ defaults:
   default_count_ad_platform:
     dooh: 6
     search: 1
-  default_datacenter_compute_embodied_emissions_kgCO2e_per_second: 0.000007130
-  default_datacenter_compute_use_phase_kwh_per_second: 0.000164000
   default_device_by_channel:
     app: phone
     ctv-bvod: tv
@@ -186,35 +184,14 @@ defaults:
   default_emissions_per_bid_request_gco2_per_imp: 0.114420000
   default_emissions_per_creative_request_gco2_per_imp: 0.000300000
   default_emissions_per_rtdp_request_gco2_per_imp: 0.010000000
-  default_eol_kgco2e_emissions_per_kg_by_material:
-    backlit_paper: 0.158940000
-    recycled_paper: 0.158940000
   default_expected_lifetime_years: 10.000000000
   default_freight_transport_emissions_kgco2e_tonne_transported_per_km: 0.110000000
-  default_freight_transport_kgco2e_emissions_per_tonne_km:
-    classic-ooh: 0.792000000
-  default_illumination_power_draw_watts_per_sq_metre: 21.400000000
   default_illumination_power_draw_watts_per_sq_metre_per_hour: 100.000000000
   default_image_compression_ratio: 10
   default_impressions_per_creative: 1000000
-  default_installation_transport_kgco2e_emissions_per_vehicle_km:
-    classic-ooh: 0.256000000
   default_iptv_network_distribution:
     fixed: 0.999000000
     mobile: 0.001000000
-  default_manufacturing_kgco2e_emissions_per_kg_by_material:
-    backlit_paper: 0.257000000
-    recycled_paper: 0.257000000
-  default_material_by_ooh_ad_format:
-    2 Sheet Poster: recycled_paper
-    6 Sheet: recycled_paper
-    96 Sheet: backlit_paper
-    Small A1: recycled_paper
-  default_material_mass_kg_per_sq_metre_by_ooh_ad_format:
-    2 Sheet Poster: 0.150000000
-    6 Sheet: 0.150000000
-    96 Sheet: 0.170000000
-    Small A1: 0.150000000
   default_mechanical_rotation_power_draw_watts_per_sq_metre_per_hour: 12.500000000
   default_network_embodied_emissions_gco2e_per_kb:
     scope3:
@@ -513,8 +490,6 @@ defaults:
     leaflet: 2.000000000
     magazine: 1.500000000
     newspaper: 1.000000000
-  default_printing_to_storage_distance_km:
-    classic-ooh: 200
   default_printing_to_storage_distance_km_per_ad:
     classic-ooh:
       AD: 0.500000000
@@ -634,19 +609,6 @@ defaults:
       YE: 0.500000000
       ZA: 0.500000000
       ZW: 0.500000000
-  default_production_loss_ratio_by_channel:
-    app: 1
-    classic-ooh: 1.110000000
-    ctv-bvod: 1
-    digital-audio: 1
-    dooh: 1
-    linear-tv: 1
-    print: 1.110000000
-    search: 1
-    social: 1
-    streaming-video: 1
-    traditional-radio: 1
-    web: 1
   default_property_ad_funded_percentage_by_channel:
     app: 100
     ctv-bvod: 100
@@ -825,8 +787,6 @@ defaults:
       YE: 4.000000000
       ZA: 4.000000000
       ZW: 4.000000000
-  default_storage_to_site_distance_km_per_ad:
-    classic-ooh: 0.700000000
   default_storage_usage_pct:
     cloud_storage: 45
     hard_disk_drive: 25
@@ -837,11 +797,7 @@ defaults:
   default_structure_pct_recycling:
     classic-ooh: 58.750000000
   default_structure_recycling_emissions_kgco2e_per_sq_metre: 0.000000000
-  default_substrate_production_kgco2e_emissions_per_kg_by_material:
-    backlit_paper: 0.920000000
-    recycled_paper: 1.050000000
   default_time_in_view_seconds: 3
-  default_transcoding_outputs_number: 6
   default_tv_home_equipment_embodied_gco2e_per_second_by_tv_distribution_method:
     cable: 0.005346759
     iptv: 0.005492307
@@ -852,13 +808,12 @@ defaults:
     iptv: 21
     ota: 1
     satellite: 22
-  default_tv_signal_preparation_embodied_gco2e_per_second: 0.007130000
-  default_tv_signal_preparation_power_watt: 590.400000000
-  default_tv_signal_transmission_embodied_gco2e_per_second: 30.630000000
+  default_tv_signal_preparation_power_watt: 16700
+  default_tv_signal_transmission_embodied_gco2e_per_second: 27
   default_tv_signal_transmission_power_by_tv_distribution_method_watt:
-    cable: 469793
-    ota: 469793
-    satellite: 550001
+    cable: 16000
+    ota: 165000
+    satellite: 3150
   default_usage_kwh_per_gb:
     scope3:
       fixed: 0.016500000
@@ -880,7 +835,6 @@ defaults:
     streaming-video: impression
     web: impression
   default_video_player_size_bytes: 350000
-  default_video_transcoding_time_seconds: 30
   edge_node_embodied_gco2e_per_kb: 0.000000588
   edge_node_use_watts_per_kb: 0.000000430
   generic_creative_ad_server:
